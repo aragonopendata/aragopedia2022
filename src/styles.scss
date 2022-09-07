@@ -1,1 +1,62 @@
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@use '@angular/material' as mat;
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+
 /* You can add global styles to this file, and also import other style files */
+
+@import url('https://fonts.googleapis.com/css2?family=Signika:wght@400;700&display=swap');
+
+:root {
+    --text-color: #333333;
+    --accent-color: #00475C;
+    --bg-dark: #92949B;
+    --bg-light: #F8F8F8;
+    --shadow: 0 4px 4px rgba(0, 0, 0, 0.05);
+    --shadow-hover: 0 4px 8px rgba(0, 0, 0, 0.3);
+    --transition: all 0.3s;
+    --div-padding: 1em;
+    --h1: 32px;
+    --h2: 28px;
+    --h3: 24px;
+}
+
+html,
+body {
+    height: 100%;
+    color: var(--text-color);
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+div {
+    padding: var(--div-padding);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: 'Signika', sans-serif !important;
+    color: var(--text-color);
+    margin: 0;
+    padding: 0;
+    font-weight: 400;
+}
+
+// Desktop
+
+main section,
+main .container {
+    max-width: 1400px;
+}
