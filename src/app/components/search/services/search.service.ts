@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, pluck } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
+import { TimeLineComponent } from '../../timeline/timeline.component';
 
 interface AragopediaResponse {
     query: {
@@ -33,7 +34,7 @@ export class SearchService {
             utf8: '1',
             origin: '*'
         }
-        return this.http.get<AragopediaResponse>(environment.api, { params })
+        return this.http.get<AragopediaResponse>(environment.apiMunicipios, { params })
             .pipe(
                 pluck('query', 'search')
             )

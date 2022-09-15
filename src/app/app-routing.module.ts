@@ -1,9 +1,18 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { HomeComponent } from './components/home/home.component';
+import { EventosComponent } from './pages/eventos/eventos.component';
+import { GeneralComponent } from './pages/general/general.component';
+import { PersonaComponent } from './pages/persona/persona.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/', pathMatch: 'full' },
-  { path: 'persona', loadChildren: () => import('./pages/persona/persona.module').then(m => m.PersonaModule) },
+  { path: 'home', component: HomeComponent },
+  { path: 'persona', component: PersonaComponent },
+  { path: 'eventos', component: EventosComponent },
+  { path: 'general', component: GeneralComponent },
+  // { path: 'persona', loadChildren: () => import('./pages/persona/persona.module').then(m => m.PersonaModule) },
+  // { path: 'eventos', loadChildren: () => import('./pages/eventos/eventos.module').then(m => m.EventosModule) },
   { path: '**', redirectTo: '', pathMatch: 'full' }
 ];
 

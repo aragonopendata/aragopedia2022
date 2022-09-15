@@ -55,6 +55,30 @@ h6 {
     font-weight: 400;
 }
 
+p {
+    line-height: 1.8rem;
+}
+
+//Mobile
+
+@media screen and (max-width: 576px) {
+    main sectionm main .container {
+        width: 100%;
+        padding: 0 15px;
+    }
+}
+
+
+// Tablet
+
+@media screen and (max-width: 992px) {
+
+    main section,
+    main .container {
+        max-width: 700px;
+    }
+}
+
 // Desktop
 
 main section,

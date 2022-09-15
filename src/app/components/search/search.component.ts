@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { TimeLineComponent } from '../timeline/timeline.component';
+import { MonthPeriod, TimeLineSvc } from '../timeline/timeline.service';
 
 @Component({
   selector: 'app-search',
@@ -7,7 +9,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SearchComponent implements OnInit {
 
-  constructor() { }
+  constructor() {
+  }
+
+  currentSearch(term: string, years: MonthPeriod[]): void {
+
+    console.log('Búsqueda ' + term + 'Años: ' + years);
+  }
 
   ngOnInit(): void {
   }

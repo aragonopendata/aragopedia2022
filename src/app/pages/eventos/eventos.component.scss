@@ -4,7 +4,7 @@
         margin: auto;
     }
 
-    .template__persona {
+    .template__evento {
         display: flex;
         flex-direction: column;
         flex-wrap: wrap;
@@ -12,11 +12,11 @@
         align-items: center;
         margin: auto;
 
-        .persona__content {
+        .evento__content {
             flex: 0 0 40%;
         }
 
-        .persona__name {
+        .evento__name {
             font-weight: 800;
 
             &::after {
@@ -29,7 +29,7 @@
             }
         }
 
-        .persona__img {
+        .evento__img {
             max-width: 250px;
             flex: 0 0 20%;
 
@@ -80,7 +80,7 @@
 
 // Tablet
 @media screen and (max-width: 992px) {
-    .template__persona {
+    .template__evento {
         flex-direction: column;
     }
 }
@@ -92,18 +92,18 @@
     margin: auto;
 }
 
-.template__persona {
+.template__evento {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
     margin: auto;
 
-    .persona__content {
+    .evento__content {
         flex: 0 0 40%;
     }
 
-    .persona__name {
+    .evento__name {
         font-weight: 800;
 
         &::after {
@@ -116,7 +116,7 @@
         }
     }
 
-    .persona__img {
+    .evento__img {
         max-width: 250px;
         flex: 0 0 20%;
 
@@ -161,5 +161,7 @@
         margin: auto;
     }
 
-
+    .evento__description {
+        width: 70%;
+    }
 }
