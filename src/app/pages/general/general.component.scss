@@ -1,0 +1,158 @@
+//Mobile
+
+.template {
+    margin: auto;
+}
+
+.template__general {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+
+    .general__content {
+        flex: 0 0 40%;
+    }
+
+    .general__name {
+        font-weight: 800;
+
+        &::after {
+            content: "";
+            width: 100%;
+            height: 2px;
+            background-color: #D9D9D9;
+            display: inline-block;
+            margin-top: 10px;
+        }
+    }
+
+    .general__img {
+        max-width: 250px;
+        flex: 0 0 20%;
+
+        img {
+            max-width: 100%;
+        }
+    }
+
+    ul {
+        list-style: none;
+        padding: 0;
+
+        li {
+            margin: 0 0 10px 20px;
+        }
+    }
+
+    .sidebar {
+        flex: 0 0 25%;
+        padding: 1rem;
+        background-color: #F8F8F8;
+        border-radius: 6px;
+
+        ul {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        li {
+            flex: 0 0 50%;
+            margin-left: 0;
+            margin-bottom: 20px;
+        }
+    }
+
+    h3 {
+        font-size: 1.5em;
+        font-weight: 800;
+    }
+
+    .sidebar__button {
+        margin: auto;
+    }
+
+}
+
+
+// Tablet
+@media screen and (min-width: 992px) {
+    .template__general {
+        flex-direction: row;
+    }
+}
+
+//Desktop
+
+@media screen and (min-width: 1200px) {
+    .template__general {
+
+        .general__content {
+            flex: 0 0 40%;
+        }
+
+        .general__name {
+            font-weight: 800;
+
+            &::after {
+                content: "";
+                width: 100%;
+                height: 2px;
+                background-color: #D9D9D9;
+                display: inline-block;
+                margin-top: 10px;
+            }
+        }
+
+        .general__img {
+            max-width: 250px;
+            flex: 0 0 20%;
+
+            img {
+                max-width: 100%;
+            }
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+
+            li {
+                margin: 0 0 10px 20px;
+            }
+        }
+
+        .sidebar {
+            flex: 0 0 25%;
+            padding: 1rem;
+            background-color: #F8F8F8;
+            border-radius: 6px;
+
+            ul {
+                display: flex;
+                flex-wrap: wrap;
+            }
+
+            li {
+                flex: 0 0 50%;
+                margin-left: 0;
+                margin-bottom: 20px;
+            }
+        }
+
+        h3 {
+            font-size: 1.5em;
+            font-weight: 800;
+        }
+
+        .sidebar__button {
+            margin: auto;
+        }
+
+        .general__description {
+            width: 70%;
+        }
+    }
+}
