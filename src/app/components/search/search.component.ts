@@ -8,16 +8,20 @@ import { MonthPeriod, TimeLineSvc } from '../timeline/timeline.service';
   styleUrls: ['./search.component.scss']
 })
 export class SearchComponent implements OnInit {
+  currentYears: MonthPeriod[] = [];
 
-  constructor() {
+  constructor(private timelineSvc: TimeLineSvc) {
+    this.currentYears = timelineSvc.getCurrentYears();
+  };
+  ngOnInit() {
+    this.timelineSvc.getCurrentYears();
+  };
+  currentSearch(): void {
+    var term = "test";
+    console.log('Búsqueda ' + term + 'Años: ' + this.timelineSvc.getCurrentYears());
   }
 
-  currentSearch(term: string, years: MonthPeriod[]): void {
-
-    console.log('Búsqueda ' + term + 'Años: ' + years);
+  myHello(): void {
+    console.log("myhello")
   }
-
-  ngOnInit(): void {
-  }
-
 }

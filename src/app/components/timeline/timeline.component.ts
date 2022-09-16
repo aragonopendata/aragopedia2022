@@ -15,14 +15,14 @@ import { TimeLineSvc, MonthPeriod } from './timeline.service';
 export class TimeLineComponent {
   dataSource: MonthPeriod[];
 
-  constructor(timeLineSvc: TimeLineSvc) {
+  constructor(private timeLineSvc: TimeLineSvc) {
     this.dataSource = timeLineSvc.getPeriods();
+    //timeLineSvc.currentYears = this.currentYears;
   }
 
-  currentYears: MonthPeriod[] = [];
-
   getData(value: MonthPeriod[]): void {
-    console.log(this.currentYears);
+    console.log(this.timeLineSvc.getCurrentYears());
+    this.timeLineSvc.setCurrentYears(value);
   }
 
 }
