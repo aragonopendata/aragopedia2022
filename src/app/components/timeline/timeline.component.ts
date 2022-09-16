@@ -2,6 +2,7 @@ import { NgModule, Component } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { DxRangeSelectorModule } from 'devextreme-angular';
+import { SearchService } from '../search/services/search.service';
 
 import { TimeLineSvc, MonthPeriod } from './timeline.service';
 

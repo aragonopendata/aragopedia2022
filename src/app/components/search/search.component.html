@@ -1,10 +1,8 @@
 <div class="main-search container">
-    <form>
-        <app-timeline></app-timeline>
-        <input type="text" class="main-search__input" name="main-search" id="main-search"
-            placeholder="Buscar en el banco de datos">
-        <button class="main-search__submit" type="submit">Buscar</button>
+    <form (ngSubmit)="currentSearch(inputBusqueda.value)" novalidate>
+        <app-timeline class="form__timeline"></app-timeline>
+        <input #inputBusqueda type="text" class="main-search__input" name="main-search" id="main-search"
+            placeholder="Buscar en el banco de datos" ngModel>
+        <button (click)="currentSearch(inputBusqueda.value)" class="main-search__submit" type="button">Buscar</button>
     </form>
-
-    <button (click)="currentSearch()">test</button>
 </div>
