@@ -20,7 +20,8 @@ import { TimeLineModule } from './components/timeline/timeline.component';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    TimeLineModule
+    TimeLineModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

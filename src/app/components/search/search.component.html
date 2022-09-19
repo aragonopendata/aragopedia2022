@@ -2,7 +2,7 @@
     <form (ngSubmit)="currentSearch(inputBusqueda.value)" novalidate>
         <app-timeline class="form__timeline"></app-timeline>
         <input #inputBusqueda type="text" class="main-search__input" name="main-search" id="main-search"
-            placeholder="Buscar en el banco de datos" ngModel>
+            placeholder="Buscar en el banco de datos" [formControl]="textoBusqueda">
         <button (click)="currentSearch(inputBusqueda.value)" class="main-search__submit" type="button">Buscar</button>
     </form>
 </div>

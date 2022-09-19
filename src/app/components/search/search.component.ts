@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MonthPeriod, TimeLineSvc } from '../timeline/timeline.service';
-import { NgForm } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-search',
@@ -9,6 +10,8 @@ import { NgForm } from '@angular/forms';
 })
 export class SearchComponent implements OnInit {
   currentYears: MonthPeriod[] = [];
+
+  textoBusqueda = new FormControl('');
 
   constructor(private timelineSvc: TimeLineSvc) {
     this.currentYears = timelineSvc.getCurrentYears();
