@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MonthPeriod, TimeLineSvc } from '../timeline/timeline.service';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { FormControl } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-search',
@@ -9,36 +8,35 @@ import { FormControl } from '@angular/forms';
   styleUrls: ['./search.component.scss']
 })
 export class SearchComponent implements OnInit {
-  currentYears: MonthPeriod[] = [];
+  currentYears: MonthPeriod[];
+  formGroup;
 
-  textoBusqueda = new FormControl('');
 
-  public formGroup!: FormGroup;
-
-  constructor(private timelineSvc: TimeLineSvc, private formBuilder: FormBuilder) {
-    this.currentYears = timelineSvc.getCurrentYears();
+  constructor(
+    private formBuilder: FormBuilder,
+    private timelineSvc: TimeLineSvc
+  ) {
+    this.currentYears = this.timelineSvc.getCurrentYears();
+    this.currentSearch('');
+    this.formGroup = this.formBuilder.group({
+      text: this.currentSearch(''),
+      years: this.currentYears,
+    })
   };
 
   ngOnInit() {
-    this.timelineSvc.getCurrentYears();
-    this.buildForm;
   };
 
-  private buildForm() {
-    const years = this.timelineSvc.getCurrentYears();
-    const dateLength = years[0] - years[1];
-    const text = this.textoBusqueda;
-    this.formGroup = this.formBuilder.group({
-      years: years,
-      dateLength: dateLength,
-      text: text,
-    });
-    console.log(this.formGroup);
-
+  onSubmit(searchData: any) {
+    // Process checkout data here
+    this.currentSearch('');
+    // this.currentYears;
+    searchData.years = this.timelineSvc.getCurrentYears();
+    this.formGroup.reset();
+    console.warn('Búsqueda completa: ', searchData);
   }
 
   currentSearch(term: string): string {
-    console.log('Búsqueda ' + term + ' Años: ' + this.timelineSvc.getCurrentYears());
     return term;
   }
 }

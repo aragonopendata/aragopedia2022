@@ -1,8 +1,10 @@
 <div class="main-search container">
-    <form [formGroup]="formGroup" (ngSubmit)="currentSearch(inputBusqueda.value)" novalidate>
+    <form [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup.value)" novalidate>
         <app-timeline class="form__timeline"></app-timeline>
-        <input #inputBusqueda type="text" class="main-search__input" name="main-search" id="main-search"
-            placeholder="Buscar en el banco de datos" [formControl]="textoBusqueda">
-        <button (click)="currentSearch(inputBusqueda.value)" class="main-search__submit" type="button">Buscar</button>
+
+        <input formControlName="text" #inputBusqueda type="text" class="main-search__input" name="main-search"
+            id="main-search" placeholder="Buscar en el banco de datos">
+
+        <button class="main-search__submit" type="submit">Buscar</button>
     </form>
 </div>

@@ -1,4 +1,4 @@
-import { Component, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 
 
 
@@ -35,23 +35,20 @@ const periods: MonthPeriod[] = [
     { date: '2022', dayT: 8 },
 ];
 
-var currentYears: MonthPeriod[] = [];
+let currentYears: MonthPeriod[] = [];
 
 @Injectable({
     providedIn: 'root',
 })
 export class TimeLineSvc {
 
-    constructor() {
-
-    };
+    constructor() { };
 
     getPeriods(): MonthPeriod[] {
         return periods;
     }
 
     getData(value: MonthPeriod[]): MonthPeriod[] {
-        console.log(value);
         return value;
     }
 
@@ -59,10 +56,7 @@ export class TimeLineSvc {
         currentYears = newRange;
     }
 
-
-
-    getCurrentYears(): any {
-        console.log("servicio: " + currentYears)
+    getCurrentYears(): MonthPeriod[] {
         return currentYears;
     }
 

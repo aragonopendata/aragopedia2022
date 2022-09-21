@@ -2,8 +2,6 @@ import { NgModule, Component } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { DxRangeSelectorModule } from 'devextreme-angular';
-import { SearchService } from '../search/services/search.service';
-
 import { TimeLineSvc, MonthPeriod } from './timeline.service';
 
 
@@ -18,11 +16,9 @@ export class TimeLineComponent {
 
   constructor(private timeLineSvc: TimeLineSvc) {
     this.dataSource = timeLineSvc.getPeriods();
-    //timeLineSvc.currentYears = this.currentYears;
   }
 
   getData(value: MonthPeriod[]): void {
-    console.log(this.timeLineSvc.getCurrentYears());
     this.timeLineSvc.setCurrentYears(value);
   }
 
