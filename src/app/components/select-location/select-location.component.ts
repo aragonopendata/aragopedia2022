@@ -7,7 +7,7 @@ import { map, startWith } from 'rxjs/operators';
 @Component({
   selector: 'app-select-location',
   templateUrl: './select-location.component.html',
-  styleUrls: ['./select-location.component.scss']
+  styleUrls: ['./select-location.component.scss'],
 })
 
 export class SelectLocationComponent implements OnInit {

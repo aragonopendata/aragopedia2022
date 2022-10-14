@@ -13,6 +13,9 @@ import { TimeLineModule } from './components/timeline/timeline.component';
 import { SelectLocationComponent } from './components/select-location/select-location.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { TemasComponent } from './components/temas/temas.component';
+import { HeaderComponent } from './components/header/header.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +23,9 @@ import { MatInputModule } from '@angular/material/input';
     HomeComponent,
     SearchComponent,
     SelectLocationComponent,
+    TemasComponent,
+    HeaderComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,
@@ -29,7 +35,7 @@ import { MatInputModule } from '@angular/material/input';
     ReactiveFormsModule,
     MatAutocompleteModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

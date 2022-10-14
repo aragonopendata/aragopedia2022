@@ -62,7 +62,7 @@ p {
 //Mobile
 
 @media screen and (max-width: 576px) {
-    main sectionm main .container {
+    main section main .container {
         width: 100%;
         padding: 0 15px;
     }
@@ -81,8 +81,11 @@ p {
 
 // Desktop
 
+
+
 main section,
-main .container {
+main .container,
+footer .container {
     max-width: 1400px;
 }
 

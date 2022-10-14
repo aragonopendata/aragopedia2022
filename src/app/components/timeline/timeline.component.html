@@ -1,14 +1,16 @@
-<dx-range-selector (onValueChanged)="getData($event.value)" id="range-selector" title="Selecciona un rango de años"
-    [value]="['2000', '2022']" [dataSource]="dataSource">
-    <dxo-margin [top]="50"></dxo-margin>
-    <dxo-chart>
-        <dxi-series valueField="dayT" color="#00607A"></dxi-series>
-        <!-- <dxi-series valueField="nightT"></dxi-series> -->
-        <dxo-common-series-settings type="steparea" argumentField="date">
-        </dxo-common-series-settings>
-    </dxo-chart>
-    <dxo-scale minorTickInterval="day" valueType="year">
-        <dxo-tick-interval [years]="1"></dxo-tick-interval>
-    </dxo-scale>
-    <dxo-slider-marker format="day"></dxo-slider-marker>
-</dx-range-selector>
+<div class="container" style="margin:auto">
+    <dx-range-selector (onValueChanged)="getData($event.value)" id="range-selector" title="Selecciona un rango de años"
+        [value]="['2000', '2022']" [dataSource]="dataSource">
+        <dxo-margin [top]="50"></dxo-margin>
+        <dxo-chart>
+            <dxi-series valueField="dayT" color="#00607A"></dxi-series>
+            <!-- <dxi-series valueField="nightT"></dxi-series> -->
+            <dxo-common-series-settings type="steparea" argumentField="date">
+            </dxo-common-series-settings>
+        </dxo-chart>
+        <dxo-scale minorTickInterval="day" valueType="year">
+            <dxo-tick-interval [years]="1"></dxo-tick-interval>
+        </dxo-scale>
+        <dxo-slider-marker format="day"></dxo-slider-marker>
+    </dx-range-selector>
+</div>
