@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -16,6 +15,10 @@ import { MatInputModule } from '@angular/material/input';
 import { TemasComponent } from './components/temas/temas.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { SelectProvinciaComponent } from './components/select-location/provincias/provincias.component';
+import { SelectComarcaComponent } from './components/select-location/comarcas/comarcas.component';
+import { SelectMunicipioComponent } from './components/select-location/municipios/municipios.component';
+
 
 @NgModule({
   declarations: [
@@ -26,6 +29,9 @@ import { FooterComponent } from './components/footer/footer.component';
     TemasComponent,
     HeaderComponent,
     FooterComponent,
+    SelectProvinciaComponent,
+    SelectComarcaComponent,
+    SelectMunicipioComponent,
   ],
   imports: [
     BrowserModule,
@@ -36,6 +42,8 @@ import { FooterComponent } from './components/footer/footer.component';
     MatAutocompleteModule,
     MatFormFieldModule,
     MatInputModule,
+    FormsModule
+
   ],
   providers: [],
   bootstrap: [AppComponent]

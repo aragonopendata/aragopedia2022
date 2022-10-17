@@ -1,0 +1,11 @@
+<mat-form-field>
+    <mat-label>
+        Provincia
+    </mat-label>
+    <input type="text" matInput [formControl]="myControlProvincias" [matAutocomplete]="auto">
+    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+        <mat-option *ngFor="let provincia of filteredProvincias | async" [value]="provincia">
+            {{provincia}}
+        </mat-option>
+    </mat-autocomplete>
+</mat-form-field>

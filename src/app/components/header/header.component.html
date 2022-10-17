@@ -1,8 +1,26 @@
+<div class="container space">
+    <a [routerLink]="['/home']" routerLinkActive="router-link-active">Home</a><br>
+    <a [routerLink]="['/persona']" routerLinkActive="router-link-active">Persona</a><br>
+    <a [routerLink]="['/eventos']" routerLinkActive="router-link-active">Eventos</a><br>
+    <a [routerLink]="['/general']" routerLinkActive="router-link-active">General</a><br>
+</div>
+
+
 <header>
-    <div class="container">
-        <a [routerLink]="['/home']" routerLinkActive="router-link-active">Home</a><br>
-        <a [routerLink]="['/persona']" routerLinkActive="router-link-active">Persona</a><br>
-        <a [routerLink]="['/eventos']" routerLinkActive="router-link-active">Eventos</a><br>
-        <a [routerLink]="['/general']" routerLinkActive="router-link-active">General</a><br>
+    <div class="header container">
+        <div class="header__logo">
+            <img src="../../../assets/logo-dga-color.svg"
+                alt="Gobierno de Aragón. Ir a la página principal del portal.">
+        </div>
+        <div class="header__europe">
+            <img src="../../../assets/flag_europe.svg" alt="Unión Europea">
+        </div>
+        <div class="header__menu">
+            <div class="header__burger">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
     </div>
 </header>

@@ -1,9 +1,20 @@
-.example-form {
+.location-form {
     min-width: 150px;
     max-width: 500px;
     width: 100%;
 }
 
-.example-full-width {
+.full-width {
     width: 100%;
+}
+
+@media screen and (min-width:992px) {
+    .location-form {
+        display: flex;
+        justify-content: space-between;
+
+        .location-form__input {
+            margin-right: 30px;
+        }
+    }
 }

@@ -1,14 +1,16 @@
-<div class="container" style="margin:auto">
-    <form class="example-form">
-        <mat-form-field class="example-full-width" appearance="fill">
-            <mat-label>Provincia</mat-label>
-            <input type="text" matInput placeholder="Provincia" aria-label="Provincia" [formControl]="myControl"
-                [matAutocomplete]="auto">
-            <mat-autocomplete #auto="matAutocomplete">
-                <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-                    {{option}}
-                </mat-option>
-            </mat-autocomplete>
-        </mat-form-field>
+<div class="container space" style="margin:auto">
+    <h2>Selecciona una comarca</h2>
+    <form class="location-form">
+        <div class="location-form__input">
+            <app-select-provincia></app-select-provincia>
+        </div>
+
+        <div class="location-form__input">
+            <app-select-comarca></app-select-comarca>
+        </div>
+
+        <div class="location-form__input">
+            <app-select-municipio></app-select-municipio>
+        </div>
     </form>
 </div>

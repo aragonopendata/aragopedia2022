@@ -1,0 +1,11 @@
+<mat-form-field>
+    <mat-label>
+        Municipio
+    </mat-label>
+    <input type="text" matInput [formControl]="myControlMunicipios" [matAutocomplete]="auto">
+    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+        <mat-option *ngFor="let municipio of filteredMunicipios | async" [value]="municipio">
+            {{municipio}}
+        </mat-option>
+    </mat-autocomplete>
+</mat-form-field>
