@@ -1,26 +1,47 @@
-<div class="container space">
-    <a [routerLink]="['/home']" routerLinkActive="router-link-active">Home</a><br>
-    <a [routerLink]="['/persona']" routerLinkActive="router-link-active">Persona</a><br>
-    <a [routerLink]="['/eventos']" routerLinkActive="router-link-active">Eventos</a><br>
-    <a [routerLink]="['/general']" routerLinkActive="router-link-active">General</a><br>
-</div>
-
-
 <header>
     <div class="header container">
         <div class="header__logo">
-            <img src="../../../assets/logo-dga-color.svg"
-                alt="Gobierno de Aragón. Ir a la página principal del portal.">
+            <a href="https://www.aragon.es/">
+                <img src="../../../assets/logo-dga-color.svg"
+                    alt="Gobierno de Aragón. Ir a la página principal del portal.">
+            </a>
         </div>
-        <div class="header__europe">
-            <img src="../../../assets/flag_europe.svg" alt="Unión Europea">
-        </div>
-        <div class="header__menu">
-            <div class="header__burger">
-                <div></div>
-                <div></div>
-                <div></div>
+        <div class="right-side">
+            <div class="header__europe">
+                <img src="../../../assets/flag_europe.svg" alt="Unión Europea">
+            </div>
+            <div class="header__menu">
+                <label for="toggle" class="header__burger">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </label>
+                <input type="checkbox" id="toggle">
+                <nav class="main-navigation">
+                    <label class="close" for="toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="23.334" height="23.334"
+                            viewBox="0 0 23.334 23.334">
+                            <path id="Unión_1" data-name="Unión 1"
+                                d="M10.607,10.607,0,21.213,10.607,10.607,0,0,10.607,10.607,21.213,0,10.607,10.607,21.213,21.213Z"
+                                transform="translate(1.061 1.061)" fill="none" stroke="#fff" stroke-width="3"></path>
+                        </svg>
+                        <span>Cerrar</span>
+                    </label>
+                    <ul>
+                        <li><a href="">Datos</a></li>
+                        <li><a href="">Servicios</a></li>
+                        <li><a href="">Información</a></li>
+                    </ul>
+                </nav>
             </div>
         </div>
     </div>
 </header>
+
+<ul>
+    <li><a [routerLink]="['/home']" routerLinkActive="router-link-active">Home</a>
+    </li>
+    <li><a [routerLink]="['/persona']" routerLinkActive="router-link-active">Persona</a></li>
+    <li><a [routerLink]="['/eventos']" routerLinkActive="router-link-active">Eventos</a></li>
+    <li><a [routerLink]="['/general']" routerLinkActive="router-link-active">General</a></li>
+</ul>
