@@ -18,6 +18,9 @@ import { FooterComponent } from './components/footer/footer.component';
 import { SelectProvinciaComponent } from './components/select-location/provincias/provincias.component';
 import { SelectComarcaComponent } from './components/select-location/comarcas/comarcas.component';
 import { SelectMunicipioComponent } from './components/select-location/municipios/municipios.component';
+import { ResultsComponent } from './pages/results/results.component';
+import { MatIconModule } from '@angular/material/icon';
+
 
 
 @NgModule({
@@ -32,6 +35,7 @@ import { SelectMunicipioComponent } from './components/select-location/municipio
     SelectProvinciaComponent,
     SelectComarcaComponent,
     SelectMunicipioComponent,
+    ResultsComponent,
   ],
   imports: [
     BrowserModule,
@@ -42,7 +46,8 @@ import { SelectMunicipioComponent } from './components/select-location/municipio
     MatAutocompleteModule,
     MatFormFieldModule,
     MatInputModule,
-    FormsModule
+    FormsModule,
+    MatIconModule
 
   ],
   providers: [],

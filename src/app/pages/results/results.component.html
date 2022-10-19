@@ -1,0 +1,104 @@
+<div class="results-page container">
+    <section class="results">
+        <div class="results__filter-desktop">
+            <div class="desktop__timeline">
+                <app-timeline></app-timeline>
+            </div>
+            <div class="desktop__location">
+                <app-select-location></app-select-location>
+            </div>
+            <div class="desktop__buscador">
+                <app-search></app-search>
+            </div>
+        </div>
+        <h2 class="results__title">Resultados de la búsqueda</h2>
+        <div class="results__filter">
+            <div class="results__filter-menu">
+                <mat-icon>reorder</mat-icon>
+                <p>Filtrar</p>
+            </div>
+            <div class="results__filter-order">
+                <mat-icon>swap_vert</mat-icon>
+                <p>Orden <span>A - Z</span></p>
+            </div>
+        </div>
+
+        <div class="search__results">
+            <article class="search__results-item">
+                <p class="item__category">Personas</p>
+                <a href="" class="item__title">
+                    <mat-icon>open_in_new</mat-icon>
+                    <h3>Título del resultado</h3>
+                </a>
+            </article>
+
+            <article class="search__results-item">
+                <p class="item__category">Personas</p>
+                <a class="item__title">
+                    <mat-icon>open_in_new</mat-icon>
+                    <h3>Título del resultado</h3>
+                </a>
+            </article>
+
+            <article class="search__results-item">
+                <p class="item__category">Personas</p>
+                <a class="item__title">
+                    <mat-icon>open_in_new</mat-icon>
+                    <h3>Título del resultado</h3>
+                </a>
+            </article>
+
+            <article class="search__results-item">
+                <p class="item__category">Personas</p>
+                <a class="item__title">
+                    <mat-icon>open_in_new</mat-icon>
+                    <h3>Título del resultado</h3>
+                </a>
+            </article>
+        </div>
+    </section>
+
+    <section class="sidebar">
+        <div class="sidebar__cerrar">
+            <mat-icon>close</mat-icon> <span>Cerrar filtros</span>
+        </div>
+        <div class="sidebar__timeline">
+            <app-timeline></app-timeline>
+        </div>
+        <div class="sidebar__location">
+            <app-select-location></app-select-location>
+        </div>
+        <div class="sidebar__buscador">
+            <app-search></app-search>
+        </div>
+        <div class="sidebar__categories">
+            <h3 class="sidebar__categories-title">Categorías</h3>
+            <ul>
+                <li>
+                    <mat-icon>chevron_right</mat-icon><a href="">Derechos y servicios del ciudadano</a>
+                </li>
+                <li>
+                    <mat-icon>chevron_right</mat-icon><a href="">Cultura, ocio y turismo</a>
+                </li>
+            </ul>
+
+
+            <h3 class="sidebar__categories-title">Tipos</h3>
+            <ul>
+                <li>
+                    <mat-icon>chevron_right</mat-icon><a href="">Lugar</a>
+                </li>
+                <li>
+                    <mat-icon>chevron_right</mat-icon><a href="">Persona</a>
+                </li>
+                <li>
+                    <mat-icon>chevron_right</mat-icon><a href="">Organización</a>
+                </li>
+                <li>
+                    <mat-icon>chevron_right</mat-icon><a href="">Temas</a>
+                </li>
+            </ul>
+
+        </div>
+    </section>
+</div>

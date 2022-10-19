@@ -10,13 +10,8 @@
         margin: auto;
     }
 
-    .form__timeline {
-        flex: 0 0 100%;
-        margin-bottom: 2em;
-    }
-
     .main-search__input {
-        width: 30rem;
+        flex: 0 0 50%;
         padding: 1em;
         outline: none;
         border: 1px solid var(--text-color);
@@ -25,6 +20,7 @@
     }
 
     .main-search__submit {
+        flex: 0 0 40%;
         background-color: var(--accent-color);
         color: #fff;
         padding: 1em 3em;
