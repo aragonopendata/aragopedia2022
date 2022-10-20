@@ -129,6 +129,13 @@ header {
             display: block;
         }
     }
+
+    .header__bg {
+        background: url(../../../assets/opendata-background-header.jpg);
+        background-size: cover;
+        height: 300px;
+        width: 100%;
+    }
 }
 
 // Desktop version

@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-
+import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
@@ -20,6 +20,8 @@ import { SelectComarcaComponent } from './components/select-location/comarcas/co
 import { SelectMunicipioComponent } from './components/select-location/municipios/municipios.component';
 import { ResultsComponent } from './pages/results/results.component';
 import { MatIconModule } from '@angular/material/icon';
+import { ResultComponent } from './pages/result/result.component';
+import { ResultService } from './pages/result/result.service';
 
 
 
@@ -36,6 +38,7 @@ import { MatIconModule } from '@angular/material/icon';
     SelectComarcaComponent,
     SelectMunicipioComponent,
     ResultsComponent,
+    ResultComponent,
   ],
   imports: [
     BrowserModule,
@@ -47,10 +50,11 @@ import { MatIconModule } from '@angular/material/icon';
     MatFormFieldModule,
     MatInputModule,
     FormsModule,
-    MatIconModule
+    MatIconModule,
+    HttpClientModule
 
   ],
-  providers: [],
+  providers: [ResultService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

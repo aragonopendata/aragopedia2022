@@ -4,6 +4,7 @@ import { HomeComponent } from './components/home/home.component';
 import { EventosComponent } from './pages/eventos/eventos.component';
 import { GeneralComponent } from './pages/general/general.component';
 import { PersonaComponent } from './pages/persona/persona.component';
+import { ResultComponent } from './pages/result/result.component';
 import { ResultsComponent } from './pages/results/results.component';
 
 const routes: Routes = [
@@ -13,6 +14,7 @@ const routes: Routes = [
   { path: 'eventos', component: EventosComponent },
   { path: 'general', component: GeneralComponent },
   { path: 'results', component: ResultsComponent },
+  { path: 'result', component: ResultComponent },
   // { path: 'persona', loadChildren: () => import('./pages/persona/persona.module').then(m => m.PersonaModule) },
   // { path: 'eventos', loadChildren: () => import('./pages/eventos/eventos.module').then(m => m.EventosModule) },
   { path: '**', redirectTo: '', pathMatch: 'full' }
