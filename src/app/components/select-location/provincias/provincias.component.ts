@@ -16,7 +16,7 @@ export class SelectProvinciaComponent implements OnInit {
 
   capturar() {
     this.provinciaSelected = this.getProvincia
-    console.log(this.provinciaSelected);
+    console.log(this.getProvincia);
   }
 
 
@@ -27,7 +27,6 @@ export class SelectProvinciaComponent implements OnInit {
 
   ngOnInit(): void {
     this.filteredProvincias = this.myControlProvincias.valueChanges.pipe(
-      debounceTime(500),
       startWith(''),
       map(val => this._filterProvincias(val || '')),
     );

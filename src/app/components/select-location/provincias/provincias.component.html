@@ -1,12 +1,14 @@
-<mat-form-field>
-    <mat-label>
-        Provincia
-    </mat-label>
-    <input [(ngModel)]="getProvincia" (ngSubmit)="capturar()" type="text" matInput [formControl]="myControlProvincias"
-        [matAutocomplete]="auto">
-    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-        <mat-option *ngFor="let provincia of filteredProvincias | async" [value]="provincia">
-            {{provincia}}
-        </mat-option>
-    </mat-autocomplete>
-</mat-form-field>
+<form (change)="capturar()">
+    <mat-form-field>
+        <mat-label>
+            Provincia
+        </mat-label>
+        <input [(ngModel)]="getProvincia" type="select" matInput [formControl]="myControlProvincias"
+            [matAutocomplete]="auto">
+        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+            <mat-option *ngFor="let provincia of filteredProvincias | async" [value]="provincia">
+                {{provincia}}
+            </mat-option>
+        </mat-autocomplete>
+    </mat-form-field>
+</form>

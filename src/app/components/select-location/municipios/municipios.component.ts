@@ -12,6 +12,15 @@ import { map, startWith, debounceTime } from 'rxjs/operators';
 
 export class SelectMunicipioComponent implements OnInit {
 
+  municipioSelected: string = '0';
+  getMunicipio: string = '';
+
+  capturar() {
+    this.municipioSelected = this.getMunicipio
+    console.log(this.getMunicipio);
+  }
+
+
   myControlMunicipios = new FormControl('');
 
   municipios: string[] = ['Ababuj', 'Abanto', 'Abejuela', 'Abiego', 'Abizanda', 'Acered', 'Adahuesca', 'Aguarón', 'Aguatón', 'Aguaviva', 'Aguilar del Alfambra', 'Aguilón', 'Agón', 'Agüero', 'Ainzón', 'Alacón', 'Aladrén', 'Alagón', 'Alarba', 'Alba', 'Albalate de Cinca', 'Albalate del Arzobispo', 'Albalatillo', 'Albarracín', 'Albelda'];
@@ -19,7 +28,6 @@ export class SelectMunicipioComponent implements OnInit {
 
   ngOnInit(): void {
     this.filteredMunicipios = this.myControlMunicipios.valueChanges.pipe(
-      debounceTime(500),
       startWith(''),
       map(val => this._filterMunicipios(val || '')),
     );
