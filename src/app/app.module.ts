@@ -22,6 +22,8 @@ import { ResultsComponent } from './pages/results/results.component';
 import { MatIconModule } from '@angular/material/icon';
 import { ResultComponent } from './pages/result/result.component';
 import { ResultService } from './pages/result/result.service';
+import { MatTabsModule } from '@angular/material/tabs';
+
 
 
 
@@ -51,7 +53,8 @@ import { ResultService } from './pages/result/result.service';
     MatInputModule,
     FormsModule,
     MatIconModule,
-    HttpClientModule
+    HttpClientModule,
+    MatTabsModule
 
   ],
   providers: [ResultService],

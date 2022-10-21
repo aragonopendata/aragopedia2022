@@ -1,0 +1,124 @@
+// Mat table styles
+
+.mat-tab-group {
+    margin-bottom: 48px;
+}
+
+section.container {
+    padding: 0 15px;
+}
+
+.template {
+    margin: auto;
+
+    .breadcrumbs {
+        text-align: center;
+    }
+
+    .inicio__name {
+        text-align: center;
+    }
+
+    .inicio__img {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .inicio__img img {
+        display: block;
+        margin: auto;
+        order: 1;
+        margin: 1em auto;
+    }
+
+    a.btn.map_btn {
+        margin: 1em auto;
+    }
+
+    .inicio__data {
+        ul {
+            display: grid;
+            grid-template-columns: auto;
+            padding: 10px;
+            list-style: none;
+
+            li {
+                padding: 20px;
+                text-align: center;
+                font-size: 16px;
+                color: var(--accent-color);
+                font-family: 'Signika', sans-serif;
+
+                .big-number {
+                    display: block;
+                    font-size: 64px;
+                    font-weight: bold;
+                    color: #D6EAF0;
+                    margin-bottom: 15px;
+                }
+            }
+        }
+    }
+
+    .inicio__contact {
+
+        padding: 1.5em;
+        margin: 1em;
+        background-color: #f4f4f4;
+        border-radius: 10px;
+
+        h2 {
+            font-size: 26px;
+            margin: 10px 0 20px 0;
+        }
+
+        ul {
+            margin: 20px 0;
+            padding: 0;
+
+            li {
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 10px;
+                font-size: 18px;
+            }
+        }
+
+    }
+
+    .template__caracteristicas {
+        h2 {
+            display: block;
+            padding-bottom: 15px;
+
+            &::after {
+                content: "";
+                display: block;
+                width: 50%;
+                background-color: #D9D9D9;
+                height: 1px;
+                margin-top: 10px;
+            }
+        }
+
+        .caracteristicas__list {
+            display: grid;
+            grid-template-columns: auto;
+
+            .caracteristica__item {
+                text-align: center;
+                padding: 1em;
+                border-radius: 6px;
+                box-shadow: var(--shadow);
+                max-width: 250px;
+                margin: 20px auto;
+
+                .mat-icon {
+                    display: block;
+                    margin: 15px auto;
+                    font-size: 32px;
+                }
+            }
+        }
+    }
+}

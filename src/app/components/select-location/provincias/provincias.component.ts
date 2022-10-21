@@ -11,6 +11,15 @@ import { map, startWith, debounceTime } from 'rxjs/operators';
 })
 
 export class SelectProvinciaComponent implements OnInit {
+  provinciaSelected: string = '0';
+  getProvincia: string = '';
+
+  capturar() {
+    this.provinciaSelected = this.getProvincia
+    console.log(this.provinciaSelected);
+  }
+
+
   myControlProvincias = new FormControl('');
 
   provincias: string[] = ['Huesca', 'Zaragoza', 'Teruel'];
