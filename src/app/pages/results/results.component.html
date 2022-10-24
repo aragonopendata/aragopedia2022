@@ -13,7 +13,7 @@
         </div>
         <h2 class="results__title">Resultados de la búsqueda</h2>
         <div class="results__filter">
-            <div class="results__filter-menu">
+            <div class="results__filter-menu" (click)="toggleSidebar()">
                 <mat-icon>reorder</mat-icon>
                 <p>Filtrar</p>
             </div>
@@ -58,8 +58,8 @@
         </div>
     </section>
 
-    <section class="sidebar">
-        <div class="sidebar__cerrar">
+    <section class="sidebar" [ngClass]="{'active': active}">
+        <div class="sidebar__cerrar" (click)="toggleSidebar()">
             <mat-icon>close</mat-icon> <span>Cerrar filtros</span>
         </div>
         <div class="sidebar__timeline">

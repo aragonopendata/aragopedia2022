@@ -1,4 +1,4 @@
-results-page {
+.results-page {
     position: relative;
 
 }
@@ -83,15 +83,18 @@ results-page {
 }
 
 .sidebar {
-    padding: 20px;
+    margin: 20px;
+    padding: 1em;
+    box-sizing: border-box;
     background-color: #EDEDEC;
+    display: none;
 
     .sidebar__cerrar {
         font-size: 16px;
         font-weight: 500;
         display: flex;
         align-items: center;
-        justify-content: flex-end;
+        // justify-content: flex-end;
         cursor: pointer;
 
         p {
@@ -134,6 +137,14 @@ results-page {
             }
         }
     }
+}
+
+.sidebar.active {
+    position: absolute;
+    top: 0;
+    margin: auto;
+    width: 100vw;
+    display: block;
 }
 
 @media screen and (min-width:992px) {

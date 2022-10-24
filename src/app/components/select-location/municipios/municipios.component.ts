@@ -12,14 +12,7 @@ import { map, startWith, debounceTime } from 'rxjs/operators';
 
 export class SelectMunicipioComponent implements OnInit {
 
-  municipioSelected: string = '0';
-  getMunicipio: string = '';
-
-  capturar() {
-    this.municipioSelected = this.getMunicipio
-    console.log(this.getMunicipio);
-  }
-
+  selected: string = '';
 
   myControlMunicipios = new FormControl('');
 

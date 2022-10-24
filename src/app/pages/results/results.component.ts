@@ -7,6 +7,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ResultsComponent implements OnInit {
 
+  active: boolean = false;
+  toggleSidebar(): void {
+    this.active = !this.active;
+  }
+
   constructor() { }
 
   ngOnInit(): void {

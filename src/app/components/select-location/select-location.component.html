@@ -1,6 +1,6 @@
 <div class="container space" style="margin:auto">
     <h2>Selecciona una comarca</h2>
-    <form class="location-form">
+    <form class="location-form" [formGroup]="locationForm" (submit)="locationSelected()">
         <div class="location-form__input">
             <app-select-provincia></app-select-provincia>
         </div>
@@ -12,5 +12,6 @@
         <div class="location-form__input">
             <app-select-municipio></app-select-municipio>
         </div>
+        <button class="btn" type="submit" (click)="locationSelected()">Establecer</button>
     </form>
 </div>

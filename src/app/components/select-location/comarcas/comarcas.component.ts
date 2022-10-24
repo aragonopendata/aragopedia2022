@@ -11,6 +11,8 @@ import { map, startWith, debounceTime } from 'rxjs/operators';
 })
 
 export class SelectComarcaComponent implements OnInit {
+
+  selected: string = '';
   myControlComarcas = new FormControl('');
 
   comarcas: string[] = ['Alto Gállego', 'Andorra-Siera de Arcos', 'Aranda', 'Bajo Aragón', ' Bajo Aragón-Caspe / Baix Aragó-Casp', 'Bajo Cinca / Baix Cinca', 'Bajo Martín', 'Campo de Belchite', 'Campo de Borja', 'Campo de Cariñena', 'Campo de Daroca', 'Cinca Medio', 'Cinco Villas', 'Comunidad de Calatayud', 'Comunidad de Teruel', 'Cuencas Mineras', 'D.C. Zaragoza', 'Gúdar-Javalambre', 'Hoya de Huesca / Plana de Uesca', 'Jiloca', 'La Jacetania', 'La Litera / La Llitera', 'La Ribagorza', 'Los Monegros', 'Maestrazgo', 'Matarraña / Matarranya', 'Ribera Alta del Ebro', 'Ribera Baja del Ebro', 'Sierra del Albarracín', 'Sobrarbe', 'Somontano de Barbastro', 'Tarazona y el Moncayo', 'Valdejalón'];

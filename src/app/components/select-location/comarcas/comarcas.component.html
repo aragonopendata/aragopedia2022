@@ -2,7 +2,7 @@
     <mat-label>
         Comarca
     </mat-label>
-    <input type="text" matInput [formControl]="myControlComarcas" [matAutocomplete]="auto">
+    <input type="select" [(ngModel)]="selected" matInput [formControl]="myControlComarcas" [matAutocomplete]="auto">
     <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
         <mat-option *ngFor="let comarca of filteredComarcas | async" [value]="comarca">
             {{comarca}}
