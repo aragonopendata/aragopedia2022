@@ -30,7 +30,10 @@ export class SelectLocationComponent {
   }
 
   locationSelected(): void {
-    console.log('Provincia: ' + this.provincia.selected + '| Comarca: ' + this.comarca.selected + '| Municipio: ' + this.municipio.selected);
+    this.provinciaSelected = this.provincia.selected;
+    this.municipioSelected = this.municipio.selected;
+    this.comarcaSelected = this.comarca.selected;
+    console.log('Provincia: ' + this.provinciaSelected + '| Comarca: ' + this.comarcaSelected + '| Municipio: ' + this.municipioSelected);
   }
 
 }
