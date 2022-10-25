@@ -12,7 +12,11 @@ export class ResultComponent {
 
   constructor(public resultSvc: ResultService) { }
 
+  density: number | undefined;
+
   ngOnInit() {
-    // this.resultSvc.getData();
+    this.density = this.resultSvc.density;
+    this.resultSvc.getData();
+    console.log(this.density);
   }
 }
