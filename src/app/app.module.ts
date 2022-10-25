@@ -23,6 +23,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { ResultComponent } from './pages/result/result.component';
 import { ResultService } from './pages/result/result.service';
 import { MatTabsModule } from '@angular/material/tabs';
+import { AbstractBaseComponent } from './components/base/base.component';
 
 
 
@@ -41,6 +42,7 @@ import { MatTabsModule } from '@angular/material/tabs';
     SelectMunicipioComponent,
     ResultsComponent,
     ResultComponent,
+    AbstractBaseComponent,
   ],
   imports: [
     BrowserModule,
