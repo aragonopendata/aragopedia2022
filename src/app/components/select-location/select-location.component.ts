@@ -12,6 +12,7 @@ import { SelectProvinciaComponent } from './provincias/provincias.component';
 })
 
 export class SelectLocationComponent {
+  constructor() { }
 
   locationForm = new FormGroup('');
 
@@ -22,12 +23,6 @@ export class SelectLocationComponent {
   @ViewChild(SelectProvinciaComponent) provincia: any;
   @ViewChild(SelectMunicipioComponent) municipio: any;
   @ViewChild(SelectComarcaComponent) comarca: any;
-
-  ngAfterViewInit() {
-    this.provinciaSelected = this.provincia.selected;
-    this.municipioSelected = this.municipio.selected;
-    this.comarcaSelected = this.comarca.selected;
-  }
 
   locationSelected(): void {
     this.provinciaSelected = this.provincia.selected;

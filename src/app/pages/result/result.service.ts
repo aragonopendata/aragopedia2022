@@ -19,11 +19,16 @@ export class ResultService {
 
     constructor(private http: HttpClient) { }
 
+<<<<<<< HEAD
     public getData(): Observable<any> {
         return this.http.get(this.queryUrl);
 
         //.subscribe(data => {
         //     Number(data.results.bindings[0].densidad_de_poblacion_habkm2.value);
         //});
+=======
+    getData(): Observable<any> {
+        return this.http.get(this.queryUrl)
+>>>>>>> 9359ff1ff3256cf1dc40a4668dfae62e6860ed78
     }
 }

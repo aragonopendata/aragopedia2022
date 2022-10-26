@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { map, startWith, debounceTime } from 'rxjs/operators';
+import { map, startWith } from 'rxjs/operators';
+import { SelectLocationService } from '../select-location.service';
 
 
 @Component({
@@ -11,12 +12,12 @@ import { map, startWith, debounceTime } from 'rxjs/operators';
 })
 
 export class SelectMunicipioComponent implements OnInit {
+  constructor(public locationSvc: SelectLocationService) { }
 
   selected: string = '';
-
   myControlMunicipios = new FormControl('');
 
-  municipios: string[] = ['Ababuj', 'Abanto', 'Abejuela', 'Abiego', 'Abizanda', 'Acered', 'Adahuesca', 'Aguarón', 'Aguatón', 'Aguaviva', 'Aguilar del Alfambra', 'Aguilón', 'Agón', 'Agüero', 'Ainzón', 'Alacón', 'Aladrén', 'Alagón', 'Alarba', 'Alba', 'Albalate de Cinca', 'Albalate del Arzobispo', 'Albalatillo', 'Albarracín', 'Albelda'];
+  municipios: string[] = ['Ababuj', 'Ababuj', 'Ababuj', 'Ababuj', 'Ababuj', 'Ababuj', 'Ababuj', 'Ababuj', 'Ababuj', 'Ababuj', 'Ababuj', 'Ababuj', 'Ababuj', 'Ababuj', 'Ababuj', 'Ababuj', 'Ababuj', 'Ababuj', 'Ababuj', 'Ababuj', 'Ababuj', 'Ababuj', 'Ababuj', 'Ababuj']
   filteredMunicipios!: Observable<string[]>;
 
   ngOnInit(): void {
@@ -24,11 +25,17 @@ export class SelectMunicipioComponent implements OnInit {
       startWith(''),
       map(val => this._filterMunicipios(val || '')),
     );
+
+    // this.locationSvc.getMunicipios().subscribe(data => {
+    //   this.municipios = data.results.bindings
+    //   console.log(this.municipios);
+    // });
+
   }
+
 
   private _filterMunicipios(val: string): string[] {
     const formatVal = val.toLowerCase();
-
     return this.municipios.filter(option => option.toLowerCase().indexOf(formatVal) === 0);
   }
 

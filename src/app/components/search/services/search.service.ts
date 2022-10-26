@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Observable, pluck } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { TimeLineComponent } from '../../timeline/timeline.component';
 
 interface AragopediaResponse {
     query: {
