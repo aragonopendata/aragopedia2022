@@ -18,6 +18,7 @@ export class SelectMunicipioComponent implements OnInit {
   myControlMunicipios = new FormControl('');
 
   municipios: string[] = ['Ababuj', 'Ababuj', 'Ababuj', 'Ababuj', 'Ababuj', 'Ababuj', 'Ababuj', 'Ababuj', 'Ababuj', 'Ababuj', 'Ababuj', 'Ababuj', 'Ababuj', 'Ababuj', 'Ababuj', 'Ababuj', 'Ababuj', 'Ababuj', 'Ababuj', 'Ababuj', 'Ababuj', 'Ababuj', 'Ababuj', 'Ababuj']
+
   filteredMunicipios!: Observable<string[]>;
 
   ngOnInit(): void {
@@ -26,10 +27,10 @@ export class SelectMunicipioComponent implements OnInit {
       map(val => this._filterMunicipios(val || '')),
     );
 
-    // this.locationSvc.getMunicipios().subscribe(data => {
-    //   this.municipios = data.results.bindings
-    //   console.log(this.municipios);
-    // });
+    this.locationSvc.getMunicipios().subscribe(data => {
+      this.municipios = data.results.bindings
+      console.log(this.municipios);
+    });
 
   }
 

@@ -12,7 +12,7 @@ import { TimeLineSvc, MonthPeriod } from './timeline.service';
   styleUrls: ['./timeline.component.scss'],
 })
 export class TimeLineComponent {
-  dataSource: MonthPeriod[];
+  dataSource: MonthPeriod[] = []
 
   constructor(private timeLineSvc: TimeLineSvc) {
     this.dataSource = timeLineSvc.getPeriods();

@@ -23,7 +23,4 @@ export class SelectLocationService {
     getMunicipios(): Observable<any> {
         return this.http.get(this.municipiosURL)
     }
-
-
-
 }
