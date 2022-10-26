@@ -12,11 +12,15 @@ export class ResultComponent {
 
   constructor(public resultSvc: ResultService) { }
 
-  density: number | undefined;
+  density: any;
 
   ngOnInit() {
     this.density = this.resultSvc.density;
-    this.resultSvc.getData();
+    //this.resultSvc.getData();
+    //console.log(this.density);
     console.log(this.density);
+    this.resultSvc.getData().subscribe((data: any) => {
+      this.density = (Number(data.results.bindings[0].densidad_de_poblacion_habkm2.value)).toFixed(1);
+    });
   }
 }
