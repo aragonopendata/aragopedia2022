@@ -19,9 +19,7 @@ export class ResultService {
 
     constructor(private http: HttpClient) { }
 
-    getData(): void {
-        this.http.get<any>(this.queryUrl).subscribe(data => {
-            return Number(data.results.bindings[0].densidad_de_poblacion_habkm2.value);
-        });
+    getData(): Observable<any> {
+        return this.http.get(this.queryUrl)
     }
 }

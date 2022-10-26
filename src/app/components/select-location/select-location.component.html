@@ -1,6 +1,6 @@
 <div class="container space" style="margin:auto">
     <h2>Selecciona una comarca</h2>
-    <form class="location-form" [formGroup]="locationForm" (submit)="locationSelected()">
+    <form class="location-form" [formGroup]="locationForm" (onChange)="locationSelected()">
         <div class="location-form__input">
             <app-select-provincia></app-select-provincia>
         </div>
@@ -15,8 +15,8 @@
         <button class="btn" type="submit" (click)="locationSelected()">Establecer</button>
     </form>
     <div class="location__selected">
-        <p *ngIf="provinciaSelected != ''">{{provinciaSelected}}</p>
-        <p *ngIf="comarcaSelected != ''">{{comarcaSelected}}</p>
-        <p *ngIf="municipioSelected != ''">{{municipioSelected}}</p>
+        <p *ngIf="provinciaSelected">{{provinciaSelected}}</p>
+        <p *ngIf="comarcaSelected">{{comarcaSelected}}</p>
+        <p *ngIf="municipioSelected">{{municipioSelected}}</p>
     </div>
 </div>

@@ -16,7 +16,9 @@ export class ResultComponent {
 
   ngOnInit() {
     this.density = this.resultSvc.density;
-    this.resultSvc.getData();
+    this.resultSvc.getData().subscribe(data => {
+      this.density = data.results.bindings[0].densidad_de_poblacion_habkm2.value
+    });
     console.log(this.density);
   }
 }
