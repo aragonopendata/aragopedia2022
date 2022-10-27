@@ -12,15 +12,25 @@ export class ResultComponent {
 
   constructor(public resultSvc: ResultService) { }
 
+  poblacion: any;
   density: any;
+  sueloUrbano: any;
+  sueloRural: any;
 
   ngOnInit() {
     this.density = this.resultSvc.density;
-    this.resultSvc.getData().subscribe(data => {
-      this.density = data.results.bindings[0].densidad_de_poblacion_habkm2.value
+
+    this.resultSvc.getSueloUrbanoData().subscribe((data: any) => {
+      this.sueloUrbano = data.results.bindings[1].urbano.value
+      this.sueloRural = data.results.bindings[1].rustico.value
     });
 
-    this.resultSvc.getData().subscribe((data: any) => {
+    this.resultSvc.getPoblacionData().subscribe((data: any) => {
+      this.poblacion = data.results.bindings[10].poblac.value;
+      console.log(this.poblacion);
+    });
+
+    this.resultSvc.getDensidadData().subscribe((data: any) => {
       this.density = (Number(data.results.bindings[0].densidad_de_poblacion_habkm2.value)).toFixed(1);
     });
   }
