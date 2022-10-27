@@ -10,21 +10,17 @@ export class TemasComponent implements OnInit {
 
   constructor(public temasSvc: TemasService) { }
 
-  temas!: object[];
+  temas: any = [];
 
   ngOnInit(): void {
     this.temasSvc.getTemas().subscribe(data => {
-      this.temas = data.results.bindings;
-      console.log(this.temas)
+
+      const temasProv = data.results.bindings;
+
+      for (let i = 0; i < temasProv.length; i++) {
+        let tema = temasProv[i].tema.value;
+        this.temas.push(tema);
+      }
     });
-
-    this.mappedTemas(this.temas);
-
-  }
-
-  mappedTemas(temas: object[]): void {
-    temas.map(val => {
-      console.log(val)
-    })
   }
 }
