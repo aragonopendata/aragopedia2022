@@ -17,7 +17,7 @@ export class SelectMunicipioComponent implements OnInit {
   selected: string = '';
   myControlMunicipios = new FormControl('');
 
-  municipios: string[] = ['Ababuj', 'Ababuj', 'Ababuj', 'Ababuj', 'Ababuj', 'Ababuj', 'Ababuj', 'Ababuj', 'Ababuj', 'Ababuj', 'Ababuj', 'Ababuj', 'Ababuj', 'Ababuj', 'Ababuj', 'Ababuj', 'Ababuj', 'Ababuj', 'Ababuj', 'Ababuj', 'Ababuj', 'Ababuj', 'Ababuj', 'Ababuj']
+  municipios: string[] = ['Ababuj', 'Ababuj', 'Ababuj', 'Ababuj', 'Ababuj',]
 
   filteredMunicipios!: Observable<string[]>;
 
@@ -27,13 +27,17 @@ export class SelectMunicipioComponent implements OnInit {
       map(val => this._filterMunicipios(val || '')),
     );
 
-    this.locationSvc.getMunicipios().subscribe(data => {
-      this.municipios = data.results.bindings
-      console.log(this.municipios);
-    });
+    // this.locationSvc.getMunicipios().subscribe(data => {
+    //   const municipiosProv = data.results.bindings;
+    //   for (let i = 0; i < municipiosProv.length; i++) {
+    //     let municipio = municipiosProv[i].muni.value;
+    //     this.municipios.push(municipio);
+    //   }
+    //   console.log(this.municipios);
+
+    // });
 
   }
-
 
   private _filterMunicipios(val: string): string[] {
     const formatVal = val.toLowerCase();
