@@ -1,5 +1,6 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { SelectLocationComponent } from '../select-location/select-location.component';
+import { TemasComponent } from '../temas/temas.component';
 import { MonthPeriod, TimeLineSvc } from '../timeline/timeline.service';
 
 @Component({
@@ -9,12 +10,13 @@ import { MonthPeriod, TimeLineSvc } from '../timeline/timeline.service';
 })
 export class HomeComponent implements OnInit {
   @ViewChild(SelectLocationComponent) location: any;
+  @ViewChild(TemasComponent) temas: any;
 
   years!: MonthPeriod[];
   provinciaSelected!: string;
   municipioSelected!: string;
   comarcaSelected!: string;
-  temas!: string[];
+  temasSelected!: string[];
 
   constructor(private timelineSvc: TimeLineSvc) { }
 
@@ -26,9 +28,9 @@ export class HomeComponent implements OnInit {
     this.provinciaSelected = this.location.provincia.selected;
     this.municipioSelected = this.location.municipio.selected;
     this.comarcaSelected = this.location.comarca.selected;
-    this.temas = ['Tema 1', 'Tema 2'];
+    this.temasSelected = this.temas.temasSeleccionados;
 
-    console.log(this.years, this.provinciaSelected, this.municipioSelected, this.comarcaSelected, this.temas);
+    console.log(this.years, this.provinciaSelected, this.municipioSelected, this.comarcaSelected, this.temasSelected);
 
 
   }
