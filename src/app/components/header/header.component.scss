@@ -258,7 +258,8 @@ header {
             color: #333;
             background-color: #fff;
             box-shadow: var(--shadow);
-            width: 900px;
+            width: 60vw;
+            height: fit-content !important;
             min-height: 400px;
             display: none;
             justify-content: space-between;
