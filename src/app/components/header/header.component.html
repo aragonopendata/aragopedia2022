@@ -27,10 +27,101 @@
                         </svg>
                         <span>Cerrar</span>
                     </label>
-                    <ul>
-                        <li><a href="">Datos</a></li>
-                        <li><a href="">Servicios</a></li>
-                        <li><a href="">Información</a></li>
+                    <ul class="menu__links">
+                        <li><span
+                                (click)="activeDatos = !activeDatos; activeServicios = false; activeInfo = false;">Datos</span>
+                            <div class="submenu" [ngClass]="{'submenu__active-datos': activeDatos}">
+                                <div class="submenu__left">
+                                    <h3>Datos</h3>
+                                    <ul class="submenu__links">
+                                        <li class="submenu__links-item"><a
+                                                href="https://opendata.aragon.es/datos/catalogo">Banco de datos</a></li>
+                                        <li class="submenu__links-item"><a
+                                                href="https://opendata.aragon.es/datos/publicadores">Publicadores</a>
+                                        </li>
+                                        <li class=" submenu__links-item"><a
+                                                href="https://opendata.aragon.es/datos/temas">Temas</a></li>
+                                    </ul>
+                                </div>
+                                <div class="submenu__right">
+                                    <p>Consulta toda la información institucional sobre el Gobierno de Aragón.</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li (click)="activeServicios = !activeServicios; activeDatos = false; activeInfo = false;">
+                            <span>Servicios</span>
+                            <div class="submenu" [ngClass]="{'submenu__active-servicios': activeServicios}">
+                                <div class="submenu__left">
+                                    <h3>Servicios</h3>
+                                    <ul class="submenu__links">
+                                        <li class="submenu__links-item"><a
+                                                href="https://opendata.aragon.es/servicios/cobertura">Análisis
+                                                cobertura</a></li>
+                                        <li class="submenu__links-item"><a
+                                                href="https://opendata.aragon.es/servicios/landing-presupuestos">Presupuestos</a>
+                                        </li>
+                                        <li class=" submenu__links-item"><a
+                                                href="https://opendata.aragon.es/servicios/landing-open-data-focus">Open
+                                                Data Focus</a></li>
+                                        <li class=" submenu__links-item"><a
+                                                href="https://opendata.aragon.es/servicios/fianzas-alquileres">Alquileres</a>
+                                        </li>
+                                        <li class=" submenu__links-item"><a
+                                                href="https://opendata.aragon.es/servicios/landing-datos-enlazados">Datos
+                                                enlazados</a></li>
+                                        <li class=" submenu__links-item"><a
+                                                href="https://opendata.aragon.es/servicios/chatbot"
+                                                target="_blank">Chatbot</a></li>
+                                        <li class=" submenu__links-item"><a
+                                                href="https://opendata.aragon.es/servicios/landing-aragopedia">Aragopedia</a>
+                                        </li>
+                                        <li class=" submenu__links-item"><a
+                                                href="https://opendata.aragon.es/servicios/analytics">Open Data
+                                                Analytics</a></li>
+                                        <li class=" submenu__links-item"><a
+                                                href="https://opendata.aragon.es/servicios/landing-open-social-data">Open
+                                                Social Data</a></li>
+                                    </ul>
+                                </div>
+                                <div class="submenu__right">
+                                    <p>Consulta toda la información institucional sobre el Gobierno de Aragón.</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li (click)="activeInfo = !activeInfo; activeServicios = false; activeDatos = false;">
+                            <span>Información</span>
+                            <div class="submenu" [ngClass]="{'submenu__active-info': activeInfo}">
+                                <div class="submenu__left">
+                                    <h3>Información</h3>
+                                    <ul class="submenu__links">
+                                        <li class="submenu__links-item"><a
+                                                href="https://opendata.aragon.es/informacion/conoce-aragon-open-data-y-los-datos-abiertos">Conoce
+                                                Aragón Open Data y los datos abiertos</a></li>
+                                        <li class="submenu__links-item"><a
+                                                href="https://opendata.aragon.es/informacion/blog-de-aragon-open-data">Blog
+                                                de Aragón Open Data</a></li>
+                                        <li class=" submenu__links-item"><a
+                                                href="https://opendata.aragon.es/informacion/herramientas-para-usuarios-as-y-desarrolladores-as">Herramientas
+                                                para usuarios/as y desarrolladores/as</a></li>
+                                        <li class=" submenu__links-item"><a
+                                                href="https://opendata.aragon.es/informacion/eventos-de-datos-abiertos">Eventos
+                                                de datos abiertos</a></li>
+                                        <li class=" submenu__links-item"><a
+                                                href="https://opendata.aragon.es/informacion/aplicaciones-hechas-con-datos-abiertos-en-aragon-open-data">Aplicaciones
+                                                hechas con datos abiertos en Aragón Opeen Data</a></li>
+                                        <li class=" submenu__links-item"><a
+                                                href="https://opendata.aragon.es/informacion/colabora-con-tus-propuestas">Colabora
+                                                con tus propuestas</a></li>
+                                        <li class=" submenu__links-item"><a
+                                                href="https://opendata.aragon.es/informacion/terminos-de-uso-licencias">Términos
+                                                de uso y licencias</a></li>
+                                    </ul>
+                                </div>
+                                <div class="submenu__right">
+                                    <p>Consulta toda la información institucional sobre el Gobierno de Aragón.</p>
+                                </div>
+                            </div>
+                        </li>
                     </ul>
                 </nav>
             </div>

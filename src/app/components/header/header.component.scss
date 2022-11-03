@@ -88,6 +88,37 @@ header {
             z-index: 99;
             background-color: #4a4a4a;
 
+            ul.menu__links li span {
+                font-size: 18px;
+            }
+
+            .submenu {
+                display: none;
+                height: 100vh;
+
+                .submenu__links {
+                    padding: 0;
+                }
+
+                .submenu__left h3 {
+                    display: none;
+
+
+                }
+
+                li.submenu__links-item {
+                    a {
+                        font-size: 16px !important;
+                    }
+                }
+
+                .submenu__right {
+                    display: none;
+                }
+
+
+            }
+
             .close {
                 display: block;
                 margin: 30px 40px 0 40px;
@@ -111,7 +142,7 @@ header {
                 list-style: none;
 
                 li {
-                    margin: 1em 0;
+                    margin: 1em;
 
                     a {
                         font-size: 24px;
@@ -137,6 +168,12 @@ header {
         height: 300px;
         width: 100%;
     }
+}
+
+.submenu__active-datos,
+.submenu__active-servicios,
+.submenu__active-info {
+    display: flex !important;
 }
 
 // Desktop version
@@ -171,6 +208,7 @@ header {
             }
         }
 
+
         .header__menu {
             .header__burger {
                 display: none;
@@ -190,7 +228,7 @@ header {
                     display: none;
                 }
 
-                ul {
+                ul.menu__links {
                     height: 100%;
                     width: 100%;
                     flex-direction: row;
@@ -198,11 +236,13 @@ header {
                     color: #fff;
                     list-style: none;
 
+                    li span,
                     li a {
                         font-size: 16px;
                         font-weight: 500;
                         color: #fff;
                         text-decoration: none;
+                        cursor: pointer;
                     }
                 }
             }
@@ -211,5 +251,71 @@ header {
                 display: block;
             }
         }
+
+        .submenu {
+            position: absolute;
+            top: 100%;
+            color: #333;
+            background-color: #fff;
+            box-shadow: var(--shadow);
+            width: 900px;
+            min-height: 400px;
+            display: none;
+            justify-content: space-between;
+            padding: 2em;
+            left: 0;
+            right: 0;
+            margin: auto;
+            margin-top: 10px;
+
+            .submenu__left {
+
+                flex: 0 0 35%;
+                height: 100%;
+
+                h3 {
+                    display: block !important;
+                    font-size: 26px;
+                }
+
+                .submenu__links {
+                    display: flex;
+                    flex-direction: column;
+                    padding: 0;
+
+                    li.submenu__links-item a {
+                        color: var(--text-color);
+                        font-weight: 400;
+                        font-size: 16px;
+
+                        &:hover {
+                            text-decoration: underline;
+                        }
+                    }
+                }
+            }
+
+            .submenu__right {
+                display: block !important;
+                flex: 0 0 60%;
+
+                p {
+                    display: block;
+                    padding: 1.5em;
+                    text-align: center;
+                    margin-top: 3em;
+                    background-color: #f2f2f2;
+                    font-size: 16px;
+                }
+            }
+
+        }
+
+        .submenu__active-datos,
+        .submenu__active-servicios,
+        .submenu__active-info {
+            display: flex;
+        }
     }
+
 }
