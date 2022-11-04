@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { dateFormat } from 'dc';
 import { PiramidePoblacionService } from './piramide-poblacion.service.spec';
 import { ItemPiramide } from './itemPiramide';
 import { Item } from 'devextreme/ui/accordion';
@@ -65,7 +64,6 @@ export class PiramidePoblacionComponent implements OnInit {
     this.piramidePoblacionSvc.getPiramidePoblacion().subscribe((data: any) => {
 
       this.piramidePoblacion = data.results.bindings
-      console.log(this.piramidePoblacion);
 
       this.piramidePoblacion.forEach((element: any) => {
 
@@ -94,9 +92,6 @@ export class PiramidePoblacionComponent implements OnInit {
       var maxMujeres = Math.max.apply(Math, this.piramideMujeres.map(function (o) { return o.personas; }))
 
       this.max = Math.max(maxHombres, maxMujeres);
-
-      console.log(this.piramideMujeres)
-      console.log(this.piramideHombres)
     });
 
   }

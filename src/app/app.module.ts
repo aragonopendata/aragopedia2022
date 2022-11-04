@@ -25,6 +25,7 @@ import { ResultService } from './pages/result/result.service';
 import { MatTabsModule } from '@angular/material/tabs';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { PiramidePoblacionComponent } from './components/piramide-poblacion/piramide-poblacion.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 
 @NgModule({
   declarations: [
@@ -56,7 +57,7 @@ import { PiramidePoblacionComponent } from './components/piramide-poblacion/pira
     MatIconModule,
     HttpClientModule,
     MatTabsModule,
-    BreadcrumbModule,
+    MatProgressSpinnerModule
   ],
   providers: [ResultService],
   bootstrap: [AppComponent]

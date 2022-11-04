@@ -124,8 +124,18 @@ section.container {
         }
     }
 
-    .slides {
-        max-width: 500px;
+    // .slides {
+    //     max-width: 500px;
+    // }
+
+    .miembros ul li {
+        b {
+            margin-right: 30px;
+        }
+
+        a {
+            color: var(--accent-color);
+        }
     }
 }
 
@@ -179,4 +189,8 @@ section.container {
         }
 
     }
+}
+
+.spinnerHide {
+    display: none;
 }

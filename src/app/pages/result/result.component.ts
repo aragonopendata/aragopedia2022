@@ -16,6 +16,13 @@ export class ResultComponent {
   density: any;
   sueloUrbano: any;
   sueloRural: any;
+  poligonos: any;
+  email: any;
+  telefono: any;
+  direccion: any;
+  codPostal: any;
+  creativeWork: any;
+  miembrosPleno: any;
 
   ngOnInit() {
     this.density = this.resultSvc.density;
@@ -32,5 +39,26 @@ export class ResultComponent {
     this.resultSvc.getDensidadData().subscribe((data: any) => {
       this.density = (Number(data.results.bindings[0].densidad_de_poblacion_habkm2.value)).toFixed(1);
     });
+
+    this.resultSvc.getPoligonos().subscribe((data: any) => {
+      this.poligonos = data.results.bindings[0]['callret-0'].value;
+    });
+
+    this.resultSvc.getDatosContacto().subscribe((data) => {
+      this.email = data.results.bindings[0].email.value;
+      this.telefono = data.results.bindings[0].tel.value;
+      this.direccion = data.results.bindings[0].direccion.value.toLowerCase();
+      this.codPostal = data.results.bindings[0].codPostal.value;
+    });
+
+    this.resultSvc.getCreativeWorkd().subscribe((data) => {
+      this.creativeWork = data.results.bindings;
+    });
+
+    this.resultSvc.getMiembrosPleno().subscribe((data) => {
+      this.miembrosPleno = data.results.bindings;
+      console.log(this.miembrosPleno);
+
+    })
   }
 }

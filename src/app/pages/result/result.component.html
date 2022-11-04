@@ -1,13 +1,15 @@
 <div class="container template">
     <section class="container breadcrumbs">
         <p>Inicio > Municipio > Ababuj</p>
-        <xng-breadcrumb></xng-breadcrumb>
     </section>
     <section class="container container template__inicio">
         <div class="inicio__img">
             <h2 class="inicio__name">Ababuj (Teruel)</h2>
             <a href="https://idearagon.aragon.es/visor/index.html?ACTIVELAYER=BusMun&QUERY=C_MUNI_INE=22001"
-                target="_blank"><img src={{this.map}} alt="Mapa"></a>
+                target="_blank">
+                <!-- <mat-spinner [ngClass]="{'spinnerHide':this.map}"></mat-spinner> -->
+                <img src={{this.map}} alt="Mapa">
+            </a>
             <a href="https://idearagon.aragon.es/visor/index.html?ACTIVELAYER=BusMun&QUERY=C_MUNI_INE=22001"
                 target="_blank" class="btn map_btn">Ver en el mapa</a>
         </div>
@@ -16,7 +18,7 @@
                 <li><span class="big-number">{{this.sueloUrbano}}</span>Hectáreas de suelo urbano</li>
                 <li><span class="big-number">{{this.poblacion}}</span>Habitantes</li>
                 <li><span class="big-number">1</span>Centro de salud</li>
-                <li><span class="big-number">1</span>Polideportivo</li>
+                <li><span class="big-number">{{this.poligonos}}</span>Polígonos industruales</li>
                 <li><span class="big-number">15</span>Rebaños de ganado</li>
                 <li><span class="big-number">2769</span>Cabezas de ganado</li>
                 <li><span class="big-number">21</span>Menciones en publicaciones</li>
@@ -29,17 +31,12 @@
         </div>
         <div class="inicio__contact">
             <h2>Contacto</h2>
+            <!-- <mat-spinner [ngClass]="{'spinnerHide':this.direccion}"></mat-spinner> -->
             <ul>
-                <li><b>Dirección</b> C/ Iglesia, 8</li>
-                <li><b>Teléfono</b> 978 77 13 03</li>
-                <li><b>email</b> ayuntamiento@ababuj.es</li>
-            </ul>
-
-            <h2>Datos similares</h2>
-            <ul>
-                <li><b>Dirección</b> C/ Iglesia, 8</li>
-                <li><b>Teléfono</b> 978 77 13 03</li>
-                <li><b>email</b> ayuntamiento@ababuj.es</li>
+                <li><b>Dirección</b> {{this.direccion}}</li>
+                <li><b>Código postal</b> {{this.codPostal}}</li>
+                <li><b>Teléfono</b> {{this.telefono}}</li>
+                <li><b>email</b> {{this.email}}</li>
             </ul>
 
             <h2>Municipios vecinos</h2>
@@ -90,27 +87,19 @@
             <h2>Enlaces de interés</h2>
             <div class="slides">
                 <mat-tab-group mat-align-tabs="start">
-                    <mat-tab label="Extensión de cultivos">
-                        <p>Ababuj es el municipio número 15 en extensión de cultivos con 16 HA de terreno.</p> <a
-                            href="" class="slide__link">Leer más sobre cultivos.</a>
-                    </mat-tab>
-                    <mat-tab label="Extensión de cultivos">
-                        <p>Ababuj es el municipio número 15 en extensión de cultivos con 16 HA de terreno.</p> <a
-                            href="" class="slide__link">Leer más sobre cultivos.</a>
-                    </mat-tab>
-                    <mat-tab label="Extensión de cultivos">
-                        <p>Ababuj es el municipio número 15 en extensión de cultivos con 16 HA de terreno.</p> <a
-                            href="" class="slide__link">Leer más sobre cultivos.</a>
+                    <mat-tab *ngFor="let link of creativeWork" label="{{link.title.value}}">
+                        <p>{{link.title.value}}</p>
+                        <a href="{{link.url.value}}" target="_blank" class="slide__link">Leer más</a>
                     </mat-tab>
                 </mat-tab-group>
             </div>
         </div>
 
-        <div class="graphics__item">
+        <div class="graphics__item miembros">
             <ul>
-                <li><b>Alcalde</b> <a href="">Alfonso López Pastor</a></li>
-                <li><b>Teniente alcalde</b> <a href="">Pilar Mejía Fructuoso</a></li>
-                <li><b>Sevretario</b> <a href="">Domingo Estrada Menor</a></li>
+                <li *ngFor="let miembro of miembrosPleno"><b>{{miembro.cargo.value}}: </b>
+                    <a href="{{miembro.persona.value}}" target="_blank">{{miembro.nombrePersona.value}}</a>
+                </li>
             </ul>
         </div>
     </section>
