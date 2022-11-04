@@ -25,7 +25,6 @@ import { ResultService } from './pages/result/result.service';
 import { MatTabsModule } from '@angular/material/tabs';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { PiramidePoblacionComponent } from './components/piramide-poblacion/piramide-poblacion.component';
-import { BreadcrumbModule } from 'xng-breadcrumb';
 
 @NgModule({
   declarations: [
@@ -57,7 +56,6 @@ import { BreadcrumbModule } from 'xng-breadcrumb';
     MatIconModule,
     HttpClientModule,
     MatTabsModule,
-    BreadcrumbModule,
   ],
   providers: [ResultService],
   bootstrap: [AppComponent]
