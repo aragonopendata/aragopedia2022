@@ -1,0 +1,37 @@
+<link rel="stylesheet" href="piramide-poblacion.component.scss">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/charts.css/dist/charts.min.css">
+<div class="piramidePob">
+
+    <div class="femenino" style="width: calc(50% + 40px);">
+        <table id="bar-example-2"
+            class="charts-css bar show-heading reverse show-primary-axis show-labels reverse-datasets show-data-on-hover">
+            <caption> Mujeres </caption>
+            <tbody>
+                <tr *ngFor="let item of piramideMujeres">
+                    <th scope="row"> {{item.grupo}} </th>
+                    <td class="item-fem" style="--size: {{item.personas/max}}; border-color: #ffffff !important;">
+                        <span class="tooltip"> Personas en este rango: {{item.personas}}</span>
+                        <span class="data" style="color: #00607A;"> {{item.personas}}</span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="masculino" style="width: calc(50% - 40px);">
+        <table id="bar-example-1"
+            class="charts-css bar show-heading show-primary-axis reverse-datasets show-data-on-hover">
+            <caption style="margin-left: 0; margin-right: auto;"> Hombres </caption>
+            <tbody>
+                <tr *ngFor="let item of piramideHombres">
+                    <td class="item-masc" style="--size: {{item.personas/max}};">
+                        <span class="tooltip"> Personas en este rango: {{item.personas}}</span>
+                        <span class="data" style="color: #D6EAF0;"> {{item.personas}}</span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+</div>
