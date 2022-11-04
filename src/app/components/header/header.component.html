@@ -28,8 +28,8 @@
                         <span>Cerrar</span>
                     </label>
                     <ul class="menu__links">
-                        <li><span
-                                (click)="activeDatos = !activeDatos; activeServicios = false; activeInfo = false;">Datos</span>
+                        <li><span (click)="activeDatos = !activeDatos; activeServicios = false; activeInfo = false;"
+                                [ngClass]="{'active':activeDatos}">Datos</span>
                             <div class="submenu" [ngClass]="{'submenu__active-datos': activeDatos}">
                                 <div class="submenu__left">
                                     <h3>Datos</h3>
@@ -48,8 +48,9 @@
                                 </div>
                             </div>
                         </li>
-                        <li (click)="activeServicios = !activeServicios; activeDatos = false; activeInfo = false;">
-                            <span>Servicios</span>
+                        <li>
+                            <span (click)="activeServicios = !activeServicios; activeDatos = false; activeInfo = false;"
+                                [ngClass]="{'active':activeServicios}">Servicios</span>
                             <div class="submenu" [ngClass]="{'submenu__active-servicios': activeServicios}">
                                 <div class="submenu__left">
                                     <h3>Servicios</h3>
@@ -88,8 +89,9 @@
                                 </div>
                             </div>
                         </li>
-                        <li (click)="activeInfo = !activeInfo; activeServicios = false; activeDatos = false;">
-                            <span>Información</span>
+                        <li>
+                            <span (click)="activeInfo = !activeInfo; activeServicios = false; activeDatos = false;"
+                                [ngClass]="{'active':activeInfo}">Información</span>
                             <div class="submenu" [ngClass]="{'submenu__active-info': activeInfo}">
                                 <div class="submenu__left">
                                     <h3>Información</h3>
