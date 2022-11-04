@@ -23,10 +23,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { ResultComponent } from './pages/result/result.component';
 import { ResultService } from './pages/result/result.service';
 import { MatTabsModule } from '@angular/material/tabs';
+import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { PiramidePoblacionComponent } from './components/piramide-poblacion/piramide-poblacion.component';
-
-
-
 
 @NgModule({
   declarations: [
@@ -42,6 +40,7 @@ import { PiramidePoblacionComponent } from './components/piramide-poblacion/pira
     SelectMunicipioComponent,
     ResultsComponent,
     ResultComponent,
+    NotFoundComponent,
     PiramidePoblacionComponent,
   ],
   imports: [
@@ -56,8 +55,8 @@ import { PiramidePoblacionComponent } from './components/piramide-poblacion/pira
     FormsModule,
     MatIconModule,
     HttpClientModule,
-    MatTabsModule
-
+    MatTabsModule,
+    BreadcrumbModule,
   ],
   providers: [ResultService],
   bootstrap: [AppComponent]

@@ -2,10 +2,11 @@
     <h2>Temas o cifras a consultar</h2>
     <form [formGroup]="temasGroup" class="space categories__list">
         <!-- Provisional list: Esto será un ngFor con todas las categorías -->
-        <label class="space categories__list-item" *ngFor="let tema of temas" for="{{tema}}">
+        <input (change)="onChange($event.target)" class="check__temas" *ngFor="let tema of temas" type="checkbox"
+            name="{{tema}}" id="{{tema}}">
+        <label [ngClass]="{'selected': temasSeleccionados.includes(tema)}" class="space categories__list-item"
+            *ngFor="let tema of temas" for="{{tema}}">
             <img src="./assets/cultura.png" alt="">
             <h3>{{tema}}</h3>
         </label>
-        <input (change)="onChange($event.target)" class="check__temas" *ngFor="let tema of temas" type="checkbox"
-            name="{{tema}}" id="{{tema}}">
     </form>

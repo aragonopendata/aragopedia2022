@@ -14,7 +14,7 @@ export class TemasComponent implements OnInit {
   temasGroup = new FormGroup('');
   temasSeleccionados: string[] = [];
 
-  temas: any = [];
+  temas: string[] = [];
 
   ngOnInit(): void {
     this.temasSvc.getTemas().subscribe(data => {

@@ -7,6 +7,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
+  activeDatos: boolean = false;
+  activeServicios: boolean = false;
+  activeInfo: boolean = false;
+
   constructor() { }
 
   ngOnInit(): void {
