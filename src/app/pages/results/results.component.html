@@ -17,44 +17,22 @@
                 <mat-icon>reorder</mat-icon>
                 <p>Filtrar</p>
             </div>
-            <div class="results__filter-order">
+            <div class="results__filter-order" (click)="sortResults(results)">
                 <mat-icon>swap_vert</mat-icon>
                 <p>Orden <span>A - Z</span></p>
             </div>
         </div>
 
-        <div class="search__results">
+        <div *ngFor="let result of results" class="search__results">
+
             <article class="search__results-item">
-                <p class="item__category">Personas</p>
+                <p class="item__category">{{result.category}}</p>
                 <a [routerLink]="['/result']" routerLinkActive="router-link-active" class="item__title">
                     <mat-icon>open_in_new</mat-icon>
-                    <h3>Título del resultado</h3>
+                    <h3>{{result.title}}</h3>
                 </a>
             </article>
 
-            <article class="search__results-item">
-                <p class="item__category">Personas</p>
-                <a class="item__title">
-                    <mat-icon>open_in_new</mat-icon>
-                    <h3>Título del resultado</h3>
-                </a>
-            </article>
-
-            <article class="search__results-item">
-                <p class="item__category">Personas</p>
-                <a class="item__title">
-                    <mat-icon>open_in_new</mat-icon>
-                    <h3>Título del resultado</h3>
-                </a>
-            </article>
-
-            <article class="search__results-item">
-                <p class="item__category">Personas</p>
-                <a class="item__title">
-                    <mat-icon>open_in_new</mat-icon>
-                    <h3>Título del resultado</h3>
-                </a>
-            </article>
         </div>
     </section>
 
@@ -73,12 +51,9 @@
         </div>
         <div class="sidebar__categories">
             <h3 class="sidebar__categories-title">Categorías</h3>
-            <ul>
+            <ul *ngFor="let tema of temas">
                 <li>
-                    <mat-icon>chevron_right</mat-icon><a href="">Derechos y servicios del ciudadano</a>
-                </li>
-                <li>
-                    <mat-icon>chevron_right</mat-icon><a href="">Cultura, ocio y turismo</a>
+                    <mat-icon>chevron_right</mat-icon><a href="">{{tema}}</a>
                 </li>
             </ul>
 

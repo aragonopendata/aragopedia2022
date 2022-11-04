@@ -48,6 +48,12 @@
     display: none;
 }
 
+.categories__list-item.selected {
+    background-color: #d6eaf0;
+    box-shadow: var(--shadow-hover);
+    transform: translateY(-3px);
+}
+
 @media screen and (min-width:620px) {
     .categories__list-item {
         flex: 0 0 30%;

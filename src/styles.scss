@@ -77,6 +77,11 @@ p {
     line-height: 1.8rem;
 }
 
+img {
+    display: block;
+    max-width: 100%;
+}
+
 //Mobile
 
 @media screen and (max-width: 576px) {

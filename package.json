@@ -24,6 +24,7 @@
     "devextreme-angular": "22.1.5",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
+    "xng-breadcrumb": "^8.0.2",
     "zone.js": "~0.11.4"
   },
   "devDependencies": {
