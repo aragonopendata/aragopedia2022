@@ -225,6 +225,7 @@ header {
             }
 
             .main-navigation {
+                min-height: 90%;
                 height: 100%;
                 position: relative;
                 background-color: transparent;
@@ -277,7 +278,7 @@ header {
 
             .submenu__left {
 
-                flex: 0 0 35%;
+                flex: 0 0 100%;
                 height: 100%;
 
                 h3 {
@@ -302,27 +303,38 @@ header {
                 }
             }
 
-            .submenu__right {
-                display: block !important;
-                flex: 0 0 60%;
-
-                p {
-                    display: block;
-                    padding: 1.5em;
-                    text-align: center;
-                    margin-top: 3em;
-                    background-color: #f2f2f2;
-                    font-size: 16px;
-                }
+            p {
+                display: block;
+                padding: 1.5em;
+                text-align: center;
+                margin-top: 3em;
+                background-color: #f2f2f2;
+                font-size: 16px;
             }
-
         }
 
-        .submenu__active-datos,
-        .submenu__active-servicios,
-        .submenu__active-info {
-            display: flex;
-        }
     }
 
+    .submenu__active-datos,
+    .submenu__active-servicios,
+    .submenu__active-info {
+        display: flex;
+    }
+}
+
+
+// Desktop 992 version
+
+@media screen and (min-width: 992px) {
+
+    .submenu {
+        .submenu__left {
+            flex: 0 0 35% !important;
+        }
+
+        .submenu__right {
+            display: block !important;
+            flex: 0 0 60%;
+        }
+    }
 }
