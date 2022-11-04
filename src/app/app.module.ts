@@ -24,10 +24,7 @@ import { ResultComponent } from './pages/result/result.component';
 import { ResultService } from './pages/result/result.service';
 import { MatTabsModule } from '@angular/material/tabs';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
-import { BreadcrumbModule } from 'xng-breadcrumb';
-
-
-
+import { PiramidePoblacionComponent } from './components/piramide-poblacion/piramide-poblacion.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +41,7 @@ import { BreadcrumbModule } from 'xng-breadcrumb';
     ResultsComponent,
     ResultComponent,
     NotFoundComponent,
+    PiramidePoblacionComponent,
   ],
   imports: [
     BrowserModule,

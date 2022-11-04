@@ -1,0 +1,53 @@
+#bar-example-2 {
+    height: auto;
+    max-width: 380px;
+    margin: 0;
+    margin-left: auto;
+    margin-right: 0;
+}
+
+#bar-example-1 {
+    padding: 0px;
+    height: auto;
+    max-width: 300px;
+    margin: 0;
+
+}
+
+caption {
+    font-size: 1rem;
+    font-weight: bold;
+    line-height: 1.25rem;
+    padding-right: 40px !important;
+}
+
+.right-align {
+    margin: 0;
+    margin-left: auto;
+    margin-right: 0;
+}
+
+.femenino {
+    float: left;
+    width: calc(50% - var(--labels-size));
+
+}
+
+.masculino {
+    float: left;
+
+}
+
+.item-masc {
+    border: solid;
+    border-width: 1px !important;
+    background-color: #D6EAF0 !important;
+    border-color: #ffffff !important;
+}
+
+.item-fem {
+    border: solid;
+    border-width: 1px !important;
+    background-color: #00607A !important;
+
+}
