@@ -16,7 +16,7 @@ export class PiramidePoblacionComponent implements OnInit {
   piramidePoblacion: any;
   piramideHombres: Array<ItemPiramide> = [
 
-    { sexo: "Hombres", personas: 0, grupo: "90 a 94" },
+    { sexo: "Hombres", personas: 0, grupo: "90 ó más" },
     { sexo: "Hombres", personas: 0, grupo: "85 a 89" },
     { sexo: "Hombres", personas: 0, grupo: "80 a 84" },
     { sexo: "Hombres", personas: 0, grupo: "75 a 79" },
@@ -38,7 +38,7 @@ export class PiramidePoblacionComponent implements OnInit {
   ];
 
   piramideMujeres: Array<ItemPiramide> = [
-    { sexo: "Mujeres", personas: 0, grupo: "90 a 94" },
+    { sexo: "Mujeres", personas: 0, grupo: "90 ó más" },
     { sexo: "Mujeres", personas: 0, grupo: "85 a 89" },
     { sexo: "Mujeres", personas: 0, grupo: "80 a 84" },
     { sexo: "Mujeres", personas: 0, grupo: "75 a 79" },

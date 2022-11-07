@@ -5,12 +5,12 @@
     <section class="container container template__inicio">
         <div class="inicio__img">
             <h2 class="inicio__name">Ababuj (Teruel)</h2>
-            <a href="https://idearagon.aragon.es/visor/index.html?ACTIVELAYER=BusMun&QUERY=C_MUNI_INE=22001"
+            <a href="https://idearagon.aragon.es/visor/index.html?ACTIVELAYER=BusMun&QUERY=C_MUNI_INE=44001"
                 target="_blank">
-                <!-- <mat-spinner [ngClass]="{'spinnerHide':this.map}"></mat-spinner> -->
+                <mat-spinner [ngClass]="{'spinnerHide':this.map}"></mat-spinner>
                 <img src={{this.map}} alt="Mapa">
             </a>
-            <a href="https://idearagon.aragon.es/visor/index.html?ACTIVELAYER=BusMun&QUERY=C_MUNI_INE=22001"
+            <a href="https://idearagon.aragon.es/visor/index.html?ACTIVELAYER=BusMun&QUERY=C_MUNI_INE=44001"
                 target="_blank" class="btn map_btn">Ver en el mapa</a>
         </div>
         <div class="inicio__data">
@@ -22,16 +22,15 @@
                 <li><span class="big-number">15</span>Rebaños de ganado</li>
                 <li><span class="big-number">2769</span>Cabezas de ganado</li>
                 <li><span class="big-number">21</span>Menciones en publicaciones</li>
-                <li><span class="big-number">134</span>Hectáreas de reserva natural</li>
-                <li><span class="big-number">{{this.sueloRural}}</span>Hectáreas de suelo rural</li>
-                <li><span class="big-number">4</span>Plazas hoteleras</li>
                 <li><span class="big-number">5</span>Incendios desde 1972</li>
+                <li><span class="big-number">{{this.sueloRural}}</span>Hectáreas de suelo rural</li>
+                <li><span class="big-number">{{this.oficinasTurismo}}</span>Oficinas de turismo</li>
+                <li><span class="big-number">{{this.alojamientosTuristicos}}</span>Alojamientos turísticos</li>
                 <li><span class="big-number">{{this.density}}</span>Habitantes por KM2</li>
             </ul>
         </div>
         <div class="inicio__contact">
             <h2>Contacto</h2>
-            <!-- <mat-spinner [ngClass]="{'spinnerHide':this.direccion}"></mat-spinner> -->
             <ul>
                 <li><b>Dirección</b> {{this.direccion}}</li>
                 <li><b>Código postal</b> {{this.codPostal}}</li>
@@ -81,6 +80,50 @@
     <section class="container template__graphics">
         <div class="graphics__item" style="width: 100%;">
             <h2>Últimos datos de Población</h2>
+
+            <table class="tabla-poblacion">
+                <div>
+                    <tr>
+                        <th>Año</th>
+                    </tr>
+                    <tr *ngFor="let year of yearsTablaPoblacion">
+                        <td>{{year}}</td>
+                    </tr>
+                </div>
+                <div>
+                    <tr>
+                        <th>Aragón</th>
+                    </tr>
+                    <tr *ngFor="let element of tablaPoblacion">
+                        <td *ngIf="element.nameRefArea.value == 'Aragón'">
+                            {{element.poblac.value}}
+                        </td>
+                    </tr>
+                </div>
+                <div>
+                    <tr>
+                        <th>C. Teruel</th>
+                    <tr *ngFor="let element of tablaPoblacion">
+                        <td *ngIf="element.nameRefArea.value == 'Comunidad de Teruel'">
+                            {{element.poblac.value}}
+                        </td>
+                    </tr>
+                </div>
+
+                <div>
+                    <tr>
+                        <th>Ababuj</th>
+                    <tr *ngFor="let element of tablaPoblacion">
+                        <td *ngIf="element.nameRefArea.value == 'Ababuj'">
+                            {{element.poblac.value}}
+                        </td>
+                    </tr>
+                </div>
+
+
+
+            </table>
+
         </div>
 
         <div class="graphics__item">
@@ -96,6 +139,7 @@
         </div>
 
         <div class="graphics__item miembros">
+            <h2>Miembros del pleno municipal</h2>
             <ul>
                 <li *ngFor="let miembro of miembrosPleno"><b>{{miembro.cargo.value}}: </b>
                     <a href="{{miembro.persona.value}}" target="_blank">{{miembro.nombrePersona.value}}</a>
