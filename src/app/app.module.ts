@@ -27,6 +27,7 @@ import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { PiramidePoblacionComponent } from './components/piramide-poblacion/piramide-poblacion.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTableModule } from '@angular/material/table';
+import { FilterPipe } from './pipes/filter.pipe';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { MatTableModule } from '@angular/material/table';
     ResultComponent,
     NotFoundComponent,
     PiramidePoblacionComponent,
+    FilterPipe,
   ],
   imports: [
     BrowserModule,
@@ -59,7 +61,7 @@ import { MatTableModule } from '@angular/material/table';
     HttpClientModule,
     MatTabsModule,
     MatProgressSpinnerModule,
-    MatTableModule
+    MatTableModule,
   ],
   providers: [ResultService],
   bootstrap: [AppComponent]

@@ -131,7 +131,7 @@
             <div class="slides">
                 <mat-tab-group mat-align-tabs="start">
                     <mat-tab *ngFor="let link of creativeWork" label="{{link.title.value}}">
-                        <p>{{link.title.value}}</p>
+                        <p class="slides__abstract">{{link.resumen.value}}</p>
                         <a href="{{link.url.value}}" target="_blank" class="slide__link">Leer más</a>
                     </mat-tab>
                 </mat-tab-group>

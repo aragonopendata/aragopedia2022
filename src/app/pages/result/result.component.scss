@@ -124,9 +124,19 @@ section.container {
         }
     }
 
-    // .slides {
-    //     max-width: 500px;
-    // }
+    .slides {
+
+        ::ng-deep .mat-tab-label .mat-tab-label-content {
+            font-size: 16px !important;
+        }
+
+
+        .slides__abstract {
+            margin: 1.5em 0;
+            max-width: 600px;
+            font-size: 16px;
+        }
+    }
 
     .miembros ul li {
         b {
