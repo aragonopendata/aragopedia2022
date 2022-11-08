@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PiramidePoblacionService } from './piramide-poblacion.service.spec';
 import { ItemPiramide } from './itemPiramide';
-import { Item } from 'devextreme/ui/accordion';
 
 @Component({
   selector: 'app-piramide-poblacion',
