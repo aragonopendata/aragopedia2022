@@ -125,8 +125,32 @@ section.container {
     }
 
     .slides {
-        max-width: 500px;
+
+        ::ng-deep .mat-tab-label .mat-tab-label-content {
+            font-size: 16px !important;
+        }
+
+
+        .slides__abstract {
+            margin: 1.5em 0;
+            max-width: 600px;
+            font-size: 16px;
+        }
     }
+
+    .miembros ul li {
+        b {
+            margin-right: 30px;
+        }
+
+        a {
+            color: var(--accent-color);
+        }
+    }
+}
+
+.tabla-poblacion {
+    display: flex;
 }
 
 @media screen and (min-width: 992px) {
@@ -179,4 +203,8 @@ section.container {
         }
 
     }
+}
+
+.spinnerHide {
+    display: none;
 }
