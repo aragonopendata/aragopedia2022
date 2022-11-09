@@ -27,6 +27,11 @@ export class ResultComponent {
   miembrosPleno: any;
   alojamientosTuristicos: any;
   oficinasTurismo: any;
+  comunidad: string[] = [];
+  provincia: string[] = [];
+  municipio: string[] = [];
+  porcentajeSueloUrbano: any;
+  porcentajeSueloRural: any;
 
   ngOnInit() {
 
@@ -35,15 +40,6 @@ export class ResultComponent {
     this.resultSvc.getSueloUrbanoData().subscribe((data: any) => {
       this.sueloUrbano = data.results.bindings[1].urbano.value
       this.sueloRural = data.results.bindings[1].rustico.value
-    });
-
-    this.resultSvc.getPoblacionData().subscribe((data: any) => {
-      this.poblacion = data.results.bindings[10].poblac.value;
-      this.tablaPoblacion = data.results.bindings;
-      for (let i = 0; i < 5; i++) {
-        this.yearsTablaPoblacion.push(data.results.bindings[i].nameRefPeriod.value);
-      }
-      console.log(this.yearsTablaPoblacion);
     });
 
     this.resultSvc.getDensidadData().subscribe((data: any) => {
@@ -76,5 +72,36 @@ export class ResultComponent {
     this.resultSvc.getOficinasTurismo().subscribe((data) => {
       this.oficinasTurismo = data.results.bindings[0]['callret-0'].value;
     });
+
+    this.resultSvc.getPoblacionData().subscribe((data: any) => {
+      this.poblacion = data.results.bindings[10].poblac.value;
+      this.tablaPoblacion = data.results.bindings;
+      for (let i = 0; i < 5; i++) {
+        this.yearsTablaPoblacion.push(data.results.bindings[i].nameRefPeriod.value);
+      }
+      for (let i = 5; i < 10; i++) {
+        const element = this.tablaPoblacion[i].nameRefArea.value;
+        this.comunidad.push(element);
+      }
+      for (let i = 0; i < 5; i++) {
+        const element = this.tablaPoblacion[i].nameRefArea.value;
+        this.provincia.push(element);
+      }
+      for (let i = 10; i < 15; i++) {
+        const element = this.tablaPoblacion[i].nameRefArea.value;
+        this.municipio.push(element);
+      }
+    });
+
+
+    this.resultSvc.getRatioSuelo().subscribe((data) => {
+      let totalUrbano = data.results.bindings[0].urbano.value;
+      let totalRural = data.results.bindings[0].rustico.value;
+      this.porcentajeSueloRural = ((this.sueloRural / totalRural) * 100).toFixed(2);
+      this.porcentajeSueloUrbano = ((this.sueloUrbano / totalUrbano) * 100).toFixed(2);
+      console.log(this.porcentajeSueloRural, this.porcentajeSueloUrbano);
+    });
+
   }
+
 }
