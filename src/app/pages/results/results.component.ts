@@ -21,6 +21,7 @@ export class ResultsComponent implements OnInit {
   toggleSidebar(): void {
     this.active = !this.active;
   }
+
   temas: any = [];
 
   filterResult = '';
