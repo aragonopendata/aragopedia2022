@@ -4,7 +4,7 @@
     </section>
     <section class="container container template__inicio">
         <div class="inicio__img">
-            <h2 class="inicio__name">Ababuj (Teruel)</h2>
+            <h2 class="inicio__name">{{this.lugarBuscado}} ({{this.comunidadActual}})</h2>
             <a href="https://idearagon.aragon.es/visor/index.html?ACTIVELAYER=BusMun&QUERY=C_MUNI_INE=44001"
                 target="_blank">
                 <mat-spinner [ngClass]="{'spinnerHide':this.map}"></mat-spinner>
@@ -26,7 +26,7 @@
                 <li><span class="big-number">21</span>Menciones en publicaciones</li>
                 <li><span class="big-number">{{this.oficinasTurismo}}</span>Oficinas de turismo</li>
                 <li><span class="big-number">{{this.alojamientosTuristicos}}</span>Alojamientos turísticos</li>
-                <li><span class="big-number">{{this.density}}</span>Habitantes por KM2</li>
+                <li><span class="big-number">{{this.densidadPoblacion}}</span>Habitantes por KM2</li>
             </ul>
         </div>
         <div class="inicio__contact">
