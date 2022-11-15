@@ -15,7 +15,7 @@ const routes: Routes = [
   { path: 'servicios/aragopedia2022/eventos', component: EventosComponent },
   { path: 'servicios/aragopedia2022/general', component: GeneralComponent },
   { path: 'servicios/aragopedia2022/results', component: ResultsComponent },
-  { path: 'servicios/aragopedia2022/result', component: ResultComponent },
+  { path: 'servicios/aragopedia2022/result/:municipio', component: ResultComponent },
   // {path: 'servicios/aragopedia2022/result', loadChildren: () =>
   // import('./pages/result/result.component').then(m => m.ResultComponent), data: { breadcrumb: { skip: true } }},
   // { path: 'persona', loadChildren: () => import('./pages/persona/persona.module').then(m => m.PersonaModule) },

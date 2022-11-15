@@ -15,12 +15,16 @@ export interface Result {
 
 export class ResultsComponent implements OnInit {
 
+  constructor(public temasSvc: TemasService) { }
+
   active: boolean = false;
   toggleSidebar(): void {
     this.active = !this.active;
   }
+
   temas: any = [];
 
+  filterResult = '';
   results: Result[] = [
     {
       category: 'Industria',
@@ -45,7 +49,7 @@ export class ResultsComponent implements OnInit {
   ];
 
 
-  constructor(public temasSvc: TemasService) { }
+
 
   ngOnInit(): void {
     this.temasSvc.getTemas().subscribe(data => {
@@ -70,5 +74,6 @@ export class ResultsComponent implements OnInit {
     });
     return results;
   }
+
 
 }
