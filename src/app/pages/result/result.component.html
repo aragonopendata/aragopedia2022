@@ -5,13 +5,11 @@
     <section class="container container template__inicio">
         <div class="inicio__img">
             <h2 class="inicio__name">{{this.lugarBuscado}} ({{this.comunidadActual}})</h2>
-            <a href="https://idearagon.aragon.es/visor/index.html?ACTIVELAYER=BusMun&QUERY=C_MUNI_INE=44001"
-                target="_blank">
+            <a href={{this.urlMap}} target="_blank">
                 <mat-spinner [ngClass]="{'spinnerHide':this.map}"></mat-spinner>
                 <img src={{this.map}} alt="Mapa">
             </a>
-            <a href="https://idearagon.aragon.es/visor/index.html?ACTIVELAYER=BusMun&QUERY=C_MUNI_INE=44001"
-                target="_blank" class="btn map_btn">Ver en el mapa</a>
+            <a href={{this.urlMap}} target="_blank" class="btn map_btn">Ver en el mapa</a>
         </div>
         <div class="inicio__data">
             <ul>
@@ -20,11 +18,11 @@
                 <li><span class="big-number">{{this.poblacion}}</span>Habitantes</li>
                 <li><span class="big-number">1</span>Centro de salud</li>
                 <li><span class="big-number">{{this.poligonos}}</span>Polígonos industruales</li>
-                <li><span class="big-number">15</span>Rebaños de ganado</li>
+                <li><span class="big-number">{{this.explotacionesGanaderas}}</span>Explotaciones ganaderas</li>
                 <li><span class="big-number">2769</span>Cabezas de ganado</li>
-                <li><span class="big-number">5</span>Incendios desde 1972</li>
+                <li><span class="big-number">{{this.incendiosUltimosAnos}}</span>Incendios desde 2002</li>
                 <li><span class="big-number">21</span>Menciones en publicaciones</li>
-                <li><span class="big-number">{{this.oficinasTurismo}}</span>Oficinas de turismo</li>
+                <li><span class="big-number">{{this.alojamientosTuristicos}}</span>Oficinas de turismo</li>
                 <li><span class="big-number">{{this.alojamientosTuristicos}}</span>Alojamientos turísticos</li>
                 <li><span class="big-number">{{this.densidadPoblacion}}</span>Habitantes por KM2</li>
             </ul>
@@ -60,14 +58,22 @@
             <div class="caracteristica__item">
                 <mat-icon>people</mat-icon> Ocupa un {{this.porcentajeSueloUrbano}}% del <b>suelo urbano</b> de Aragón
             </div>
+            <div class="caracteristica__item" *ngIf="esPoblado == '1'; else noPoblado">
+                <mat-icon>people</mat-icon> {{this.lugarBuscado}} es uno de los <b>20 {{this.tipoLocalidad}}s más
+                    poblados</b> de Aragón
+            </div>
+            <ng-template #noPoblado>
+                <div class="caracteristica__item">
+                    <mat-icon>people</mat-icon> {{this.lugarBuscado}} no es uno de los <b>20 {{this.tipoLocalidad}}s más
+                        poblados</b> de
+                    Aragón
+                </div>
+            </ng-template>
             <div class="caracteristica__item">
-                <mat-icon>people</mat-icon> Municipio número 15 con más población de Teruel
+                <mat-icon>people</mat-icon> La edad media de los <b>hombres</b> es de {{this.edadMediaHombres}} años
             </div>
             <div class="caracteristica__item">
-                <mat-icon>people</mat-icon> Municipio número 15 con más población de Teruel
-            </div>
-            <div class="caracteristica__item">
-                <mat-icon>people</mat-icon> Municipio número 15 con más población de Teruel
+                <mat-icon>people</mat-icon> La edad media de las <b>mujeres</b> es de {{this.edadMediaMujeres}} años
             </div>
             <div class="caracteristica__item">
                 <mat-icon>people</mat-icon> Municipio número 15 con más población de Teruel
