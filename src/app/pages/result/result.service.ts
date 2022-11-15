@@ -57,4 +57,16 @@ export class ResultService {
         return this.http.get(query);
     }
 
+    public getIdWikiData(query: string): Observable<any> {
+        return this.http.get(query);
+    }
+
+    public getFotoWikiData(query: string): Observable<any> {
+        return this.http.get(query);
+    }
+
+    public getImageWikiData(query: string): Observable<any> {
+        return this.http.get(query);
+    }
+
 }

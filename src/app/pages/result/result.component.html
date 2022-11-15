@@ -1,6 +1,6 @@
 <div class="container template">
     <section class="container breadcrumbs">
-        <p>Inicio > Municipio > {{this.lugarBuscado}}</p>
+        <p>Inicio > {{this.capitalizeString(this.tipoLocalidad)}} > {{this.lugarBuscado}}</p>
     </section>
     <section class="container container template__inicio">
         <div class="inicio__img">
@@ -45,6 +45,10 @@
                 <li>Jorcas</li>
             </ul>
         </div>
+    </section>
+
+    <section class="container template__img-municipio">
+        <img src="{{this.imageWikiDataUrl}}" alt="Imagen principal de {{this.lugarBuscado}}">
     </section>
 
     <section class="container template__caracteristicas">
