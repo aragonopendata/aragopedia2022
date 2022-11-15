@@ -26,7 +26,9 @@ export class ResultComponent {
     });
 
     this.resultSvc.getPoblacionData().subscribe((data: any) => {
+      console.log(data.results.bindings);
       this.poblacion = data.results.bindings[10].poblac.value;
+
     });
 
     this.resultSvc.getDensidadData().subscribe((data: any) => {
