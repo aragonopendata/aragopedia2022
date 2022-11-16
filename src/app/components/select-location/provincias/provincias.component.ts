@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { Observable } from 'rxjs';
-import { map, startWith, debounceTime } from 'rxjs/operators';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { SelectLocationService } from '../select-location.service';
 
 
 @Component({
@@ -11,26 +10,39 @@ import { map, startWith, debounceTime } from 'rxjs/operators';
 })
 
 export class SelectProvinciaComponent implements OnInit {
+  constructor(private fb: FormBuilder) { }
 
   selected: string = '';
-
+  formGroup!: FormGroup;
+  selectedProvincia: string = '';
+  provincias!: string[];
+  filteredProvincias: any;
   myControlProvincias = new FormControl('');
 
-  provincias: string[] = ['Huesca', 'Zaragoza', 'Teruel'];
-  filteredProvincias!: Observable<string[]>;
-
   ngOnInit(): void {
-    this.filteredProvincias = this.myControlProvincias.valueChanges.pipe(
-      startWith(''),
-      map(val => this._filterProvincias(val || '')),
-    );
-
+    this.initForm();
+    this.getNames();
   }
 
-  private _filterProvincias(val: string): string[] {
-    const formatVal = val.toLowerCase();
+  initForm() {
+    this.formGroup = this.fb.group({
+      'municipio': [this.selectedProvincia]
+    })
+    this.formGroup.get('municipio')?.valueChanges.subscribe(response => {
+      this.selectedProvincia = response;
+      this.selected = this.selectedProvincia
+      this.filterData(response);
+    });
+  }
 
-    return this.provincias.filter(option => option.toLowerCase().indexOf(formatVal) === 0);
+  filterData(enteredData: any) {
+    this.filteredProvincias = this.provincias.filter((item: any) => {
+      return item.toLowerCase().indexOf(enteredData.toLowerCase()) > -1
+    })
+  }
+
+  getNames() {
+    this.provincias = ['Huesca', 'Zaragoza', 'Teruel'];
   }
 
 }

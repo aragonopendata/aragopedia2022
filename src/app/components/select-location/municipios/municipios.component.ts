@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { Observable } from 'rxjs';
-import { map, startWith } from 'rxjs/operators';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { SelectLocationService } from '../select-location.service';
 
 
@@ -12,36 +10,42 @@ import { SelectLocationService } from '../select-location.service';
 })
 
 export class SelectMunicipioComponent implements OnInit {
-  constructor(public locationSvc: SelectLocationService) { }
+  constructor(private locationSvc: SelectLocationService, private fb: FormBuilder) { }
 
   selected: string = '';
+  formGroup!: FormGroup;
+  selectedMunicipio: string = '';
+  municipios: any = [];
+  filteredMunicipios: any;
   myControlMunicipios = new FormControl('');
 
-  municipios: string[] = ['Ababuj', 'Ababuj', 'Ababuj', 'Ababuj', 'Ababuj',]
-
-  filteredMunicipios!: Observable<string[]>;
-
   ngOnInit(): void {
-    this.filteredMunicipios = this.myControlMunicipios.valueChanges.pipe(
-      startWith(''),
-      map(val => this._filterMunicipios(val || '')),
-    );
-
-    // this.locationSvc.getMunicipios().subscribe(data => {
-    //   const municipiosProv = data.results.bindings;
-    //   for (let i = 0; i < municipiosProv.length; i++) {
-    //     let municipio = municipiosProv[i].muni.value;
-    //     this.municipios.push(municipio);
-    //   }
-    //   console.log(this.municipios);
-
-    // });
-
+    this.initForm();
+    this.getNames();
   }
 
-  private _filterMunicipios(val: string): string[] {
-    const formatVal = val.toLowerCase();
-    return this.municipios.filter(option => option.toLowerCase().indexOf(formatVal) === 0);
+  initForm() {
+    this.formGroup = this.fb.group({
+      'municipio': [this.selectedMunicipio]
+    })
+    this.formGroup.get('municipio')?.valueChanges.subscribe(response => {
+      this.selectedMunicipio = response;
+      this.selected = this.selectedMunicipio
+      this.filterData(response);
+    });
+  }
+
+  filterData(enteredData: any) {
+    this.filteredMunicipios = this.municipios.filter((item: any) => {
+      return item.toLowerCase().indexOf(enteredData.toLowerCase()) > -1
+    })
+  }
+
+  getNames() {
+    this.locationSvc.getMunicipios().subscribe(response => {
+      this.municipios = response;
+      this.filteredMunicipios = response;
+    })
   }
 
 }
