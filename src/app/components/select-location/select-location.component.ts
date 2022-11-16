@@ -1,8 +1,10 @@
 import { Component, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 import { SelectComarcaComponent } from './comarcas/comarcas.component';
 import { SelectMunicipioComponent } from './municipios/municipios.component';
 import { SelectProvinciaComponent } from './provincias/provincias.component';
+
 
 
 @Component({
@@ -12,9 +14,11 @@ import { SelectProvinciaComponent } from './provincias/provincias.component';
 })
 
 export class SelectLocationComponent {
-  constructor() { }
+  constructor(private router: Router) { }
 
   locationForm = new FormGroup('');
+
+  searchValue!: string;
 
   provinciaSelected!: string;
   municipioSelected!: string;
@@ -25,10 +29,26 @@ export class SelectLocationComponent {
   @ViewChild(SelectComarcaComponent) comarca: any;
 
   locationSelected(): void {
-    this.provinciaSelected = this.provincia.selected;
-    this.municipioSelected = this.municipio.selected;
-    this.comarcaSelected = this.comarca.selected;
+    this.provinciaSelected = this.provincia.selectedProvincia;
+    this.comarcaSelected = this.comarca.selectedComarca;
+    this.municipioSelected = this.municipio.selectedMunicipio;
     console.log('Provincia: ' + this.provinciaSelected + '| Comarca: ' + this.comarcaSelected + '| Municipio: ' + this.municipioSelected);
+  }
+
+  submit() {
+    this.provinciaSelected = this.provincia.selectedProvincia;
+    this.comarcaSelected = this.comarca.selectedComarca;
+    this.municipioSelected = this.municipio.selectedMunicipio;
+    if (this.provinciaSelected !== '' && this.comarcaSelected == '' && this.municipioSelected == '') {
+      this.router.navigate([`/servicios/aragopedia2022/result/${this.provinciaSelected}`])
+    } else if (this.comarcaSelected !== '' && this.municipioSelected == '') {
+      this.router.navigate([`/servicios/aragopedia2022/result/${this.comarcaSelected}`])
+    } else {
+      this.router.navigate([`/servicios/aragopedia2022/result/${this.municipioSelected}`])
+    }
+
+    console.log(this.provinciaSelected, this.comarcaSelected, this.municipioSelected);
+
   }
 
 }

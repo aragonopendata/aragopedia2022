@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { Observable } from 'rxjs';
-import { map, startWith, debounceTime } from 'rxjs/operators';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { SelectLocationService } from '../select-location.service';
 
 
 @Component({
@@ -11,26 +10,42 @@ import { map, startWith, debounceTime } from 'rxjs/operators';
 })
 
 export class SelectComarcaComponent implements OnInit {
+  constructor(private locationSvc: SelectLocationService, private fb: FormBuilder) { }
 
   selected: string = '';
+  formGroup!: FormGroup;
+  selectedComarca: string = '';
+  comarcas: any = [];
+  filteredComarcas: any;
   myControlComarcas = new FormControl('');
 
-  comarcas: string[] = ['Alto Gállego', 'Andorra-Siera de Arcos', 'Aranda', 'Bajo Aragón', ' Bajo Aragón-Caspe / Baix Aragó-Casp', 'Bajo Cinca / Baix Cinca', 'Bajo Martín', 'Campo de Belchite', 'Campo de Borja', 'Campo de Cariñena', 'Campo de Daroca', 'Cinca Medio', 'Cinco Villas', 'Comunidad de Calatayud', 'Comunidad de Teruel', 'Cuencas Mineras', 'D.C. Zaragoza', 'Gúdar-Javalambre', 'Hoya de Huesca / Plana de Uesca', 'Jiloca', 'La Jacetania', 'La Litera / La Llitera', 'La Ribagorza', 'Los Monegros', 'Maestrazgo', 'Matarraña / Matarranya', 'Ribera Alta del Ebro', 'Ribera Baja del Ebro', 'Sierra del Albarracín', 'Sobrarbe', 'Somontano de Barbastro', 'Tarazona y el Moncayo', 'Valdejalón'];
-  filteredComarcas!: Observable<string[]>;
-
   ngOnInit(): void {
-
-    this.filteredComarcas = this.myControlComarcas.valueChanges.pipe(
-      debounceTime(500),
-      startWith(''),
-      map(val => this._filterComarcas(val || '')),
-    );
+    this.initForm();
+    this.getNames();
   }
 
-  private _filterComarcas(val: string): string[] {
-    const formatVal = val.toLowerCase();
+  initForm() {
+    this.formGroup = this.fb.group({
+      'municipio': [this.selectedComarca]
+    })
+    this.formGroup.get('municipio')?.valueChanges.subscribe(response => {
+      this.selectedComarca = response;
+      this.selected = this.selectedComarca;
+      this.filterData(response);
+    });
+  }
 
-    return this.comarcas.filter(option => option.toLowerCase().indexOf(formatVal) === 0);
+  filterData(enteredData: any) {
+    this.filteredComarcas = this.comarcas.filter((item: any) => {
+      return item.toLowerCase().indexOf(enteredData.toLowerCase()) > -1
+    })
+  }
+
+  getNames() {
+    this.locationSvc.getComarcas().subscribe(response => {
+      this.comarcas = response;
+      this.filteredComarcas = response;
+    })
   }
 
 }
