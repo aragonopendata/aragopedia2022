@@ -1,210 +1,214 @@
-<div class="container template">
-    <section class="container breadcrumbs">
-        <p>Inicio > {{this.capitalizeString(this.tipoLocalidad)}} > {{this.lugarBuscado}}</p>
-    </section>
-    <section class="container container template__inicio">
-        <div class="inicio__img">
-            <h2 class="inicio__name">{{this.lugarBuscado}} ({{this.comunidadActual}})</h2>
-            <a href={{this.urlMap}} target="_blank">
-                <mat-spinner [ngClass]="{'spinnerHide':this.map}"></mat-spinner>
-                <img src={{this.map}} alt="Mapa">
-            </a>
-            <a href={{this.urlMap}} target="_blank" class="btn map_btn">Ver en el mapa</a>
-        </div>
-        <div class="inicio__data">
-            <ul>
-                <li><span class="big-number">{{this.sueloUrbano}}</span>Hectáreas de suelo urbano</li>
-                <li><span class="big-number">{{this.sueloRural}}</span>Hectáreas de suelo rural</li>
-                <li><span class="big-number">{{this.poblacion}}</span>Habitantes</li>
-                <li><span class="big-number">1</span>Centro de salud</li>
-                <li><span class="big-number">{{this.poligonos}}</span>Polígonos industruales</li>
-                <li><span class="big-number">{{this.explotacionesGanaderas}}</span>Explotaciones ganaderas</li>
-                <li><span class="big-number">2769</span>Cabezas de ganado</li>
-                <li><span class="big-number">{{this.incendiosUltimosAnos}}</span>Incendios desde 2002</li>
-                <li><span class="big-number">21</span>Menciones en publicaciones</li>
-                <li><span class="big-number">{{this.alojamientosTuristicos}}</span>Oficinas de turismo</li>
-                <li><span class="big-number">{{this.alojamientosTuristicos}}</span>Alojamientos turísticos</li>
-                <li><span class="big-number">{{this.densidadPoblacion}}</span>Habitantes por KM2</li>
-            </ul>
-        </div>
-        <div class="inicio__contact">
-            <h2>Contacto</h2>
-            <ul>
-                <li><b>Dirección</b> {{this.direccion}}</li>
-                <li><b>Código postal</b> {{this.codPostal}}</li>
-                <li><b>Teléfono</b> {{this.telefono}}</li>
-                <li><b>email</b> {{this.email}}</li>
-            </ul>
-
-            <h2>Municipios vecinos</h2>
-            <ul>
-                <li>El Pobo</li>
-                <li>Escorihuela</li>
-                <li>Jorcas</li>
-            </ul>
-        </div>
-    </section>
-
-    <section class="container template__img-municipio">
-        <img src="{{this.imageWikiDataUrl}}" alt="Imagen principal de {{this.lugarBuscado}}">
-    </section>
-
-    <section class="container template__caracteristicas">
-        <h2>Características del municipio</h2>
-        <div class="caracteristicas__list">
-            <div class="caracteristica__item">
-                <mat-icon>people</mat-icon> Ocupa un {{this.porcentajeSueloRural}}% del <b>suelo rural</b> de Aragón
+<ng-container *ngIf="this.tipoLocalidad === 'municipio'">
+    <div class="container template">
+        <section class="container breadcrumbs">
+            <p>Inicio > {{this.capitalizeString(this.tipoLocalidad)}} > {{this.lugarBuscado}}</p>
+        </section>
+        <section class="container container template__inicio">
+            <div class="inicio__img">
+                <h2 class="inicio__name">{{this.lugarBuscado}} ({{this.comunidadActual}})</h2>
+                <a href={{this.urlMap}} target="_blank">
+                    <mat-spinner [ngClass]="{'spinnerHide':this.map}"></mat-spinner>
+                    <img src={{this.map}} alt="Mapa">
+                </a>
+                <a href={{this.urlMap}} target="_blank" class="btn map_btn">Ver en el mapa</a>
             </div>
-            <div class="caracteristica__item">
-                <mat-icon>people</mat-icon> Ocupa un {{this.porcentajeSueloUrbano}}% del <b>suelo urbano</b> de Aragón
+            <div class="inicio__data">
+                <ul>
+                    <li><span class="big-number">{{this.sueloUrbano}}</span>Hectáreas de suelo urbano</li>
+                    <li><span class="big-number">{{this.sueloRural}}</span>Hectáreas de suelo rural</li>
+                    <li><span class="big-number">{{this.poblacion}}</span>Habitantes</li>
+                    <li><span class="big-number">1</span>Centro de salud</li>
+                    <li><span class="big-number">{{this.poligonos}}</span>Polígonos industruales</li>
+                    <li><span class="big-number">{{this.explotacionesGanaderas}}</span>Explotaciones ganaderas</li>
+                    <li><span class="big-number">2769</span>Cabezas de ganado</li>
+                    <li><span class="big-number">{{this.incendiosUltimosAnos}}</span>Incendios desde 2002</li>
+                    <li><span class="big-number">21</span>Menciones en publicaciones</li>
+                    <li><span class="big-number">{{this.plazasHoteleras}}</span>Plazas hoteleras</li>
+                    <li><span class="big-number">{{this.alojamientosTuristicos}}</span>Alojamientos turísticos</li>
+                    <li><span class="big-number">{{this.densidadPoblacion}}</span>Habitantes por KM2</li>
+                </ul>
             </div>
-            <div class="caracteristica__item" *ngIf="esPoblado == '1'; else noPoblado">
-                <mat-icon>people</mat-icon> {{this.lugarBuscado}} es uno de los <b>20 {{this.tipoLocalidad}}s más
-                    poblados</b> de Aragón
+            <div class="inicio__contact">
+                <h2>Contacto</h2>
+                <ul>
+                    <li><b>Dirección</b> {{this.direccion}}</li>
+                    <li><b>Código postal</b> {{this.codPostal}}</li>
+                    <li><b>Teléfono</b> {{this.telefono}}</li>
+                    <li><b>email</b> {{this.email}}</li>
+                </ul>
+
+                <h2>Municipios vecinos</h2>
+                <ul>
+                    <li>El Pobo</li>
+                    <li>Escorihuela</li>
+                    <li>Jorcas</li>
+                </ul>
             </div>
-            <ng-template #noPoblado>
+        </section>
+
+        <section class="container template__img-municipio">
+            <img src="{{this.imageWikiDataUrl}}" alt="Imagen principal de {{this.lugarBuscado}}">
+        </section>
+
+        <section class="container template__caracteristicas">
+            <h2>Características del municipio</h2>
+            <div class="caracteristicas__list">
                 <div class="caracteristica__item">
-                    <mat-icon>people</mat-icon> {{this.lugarBuscado}} no es uno de los <b>20 {{this.tipoLocalidad}}s más
-                        poblados</b> de
+                    <mat-icon>people</mat-icon> Ocupa un {{this.porcentajeSueloRural}}% del <b>suelo rural</b> de Aragón
+                </div>
+                <div class="caracteristica__item">
+                    <mat-icon>people</mat-icon> Ocupa un {{this.porcentajeSueloUrbano}}% del <b>suelo urbano</b> de
                     Aragón
                 </div>
-            </ng-template>
-            <div class="caracteristica__item">
-                <mat-icon>people</mat-icon> La edad media de los <b>hombres</b> es de {{this.edadMediaHombres}} años
+                <div class="caracteristica__item" *ngIf="esPoblado == '1'; else noPoblado">
+                    <mat-icon>people</mat-icon> {{this.lugarBuscado}} es uno de los <b>20 {{this.tipoLocalidad}}s más
+                        poblados</b> de Aragón
+                </div>
+                <ng-template #noPoblado>
+                    <div class="caracteristica__item">
+                        <mat-icon>people</mat-icon> {{this.lugarBuscado}} no es uno de los <b>20 {{this.tipoLocalidad}}s
+                            más
+                            poblados</b> de
+                        Aragón
+                    </div>
+                </ng-template>
+                <div class="caracteristica__item">
+                    <mat-icon>people</mat-icon> La edad media de los <b>hombres</b> es de {{this.edadMediaHombres}} años
+                </div>
+                <div class="caracteristica__item">
+                    <mat-icon>people</mat-icon> La edad media de las <b>mujeres</b> es de {{this.edadMediaMujeres}} años
+                </div>
+                <div class="caracteristica__item">
+                    <mat-icon>people</mat-icon> Municipio número 15 con más población de Teruel
+                </div>
             </div>
-            <div class="caracteristica__item">
-                <mat-icon>people</mat-icon> La edad media de las <b>mujeres</b> es de {{this.edadMediaMujeres}} años
-            </div>
-            <div class="caracteristica__item">
-                <mat-icon>people</mat-icon> Municipio número 15 con más población de Teruel
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <section class="container template__graphics">
-        <div class="graphics__item" style="width: 100%;">
-            <h2>Pirámide de población</h2>
-            <app-piramide-poblacion></app-piramide-poblacion>
-        </div>
-    </section>
-    <section class="container template__graphics">
-        <div class="graphics__item" style="width: 100%;">
-            <h2>Últimos datos de Población</h2>
-
-            <table class="tabla-poblacion">
-                <tr>
-                    <th>Año</th>
-
-                    <td *ngFor="let year of yearsTablaPoblacion"><span>{{year}}</span></td>
-                </tr>
-                <tr>
-                    <th>{{this.comunidad[0]}}</th>
-                    <td *ngFor="let element of tablaPoblacion">
-                        <span *ngIf="element.nameRefArea.value == this.comunidad[0]">
-                            {{element.poblac.value}}
-                        </span>
-                    </td>
-                </tr>
-
-                <tr>
-                    <th>{{this.provincia[0]}}</th>
-                    <td *ngFor="let element of tablaPoblacion">
-                        <span *ngIf="element.nameRefArea.value == this.provincia[0]">
-                            {{element.poblac.value}}
-                        </span>
-                    </td>
-                </tr>
-                <tr>
-                    <th>{{this.municipio[0]}}</th>
-                    <td *ngFor="let element of tablaPoblacion">
-                        <span *ngIf="element.nameRefArea.value == this.municipio[0]">
-                            {{element.poblac.value}}
-                        </span>
-                    </td>
-                </tr>
-            </table>
-
-        </div>
-
-        <div class="graphics__item">
-            <h2>Enlaces de interés</h2>
-            <div class="slides">
-                <mat-tab-group mat-align-tabs="start">
-                    <mat-tab *ngFor="let link of creativeWork" label="{{link.title.value}}">
-                        <span class="slides__tema">
-                            <a *ngIf="
-                            link.tema.value==='http://datos.gob.es/kos/sector-publico/sector/turismo'"
-                                href="{{link.tema.value}}" target="_blank">Turismo</a>
-                            <a *ngIf="
-                            link.tema.value==='http://datos.gob.es/kos/sector-publico/sector/educacion'"
-                                href="{{link.tema.value}}" target="_blank">Educación</a>
-                            <a *ngIf="
-                            link.tema.value==='http://datos.gob.es/kos/sector-publico/sector/ciencia-tecnologia'"
-                                href="{{link.tema.value}}" target="_blank">Ciencia y Tecnología</a>
-                            <a *ngIf="
-                            link.tema.value==='http://datos.gob.es/kos/sector-publico/sector/empleo'"
-                                href="{{link.tema.value}}" target="_blank">Empleo</a>
-                            <a *ngIf="
-                            link.tema.value==='http://datos.gob.es/kos/sector-publico/sector/economia'"
-                                href="{{link.tema.value}}" target="_blank">Economia</a>
-                            <a *ngIf="
-                            link.tema.value==='http://datos.gob.es/kos/sector-publico/sector/sector-publico'"
-                                href="{{link.tema.value}}" target="_blank">Sector Público</a>
-                            <a *ngIf="
-                            link.tema.value==='http://datos.gob.es/kos/sector-publico/sector/salud'"
-                                href="{{link.tema.value}}" target="_blank">Salud</a>
-                            <a *ngIf="
-                            link.tema.value==='http://datos.gob.es/kos/sector-publico/sector/cultura-ocio'"
-                                href="{{link.tema.value}}" target="_blank">Cultura y Ocio</a>
-                            <a *ngIf="
-                            link.tema.value==='http://datos.gob.es/kos/sector-publico/sector/sociedad-bienestar'"
-                                href="{{link.tema.value}}" target="_blank">Sociedad y Bienestar</a>
-                            <a *ngIf="
-                            link.tema.value==='http://datos.gob.es/kos/sector-publico/sector/medio-ambiente'"
-                                href="{{link.tema.value}}" target="_blank">Medio Ambiente</a>
-                        </span>
-                        <p class=" slides__abstract">{{link.resumen.value}}</p>
-                        <a href="{{link.url.value}}" target="_blank" class="slide__link">Leer más</a>
-                    </mat-tab>
-                </mat-tab-group>
+        <section class="container template__graphics">
+            <div class="graphics__item" style="width: 100%;">
+                <h2>Pirámide de población</h2>
+                <app-piramide-poblacion></app-piramide-poblacion>
             </div>
-        </div>
+        </section>
+        <section class="container template__graphics">
+            <div class="graphics__item" style="width: 100%;">
+                <h2>Últimos datos de Población</h2>
 
-        <div class="graphics__item miembros">
-            <h2>Miembros del pleno municipal</h2>
-            <ul>
-                <li *ngFor="let miembro of miembrosPleno"><b>{{miembro.cargo.value}}: </b>
-                    <a href="{{miembro.persona.value}}" target="_blank">{{miembro.nombrePersona.value}}</a>
-                </li>
-            </ul>
-        </div>
-    </section>
-    <section class="container template__caracteristicas">
-        <h2>Características del municipio</h2>
-        <div class="caracteristicas__list">
-            <div class="caracteristica__item">
-                <mat-icon>people</mat-icon> Municipio número 15 con más población de Teruel
-            </div>
-            <div class="caracteristica__item">
-                <mat-icon>people</mat-icon> Municipio número 15 con más población de Teruel
-            </div>
-            <div class="caracteristica__item">
-                <mat-icon>people</mat-icon> Municipio número 15 con más población de Teruel
-            </div>
-            <div class="caracteristica__item">
-                <mat-icon>people</mat-icon> Municipio número 15 con más población de Teruel
-            </div>
-            <div class="caracteristica__item">
-                <mat-icon>people</mat-icon> Municipio número 15 con más población de Teruel
-            </div>
-            <div class="caracteristica__item">
-                <mat-icon>people</mat-icon> Municipio número 15 con más población de Teruel
-            </div>
-        </div>
-    </section>
+                <table class="tabla-poblacion">
+                    <tr>
+                        <th>Año</th>
 
-    <section class="container template__statistics">
-        <h2>Encuentra los datos estadísticos de Ababuj</h2>
-    </section>
+                        <td *ngFor="let year of yearsTablaPoblacion"><span>{{year}}</span></td>
+                    </tr>
+                    <tr>
+                        <th>{{this.comunidad[0]}}</th>
+                        <td *ngFor="let element of tablaPoblacion">
+                            <span *ngIf="element.nameRefArea.value == this.comunidad[0]">
+                                {{element.poblac.value}}
+                            </span>
+                        </td>
+                    </tr>
 
-</div>
+                    <tr>
+                        <th>{{this.provincia[0]}}</th>
+                        <td *ngFor="let element of tablaPoblacion">
+                            <span *ngIf="element.nameRefArea.value == this.provincia[0]">
+                                {{element.poblac.value}}
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{{this.municipio[0]}}</th>
+                        <td *ngFor="let element of tablaPoblacion">
+                            <span *ngIf="element.nameRefArea.value == this.municipio[0]">
+                                {{element.poblac.value}}
+                            </span>
+                        </td>
+                    </tr>
+                </table>
+
+            </div>
+
+            <div class="graphics__item">
+                <h2>Enlaces de interés</h2>
+                <div class="slides">
+                    <mat-tab-group mat-align-tabs="start">
+                        <mat-tab *ngFor="let link of creativeWork" label="{{link.title.value}}">
+                            <span class="slides__tema">
+                                <a *ngIf="
+                                link.tema.value==='http://datos.gob.es/kos/sector-publico/sector/turismo'"
+                                    href="{{link.tema.value}}" target="_blank">Turismo</a>
+                                <a *ngIf="
+                                link.tema.value==='http://datos.gob.es/kos/sector-publico/sector/educacion'"
+                                    href="{{link.tema.value}}" target="_blank">Educación</a>
+                                <a *ngIf="
+                                link.tema.value==='http://datos.gob.es/kos/sector-publico/sector/ciencia-tecnologia'"
+                                    href="{{link.tema.value}}" target="_blank">Ciencia y Tecnología</a>
+                                <a *ngIf="
+                                link.tema.value==='http://datos.gob.es/kos/sector-publico/sector/empleo'"
+                                    href="{{link.tema.value}}" target="_blank">Empleo</a>
+                                <a *ngIf="
+                                link.tema.value==='http://datos.gob.es/kos/sector-publico/sector/economia'"
+                                    href="{{link.tema.value}}" target="_blank">Economia</a>
+                                <a *ngIf="
+                                link.tema.value==='http://datos.gob.es/kos/sector-publico/sector/sector-publico'"
+                                    href="{{link.tema.value}}" target="_blank">Sector Público</a>
+                                <a *ngIf="
+                                link.tema.value==='http://datos.gob.es/kos/sector-publico/sector/salud'"
+                                    href="{{link.tema.value}}" target="_blank">Salud</a>
+                                <a *ngIf="
+                                link.tema.value==='http://datos.gob.es/kos/sector-publico/sector/cultura-ocio'"
+                                    href="{{link.tema.value}}" target="_blank">Cultura y Ocio</a>
+                                <a *ngIf="
+                                link.tema.value==='http://datos.gob.es/kos/sector-publico/sector/sociedad-bienestar'"
+                                    href="{{link.tema.value}}" target="_blank">Sociedad y Bienestar</a>
+                                <a *ngIf="
+                                link.tema.value==='http://datos.gob.es/kos/sector-publico/sector/medio-ambiente'"
+                                    href="{{link.tema.value}}" target="_blank">Medio Ambiente</a>
+                            </span>
+                            <p class=" slides__abstract">{{link.resumen.value}}</p>
+                            <a href="{{link.url.value}}" target="_blank" class="slide__link">Leer más</a>
+                        </mat-tab>
+                    </mat-tab-group>
+                </div>
+            </div>
+
+            <div class="graphics__item miembros">
+                <h2>Miembros del pleno municipal</h2>
+                <ul>
+                    <li *ngFor="let miembro of miembrosPleno"><b>{{miembro.cargo.value}}: </b>
+                        <a href="{{miembro.persona.value}}" target="_blank">{{miembro.nombrePersona.value}}</a>
+                    </li>
+                </ul>
+            </div>
+        </section>
+        <section class="container template__caracteristicas">
+            <h2>Características del municipio</h2>
+            <div class="caracteristicas__list">
+                <div class="caracteristica__item">
+                    <mat-icon>people</mat-icon> Municipio número 15 con más población de Teruel
+                </div>
+                <div class="caracteristica__item">
+                    <mat-icon>people</mat-icon> Municipio número 15 con más población de Teruel
+                </div>
+                <div class="caracteristica__item">
+                    <mat-icon>people</mat-icon> Municipio número 15 con más población de Teruel
+                </div>
+                <div class="caracteristica__item">
+                    <mat-icon>people</mat-icon> Municipio número 15 con más población de Teruel
+                </div>
+                <div class="caracteristica__item">
+                    <mat-icon>people</mat-icon> Municipio número 15 con más población de Teruel
+                </div>
+                <div class="caracteristica__item">
+                    <mat-icon>people</mat-icon> Municipio número 15 con más población de Teruel
+                </div>
+            </div>
+        </section>
+
+        <section class="container template__statistics">
+            <h2>Encuentra los datos estadísticos de Ababuj</h2>
+        </section>
+
+    </div>
+</ng-container>
