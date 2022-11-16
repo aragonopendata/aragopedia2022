@@ -87,13 +87,17 @@ section.container {
     }
 
     .template__img-municipio {
-        margin: 2em 0;
+        width: 900px;
+        margin: 2em auto;
 
         img {
-            width: 900px;
             border-radius: 10px;
             box-shadow: var(--shadow);
             margin: auto;
+        }
+
+        figcaption {
+            margin-top: 1em;
         }
     }
 
@@ -160,8 +164,14 @@ section.container {
 
         .slides__abstract {
             margin: 1.5em 0;
-            max-width: 600px;
+            // max-width: 600px;
             font-size: 16px;
+
+            .leer-mas {
+                cursor: pointer;
+                display: block;
+                font-size: 14px;
+            }
         }
 
         .slide__link {

@@ -16,16 +16,16 @@
                 <ul>
                     <li><span class="big-number">{{this.sueloUrbano}}</span>Hectáreas de suelo urbano</li>
                     <li><span class="big-number">{{this.sueloRural}}</span>Hectáreas de suelo rural</li>
+                    <li><span class="big-number">1</span><b>Centro de salud</b></li>
                     <li><span class="big-number">{{this.poblacion}}</span>Habitantes</li>
-                    <li><span class="big-number">1</span>Centro de salud</li>
-                    <li><span class="big-number">{{this.poligonos}}</span>Polígonos industruales</li>
+                    <li><span class="big-number">{{this.densidadPoblacion}}</span>Habitantes por KM2</li>
+                    <li><span class="big-number">{{this.poligonos}}</span>Polígonos industriales</li>
                     <li><span class="big-number">{{this.explotacionesGanaderas}}</span>Explotaciones ganaderas</li>
-                    <li><span class="big-number">2769</span>Cabezas de ganado</li>
+                    <li><span class="big-number">2769</span><b>Cabezas de ganado</b></li>
                     <li><span class="big-number">{{this.incendiosUltimosAnos}}</span>Incendios desde 2002</li>
-                    <li><span class="big-number">21</span>Menciones en publicaciones</li>
+                    <li><span class="big-number">21</span><b>Menciones en publicaciones</b></li>
                     <li><span class="big-number">{{this.plazasHoteleras}}</span>Plazas hoteleras</li>
                     <li><span class="big-number">{{this.alojamientosTuristicos}}</span>Alojamientos turísticos</li>
-                    <li><span class="big-number">{{this.densidadPoblacion}}</span>Habitantes por KM2</li>
                 </ul>
             </div>
             <div class="inicio__contact">
@@ -46,8 +46,13 @@
             </div>
         </section>
 
-        <section class="container template__img-municipio">
-            <img src="{{this.imageWikiDataUrl}}" alt="Imagen principal de {{this.lugarBuscado}}">
+        <section class="container template__img-municipio" *ngIf="this.imageWikiDataUrl">
+            <figure>
+                <img src="{{this.imageWikiDataUrl}}" alt="Imagen principal de {{this.lugarBuscado}}">
+                <figcaption>Foto de <b>{{this.lugarBuscado}}</b> aportada por <a
+                        href="https://www.wikidata.org/wiki/Wikidata:Main_Page" target="_blank">Wikidata</a>
+                </figcaption>
+            </figure>
         </section>
 
         <section class="container template__caracteristicas">
@@ -97,7 +102,6 @@
                 <table class="tabla-poblacion">
                     <tr>
                         <th>Año</th>
-
                         <td *ngFor="let year of yearsTablaPoblacion"><span>{{year}}</span></td>
                     </tr>
                     <tr>
@@ -126,7 +130,6 @@
                         </td>
                     </tr>
                 </table>
-
             </div>
 
             <div class="graphics__item">
@@ -166,7 +169,14 @@
                                 link.tema.value==='http://datos.gob.es/kos/sector-publico/sector/medio-ambiente'"
                                     href="{{link.tema.value}}" target="_blank">Medio Ambiente</a>
                             </span>
-                            <p class=" slides__abstract">{{link.resumen.value}}</p>
+                            <p class=" slides__abstract" *ngIf="leerMas">{{link.resumen.value}} <span class="leer-mas"
+                                    (click)="this.leerMas = !this.leerMas">Reducir resumen</span></p>
+                            <p class=" slides__abstract" *ngIf="leerMas === false">
+                                {{this.reduceText(link.resumen.value)}}... <span class="leer-mas"
+                                    (click)="this.leerMas = !this.leerMas">Ver
+                                    resumen completo</span></p>
+
+
                             <a href="{{link.url.value}}" target="_blank" class="slide__link">Leer más</a>
                         </mat-tab>
                     </mat-tab-group>
@@ -179,6 +189,12 @@
                     <li *ngFor="let miembro of miembrosPleno"><b>{{miembro.cargo.value}}: </b>
                         <a href="{{miembro.persona.value}}" target="_blank">{{miembro.nombrePersona.value}}</a>
                     </li>
+                </ul>
+            </div>
+            <div class="graphics__item personas-ilustres">
+                <h2>Personas Ilustres nacidas en {{this.lugarBuscado}}</h2>
+                <ul>
+                    <li *ngFor="let persona of personasIlustres">{{persona.itemLabel.value}}</li>
                 </ul>
             </div>
         </section>
