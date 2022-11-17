@@ -11,7 +11,7 @@
         }
       },
       "root": "",
-      "sourceRoot": "src",
+      "sourceRoot": "/servicios/aragopedia2022/src",
       "prefix": "app",
       "architect": {
         "build": {
