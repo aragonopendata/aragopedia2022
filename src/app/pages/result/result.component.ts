@@ -12,6 +12,8 @@ export class ResultComponent {
 
   constructor(public resultSvc: ResultService, private _route: ActivatedRoute) { }
 
+  currentLink: any;
+
   lugarBuscado: any;
   lugarBuscadoParsed!: string;
   idLocalidad: any;
@@ -29,6 +31,7 @@ export class ResultComponent {
   direccion: any;
   codPostal: any;
   creativeWork: any;
+  numberOfCreativeWork: any;
   miembrosPleno: any;
   alojamientosTuristicos: any;
   oficinasTurismo: any;
@@ -188,8 +191,6 @@ export class ResultComponent {
     this.resultSvc.getData(this.queryUrlExtension).subscribe((data: any) => {
       this.sueloUrbano = data.results.bindings[1].urbano.value;
       this.sueloRural = data.results.bindings[1].rustico.value;
-      console.log(data.results.bindings);
-
     });
 
     this.resultSvc.getData(this.queryUrlDensidadPoblacion).subscribe((data: any) => {
@@ -198,6 +199,7 @@ export class ResultComponent {
 
     this.resultSvc.getData(this.queryUrlCreativeWork).subscribe((data: any) => {
       this.creativeWork = data.results.bindings;
+      this.numberOfCreativeWork = data.results.bindings.length
     });
 
     this.resultSvc.getData(this.queryUrlPoblacion).subscribe((data: any) => {
@@ -227,6 +229,8 @@ export class ResultComponent {
     this.resultSvc.getData(this.queryUrlRatioSuelo).subscribe((data: any) => {
       let totalUrbano = data.results.bindings[0].urbano.value;
       let totalRural = data.results.bindings[0].rustico.value;
+      console.log(data);
+
       this.porcentajeSueloRural = ((this.sueloRural / totalRural) * 100).toFixed(2);
       this.porcentajeSueloUrbano = ((this.sueloUrbano / totalUrbano) * 100).toFixed(2);
     });
@@ -263,5 +267,4 @@ export class ResultComponent {
       this.leerMas ? text : reducedText
     )
   }
-
 }
