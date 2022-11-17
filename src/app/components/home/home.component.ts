@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { SelectLocationComponent } from '../select-location/select-location.component';
 import { TemasComponent } from '../temas/temas.component';
 import { MonthPeriod, TimeLineSvc } from '../timeline/timeline.service';
