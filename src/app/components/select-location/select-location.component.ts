@@ -23,6 +23,7 @@ export class SelectLocationComponent implements OnInit {
   provinciaSelected!: string;
   municipioSelected!: string;
   comarcaSelected!: string;
+  tipoLocalidad!: string;
 
   @ViewChild(SelectProvinciaComponent) provincia: any;
   @ViewChild(SelectMunicipioComponent) municipio: any;
@@ -45,11 +46,14 @@ export class SelectLocationComponent implements OnInit {
     this.comarcaSelected = this.comarca.selectedComarca;
     this.municipioSelected = this.municipio.selectedMunicipio;
     if (this.provinciaSelected !== '' && this.comarcaSelected == '' && this.municipioSelected == '') {
-      this.router.navigate([`/servicios/aragopedia2022/result/${this.provinciaSelected}`])
+      this.tipoLocalidad = 'provincia';
+      this.router.navigate([`/${this.tipoLocalidad}/${this.provinciaSelected}`])
     } else if (this.comarcaSelected !== '' && this.municipioSelected == '') {
-      this.router.navigate([`/servicios/aragopedia2022/result/${this.comarcaSelected}`])
+      this.tipoLocalidad = 'comarca';
+      this.router.navigate([`/${this.tipoLocalidad}/${this.comarcaSelected}`])
     } else {
-      this.router.navigate([`/servicios/aragopedia2022/result/${this.municipioSelected}`])
+      this.tipoLocalidad = 'municipio';
+      this.router.navigate([`/${this.tipoLocalidad}/${this.municipioSelected}`])
     }
 
     console.log(this.provinciaSelected, this.comarcaSelected, this.municipioSelected);

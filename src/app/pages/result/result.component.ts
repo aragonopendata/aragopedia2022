@@ -82,6 +82,7 @@ export class ResultComponent {
 
     this.lugarBuscado = this.capitalizeString(this._route.snapshot.paramMap.get('municipio'));
     this.lugarBuscadoParsed = this.deleteSpace(this._route.snapshot.paramMap.get('municipio'));
+    this.tipoLocalidad = this.deleteSpace(this._route.snapshot.paramMap.get('tipoLocalidad'));
 
     //Obtenemos id y tipo de localidad antes de nada
 
@@ -157,6 +158,7 @@ export class ResultComponent {
 
           this.resultSvc.getData(this.queryUrlPersonasIlustres).subscribe((data) => {
             this.personasIlustres = data.results.bindings;
+            console.log(this.personasIlustres.length)
           })
 
         });

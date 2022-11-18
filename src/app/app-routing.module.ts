@@ -9,14 +9,14 @@ import { ResultComponent } from './pages/result/result.component';
 import { ResultsComponent } from './pages/results/results.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'servicios/aragopedia2022', pathMatch: 'full' },
-  { path: 'servicios/aragopedia2022', component: HomeComponent },
-  { path: 'servicios/aragopedia2022/persona', component: PersonaComponent },
-  { path: 'servicios/aragopedia2022/eventos', component: EventosComponent },
-  { path: 'servicios/aragopedia2022/general', component: GeneralComponent },
-  { path: 'servicios/aragopedia2022/results', component: ResultsComponent },
-  { path: 'servicios/aragopedia2022/result/:municipio', component: ResultComponent },
-  // {path: 'servicios/aragopedia2022/result', loadChildren: () =>
+  { path: '', redirectTo: '/', pathMatch: 'full' },
+  { path: '', component: HomeComponent },
+  { path: 'persona', component: PersonaComponent },
+  { path: 'eventos', component: EventosComponent },
+  { path: 'general', component: GeneralComponent },
+  { path: 'results', component: ResultsComponent },
+  { path: ':tipoLocalidad/:municipio', component: ResultComponent },
+  // {path: '/result', loadChildren: () =>
   // import('./pages/result/result.component').then(m => m.ResultComponent), data: { breadcrumb: { skip: true } }},
   // { path: 'persona', loadChildren: () => import('./pages/persona/persona.module').then(m => m.PersonaModule) },
   // { path: 'eventos', loadChildren: () => import('./pages/eventos/eventos.module').then(m => m.EventosModule) },

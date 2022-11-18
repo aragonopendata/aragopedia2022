@@ -198,7 +198,7 @@
                     </li>
                 </ul>
             </div>
-            <div class="graphics__item personas-ilustres">
+            <div class="graphics__item personas-ilustres" *ngIf="this.personasIlustres.length > 0">
                 <h2>Personas Ilustres nacidas en {{this.lugarBuscado}}</h2>
                 <ul>
                     <li *ngFor="let persona of personasIlustres">{{persona.itemLabel.value}}</li>
@@ -439,7 +439,7 @@
                     </li>
                 </ul>
             </div>
-            <div class="graphics__item personas-ilustres">
+            <div class="graphics__item personas-ilustres" *ngIf="this.personasIlustres.length > 0">
                 <h2>Personas Ilustres nacidas en {{this.lugarBuscado}}</h2>
                 <ul>
                     <li *ngFor="let persona of personasIlustres">{{persona.itemLabel.value}}</li>
