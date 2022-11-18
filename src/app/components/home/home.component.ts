@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { SelectLocationComponent } from '../select-location/select-location.component';
 import { TemasComponent } from '../temas/temas.component';
-import { MonthPeriod, TimeLineSvc } from '../timeline/timeline.service';
+import { YearsPeriod, TimeLineSvc } from '../timeline/timeline.service';
 
 @Component({
   selector: 'app-home',
@@ -12,7 +12,7 @@ export class HomeComponent implements OnInit {
   @ViewChild(SelectLocationComponent) location: any;
   @ViewChild(TemasComponent) temas: any;
 
-  years!: MonthPeriod[];
+  years!: YearsPeriod[];
   provinciaSelected!: string;
   municipioSelected!: string;
   comarcaSelected!: string;
