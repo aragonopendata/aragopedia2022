@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TemasService } from 'src/app/components/temas/temas.service';
+import { TimeLineSvc } from 'src/app/components/timeline/timeline.service';
 
 export interface Result {
   category: String;
@@ -15,7 +16,9 @@ export interface Result {
 
 export class ResultsComponent implements OnInit {
 
-  constructor(public temasSvc: TemasService) { }
+  constructor(public temasSvc: TemasService, public timelineSvc: TimeLineSvc) { }
+
+
 
   active: boolean = false;
   toggleSidebar(): void {
@@ -61,6 +64,9 @@ export class ResultsComponent implements OnInit {
         this.temas.push(tema);
       }
     });
+
+    this.timelineSvc.getCurrentYears();
+
   }
 
   sortResults(results: Result[]): Result[] {

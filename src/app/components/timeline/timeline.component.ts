@@ -36,7 +36,6 @@ export class TimeLineComponent implements OnInit {
       filteredData.forEach((element: any, index: any) => {
         this.dataSource[index] = { date: element['callret-1'].value, dataQuantity: element['callret-0'].value }
       });
-      console.log(this.dataSource);
     });
 
 

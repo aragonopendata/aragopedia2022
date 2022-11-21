@@ -13,6 +13,8 @@ export class HomeComponent implements OnInit {
   @ViewChild(TemasComponent) temas: any;
 
   years!: YearsPeriod[];
+  firstYearSelected: any;
+  lastYearSelected: any;
   provinciaSelected!: string;
   municipioSelected!: string;
   comarcaSelected!: string;
@@ -20,11 +22,15 @@ export class HomeComponent implements OnInit {
 
   constructor(private timelineSvc: TimeLineSvc) { }
 
+
   ngOnInit(): void {
+
   }
 
   search(): void {
     this.years = this.timelineSvc.getCurrentYears();
+    this.firstYearSelected = this.years[0];
+    this.lastYearSelected = this.years[1];
     this.provinciaSelected = this.location.provincia.selected;
     this.municipioSelected = this.location.municipio.selected;
     this.comarcaSelected = this.location.comarca.selected;
