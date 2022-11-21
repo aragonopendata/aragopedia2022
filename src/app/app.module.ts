@@ -60,6 +60,7 @@ import { FilterPipe } from './pipes/filter.pipe';
     MatIconModule,
     HttpClientModule,
     MatTabsModule,
+    MatProgressSpinnerModule
   ],
   providers: [ResultService],
   bootstrap: [AppComponent]

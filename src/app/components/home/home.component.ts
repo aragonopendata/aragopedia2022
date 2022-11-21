@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { SelectLocationComponent } from '../select-location/select-location.component';
 import { TemasComponent } from '../temas/temas.component';
-import { MonthPeriod, TimeLineSvc } from '../timeline/timeline.service';
+import { YearsPeriod, TimeLineSvc } from '../timeline/timeline.service';
 
 @Component({
   selector: 'app-home',
@@ -12,7 +12,9 @@ export class HomeComponent implements OnInit {
   @ViewChild(SelectLocationComponent) location: any;
   @ViewChild(TemasComponent) temas: any;
 
-  years!: MonthPeriod[];
+  years!: YearsPeriod[];
+  firstYearSelected: any;
+  lastYearSelected: any;
   provinciaSelected!: string;
   municipioSelected!: string;
   comarcaSelected!: string;
@@ -20,11 +22,15 @@ export class HomeComponent implements OnInit {
 
   constructor(private timelineSvc: TimeLineSvc) { }
 
+
   ngOnInit(): void {
+
   }
 
   search(): void {
     this.years = this.timelineSvc.getCurrentYears();
+    this.firstYearSelected = this.years[0];
+    this.lastYearSelected = this.years[1];
     this.provinciaSelected = this.location.provincia.selected;
     this.municipioSelected = this.location.municipio.selected;
     this.comarcaSelected = this.location.comarca.selected;

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { MonthPeriod } from '../timeline/timeline.service';
+import { YearsPeriod } from '../timeline/timeline.service';
 
 @Injectable({ providedIn: 'root' })
 export class ServiceNameService {
@@ -7,7 +7,7 @@ export class ServiceNameService {
     provincia!: string;
     comarca!: string;
     municipio!: string;
-    years!: MonthPeriod;
+    years!: YearsPeriod;
     temas!: string[];
 
     sparqlSearch: string = `https://opendata.aragon.es/sparql?${this.provincia}${this.municipio}${this.comarca}${this.years}${this.temas}`

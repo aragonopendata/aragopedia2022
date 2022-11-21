@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MonthPeriod, TimeLineSvc } from '../timeline/timeline.service';
+import { YearsPeriod, TimeLineSvc } from '../timeline/timeline.service';
 import { FormBuilder } from '@angular/forms';
 
 @Component({
@@ -8,7 +8,7 @@ import { FormBuilder } from '@angular/forms';
   styleUrls: ['./search.component.scss']
 })
 export class SearchComponent implements OnInit {
-  currentYears: MonthPeriod[];
+  currentYears: YearsPeriod[];
   formGroup;
 
 
