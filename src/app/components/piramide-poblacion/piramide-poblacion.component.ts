@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PiramidePoblacionService } from './piramide-poblacion.service.spec';
 import { ItemPiramide } from './itemPiramide';
 import { ActivatedRoute } from '@angular/router';
+import { getLocaleFirstDayOfWeek } from '@angular/common';
 
 @Component({
   selector: 'app-piramide-poblacion',
@@ -19,7 +20,7 @@ export class PiramidePoblacionComponent implements OnInit {
   piramideHombres: Array<ItemPiramide> = [
 
     { sexo: "Hombres", personas: 0, grupo: "90 ó más" },
-    { sexo: "Hombres", personas: 0, grupo: "85 a 89" },
+    { sexo: "Hombres", personas: 0, grupo: "85 a 90" },
     { sexo: "Hombres", personas: 0, grupo: "80 a 84" },
     { sexo: "Hombres", personas: 0, grupo: "75 a 79" },
     { sexo: "Hombres", personas: 0, grupo: "70 a 74" },
@@ -41,7 +42,7 @@ export class PiramidePoblacionComponent implements OnInit {
 
   piramideMujeres: Array<ItemPiramide> = [
     { sexo: "Mujeres", personas: 0, grupo: "90 ó más" },
-    { sexo: "Mujeres", personas: 0, grupo: "85 a 89" },
+    { sexo: "Mujeres", personas: 0, grupo: "85 a 90" },
     { sexo: "Mujeres", personas: 0, grupo: "80 a 84" },
     { sexo: "Mujeres", personas: 0, grupo: "75 a 79" },
     { sexo: "Mujeres", personas: 0, grupo: "70 a 74" },
@@ -70,7 +71,6 @@ export class PiramidePoblacionComponent implements OnInit {
     this.piramidePoblacionSvc.getPiramidePoblacion(this.queryPiramidePoblacion).subscribe((data: any) => {
 
       this.piramidePoblacion = data.results.bindings
-
       this.piramidePoblacion.forEach((element: any) => {
 
         var auxDatoPiramide: ItemPiramide = { sexo: "", personas: 0, grupo: "" };
