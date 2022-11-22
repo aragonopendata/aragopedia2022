@@ -7,6 +7,7 @@ import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { PersonaComponent } from './pages/persona/persona.component';
 import { ResultComponent } from './pages/result/result.component';
 import { ResultsComponent } from './pages/results/results.component';
+import { AragopediaComponent } from './pages/aragopedia/aragopedia.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/', pathMatch: 'full' },
@@ -16,6 +17,7 @@ const routes: Routes = [
   { path: 'general', component: GeneralComponent },
   { path: 'results/:temas', component: ResultsComponent },
   { path: ':tipoLocalidad/:municipio', component: ResultComponent },
+  { path: 'aragopedia', component: AragopediaComponent },
   // {path: '/result', loadChildren: () =>
   // import('./pages/result/result.component').then(m => m.ResultComponent), data: { breadcrumb: { skip: true } }},
   // { path: 'persona', loadChildren: () => import('./pages/persona/persona.module').then(m => m.PersonaModule) },

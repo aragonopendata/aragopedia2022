@@ -28,6 +28,7 @@ import { PiramidePoblacionComponent } from './components/piramide-poblacion/pira
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTableModule } from '@angular/material/table';
 import { FilterPipe } from './pipes/filter.pipe';
+import { AragopediaComponent } from './pages/aragopedia/aragopedia.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { FilterPipe } from './pipes/filter.pipe';
     NotFoundComponent,
     PiramidePoblacionComponent,
     FilterPipe,
+    AragopediaComponent,
   ],
   imports: [
     BrowserModule,
