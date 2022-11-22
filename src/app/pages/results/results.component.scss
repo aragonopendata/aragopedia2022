@@ -162,9 +162,9 @@
 }
 
 .sidebar.active {
-    position: absolute;
+    // position: absolute;
     top: 0;
-    margin: auto;
+    // margin: auto;
     width: 100vw;
     display: block;
 }
@@ -196,7 +196,7 @@
             max-width: 320px;
             height: fit-content;
             border-radius: 10px;
-            position: sticky;
+            // position: absolute;
             top: 100px;
 
             .sidebar__cerrar,
