@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map } from 'rxjs';
+import { map, Observable } from 'rxjs';
 @Injectable({ providedIn: 'root' })
 export class SelectLocationService {
 
@@ -21,5 +21,9 @@ export class SelectLocationService {
             .pipe(
                 map((response: any) => response.results.bindings.map((item: any) => item['callret-0'].value))
             )
+    }
+
+    getData(query: string): Observable<any> {
+        return this.http.get(query);
     }
 }

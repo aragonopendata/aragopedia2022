@@ -1,9 +1,10 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { SelectComarcaComponent } from './comarcas/comarcas.component';
 import { SelectMunicipioComponent } from './municipios/municipios.component';
 import { SelectProvinciaComponent } from './provincias/provincias.component';
+import { SelectLocationService } from './select-location.service';
 
 
 
@@ -13,9 +14,8 @@ import { SelectProvinciaComponent } from './provincias/provincias.component';
   styleUrls: ['./select-location.component.scss'],
 })
 
-export class SelectLocationComponent {
-  constructor(private router: Router) { }
-
+export class SelectLocationComponent implements OnInit {
+  constructor(private router: Router, public locationSvc: SelectLocationService) { }
   locationForm = new FormGroup('');
 
   searchValue!: string;
@@ -23,10 +23,16 @@ export class SelectLocationComponent {
   provinciaSelected!: string;
   municipioSelected!: string;
   comarcaSelected!: string;
+  tipoLocalidad!: string;
 
   @ViewChild(SelectProvinciaComponent) provincia: any;
   @ViewChild(SelectMunicipioComponent) municipio: any;
   @ViewChild(SelectComarcaComponent) comarca: any;
+
+  ngOnInit(): void {
+
+  }
+
 
   locationSelected(): void {
     this.provinciaSelected = this.provincia.selectedProvincia;
@@ -40,11 +46,14 @@ export class SelectLocationComponent {
     this.comarcaSelected = this.comarca.selectedComarca;
     this.municipioSelected = this.municipio.selectedMunicipio;
     if (this.provinciaSelected !== '' && this.comarcaSelected == '' && this.municipioSelected == '') {
-      this.router.navigate([`/servicios/aragopedia2022/result/${this.provinciaSelected}`])
+      this.tipoLocalidad = 'provincia';
+      this.router.navigate([`/${this.tipoLocalidad}/${this.provinciaSelected}`])
     } else if (this.comarcaSelected !== '' && this.municipioSelected == '') {
-      this.router.navigate([`/servicios/aragopedia2022/result/${this.comarcaSelected}`])
+      this.tipoLocalidad = 'comarca';
+      this.router.navigate([`/${this.tipoLocalidad}/${this.comarcaSelected}`])
     } else {
-      this.router.navigate([`/servicios/aragopedia2022/result/${this.municipioSelected}`])
+      this.tipoLocalidad = 'municipio';
+      this.router.navigate([`/${this.tipoLocalidad}/${this.municipioSelected}`])
     }
 
     console.log(this.provinciaSelected, this.comarcaSelected, this.municipioSelected);

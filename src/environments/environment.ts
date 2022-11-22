@@ -4,11 +4,6 @@
 
 export const environment = {
   production: false,
-  apiMunicipios: '',
-  apiEventos: '',
-  apiTemas: '',
-  apiOrganizaciones: '',
-  apiPersonas: ''
 };
 
 /*

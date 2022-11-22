@@ -15,16 +15,16 @@ export class TemasComponent implements OnInit {
   temasSeleccionados: string[] = [];
 
   temas: string[] = [];
+  temasUnicos!: string[];
 
   ngOnInit(): void {
     this.temasSvc.getTemas().subscribe(data => {
-
       const temasProv = data.results.bindings;
-
       for (let i = 0; i < temasProv.length; i++) {
-        let tema = temasProv[i].tema.value;
-        this.temas.push(tema);
+        let tema = temasProv[i].labelTema.value;
+        this.temas.push(tema)
       }
+      this.temasUnicos = [... new Set(this.temas)];
     });
   }
 

@@ -17,6 +17,12 @@ section.container {
 
     .inicio__name {
         text-align: center;
+        font-size: 30px;
+
+        .inicio__name-comunidad {
+            display: block;
+            font-size: 24px;
+        }
     }
 
     .inicio__img {
@@ -56,6 +62,14 @@ section.container {
                     color: #D6EAF0;
                     margin-bottom: 15px;
                 }
+
+                .inicio__data-link {
+                    font-size: 14px;
+                    color: var(--accent-color);
+                    display: block;
+                    font-weight: 400;
+                    margin-top: 1em;
+                }
             }
         }
     }
@@ -87,13 +101,17 @@ section.container {
     }
 
     .template__img-municipio {
-        margin: 2em 0;
+        max-width: 700px;
+        margin: 2em auto;
 
         img {
-            width: 900px;
             border-radius: 10px;
             box-shadow: var(--shadow);
             margin: auto;
+        }
+
+        figcaption {
+            margin-top: 1em;
         }
     }
 
@@ -157,11 +175,22 @@ section.container {
             font-size: 16px !important;
         }
 
+        ::ng-deep .mat-tab-body-content {
+            max-width: 600px;
+            margin: auto;
+        }
+
 
         .slides__abstract {
             margin: 1.5em 0;
-            max-width: 600px;
+            // max-width: 600px;
             font-size: 16px;
+
+            .leer-mas {
+                cursor: pointer;
+                display: block;
+                font-size: 14px;
+            }
         }
 
         .slide__link {
