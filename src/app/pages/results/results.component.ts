@@ -34,18 +34,16 @@ export class ResultsComponent implements OnInit {
   temasUrl: any = [];
   temasUnicos: any;
   temasUnicosUrl: any;
-  selectedUrl: any;
   temp = undefined;
   filterResult = '';
   results = this.temp || [{ category: '', title: '' }];
   temasParsed = this.temp || [{ title: '', url: '' }];
-
-
-
+  selectedUrl: any;
 
   ngOnInit(): void {
 
-    this.temasSelected = this._route.snapshot.paramMap.get('temas');
+    this.temasSelected = this._route.snapshot.paramMap.get('temas')?.toLocaleLowerCase();
+    console.log(this.temasSelected);
 
     this.timelineSvc.getCurrentYears();
 
@@ -74,23 +72,16 @@ export class ResultsComponent implements OnInit {
         this.temasParsed[i] = { title: element, url: this.temasUnicosUrl[i] }
       });
 
+      this.selectedUrl = this.temasParsed.find((element: any) => {
+        element.title.toLowerCase() === this.temasSelected;
+        console.log(element.title.toLocaleLowerCase(), '=', this.temasSelected);
+      })?.url
+
+      console.log(this.selectedUrl);
 
     });
 
-    console.log(this.temasSelected);
-
-    this.selectedUrl = this.temasParsed.find((element: any) => {
-      element.title === this.temasSelected;
-      console.log(element.url, '=', this.temasSelected);
-    })?.url
-
-    console.log(this.selectedUrl);
-
-
   }
-
-
-
 
 
   sortResults(results: Result[]): Result[] {
@@ -104,6 +95,5 @@ export class ResultsComponent implements OnInit {
     });
     return results;
   }
-
 
 }

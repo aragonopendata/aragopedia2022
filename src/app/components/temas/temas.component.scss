@@ -20,6 +20,7 @@
 .categories__list-item {
     flex: 0 0 80%;
     margin: 1em;
+    padding: 1em;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -28,6 +29,12 @@
     box-shadow: var(--shadow);
     cursor: pointer;
     transition: all 0.3s;
+
+    .categories__list-item-img {
+        width: 42px;
+        display: block;
+        margin-right: 10px;
+    }
 }
 
 .categories__list-item:hover {

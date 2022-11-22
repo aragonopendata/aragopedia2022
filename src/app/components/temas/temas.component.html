@@ -1,12 +1,13 @@
 <div class="space categories container">
     <h2>Temas o cifras a consultar</h2>
     <form [formGroup]="temasGroup" class="space categories__list">
-        <input (change)="onChange($event.target)" class="check__temas" *ngFor="let tema of temasUnicos" type="checkbox"
-            name="{{tema}}" id="{{tema}}">
-        <label [ngClass]="{'selected': temasSeleccionados.includes(tema)}" class="space categories__list-item"
-            *ngFor="let tema of temasUnicos" for="{{tema}}">
-            <img src="assets/cultura.png" alt="">
-            <h3>{{tema}}</h3>
+        <input (change)="onChange($event.target)" class="check__temas" *ngFor="let tema of temasConIconos"
+            type="checkbox" name="{{tema.title}}" id="{{tema.title}}">
+        <label [ngClass]="{'selected': temasSeleccionados.includes(tema.title)}" class="space categories__list-item"
+            *ngFor="let tema of temasConIconos" for="{{tema.title}}">
+            <img *ngIf="tema.icon" class="categories__list-item-img" src="assets/{{tema.icon}}"
+                alt="Icono del tema {{tema.title}}">
+            <h3>{{tema.title}}</h3>
         </label>
     </form>
 </div>

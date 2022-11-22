@@ -16,8 +16,34 @@ export class TemasComponent implements OnInit {
 
   temas: string[] = [];
   temasUnicos!: string[];
+  temasConIconos: any = undefined || [{}];
+
+  iconosTemas: string[] = [
+    'ciencia.png',
+    'comercio.png',
+    'cultura.png',
+    'deporte.png',
+    'economia.png',
+    'educacion.png',
+    'empleo.png',
+    'energia.png',
+    'hacienda.png',
+    'industria.png',
+    'justicia.png',
+    'medioambiente.png',
+    'mediorural.png',
+    'salud.png',
+    'sectorpublico.png',
+    'seguridad.png',
+    'sociedad.png',
+    'transporte.png',
+    'turismo.png',
+    'infraestructuras.png',
+    'vivienda.png'
+  ];
 
   ngOnInit(): void {
+
     this.temasSvc.getTemas().subscribe(data => {
       const temasProv = data.results.bindings;
       for (let i = 0; i < temasProv.length; i++) {
@@ -25,8 +51,16 @@ export class TemasComponent implements OnInit {
         this.temas.push(tema)
       }
       this.temasUnicos = [... new Set(this.temas)];
+
+      this.temasUnicos.forEach((element: any, i: any) => {
+        this.temasConIconos[i] = { title: element, icon: this.iconosTemas[i] }
+      });
+      console.log(this.temasConIconos);
     });
+
+
   }
+
 
   removeItemFromArr(arr: any, item: any) {
     let i = arr.indexOf(item);
