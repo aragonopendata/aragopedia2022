@@ -30,7 +30,7 @@ export class TimeLineComponent implements OnInit {
 
     this.timeLineSvc.getAllYears(this.queryUrlYears).subscribe(data => {
       const years = data.results.bindings;
-      const firstYear = years.find((element: any) => element['callret-1'].value == '1975');
+      const firstYear = years.find((element: any) => element['callret-1'].value == '1978');
       const lastYear = years.find((element: any) => element['callret-1'].value == '2022');
       const filteredData = years.slice(years.indexOf(firstYear), years.indexOf(lastYear + 1));
       filteredData.forEach((element: any, index: any) => {

@@ -67,27 +67,31 @@ export class ResultsComponent implements OnInit {
         this.temasUrl.push(url);
       }
 
-
       this.temasUnicos = [... new Set(this.temas)];
       this.temasUnicosUrl = [... new Set(this.temasUrl)];
 
       this.temasUnicos.forEach((element: any, i: any) => {
         this.temasParsed[i] = { title: element, url: this.temasUnicosUrl[i] }
       });
-      console.log(data.results.bindings);
-
-
-      data.results.bindings.find((element: any) => {
-        const found = element.uriTema.value = this.temasSelected;
-        console.log(found);
-      })
-
-      console.log(this.selectedUrl);
 
 
     });
 
+    console.log(this.temasSelected);
+
+    this.selectedUrl = this.temasParsed.find((element: any) => {
+      element.title === this.temasSelected;
+      console.log(element.url, '=', this.temasSelected);
+    })?.url
+
+    console.log(this.selectedUrl);
+
+
   }
+
+
+
+
 
   sortResults(results: Result[]): Result[] {
     results.sort(function (a, b) {

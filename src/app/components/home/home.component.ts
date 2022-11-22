@@ -10,6 +10,7 @@ import { YearsPeriod, TimeLineSvc } from '../timeline/timeline.service';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
+
   @ViewChild(SelectLocationComponent) location: any;
   @ViewChild(TemasComponent) temas: any;
 
@@ -32,9 +33,9 @@ export class HomeComponent implements OnInit {
     // this.years = this.timelineSvc.getCurrentYears();
     // this.firstYearSelected = this.years[0];
     // this.lastYearSelected = this.years[1];
-    // this.provinciaSelected = this.location.provincia.selected;
-    // this.municipioSelected = this.location.municipio.selected;
-    // this.comarcaSelected = this.location.comarca.selected;
+    this.provinciaSelected = this.location.provincia.selected;
+    this.municipioSelected = this.location.municipio.selected;
+    this.comarcaSelected = this.location.comarca.selected;
     this.temasSelected = this.temas.temasSeleccionados;
 
     this.router.navigate([`results/${this.temasSelected}`]);
