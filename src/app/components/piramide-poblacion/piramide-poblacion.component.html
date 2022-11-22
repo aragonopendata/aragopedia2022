@@ -9,7 +9,8 @@
             <tbody>
                 <tr *ngFor="let item of piramideMujeres">
                     <th scope="row"> {{item.grupo}} </th>
-                    <td class="item-fem" style="--size: {{item.personas/max}}; border-color: #ffffff !important;">
+                    <td class="item-fem"
+                        style="--size: {{item.personas/max}}; border-color: #ffffff !important; max-height: 1.5rem;">
                         <span class="tooltip"> Personas en este rango: {{item.personas}}</span>
                         <span class="data" style="color: #00607A00;"> {{item.personas}}</span>
                     </td>
@@ -24,7 +25,7 @@
             <caption style="margin-left: 0; margin-right: auto;"> Hombres </caption>
             <tbody>
                 <tr *ngFor="let item of piramideHombres">
-                    <td class="item-masc" style="--size: {{item.personas/max}};">
+                    <td class="item-masc" style="--size: {{item.personas/max}}; max-height: 1.5rem;">
                         <span class="tooltip"> Personas en este rango: {{item.personas}}</span>
                         <span class="data" style="color: #D6EAF000;"> {{item.personas}}</span>
                     </td>
