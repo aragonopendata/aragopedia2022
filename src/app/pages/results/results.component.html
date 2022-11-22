@@ -36,9 +36,9 @@
 
             <article class="search__results-item">
                 <p class="item__category">{{result.category}}</p>
-                <a [routerLink]="['/result']" routerLinkActive="router-link-active" class="item__title">
+                <a href="{{result.title}}" target="_blank" class="item__title">
                     <mat-icon>open_in_new</mat-icon>
-                    <h3>{{result.title}}</h3>
+                    <h3>{{result.title.slice(26,65)}}</h3>
                 </a>
             </article>
 
@@ -60,9 +60,9 @@
         </div>
         <div class="sidebar__categories">
             <h3 class="sidebar__categories-title">Categorías</h3>
-            <ul *ngFor="let tema of temasUnicos">
+            <ul *ngFor="let tema of temasParsed">
                 <li>
-                    <mat-icon>chevron_right</mat-icon><a href="">{{tema}}</a>
+                    <mat-icon>chevron_right</mat-icon><a href="">{{tema.title}}</a>
                 </li>
             </ul>
 

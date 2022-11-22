@@ -14,7 +14,7 @@ const routes: Routes = [
   { path: 'persona', component: PersonaComponent },
   { path: 'eventos', component: EventosComponent },
   { path: 'general', component: GeneralComponent },
-  { path: 'results', component: ResultsComponent },
+  { path: 'results/:temas', component: ResultsComponent },
   { path: ':tipoLocalidad/:municipio', component: ResultComponent },
   // {path: '/result', loadChildren: () =>
   // import('./pages/result/result.component').then(m => m.ResultComponent), data: { breadcrumb: { skip: true } }},
