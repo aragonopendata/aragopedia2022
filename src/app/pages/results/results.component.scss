@@ -1,3 +1,51 @@
+::ng-deep {
+
+    ul.pagination {
+        display: flex;
+        justify-content: space-evenly;
+        list-style: none;
+        margin: auto;
+        padding: 0 1em;
+
+        .page-item {
+            cursor: pointer;
+            font-size: 18px;
+            color: var(--text-color);
+            margin: auto;
+            display: block;
+            width: 50px;
+            text-align: center;
+
+        }
+
+        .disabled {
+            cursor: default;
+            color: var(--bg-dark);
+        }
+
+        .active {
+            font-weight: bold;
+            color: #00607a;
+            background-color: #EDEDEC;
+
+            &::after {
+                content: '';
+                display: block;
+                height: 3px;
+                width: 100%;
+                background-color: #00607a;
+            }
+        }
+
+        .first-item,
+        .previous-item,
+        .next-item,
+        .last-item {
+            display: none;
+        }
+    }
+}
+
 .results-page {
     position: relative;
 
@@ -23,6 +71,11 @@
 
     }
 
+}
+
+ul.pagination {
+    display: flex;
+    justify-content: space-around;
 }
 
 .results {
@@ -72,6 +125,12 @@
                 margin: 0 0 0 5px;
             }
         }
+
+    }
+
+    .results__pagination {
+        width: 100%;
+
     }
 
     .search__results {

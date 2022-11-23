@@ -26,13 +26,13 @@
                 <mat-icon>reorder</mat-icon>
                 <p>Filtrar</p>
             </div>
-            <div class="results__filter-order" (click)="sortResults(results)">
+            <div class="results__filter-order" (click)="sortResults(pageOfItems)">
                 <mat-icon>swap_vert</mat-icon>
-                <p>Orden <span>A - Z</span></p>
+                <p>Orden <span *ngIf="sortByName">A - Z</span><span *ngIf="!sortByName">Z - A</span></p>
             </div>
         </div>
 
-        <div *ngFor="let result of results | filter:filterResult" class="search__results">
+        <div *ngFor="let result of pageOfItems | filter:filterResult" class="search__results">
 
             <article class="search__results-item">
                 <p class="item__category">{{result.category}}</p>
@@ -43,6 +43,10 @@
             </article>
 
         </div>
+        <div *ngIf="this.items.length!== 1 " class="results__pagination">
+            <jw-pagination [items]="items" (changePage)="onChangePage($event)"></jw-pagination>
+        </div>
+
     </section>
 
     <section class="sidebar" [ngClass]="{'active': active}">

@@ -30,19 +30,26 @@ export class HomeComponent implements OnInit {
   }
 
   search(): void {
-    // this.years = this.timelineSvc.getCurrentYears();
+    this.years = this.timelineSvc.getCurrentYears();
     // this.firstYearSelected = this.years[0];
     // this.lastYearSelected = this.years[1];
-    this.provinciaSelected = this.location.provincia.selected;
-    this.municipioSelected = this.location.municipio.selected;
-    this.comarcaSelected = this.location.comarca.selected;
+    // this.provinciaSelected = this.location.provincia.selected;
+    // this.municipioSelected = this.location.municipio.selected;
+    // this.comarcaSelected = this.location.comarca.selected;
     this.temasSelected = this.temas.temasSeleccionados;
 
     this.router.navigate([`results/${this.temasSelected}`]);
 
     console.log(this.years, this.provinciaSelected, this.municipioSelected, this.comarcaSelected, this.temasSelected);
 
+  }
 
+  submit(): void {
+    this.temasSelected = this.temas.temasSeleccionados;
+    // console.log(this.temasSelected);
+    // console.log(`/results/${this.temasSelected}`);
+
+    this.router.navigate([`/results/${this.temasSelected}`]);
   }
 
 }
