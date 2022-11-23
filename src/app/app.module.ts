@@ -29,6 +29,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTableModule } from '@angular/material/table';
 import { FilterPipe } from './pipes/filter.pipe';
 import { AragopediaComponent } from './pages/aragopedia/aragopedia.component';
+import { JwPaginationModule } from 'jw-angular-pagination';
 
 @NgModule({
   declarations: [
@@ -62,7 +63,8 @@ import { AragopediaComponent } from './pages/aragopedia/aragopedia.component';
     MatIconModule,
     HttpClientModule,
     MatTabsModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    JwPaginationModule
   ],
   providers: [ResultService],
   bootstrap: [AppComponent]

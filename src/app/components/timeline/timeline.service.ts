@@ -10,13 +10,14 @@ export class YearsPeriod {
 const periods: YearsPeriod[] = [
 ];
 
-let currentYears: YearsPeriod[] = [];
 
 @Injectable({
     providedIn: 'root',
 })
 
 export class TimeLineSvc {
+
+    currentYears: YearsPeriod[] = [];
     queryUrlYears!: string;
     constructor(private http: HttpClient) { };
 
@@ -33,11 +34,11 @@ export class TimeLineSvc {
     }
 
     setCurrentYears(newRange: YearsPeriod[]): void {
-        currentYears = newRange;
+        this.currentYears = newRange;
     }
 
     getCurrentYears(): YearsPeriod[] {
-        return currentYears;
+        return this.currentYears;
     }
 
 }

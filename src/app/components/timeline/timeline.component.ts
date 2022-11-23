@@ -18,7 +18,6 @@ export class TimeLineComponent implements OnInit {
   queryUrlYears!: string;
   firstYear: any;
   lastYear: any;
-  // dataSource!: YearsPeriod[]
   dataSource = this.temp || [{}]
 
   getData(value: YearsPeriod[]): void {
@@ -33,9 +32,11 @@ export class TimeLineComponent implements OnInit {
       const firstYear = years.find((element: any) => element['callret-1'].value == '1978');
       const lastYear = years.find((element: any) => element['callret-1'].value == '2022');
       const filteredData = years.slice(years.indexOf(firstYear), years.indexOf(lastYear + 1));
+
       filteredData.forEach((element: any, index: any) => {
-        this.dataSource[index] = { date: element['callret-1'].value, dataQuantity: element['callret-0'].value }
+        this.dataSource[index] = { date: element['callret-1'].value, dataQuantity: Number(element['callret-0'].value) }
       });
+
     });
 
 
