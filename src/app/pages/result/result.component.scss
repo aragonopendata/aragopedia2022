@@ -209,6 +209,18 @@ section.container {
             color: var(--accent-color);
         }
     }
+
+    .personas-ilustres {
+
+        li {
+            margin-bottom: .3em;
+
+            a {
+                font-size: 16px;
+                color: var(--accent-color);
+            }
+        }
+    }
 }
 
 .tabla-poblacion {

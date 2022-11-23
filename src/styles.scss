@@ -82,6 +82,28 @@ img {
     max-width: 100%;
 }
 
+
+// Estilos globales del spinner de carga
+.loading {
+    margin: 3em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .mat-progress-spinner circle,
+    .mat-spinner circle {
+        stroke: var(--accent-color);
+    }
+
+    p {
+        margin-top: 1em;
+        font-family: 'Signika', sans-serif;
+        font-size: var(--h3);
+        text-align: center;
+    }
+}
+
 //Mobile
 
 @media screen and (max-width: 576px) {

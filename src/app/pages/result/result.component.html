@@ -8,8 +8,7 @@
                 <h1 class="inicio__name">{{this.lugarBuscado}} <span
                         class="inicio__name-comunidad">({{this.comunidadActual}})</span></h1>
                 <a href={{this.urlMap}} target="_blank">
-                    <mat-spinner [ngClass]="{'spinnerHide':this.map}"></mat-spinner>
-                    <img src={{this.map}} alt="Mapa">
+                    <img *ngIf="this.map" src={{this.map}} alt="Mapa de {{this.lugarBuscado}}">
                 </a>
                 <a href={{this.urlMap}} target="_blank" class="btn map_btn">Ver en el mapa</a>
             </div>
@@ -41,16 +40,19 @@
                     <li><b>email</b> {{this.email}}</li>
                 </ul>
 
-                <h2>Municipios vecinos</h2>
-                <ul>
-                    <li>El Pobo</li>
-                    <li>Escorihuela</li>
-                    <li>Jorcas</li>
+                <h2>Entidades singulares</h2>
+                <ul *ngFor="let entidad of entidadesSingulares">
+                    <li><a
+                            href="/{{this.tipoLocalidad}}/{{entidad.nombreEntidad.value.toLowerCase()}}">{{this.capitalizeString(entidad.nombreEntidad.value)}}</a>
+                    </li>
                 </ul>
             </div>
         </section>
 
         <section class="container template__img-municipio" *ngIf="this.imageWikiDataUrl">
+            <div class="loading" *ngIf="!this.imageWikiDataUrl">
+                <mat-spinner [diameter]="70"></mat-spinner>
+            </div>
             <figure>
                 <img src="{{this.imageWikiDataUrl}}" alt="Imagen principal de {{this.lugarBuscado}}">
                 <figcaption>Foto de <b>{{this.lugarBuscado}}</b> aportada por <a
@@ -62,10 +64,10 @@
         <section class="container template__caracteristicas">
             <h2>Características del municipio</h2>
             <div class="caracteristicas__list">
-                <div class="caracteristica__item">
+                <div *ngIf="this.porcentajeSueloRural !== 'NaN'" class="caracteristica__item">
                     <mat-icon>people</mat-icon> Ocupa un {{this.porcentajeSueloRural}}% del <b>suelo rural</b> de Aragón
                 </div>
-                <div class="caracteristica__item">
+                <div class="caracteristica__item" *ngIf="this.porcentajeSueloUrbano !== 'NaN'">
                     <mat-icon>people</mat-icon> Ocupa un {{this.porcentajeSueloUrbano}}% del <b>suelo urbano</b> de
                     Aragón
                 </div>
@@ -201,7 +203,8 @@
             <div class="graphics__item personas-ilustres" *ngIf="this.personasIlustres.length > 0">
                 <h2>Personas Ilustres nacidas en {{this.lugarBuscado}}</h2>
                 <ul>
-                    <li *ngFor="let persona of personasIlustres">{{persona.itemLabel.value}}</li>
+                    <li *ngFor="let persona of personasIlustres"><a href="{{persona.about.value}}"
+                            target="_blank">{{persona.itemLabel.value}}</a></li>
                 </ul>
             </div>
         </section>

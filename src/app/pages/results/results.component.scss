@@ -234,6 +234,10 @@ ul.pagination {
         flex-direction: row-reverse;
         margin: auto;
 
+        .desktop__buscador {
+            margin-bottom: 1.5em;
+        }
+
         .results {
             flex: 0 0 60%;
             width: 100%;

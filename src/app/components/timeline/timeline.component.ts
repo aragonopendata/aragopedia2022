@@ -1,4 +1,5 @@
 import { NgModule, Component, OnInit } from '@angular/core';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { BrowserModule } from '@angular/platform-browser';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { DxRangeSelectorModule } from 'devextreme-angular';
@@ -52,6 +53,7 @@ export class TimeLineComponent implements OnInit {
   imports: [
     BrowserModule,
     DxRangeSelectorModule,
+    MatProgressSpinnerModule
   ],
   exports: [TimeLineComponent],
   declarations: [TimeLineComponent],

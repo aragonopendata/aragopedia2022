@@ -53,6 +53,7 @@ export class ResultComponent {
   codigoIne!: string;
   leerMas: boolean = false;
   personasIlustres: any;
+  entidadesSingulares: any;
 
   //Queries variables
   queryIdWikiData!: string;
@@ -73,6 +74,7 @@ export class ResultComponent {
   queryUrlPlazasHoteleras!: string;
   queryUrlGetCodigoIne!: string;
   queryUrlPersonasIlustres!: string;
+  queryUrlEntidadesSingulares!: string;
 
 
   ngOnInit() {
@@ -115,6 +117,8 @@ export class ResultComponent {
 
         this.queryUrlGetCodigoIne = `https://opendata.aragon.es/sparql?default-graph-uri=http%3A%2F%2Fopendata.aragon.es%2Fdef%2Fei2av2&query=select+%3Fwikidata+%3Faragopedia+where+%7B%0D%0A++%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fsector-publico%2Forganizacion%2Fmunicipio%2F${this.idLocalidad}%3E+skos%3AexactMatch+%3Fwikidata%3B%0D%0A+++owl%3AsameAs+%3Faragopedia.%0D%0A++FILTER%28regex%28%3Fwikidata%2C+%22http%3A%2F%2Fwww.wikidata.org%2F%22%29%29.%0D%0A++FILTER%28regex%28%3Faragopedia%2C+%22http%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fterritorio%2FMunicipio%2F%22%29%29.%0D%0A%7D&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`;
 
+        this.queryUrlEntidadesSingulares = `https://opendata.aragon.es/sparql?default-graph-uri=http%3A%2F%2Fopendata.aragon.es%2Fdef%2Fei2av2&query=select++distinct+%3Fs+%3FnombreEntidad+where+%7B%0D%0A%3Fs+dc%3Atitle+%3FnombreEntidad%3B%0D%0A++++%3Chttp%3A%2F%2Fwww.w3.org%2Fns%2Forg%23linkedTo%3E+%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fsector-publico%2Forganizacion%2Fmunicipio%2F${this.idLocalidad}%3E%3B%0D%0A++++ns%3AwasUsedBy+%3Fproc.%0D%0A%3Fproc+ns%3AwasAssociatedWith+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdatos%2Fcatalogo%2Fdataset%2Fga-od-core%2F20%3E.%0D%0A%7D%0D%0Aorder+by+%3Fs%0D%0Alimit+100&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`
+
         //Obtención de datos por ID
 
         this.resultSvc.getData(this.queryUrlPoligonos).subscribe((data: any) => {
@@ -144,6 +148,11 @@ export class ResultComponent {
           this.plazasHoteleras = data.results.bindings[0]['callret-0'].value;
         });
 
+        this.resultSvc.getData(this.queryUrlEntidadesSingulares).subscribe((data) => {
+          this.entidadesSingulares = data.results.bindings;
+
+        })
+
         this.resultSvc.getData(this.queryUrlGetCodigoIne).subscribe((data) => {
           const urlAnalizada = data.results.bindings[0].wikidata.value;
           this.codigoIne = urlAnalizada.split('/')[4];
@@ -158,7 +167,6 @@ export class ResultComponent {
 
           this.resultSvc.getData(this.queryUrlPersonasIlustres).subscribe((data) => {
             this.personasIlustres = data.results.bindings;
-            console.log(this.personasIlustres.length)
           })
 
         });
@@ -231,10 +239,12 @@ export class ResultComponent {
     this.resultSvc.getData(this.queryUrlRatioSuelo).subscribe((data: any) => {
       let totalUrbano = data.results.bindings[0].urbano.value;
       let totalRural = data.results.bindings[0].rustico.value;
-      console.log(data);
 
       this.porcentajeSueloRural = ((this.sueloRural / totalRural) * 100).toFixed(2);
       this.porcentajeSueloUrbano = ((this.sueloUrbano / totalUrbano) * 100).toFixed(2);
+
+      console.log(this.porcentajeSueloRural, this.porcentajeSueloUrbano);
+
     });
 
     this.resultSvc.getData(this.queryUrlIncendios).subscribe((data: any) => {

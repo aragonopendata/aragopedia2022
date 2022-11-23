@@ -76,7 +76,12 @@ export class ResultsComponent implements OnInit {
         });
 
       });
+      console.log(this.results);
+
       this.items = this.results;
+
+      console.log(this.items);
+
 
     });
 
@@ -118,6 +123,11 @@ export class ResultsComponent implements OnInit {
   onChangePage(pageOfItems: Array<any>) {
     // update current page of items
     this.pageOfItems = pageOfItems;
+  }
+
+  filterByCategory(event: any) {
+    this.temasSelected = event;
+    window.location.reload();
   }
 
 }
