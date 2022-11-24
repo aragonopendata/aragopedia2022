@@ -45,6 +45,7 @@ export class ResultComponent {
   map!: string;
   urlMap!: string;
   incendiosUltimosAnos!: string;
+  hectareasQuemadas!: string;
   esPoblado!: string;
   edadMediaHombres!: string;
   edadMediaMujeres!: string;
@@ -92,6 +93,7 @@ export class ResultComponent {
 
       const found = data.results.bindings.find((element: any) => this.capitalizeString(element['callret-1'].value) == this.lugarBuscado);
       this.idLocalidad = found.id.value;
+
 
       const urlAnalizada = found.s.value.split('/');
       this.tipoLocalidad = urlAnalizada[6];
@@ -204,6 +206,8 @@ export class ResultComponent {
     });
 
     this.resultSvc.getData(this.queryUrlDensidadPoblacion).subscribe((data: any) => {
+      console.log(data);
+
       this.densidadPoblacion = (Number(data.results.bindings[0].densidad_de_poblacion_habkm2.value)).toFixed(1);
     });
 
@@ -242,13 +246,11 @@ export class ResultComponent {
 
       this.porcentajeSueloRural = ((this.sueloRural / totalRural) * 100).toFixed(2);
       this.porcentajeSueloUrbano = ((this.sueloUrbano / totalUrbano) * 100).toFixed(2);
-
-      console.log(this.porcentajeSueloRural, this.porcentajeSueloUrbano);
-
     });
 
     this.resultSvc.getData(this.queryUrlIncendios).subscribe((data: any) => {
       this.incendiosUltimosAnos = data.results.bindings[0].incendios.value;
+      this.hectareasQuemadas = data.results.bindings[0].superficie_forestal_afectada.value;
     });
 
     this.resultSvc.getData(this.queryUrlEsPoblado).subscribe((data) => {

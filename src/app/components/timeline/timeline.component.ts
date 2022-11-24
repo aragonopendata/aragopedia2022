@@ -14,15 +14,18 @@ import { TimeLineSvc, YearsPeriod } from './timeline.service';
 })
 
 export class TimeLineComponent implements OnInit {
+  constructor(private timeLineSvc: TimeLineSvc) {
+  }
   temp = undefined;
   allYearsData: any;
   queryUrlYears!: string;
   firstYear: any;
   lastYear: any;
   dataSource = this.temp || [{}]
+  yearsSelected: any;
 
   getData(value: YearsPeriod[]): void {
-    this.timeLineSvc.setCurrentYears(value);
+    this.yearsSelected = value;
   }
 
   ngOnInit(): void {
@@ -40,12 +43,9 @@ export class TimeLineComponent implements OnInit {
 
     });
 
+    this.yearsSelected = ['2010', '2022']
 
   }
-
-  constructor(private timeLineSvc: TimeLineSvc) {
-  }
-
 
 }
 
@@ -62,6 +62,4 @@ export class TimeLineComponent implements OnInit {
 export class TimeLineModule {
 }
 
-
-
-platformBrowserDynamic().bootstrapModule(TimeLineModule);
+// platformBrowserDynamic().bootstrapModule(TimeLineModule);

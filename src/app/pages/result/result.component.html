@@ -21,8 +21,9 @@
                     <li><span class="big-number">{{this.densidadPoblacion}}</span>Habitantes por KM2</li>
                     <li><span class="big-number">{{this.poligonos}}</span>Polígonos industriales</li>
                     <li><span class="big-number">{{this.explotacionesGanaderas}}</span>Explotaciones ganaderas</li>
-                    <li><span class="big-number">2769</span><b>Cabezas de ganado</b></li>
                     <li><span class="big-number">{{this.incendiosUltimosAnos}}</span>Incendios desde 2002</li>
+                    <li><span class="big-number">{{this.hectareasQuemadas}}</span>Hectáreas afectadas por
+                        incendios</li>
                     <li><span class="big-number">{{this.numberOfCreativeWork}}</span>Menciones en publicaciones
                         <!-- <a class="inicio__data-link">Ver
                                 publicaciones</a>-->
@@ -43,7 +44,7 @@
                 <h2>Entidades singulares</h2>
                 <ul *ngFor="let entidad of entidadesSingulares">
                     <li><a
-                            href="/{{this.tipoLocalidad}}/{{entidad.nombreEntidad.value.toLowerCase()}}">{{this.capitalizeString(entidad.nombreEntidad.value)}}</a>
+                            href="/{{this.tipoLocalidad}}/{{this.capitalizeString(entidad.nombreEntidad.value)}}">{{this.capitalizeString(entidad.nombreEntidad.value)}}</a>
                     </li>
                 </ul>
             </div>
@@ -55,8 +56,14 @@
             </div>
             <figure>
                 <img src="{{this.imageWikiDataUrl}}" alt="Imagen principal de {{this.lugarBuscado}}">
-                <figcaption>Foto de <b>{{this.lugarBuscado}}</b> aportada por <a
-                        href="https://www.wikidata.org/wiki/Wikidata:Main_Page" target="_blank">Wikidata</a>
+                <figcaption>Este archivo está disponible bajo la licencia <a
+                        href="https://en.wikipedia.org/wiki/es:Creative_Commons" target="_blank"
+                        rel="nofollow noopener">Creative Commons</a> <a
+                        href="https://creativecommons.org/licenses/by/4.0/deed.es" target="_blank"
+                        rel="nofollow noopener">
+                        Atribución 4.0
+                        Internaciona
+                    </a>
                 </figcaption>
             </figure>
         </section>
@@ -149,34 +156,34 @@
                             <span class="slides__tema">
                                 <a *ngIf="
                                 link.tema.value==='http://datos.gob.es/kos/sector-publico/sector/turismo'"
-                                    href="{{link.tema.value}}" target="_blank">Turismo</a>
+                                    href="/results/Turismo">Turismo</a>
                                 <a *ngIf="
                                 link.tema.value==='http://datos.gob.es/kos/sector-publico/sector/educacion'"
-                                    href="{{link.tema.value}}" target="_blank">Educación</a>
+                                    href="/results/Educacion">Educación</a>
                                 <a *ngIf="
                                 link.tema.value==='http://datos.gob.es/kos/sector-publico/sector/ciencia-tecnologia'"
-                                    href="{{link.tema.value}}" target="_blank">Ciencia y Tecnología</a>
+                                    href="/results/Ciencia%20y%20Tecnología">Ciencia y Tecnología</a>
                                 <a *ngIf="
                                 link.tema.value==='http://datos.gob.es/kos/sector-publico/sector/empleo'"
-                                    href="{{link.tema.value}}" target="_blank">Empleo</a>
+                                    href="/results/Empleo">Empleo</a>
                                 <a *ngIf="
                                 link.tema.value==='http://datos.gob.es/kos/sector-publico/sector/economia'"
-                                    href="{{link.tema.value}}" target="_blank">Economia</a>
+                                    href="/results/Economia">Economía</a>
                                 <a *ngIf="
                                 link.tema.value==='http://datos.gob.es/kos/sector-publico/sector/sector-publico'"
-                                    href="{{link.tema.value}}" target="_blank">Sector Público</a>
+                                    href="/results/Sector%20público">Sector Público</a>
                                 <a *ngIf="
                                 link.tema.value==='http://datos.gob.es/kos/sector-publico/sector/salud'"
-                                    href="{{link.tema.value}}" target="_blank">Salud</a>
+                                    href="/results/Salud">Salud</a>
                                 <a *ngIf="
                                 link.tema.value==='http://datos.gob.es/kos/sector-publico/sector/cultura-ocio'"
-                                    href="{{link.tema.value}}" target="_blank">Cultura y Ocio</a>
+                                    href="/results/">Cultura y Ocio</a>
                                 <a *ngIf="
                                 link.tema.value==='http://datos.gob.es/kos/sector-publico/sector/sociedad-bienestar'"
-                                    href="{{link.tema.value}}" target="_blank">Sociedad y Bienestar</a>
+                                    href="/results/">Sociedad y Bienestar</a>
                                 <a *ngIf="
                                 link.tema.value==='http://datos.gob.es/kos/sector-publico/sector/medio-ambiente'"
-                                    href="{{link.tema.value}}" target="_blank">Medio Ambiente</a>
+                                    href="/results/">Medio Ambiente</a>
                             </span>
                             <p class=" slides__abstract" *ngIf="leerMas">{{link.resumen.value}} <span class="leer-mas"
                                     (click)="this.leerMas = !this.leerMas">Reducir resumen</span></p>
@@ -200,7 +207,7 @@
                     </li>
                 </ul>
             </div>
-            <div class="graphics__item personas-ilustres" *ngIf="this.personasIlustres.length > 0">
+            <div class="graphics__item personas-ilustres" *ngIf="this.personasIlustres">
                 <h2>Personas Ilustres nacidas en {{this.lugarBuscado}}</h2>
                 <ul>
                     <li *ngFor="let persona of personasIlustres"><a href="{{persona.about.value}}"
@@ -266,8 +273,9 @@
                     <li><span class="big-number">{{this.densidadPoblacion}}</span>Habitantes por KM2</li>
                     <li><span class="big-number">{{this.poligonos}}</span>Polígonos industriales</li>
                     <li><span class="big-number">{{this.explotacionesGanaderas}}</span>Explotaciones ganaderas</li>
-                    <li><span class="big-number">2769</span><b>Cabezas de ganado</b></li>
                     <li><span class="big-number">{{this.incendiosUltimosAnos}}</span>Incendios desde 2002</li>
+                    <li><span class="big-number">{{this.hectareasQuemadas}}</span>Hectáreas afectadas por
+                        incendios</li>
                     <li><span class="big-number">{{this.numberOfCreativeWork}}</span>Menciones en publicaciones
                         <!-- <a class="inicio__data-link">Ver
                                 publicaciones</a>-->
@@ -442,7 +450,7 @@
                     </li>
                 </ul>
             </div>
-            <div class="graphics__item personas-ilustres" *ngIf="this.personasIlustres.length > 0">
+            <div class="graphics__item personas-ilustres" *ngIf="this.personasIlustres">
                 <h2>Personas Ilustres nacidas en {{this.lugarBuscado}}</h2>
                 <ul>
                     <li *ngFor="let persona of personasIlustres">{{persona.itemLabel.value}}</li>

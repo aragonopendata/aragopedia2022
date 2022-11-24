@@ -12,7 +12,7 @@ import { AragopediaComponent } from './pages/aragopedia/aragopedia.component';
 const routes: Routes = [
   { path: '', redirectTo: '/', pathMatch: 'full' },
   { path: '', component: HomeComponent },
-  { path: 'persona', component: PersonaComponent },
+  { path: 'persona/:id', component: PersonaComponent },
   { path: 'eventos', component: EventosComponent },
   { path: 'general', component: GeneralComponent },
   { path: 'results/:temas', component: ResultsComponent },

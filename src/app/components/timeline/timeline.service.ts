@@ -25,11 +25,12 @@ export class TimeLineSvc {
         return this.http.get(query);
     }
 
-    getPeriods(): YearsPeriod[] {
-        return periods;
-    }
+    // getPeriods(): YearsPeriod[] {
+    //     return periods;
+    // }
 
     getData(value: YearsPeriod[]): YearsPeriod[] {
+        console.log(value);
         return value;
     }
 

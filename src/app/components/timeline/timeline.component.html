@@ -2,7 +2,7 @@
     <mat-spinner [diameter]="70"></mat-spinner>
     <p>Cargando línea temporal</p>
 </div>
-<div *ngIf="this.dataSource.length !== 1" class="space container" style="margin:auto; margin-bottom: 4rem">
+<div *ngIf="this.dataSource.length !== 1" class="space container" style="margin:auto; margin-bottom: 1rem">
     <dx-range-selector (onValueChanged)="getData($event.value)" id="range-selector" title="Selecciona un rango de años"
         [value]="['2010', '2022']" [dataSource]="dataSource">
         <dxo-margin [top]="50"></dxo-margin>
@@ -18,4 +18,10 @@
         </dxo-scale>
         <dxo-slider-marker format="day"></dxo-slider-marker>
     </dx-range-selector>
+    <div class="years-selected" style="margin-top: 100px;">
+        <p>Rango de años seleccionado:
+            <b *ngFor="let year of yearsSelected"> {{year}} </b>
+        </p>
+
+    </div>
 </div>

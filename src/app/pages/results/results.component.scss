@@ -19,8 +19,8 @@
         }
 
         .disabled {
+            filter: opacity(0.5);
             cursor: default;
-            color: var(--bg-dark);
         }
 
         .active {
@@ -37,10 +37,20 @@
             }
         }
 
+        .first-item {
+            visibility: hidden;
+
+            &::after {
+
+                content: "Principio";
+                visibility: visible;
+            }
+        }
+
         .first-item,
+        .last-item,
         .previous-item,
-        .next-item,
-        .last-item {
+        .next-item {
             display: none;
         }
     }
@@ -137,7 +147,7 @@ ul.pagination {
         margin: 20px 15px;
 
         .search__results-item {
-            padding: 20px 15px;
+            padding: 10px;
             border-top: 1px solid #aaa;
 
             .item__category {
