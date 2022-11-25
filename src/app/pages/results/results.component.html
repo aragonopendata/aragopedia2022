@@ -19,37 +19,37 @@
                     <!-- buscador -->
                 </div>
             </div>
-            <h2 class="results__title">Resultados de la búsqueda. Encontrados <u>{{this.results.length}} resultados:</u>
-            </h2>
-            <div class="results__filter">
-                <div class="results__filter-menu" (click)="toggleSidebar()">
-                    <mat-icon>reorder</mat-icon>
-                    <p>Filtrar</p>
-                </div>
-                <div class="results__filter-order" (click)="sortResults(pageOfItems)">
-                    <mat-icon>swap_vert</mat-icon>
-                    <p>Orden <span *ngIf="sortByName">A - Z</span><span *ngIf="!sortByName">Z - A</span></p>
-                </div>
+        </div>
+        <h2 class="results__title">Resultados de la búsqueda. Encontrados <u>{{this.results.length}} resultados
+                entre {{this.firstYear}} y {{this.lastYear}}:</u>
+        </h2>
+        <div class="results__filter">
+            <div class="results__filter-menu" (click)="toggleSidebar()">
+                <mat-icon>reorder</mat-icon>
+                <p>Filtrar</p>
             </div>
-            <div class="loading" *ngIf="this.results.length === 1">
-                <mat-spinner [diameter]="70"></mat-spinner>
-                <p>Obteniendo datos</p>
-            </div>
-            <div *ngFor="let result of pageOfItems | filter:filterResult" class="search__results">
-                <article class="search__results-item">
-                    <p class="item__category">{{result.category}}</p>
-                    <a href="{{result.resultURL}}" target="_blank" class="item__title">
-                        <mat-icon>open_in_new</mat-icon>
-                        <h3>{{result.title}}</h3>
-                    </a>
-                </article>
-
-            </div>
-            <div *ngIf="this.items.length !== 1 " class="results__pagination">
-                <jw-pagination [items]="items" (changePage)="onChangePage($event)"></jw-pagination>
+            <div class="results__filter-order" (click)="sortResults(pageOfItems)">
+                <mat-icon>swap_vert</mat-icon>
+                <p>Orden <span *ngIf="sortByName">A - Z</span><span *ngIf="!sortByName">Z - A</span></p>
             </div>
         </div>
+        <div class="loading" *ngIf="this.results.length === 1">
+            <mat-spinner [diameter]="70"></mat-spinner>
+            <p>Obteniendo datos</p>
+        </div>
+        <div *ngFor="let result of pageOfItems | filter:filterResult" class="search__results">
+            <article class="search__results-item">
+                <p class="item__category">{{result.category}}</p>
+                <a href="{{result.resultURL}}" target="_blank" class="item__title">
+                    <mat-icon>open_in_new</mat-icon>
+                    <h3>{{result.title}}</h3>
+                </a>
+            </article>
 
+        </div>
+        <div *ngIf="this.items.length !== 1 " class="results__pagination">
+            <jw-pagination [items]="items" (changePage)="onChangePage($event)"></jw-pagination>
+        </div>
     </section>
 
     <section class="sidebar" [ngClass]="{'active': active}">

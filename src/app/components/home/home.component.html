@@ -1,5 +1,5 @@
 <!-- Buscador -->
-<app-timeline></app-timeline>
+<app-timeline [yearsSelected]="selectedYears"></app-timeline>
 
 <!-- Selector de comarca -->
 <app-select-location></app-select-location>
@@ -16,7 +16,7 @@
     <!-- [routerLink]="['/results']" -->
     <ul>
         <h2>Búsqueda:</h2>
-        <li *ngIf="years">{{years}}</li>
+        <li *ngIf="selectedYears">{{selectedYears}}</li>
         <li *ngIf="provinciaSelected">{{provinciaSelected}}</li>
         <li *ngIf="municipioSelected">{{municipioSelected}}</li>
         <li *ngIf="comarcaSelected">{{comarcaSelected}}</li>

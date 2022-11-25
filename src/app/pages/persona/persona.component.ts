@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { PersonaService } from './persona.service';
 
 @Component({
   selector: 'app-persona',
@@ -8,13 +9,14 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class PersonaComponent implements OnInit {
 
-  constructor(private _route: ActivatedRoute) { }
+  constructor(private _route: ActivatedRoute, personaSvc: PersonaService) { }
 
   idPersona: any;
+  queryUrlPersonas!: string;
 
   ngOnInit(): void {
     this.idPersona = this._route.snapshot.paramMap.get('id');
-    console.log(this.idPersona);
+
 
   }
 

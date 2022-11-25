@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, Input, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 
 export class YearsPeriod {
@@ -15,22 +15,23 @@ const periods: YearsPeriod[] = [
     providedIn: 'root',
 })
 
-export class TimeLineSvc {
+export class TimeLineSvc implements OnInit {
 
     currentYears: YearsPeriod[] = [];
     queryUrlYears!: string;
     constructor(private http: HttpClient) { };
 
+    ngOnInit(): void {
+    }
     getAllYears(query: string): Observable<any> {
         return this.http.get(query);
     }
 
-    // getPeriods(): YearsPeriod[] {
-    //     return periods;
-    // }
+    getPeriods(): YearsPeriod[] {
+        return periods;
+    }
 
-    getData(value: YearsPeriod[]): YearsPeriod[] {
-        console.log(value);
+    getSelectedYears(value: YearsPeriod[]) {
         return value;
     }
 

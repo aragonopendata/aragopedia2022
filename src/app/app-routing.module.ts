@@ -15,7 +15,7 @@ const routes: Routes = [
   { path: 'persona/:id', component: PersonaComponent },
   { path: 'eventos', component: EventosComponent },
   { path: 'general', component: GeneralComponent },
-  { path: 'results/:temas', component: ResultsComponent },
+  { path: 'results/:temas/:years', component: ResultsComponent },
   { path: ':tipoLocalidad/:municipio', component: ResultComponent },
   { path: 'aragopedia', component: AragopediaComponent },
   // {path: '/result', loadChildren: () =>
