@@ -24,10 +24,11 @@ export class TimeLineComponent implements OnInit {
   dataSource = this.temp || [{}]
 
   @Input() yearsSelected: any = ['2010', '2022'];
+  @Input() yearsURL: string = ``;
 
   getData(value: YearsPeriod[]): void {
     this.yearsSelected = value;
-
+    this.yearsURL = `${this.yearsSelected[0]}-${this.yearsSelected[1]}`;
   }
 
   ngOnInit(): void {

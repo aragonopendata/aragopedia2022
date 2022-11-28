@@ -20,7 +20,8 @@
                 </div>
             </div>
         </div>
-        <h2 class="results__title">Resultados de la búsqueda. Encontrados <u>{{this.results.length}} resultados
+        <h2 class="results__title">Resultados de la búsqueda. Encontrados <u>{{this.results.length}} resultados de
+                {{this.temasSelected}}
                 entre {{this.firstYear}} y {{this.lastYear}}:</u>
         </h2>
         <div class="results__filter">
@@ -39,7 +40,7 @@
         </div>
         <div *ngFor="let result of pageOfItems | filter:filterResult" class="search__results">
             <article class="search__results-item">
-                <p class="item__category">{{result.category}}</p>
+                <p class="item__category">{{result.category}} - {{result.year}}</p>
                 <a href="{{result.resultURL}}" target="_blank" class="item__title">
                     <mat-icon>open_in_new</mat-icon>
                     <h3>{{result.title}}</h3>
@@ -47,8 +48,10 @@
             </article>
 
         </div>
-        <div *ngIf="this.items.length !== 1 " class="results__pagination">
-            <jw-pagination [items]="items" (changePage)="onChangePage($event)"></jw-pagination>
+        <div *ngIf="this.items">
+            <div *ngIf="this.items.length !== 1 " class="results__pagination">
+                <jw-pagination [items]="items" (changePage)="onChangePage($event)"></jw-pagination>
+            </div>
         </div>
     </section>
 
@@ -57,7 +60,7 @@
             <mat-icon>close</mat-icon> <span>Cerrar filtros</span>
         </div>
         <div class="sidebar__timeline">
-            <app-timeline></app-timeline>
+            <app-timeline [yearsSelected]="selectedYears"></app-timeline>
         </div>
         <div class="sidebar__location">
             <app-select-location></app-select-location>
@@ -69,27 +72,9 @@
             <h3 class="sidebar__categories-title">Categorías</h3>
             <ul *ngFor="let tema of temasParsed">
                 <li>
-                    <mat-icon>chevron_right</mat-icon><a (click)="filterByCategory(tema.title)"
-                        [routerLink]="['/results/', tema.title]">{{tema.title}}</a>
+                    <mat-icon>chevron_right</mat-icon><a (click)="filterByCategory(tema.title)">{{tema.title}}</a>
                 </li>
             </ul>
-
-            <h3 class="sidebar__categories-title">Tipos</h3>
-            <ul>
-                <li>
-                    <mat-icon>chevron_right</mat-icon><a href="">Lugar</a>
-                </li>
-                <li>
-                    <mat-icon>chevron_right</mat-icon><a href="">Persona</a>
-                </li>
-                <li>
-                    <mat-icon>chevron_right</mat-icon><a href="">Organización</a>
-                </li>
-                <li>
-                    <mat-icon>chevron_right</mat-icon><a href="">Temas</a>
-                </li>
-            </ul>
-
         </div>
     </section>
 </div>

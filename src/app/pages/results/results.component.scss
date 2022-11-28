@@ -15,7 +15,11 @@
             display: block;
             width: 50px;
             text-align: center;
+            transition: background-color 0.3s;
 
+            &:hover {
+                background-color: #EDEDEC;
+            }
         }
 
         .disabled {
@@ -98,6 +102,7 @@ ul.pagination {
     .results__title {
         font-weight: bold;
         text-align: center;
+        padding: 0 1em;
     }
 
     .results__filter {
@@ -174,11 +179,12 @@ ul.pagination {
 }
 
 .sidebar {
-    margin: 20px;
+    // margin: 20px;
     padding: 1em;
     box-sizing: border-box;
     background-color: #EDEDEC;
     display: none;
+    padding: 1em;
 
     .sidebar__cerrar {
         font-size: 16px;
@@ -224,6 +230,7 @@ ul.pagination {
                     color: var(--text-color);
                     text-decoration: none;
                     margin-top: 3px;
+                    cursor: pointer;
                 }
             }
         }
@@ -231,11 +238,11 @@ ul.pagination {
 }
 
 .sidebar.active {
-    // position: absolute;
-    top: 0;
-    // margin: auto;
-    width: 100vw;
     display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
 }
 
 @media screen and (min-width:992px) {
@@ -254,6 +261,7 @@ ul.pagination {
 
             .results__title {
                 text-align: left;
+                padding: 0;
             }
 
             .results__filter-desktop {
@@ -269,7 +277,7 @@ ul.pagination {
             max-width: 320px;
             height: fit-content;
             border-radius: 10px;
-            // position: absolute;
+            position: sticky;
             top: 100px;
 
             .sidebar__cerrar,
