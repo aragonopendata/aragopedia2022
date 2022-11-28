@@ -24,6 +24,7 @@ export class SelectLocationComponent implements OnInit {
   municipioSelected!: string;
   comarcaSelected!: string;
   tipoLocalidad!: string;
+  error: boolean = false;
 
   @ViewChild(SelectProvinciaComponent) provincia: any;
   @ViewChild(SelectMunicipioComponent) municipio: any;
@@ -45,18 +46,19 @@ export class SelectLocationComponent implements OnInit {
     this.provinciaSelected = this.provincia.selectedProvincia;
     this.comarcaSelected = this.comarca.selectedComarca;
     this.municipioSelected = this.municipio.selectedMunicipio;
-    if (this.provinciaSelected !== '' && this.comarcaSelected == '' && this.municipioSelected == '') {
+
+    if (this.provinciaSelected === '' && this.comarcaSelected === '' && this.municipioSelected === '') {
+      this.error = true;
+    } else if (this.provinciaSelected !== '' && this.comarcaSelected === '' && this.municipioSelected === '') {
       this.tipoLocalidad = 'provincia';
       this.router.navigate([`/${this.tipoLocalidad}/${this.provinciaSelected}`])
-    } else if (this.comarcaSelected !== '' && this.municipioSelected == '') {
+    } else if (this.comarcaSelected !== '' && this.municipioSelected === '') {
       this.tipoLocalidad = 'comarca';
       this.router.navigate([`/${this.tipoLocalidad}/${this.comarcaSelected}`])
     } else {
       this.tipoLocalidad = 'municipio';
       this.router.navigate([`/${this.tipoLocalidad}/${this.municipioSelected}`])
     }
-
-    console.log(this.provinciaSelected, this.comarcaSelected, this.municipioSelected);
 
   }
 
