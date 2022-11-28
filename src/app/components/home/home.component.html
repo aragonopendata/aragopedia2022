@@ -1,25 +1,31 @@
-<!-- Buscador -->
-<app-timeline [yearsSelected]="selectedYears"></app-timeline>
-
-<!-- Selector de comarca -->
-<app-select-location></app-select-location>
-
-<!-- Temas -->
-
-<app-temas></app-temas>
-
-<!-- Submit button -->
-
-<div class="submit">
-    <button (click)="submit()" class="btn submit__btn">Realizar
-        búsqueda</button>
-    <!-- [routerLink]="['/results']" -->
-    <ul>
-        <h2>Búsqueda:</h2>
-        <li *ngIf="yearsURL">{{yearsURL}}</li>
-        <li *ngIf="provinciaSelected">{{provinciaSelected}}</li>
-        <li *ngIf="municipioSelected">{{municipioSelected}}</li>
-        <li *ngIf="comarcaSelected">{{comarcaSelected}}</li>
-        <li *ngIf="temasSelected">{{temasSelected}}</li>
-    </ul>
+<div class="home__location">
+    <div class="container">
+        <h2>Busca los detalles de un municipio</h2>
+        <!-- Selector de comarca -->
+        <app-select-location></app-select-location>
+    </div>
 </div>
+
+<div class="container home__temas">
+    <h2>Búsqueda por temas y años</h2>
+    <app-timeline [yearsSelected]="selectedYears"></app-timeline>
+    <!-- Temas -->
+
+    <app-temas></app-temas>
+
+    <!-- Submit button -->
+
+    <div class="container submit">
+        <p *ngIf="error" class="error">Debes seleccionar al menos un tema y un mínimo de 3 años</p>
+        <button (click)="submit()" class="btn submit__btn">Realizar
+            búsqueda</button>
+    </div>
+</div>
+<!-- <ul>
+    <h2>Búsqueda:</h2>
+    <li *ngIf="yearsURL">{{yearsURL}}</li>
+    <li *ngIf="provinciaSelected">{{provinciaSelected}}</li>
+    <li *ngIf="municipioSelected">{{municipioSelected}}</li>
+    <li *ngIf="comarcaSelected">{{comarcaSelected}}</li>
+    <li *ngIf="temasSelected">{{temasSelected}}</li>
+</ul> -->

@@ -1,26 +1,41 @@
-// App heading
+.home__location {
+    margin: auto;
+    padding: 3em 0;
+    background-color: #FAFAFD;
 
-// .app-title {
-//     display: flex;
-//     align-items: center;
-//     background-color: var(--text-color);
-//     padding: 1.5em 1em;
-//     margin: auto;
-// }
+    .container {
+        margin: auto;
+    }
 
-// .app-title h1 {
-//     color: #fff;
-// }
+    h2 {
+        font-size: var(--h1);
+    }
+}
 
-// Buscador
+.home__temas {
+    margin: auto;
+    margin-top: 3em;
+
+    h2 {
+        font-size: var(--h1);
+    }
+}
 
 // Submit btn
+.submit {
 
-.submit__btn {
-    margin: auto;
-    outline: none;
-    border-width: 0;
-    cursor: pointer;
-    display: block;
-    width: fit-content;
+    .submit__btn {
+        margin: auto;
+        outline: none;
+        border-width: 0;
+        cursor: pointer;
+        display: block;
+        width: fit-content;
+    }
+
+    .error {
+        font-size: 18px;
+        color: #d22333;
+        text-align: center;
+    }
 }

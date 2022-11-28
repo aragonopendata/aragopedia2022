@@ -1,3 +1,21 @@
+.return {
+    width: fit-content;
+    position: fixed;
+    bottom: 30px;
+    right: 0;
+    left: 0;
+    margin: auto;
+
+    .return__btn {
+        margin: auto;
+        outline: none;
+        border-width: 0;
+        cursor: pointer;
+        display: block;
+        width: fit-content;
+    }
+}
+
 ::ng-deep {
 
     ul.pagination {
@@ -62,6 +80,10 @@
 
 .results-page {
     position: relative;
+
+    .desktop__timeline {
+        margin-top: 5em;
+    }
 
     .main-search {
         margin: 3em auto 0;
@@ -246,6 +268,7 @@ ul.pagination {
 }
 
 @media screen and (min-width:992px) {
+
     .results-page {
         display: flex;
         flex-direction: row-reverse;

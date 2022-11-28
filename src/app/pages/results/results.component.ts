@@ -99,6 +99,7 @@ export class ResultsComponent implements OnInit {
       this.temasSvc.getResults(this.queryUrlResultTemas).subscribe(data => {
 
         const results = data.results.bindings;
+
         results.forEach((element: any, i: any) => {
           const title = element['callret-3'].value
           this.results[i] = { categoryURL: element.item.value, title: title, category: element.labelTema.value, resultURL: element.item.value, year: element.year.value }

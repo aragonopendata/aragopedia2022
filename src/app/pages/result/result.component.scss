@@ -1,3 +1,21 @@
+.return {
+    width: fit-content;
+    position: fixed;
+    bottom: 30px;
+    right: 0;
+    left: 0;
+    margin: auto;
+
+    .return__btn {
+        margin: auto;
+        outline: none;
+        border-width: 0;
+        cursor: pointer;
+        display: block;
+        width: fit-content;
+    }
+}
+
 // Mat table styles
 
 .mat-tab-group {

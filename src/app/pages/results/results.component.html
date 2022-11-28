@@ -4,9 +4,9 @@
             <div class="desktop__timeline">
                 <app-timeline></app-timeline>
             </div>
-            <div class="desktop__location">
+            <!-- <div class="desktop__location">
                 <app-select-location></app-select-location>
-            </div>
+            </div> -->
             <div *ngIf="this.results.length !== 1">
                 <div class="desktop__buscador">
                     <!-- BUSCADOR -->
@@ -62,9 +62,9 @@
         <div class="sidebar__timeline">
             <app-timeline [yearsSelected]="selectedYears"></app-timeline>
         </div>
-        <div class="sidebar__location">
+        <!-- <div class="sidebar__location">
             <app-select-location></app-select-location>
-        </div>
+        </div> -->
         <div class="sidebar__buscador">
             <app-search></app-search>
         </div>
@@ -77,4 +77,8 @@
             </ul>
         </div>
     </section>
+
+    <div class="return">
+        <button class="btn return__btn" [routerLink]="['/']">Nueva búsqueda</button>
+    </div>
 </div>
