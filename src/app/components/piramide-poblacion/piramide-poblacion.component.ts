@@ -17,6 +17,8 @@ export class PiramidePoblacionComponent implements OnInit {
   queryPiramidePoblacion!: string;
   lugarBuscado!: string;
   lugarBuscadoParsed!: string;
+  codigoIne!: string;
+  queryNombresIne!: string;
   piramideHombres: Array<ItemPiramide> = [
 
     { sexo: "Hombres", personas: 0, grupo: "90 ó más" },
@@ -64,44 +66,52 @@ export class PiramidePoblacionComponent implements OnInit {
 
   ngOnInit() {
 
-    this.lugarBuscado = this.capitalizeString(this._route.snapshot.paramMap.get('municipio'));
+    this.codigoIne = this.capitalizeString(this._route.snapshot.paramMap.get('municipio'));
     this.lugarBuscadoParsed = this.deleteSpace(this._route.snapshot.paramMap.get('municipio'));
+    this.queryNombresIne = `https://opendata.aragon.es/sparql?default-graph-uri=&query=prefix+dbpedia%3A+%3Chttp%3A%2F%2Fdbpedia.org%2Fontology%2F%3E+%0D%0Aprefix+org%3A+%3Chttp%3A%2F%2Fwww.w3.org%2Fns%2Forg%23%3E%0D%0Aprefix+aragopedia%3A+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2FAragopedia%23%3E%0D%0A%0D%0Aselect+%3Fnombre+from+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fei2av2%3E++where+%7B%0D%0A++%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fsector-publico%2Forganizacion%2Fmunicipio%2F${this.codigoIne}%3E+dc%3Atitle+%3Fnombre%0D%0A%7D&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`;
 
+    this.piramidePoblacionSvc.getPiramidePoblacion(this.queryNombresIne).subscribe(data => {
+      const nombreMunicipio = data.results.bindings[0].nombre.value;
+      this.lugarBuscado = this.capitalizeString(nombreMunicipio);
+      this.lugarBuscadoParsed = this.deleteSpace(this.lugarBuscado);
 
-    this.queryPiramidePoblacion = `https://opendata.aragon.es/sparql?default-graph-uri=&query=select+distinct+%3FrefArea+%3FnameRefArea+%28strafter%28str%28%3FrefPeriod%29%2C+%22http%3A%2F%2Freference.data.gov.uk%2Fid%2Fyear%2F%22%29+AS+%3FnameRefPeriod%29+%3Fgrupo+%3Fsexo+xsd%3Aint%28%3Fvalor%29+as+%3Fpersonas+where+%7B%0D%0A+++%3Fobs+qb%3AdataSet+%3Fdataset.%0D%0A+++FILTER%28%3Fdataset+IN+%28%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fiaest%2Fdataset%2F03-030018TM%3E%29%29.%0D%0A+%3Fobs+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refPeriod%3E+%3FrefPeriod.%0D%0A+FILTER+%28%3FrefPeriod+IN+%28%3Chttp%3A%2F%2Freference.data.gov.uk%2Fid%2Fyear%2F2011%3E%29%29.%0D%0A+%3Fobs+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refArea%3E+%3FrefArea.%0D%0A+%3FrefArea+rdfs%3Alabel+%3FnameRefArea.+%0D%0A+FILTER+%28+lang%28%3FnameRefArea%29+%3D+%22es%22+%29.%0D%0A+BIND+%28%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fterritorio%2FMunicipio%2F${this.lugarBuscadoParsed}%3E+AS+%3Fmuni%29.%0D%0A+FILTER+%28%3FrefArea+IN+%28%3Fmuni%29%29.%0D%0A+OPTIONAL+%7B++%3Fobs+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fiaest%2Fdimension%23sexo%3E+%3FsexoVal++%7D+.%0D%0A+%3FsexoVal+skos%3AprefLabel+%3Fsexo.%0D%0AFILTER+%28%3Chttp%3A%2F%2Fopendata.aragon.es%2Fkos%2Fiaest%2Fsexo%2Fmujeres%3E+AS+%3FsexoVal%29.%0D%0A+OPTIONAL+%7B++%3Fobs+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fiaest%2Fdimension%23edad-grupos-quinquenales%3E+%3FgrupoVal++%7D+.%0D%0A+%3FgrupoVal+skos%3AprefLabel+%3Fgrupo.%0D%0A+OPTIONAL+%7B++%3Fobs+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fiaest%2Fmedida%23personas%3E+%3Fvalor+%7D+.%0D%0A%7D%0D%0AORDER+BY++desc%28%3FrefPeriod%29%2Cdesc%28%3Fgrupo%29%2C+%3Fsexo%0D%0ALIMIT+200&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`;
+      this.queryPiramidePoblacion = `https://opendata.aragon.es/sparql?default-graph-uri=&query=select+distinct+%3FrefArea+%3FnameRefArea+%28strafter%28str%28%3FrefPeriod%29%2C+%22http%3A%2F%2Freference.data.gov.uk%2Fid%2Fyear%2F%22%29+AS+%3FnameRefPeriod%29+%3Fgrupo+%3Fsexo+xsd%3Aint%28%3Fvalor%29+as+%3Fpersonas+where+%7B%0D%0A+++%3Fobs+qb%3AdataSet+%3Fdataset.%0D%0A+++FILTER%28%3Fdataset+IN+%28%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fiaest%2Fdataset%2F03-030018TM%3E%29%29.%0D%0A+%3Fobs+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refPeriod%3E+%3FrefPeriod.%0D%0A+FILTER+%28%3FrefPeriod+IN+%28%3Chttp%3A%2F%2Freference.data.gov.uk%2Fid%2Fyear%2F2011%3E%29%29.%0D%0A+%3Fobs+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refArea%3E+%3FrefArea.%0D%0A+%3FrefArea+rdfs%3Alabel+%3FnameRefArea.+%0D%0A+FILTER+%28+lang%28%3FnameRefArea%29+%3D+%22es%22+%29.%0D%0A+BIND+%28%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fterritorio%2FMunicipio%2F${this.lugarBuscadoParsed}%3E+AS+%3Fmuni%29.%0D%0A+FILTER+%28%3FrefArea+IN+%28%3Fmuni%29%29.%0D%0A+OPTIONAL+%7B++%3Fobs+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fiaest%2Fdimension%23sexo%3E+%3FsexoVal++%7D+.%0D%0A+%3FsexoVal+skos%3AprefLabel+%3Fsexo.%0D%0AFILTER+%28%3Chttp%3A%2F%2Fopendata.aragon.es%2Fkos%2Fiaest%2Fsexo%2Fmujeres%3E+AS+%3FsexoVal%29.%0D%0A+OPTIONAL+%7B++%3Fobs+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fiaest%2Fdimension%23edad-grupos-quinquenales%3E+%3FgrupoVal++%7D+.%0D%0A+%3FgrupoVal+skos%3AprefLabel+%3Fgrupo.%0D%0A+OPTIONAL+%7B++%3Fobs+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fiaest%2Fmedida%23personas%3E+%3Fvalor+%7D+.%0D%0A%7D%0D%0AORDER+BY++desc%28%3FrefPeriod%29%2Cdesc%28%3Fgrupo%29%2C+%3Fsexo%0D%0ALIMIT+200&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`;
 
-    this.piramidePoblacionSvc.getPiramidePoblacion(this.queryPiramidePoblacion).subscribe((data: any) => {
+      this.piramidePoblacionSvc.getPiramidePoblacion(this.queryPiramidePoblacion).subscribe((data: any) => {
 
-      this.piramidePoblacion = data.results.bindings
+        this.piramidePoblacion = data.results.bindings
 
-      this.piramidePoblacion.forEach((element: any) => {
+        this.piramidePoblacion.forEach((element: any) => {
 
-        var auxDatoPiramide: ItemPiramide = { sexo: "", personas: 0, grupo: "" };
+          let auxDatoPiramide: ItemPiramide = { sexo: "", personas: 0, grupo: "" };
 
-        auxDatoPiramide.grupo = element.grupo.value;
-        auxDatoPiramide.sexo = element.sexo.value;
-        auxDatoPiramide.personas = element.personas.value;
+          auxDatoPiramide.grupo = element.grupo.value;
+          auxDatoPiramide.sexo = element.sexo.value;
+          auxDatoPiramide.personas = element.personas.value;
 
-        if ((element.sexo.value) == "Mujeres") {
-          if (this.piramideMujeres.find(v => v.grupo === auxDatoPiramide.grupo) && this.piramideMujeres.find(v => v.grupo === auxDatoPiramide.grupo) != undefined) {
+          if ((element.sexo.value) == "Mujeres") {
+            if (this.piramideMujeres.find(v => v.grupo === auxDatoPiramide.grupo) && this.piramideMujeres.find(v => v.grupo === auxDatoPiramide.grupo) != undefined) {
 
-            this.piramideMujeres.find(v => v.grupo == auxDatoPiramide.grupo)!.personas = Number(element.personas.value);
+              this.piramideMujeres.find(v => v.grupo == auxDatoPiramide.grupo)!.personas = Number(element.personas.value);
 
+            }
+          } else {
+            if (this.piramideHombres.find(v => v.grupo === auxDatoPiramide.grupo) && this.piramideHombres.find(v => v.grupo === auxDatoPiramide.grupo) != undefined) {
+
+              this.piramideHombres.find(v => v.grupo == auxDatoPiramide.grupo)!.personas = Number(element.personas.value);
+
+            }
           }
-        } else {
-          if (this.piramideHombres.find(v => v.grupo === auxDatoPiramide.grupo) && this.piramideHombres.find(v => v.grupo === auxDatoPiramide.grupo) != undefined) {
+        });
 
-            this.piramideHombres.find(v => v.grupo == auxDatoPiramide.grupo)!.personas = Number(element.personas.value);
+        let maxHombres = Math.max.apply(Math, this.piramideHombres.map(function (o) { return o.personas; }))
+        let maxMujeres = Math.max.apply(Math, this.piramideMujeres.map(function (o) { return o.personas; }))
 
-          }
-        }
+        this.max = Math.max(maxHombres, maxMujeres);
       });
+    })
 
-      var maxHombres = Math.max.apply(Math, this.piramideHombres.map(function (o) { return o.personas; }))
-      var maxMujeres = Math.max.apply(Math, this.piramideMujeres.map(function (o) { return o.personas; }))
 
-      this.max = Math.max(maxHombres, maxMujeres);
-    });
 
   }
 

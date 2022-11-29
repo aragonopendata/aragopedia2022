@@ -4,6 +4,10 @@
         margin: auto;
     }
 
+    .container {
+        margin: auto;
+    }
+
     .template__persona {
         display: flex;
         flex-direction: column;
@@ -52,17 +56,6 @@
             padding: 1rem;
             background-color: #F8F8F8;
             border-radius: 6px;
-
-            ul {
-                display: flex;
-                flex-wrap: wrap;
-            }
-
-            li {
-                flex: 0 0 50%;
-                margin-left: 0;
-                margin-bottom: 20px;
-            }
         }
 
         h3 {
@@ -82,6 +75,10 @@
 @media screen and (max-width: 992px) {
     .template__persona {
         flex-direction: column;
+    }
+
+    .container {
+        margin: auto;
     }
 }
 
@@ -140,13 +137,7 @@
         background-color: #F8F8F8;
         border-radius: 6px;
 
-        ul {
-            display: flex;
-            flex-wrap: wrap;
-        }
-
         li {
-            flex: 0 0 50%;
             margin-left: 0;
             margin-bottom: 20px;
         }

@@ -23,8 +23,11 @@ export class SelectLocationComponent implements OnInit {
   provinciaSelected!: string;
   municipioSelected!: string;
   comarcaSelected!: string;
+  idSelected!: string;
   tipoLocalidad!: string;
   error: boolean = false;
+
+
 
   @ViewChild(SelectProvinciaComponent) provincia: any;
   @ViewChild(SelectMunicipioComponent) municipio: any;
@@ -39,6 +42,7 @@ export class SelectLocationComponent implements OnInit {
     this.provinciaSelected = this.provincia.selectedProvincia;
     this.comarcaSelected = this.comarca.selectedComarca;
     this.municipioSelected = this.municipio.selectedMunicipio;
+    this.idSelected = this.municipio.id;
     console.log('Provincia: ' + this.provinciaSelected + '| Comarca: ' + this.comarcaSelected + '| Municipio: ' + this.municipioSelected);
   }
 
@@ -46,18 +50,25 @@ export class SelectLocationComponent implements OnInit {
     this.provinciaSelected = this.provincia.selectedProvincia;
     this.comarcaSelected = this.comarca.selectedComarca;
     this.municipioSelected = this.municipio.selectedMunicipio;
+    this.idSelected = this.municipio.selectedId;
+
+    console.log(this.idSelected);
+
 
     if (this.provinciaSelected === '' && this.comarcaSelected === '' && this.municipioSelected === '') {
       this.error = true;
     } else if (this.provinciaSelected !== '' && this.comarcaSelected === '' && this.municipioSelected === '') {
       this.tipoLocalidad = 'provincia';
-      this.router.navigate([`/${this.tipoLocalidad}/${this.provinciaSelected}`])
+      // this.router.navigate([`/${this.tipoLocalidad}/${this.provinciaSelected}`])
+      this.router.navigate([`/${this.tipoLocalidad}/${this.idSelected}`])
     } else if (this.comarcaSelected !== '' && this.municipioSelected === '') {
       this.tipoLocalidad = 'comarca';
-      this.router.navigate([`/${this.tipoLocalidad}/${this.comarcaSelected}`])
+      // this.router.navigate([`/${this.tipoLocalidad}/${this.comarcaSelected}`])
+      this.router.navigate([`/${this.tipoLocalidad}/${this.idSelected}`])
     } else {
       this.tipoLocalidad = 'municipio';
-      this.router.navigate([`/${this.tipoLocalidad}/${this.municipioSelected}`])
+      // this.router.navigate([`/${this.tipoLocalidad}/${this.municipioSelected}`])
+      this.router.navigate([`/${this.tipoLocalidad}/${this.idSelected}`])
     }
 
   }

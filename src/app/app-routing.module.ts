@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
-import { EventosComponent } from './pages/eventos/eventos.component';
 import { GeneralComponent } from './pages/general/general.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { PersonaComponent } from './pages/persona/persona.component';
@@ -13,15 +12,10 @@ const routes: Routes = [
   { path: '', redirectTo: '/', pathMatch: 'full' },
   { path: '', component: HomeComponent },
   { path: 'persona/:id', component: PersonaComponent },
-  { path: 'eventos', component: EventosComponent },
   { path: 'general', component: GeneralComponent },
   { path: 'results/:temas/:years', component: ResultsComponent },
   { path: ':tipoLocalidad/:municipio', component: ResultComponent },
   { path: 'aragopedia', component: AragopediaComponent },
-  // {path: '/result', loadChildren: () =>
-  // import('./pages/result/result.component').then(m => m.ResultComponent), data: { breadcrumb: { skip: true } }},
-  // { path: 'persona', loadChildren: () => import('./pages/persona/persona.module').then(m => m.PersonaModule) },
-  // { path: 'eventos', loadChildren: () => import('./pages/eventos/eventos.module').then(m => m.EventosModule) },
   { path: '**', pathMatch: 'full', component: NotFoundComponent }
 ];
 
