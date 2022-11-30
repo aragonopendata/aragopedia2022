@@ -203,7 +203,8 @@
                 <h2>Miembros del pleno municipal</h2>
                 <ul>
                     <li *ngFor="let miembro of miembrosPleno"><b>{{miembro.cargo.value}}: </b>
-                        <a href="{{miembro.persona.value}}" target="_blank">{{miembro.nombrePersona.value}}</a>
+                        <a [routerLink]="['/persona/', miembro.persona.value]" routerLinkActive="router-link-active"
+                            target="_blank">{{miembro.nombrePersona.value}}</a>
                     </li>
                 </ul>
             </div>

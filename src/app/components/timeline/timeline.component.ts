@@ -31,7 +31,8 @@ export class TimeLineComponent implements OnInit {
       this.yearsSelected = value;
       this.yearsURL = `${this.yearsSelected[0]}-${this.yearsSelected[1]}`;
     } else {
-      this.yearsSelected = ['1978', '2022']
+      this.yearsSelected = ['1978', '2022'];
+      this.yearsURL = `${this.yearsSelected[0]}-${this.yearsSelected[1]}`;
     }
   }
 

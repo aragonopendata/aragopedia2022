@@ -30,6 +30,7 @@ import { MatTableModule } from '@angular/material/table';
 import { FilterPipe } from './pipes/filter.pipe';
 import { AragopediaComponent } from './pages/aragopedia/aragopedia.component';
 import { JwPaginationModule } from 'jw-angular-pagination';
+import { PersonaModule } from './pages/persona/persona.module';
 
 @NgModule({
   declarations: [
@@ -64,7 +65,8 @@ import { JwPaginationModule } from 'jw-angular-pagination';
     HttpClientModule,
     MatTabsModule,
     MatProgressSpinnerModule,
-    JwPaginationModule
+    JwPaginationModule,
+    PersonaModule
   ],
   providers: [ResultService],
   bootstrap: [AppComponent]

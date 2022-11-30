@@ -39,7 +39,7 @@ export class ResultsComponent implements OnInit {
   items: any;
   pageOfItems!: Array<any>;
   sortByName: boolean = true;
-  selectedYears: any;
+  selectedYears: any = ['1978', '2022'];
   firstYear!: string;
   lastYear!: string;
   yearsURL!: string;

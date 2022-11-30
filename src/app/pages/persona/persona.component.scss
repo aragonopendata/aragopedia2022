@@ -2,6 +2,11 @@
 @media screen and (max-width: 576px) {
     .template {
         margin: auto;
+        margin-top: 2em;
+    }
+
+    .container {
+        margin: auto;
     }
 
     .template__persona {
@@ -52,17 +57,6 @@
             padding: 1rem;
             background-color: #F8F8F8;
             border-radius: 6px;
-
-            ul {
-                display: flex;
-                flex-wrap: wrap;
-            }
-
-            li {
-                flex: 0 0 50%;
-                margin-left: 0;
-                margin-bottom: 20px;
-            }
         }
 
         h3 {
@@ -80,8 +74,18 @@
 
 // Tablet
 @media screen and (max-width: 992px) {
+
+    .template {
+        margin-top: 2em;
+    }
+
     .template__persona {
         flex-direction: column;
+
+    }
+
+    .container {
+        margin: auto;
     }
 }
 
@@ -90,6 +94,8 @@
 
 .template {
     margin: auto;
+    margin-top: 2em;
+    min-height: 400px;
 }
 
 .template__persona {
@@ -140,13 +146,7 @@
         background-color: #F8F8F8;
         border-radius: 6px;
 
-        ul {
-            display: flex;
-            flex-wrap: wrap;
-        }
-
         li {
-            flex: 0 0 50%;
             margin-left: 0;
             margin-bottom: 20px;
         }

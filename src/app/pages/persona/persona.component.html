@@ -1,45 +1,50 @@
 <div class="container template">
     <div class="breadcrumbs">
-        <p>Inicio > Personas > Ababuj</p>
+        <p>Inicio > <a [routerLink]="['/municipio/', this.idMunicipio]">{{municipio}}</a>
+            > {{nombre}}</p>
     </div>
-</div>
-<div class="container template__persona">
-    <div class="persona__img">
+
+    <section class="container template__persona">
+        <!-- <div class="persona__img">
         <img src="assets/persona.png" alt="Foto de la persona">
-    </div>
-    <div class="persona__content">
-        <h2 class="persona__name">Alfonso López Pastor</h2>
-        <ul class="persona__cargos">
-            <p><strong>Cargos</strong></p>
-            <li>Alcalde de Ababuj</li>
-            <li>Miembro del Pleno Municipal</li>
-        </ul>
-        <ul class="persona__partido">
-            <p><strong>Partido</strong></p>
-            <li>Ciudadanos</li>
-        </ul>
-    </div>
-    <div class="persona__data sidebar">
-        <div class="sidebar__more">
-            <h3>Datos similares</h3>
-            <ul class="more__data">
-                <li>Ababuj (Teruel)</li>
-                <li>Dpto. de Agricultura</li>
-                <li>Diputación de Teruel</li>
-                <li>Salud</li>
+    </div> -->
+        <div class="persona__content">
+            <h2 class="persona__name">{{nombre}}</h2>
+            <p><strong>Cargo</strong></p>
+            <ul class="persona__cargos">
+                <li>{{puesto}} de <a [routerLink]="['/municipio/', this.idMunicipio]">{{municipio}}</a></li>
+            </ul>
+            <p><strong>Ámbito</strong></p>
+            <ul class="persona__partido">
+                <li>{{sectorPersona}}</li>
             </ul>
         </div>
-        <div class="sidebar__other">
-            <h3>Otros datos</h3>
-            <ul class="more__data">
-                <li>Lorem Ipsum</li>
-                <li>Lorem Ipsum</li>
-                <li>Lorem Ipsum</li>
-                <li>Lorem Ipsum</li>
-            </ul>
+        <div class="persona__data sidebar">
+            <div class="sidebar__more">
+                <h3>Datos de contacto</h3>
+                <div *ngIf="datosContacto.phone">
+                    <ul class="more__data">
+                        <li>{{datosContacto.phone.value}}</li>
+                    </ul>
+                </div>
+                <div *ngIf="!datosContacto.phone">
+                    <p>No hay datos de contacto</p>
+                </div>
+            </div>
+            <div class="sidebar__button">
+                <a class="btn new-search" [routerLink]="['/']">Nueva búsqueda</a>
+            </div>
         </div>
-        <div class="sidebar__button">
-            <a class="btn new-search" href="#">Nueva búsqueda</a>
+    </section>
+
+    <section class="container template">
+        <div class="creative-works">
+            <h2>Menciones en publicaciones</h2>
+
+            <div *ngFor="let publicacion of creativeWorks" class="creative-works__articles">
+
+            </div>
         </div>
-    </div>
+    </section>
+
 </div>
