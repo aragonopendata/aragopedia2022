@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ResultService } from './result.service';
 import { ActivatedRoute } from '@angular/router';
+import { ngxCsv } from 'ngx-csv/ngx-csv';
 
 @Component({
   selector: 'app-result',
@@ -13,6 +14,8 @@ export class ResultComponent {
   constructor(public resultSvc: ResultService, private _route: ActivatedRoute) { }
 
   currentLink: any;
+
+  temp = undefined;
 
   lugarBuscado: any;
   lugarBuscadoParsed!: string;
@@ -57,6 +60,7 @@ export class ResultComponent {
   entidadesSingulares: any;
   entidadesSingularesId: any;
 
+
   //Queries variables
   queryIdWikiData!: string;
   queryImageWikiData!: string;
@@ -78,6 +82,11 @@ export class ResultComponent {
   queryUrlPersonasIlustres!: string;
   queryUrlEntidadesSingulares!: string;
   queryNombresIne!: string;
+
+  // Download data
+
+  dataDownload = this.temp || [{ nombre: '', email: '', telefono: '', direccion: '', codigoPostal: '', habitantes: '', sueloRural: '', sueloUrbano: '', densidad: '', poligonosIndustriales: '', alojamientosTuristicos: '', explotacionesGanaderas: '', plazasHoteleras: '', incendiosDesde2022: '', hectareasAfectadasPorIncendios: '' }];
+
 
 
   ngOnInit() {
@@ -133,9 +142,8 @@ export class ResultComponent {
         //Obtención de datos por ID
 
         this.resultSvc.getData(this.queryUrlPoligonos).subscribe((data: any) => {
-          console.log(this.queryUrlPoligonos);
-
           this.poligonos = data.results.bindings[0]['callret-0'].value;
+          this.dataDownload[0].poligonosIndustriales = this.poligonos;
         });
 
         this.resultSvc.getData(this.queryUrlContacto).subscribe((data: any) => {
@@ -143,6 +151,11 @@ export class ResultComponent {
           this.telefono = data.results.bindings[0].tel.value;
           this.direccion = data.results.bindings[0].direccion.value.toLowerCase();
           this.codPostal = data.results.bindings[0].codPostal.value;
+
+          this.dataDownload[0].email = this.email;
+          this.dataDownload[0].telefono = this.telefono;
+          this.dataDownload[0].direccion = this.direccion;
+          this.dataDownload[0].codigoPostal = this.codPostal;
         });
 
         this.resultSvc.getData(this.queryUrlMiembrosPleno).subscribe((data: any) => {
@@ -152,14 +165,17 @@ export class ResultComponent {
 
         this.resultSvc.getData(this.queryUrlAlojamientosTuristicos).subscribe((data: any) => {
           this.alojamientosTuristicos = data.results.bindings[0]['callret-0'].value;
+          this.dataDownload[0].alojamientosTuristicos = this.alojamientosTuristicos;
         });
 
         this.resultSvc.getData(this.queryUrlExplotacionesGanaderas).subscribe((data) => {
           this.explotacionesGanaderas = data.results.bindings[0]['callret-0'].value;
+          this.dataDownload[0].explotacionesGanaderas = this.explotacionesGanaderas;
         });
 
         this.resultSvc.getData(this.queryUrlPlazasHoteleras).subscribe((data) => {
           this.plazasHoteleras = data.results.bindings[0]['callret-0'].value;
+          this.dataDownload[0].plazasHoteleras = this.plazasHoteleras;
         });
 
         this.resultSvc.getData(this.queryUrlEntidadesSingulares).subscribe((data) => {
@@ -194,6 +210,7 @@ export class ResultComponent {
     this.resultSvc.getData(this.queryNombresIne).subscribe(data => {
       const nombreMunicipio = data.results.bindings[0].nombre.value;
       this.lugarBuscado = nombreMunicipio;
+      this.dataDownload[0].nombre = this.lugarBuscado;
       this.lugarBuscadoParsed = this.deleteSpace(this.lugarBuscado);
 
 
@@ -221,10 +238,13 @@ export class ResultComponent {
       this.resultSvc.getData(this.queryUrlExtension).subscribe((data: any) => {
         this.sueloUrbano = data.results.bindings[1].urbano.value;
         this.sueloRural = data.results.bindings[1].rustico.value;
+        this.dataDownload[0].sueloRural = this.sueloRural;
+        this.dataDownload[0].sueloUrbano = this.sueloUrbano;
       });
 
       this.resultSvc.getData(this.queryUrlDensidadPoblacion).subscribe((data: any) => {
         this.densidadPoblacion = (Number(data.results.bindings[0].densidad_de_poblacion_habkm2.value)).toFixed(1);
+        this.dataDownload[0].densidad = this.densidadPoblacion;
       });
 
       this.resultSvc.getData(this.queryUrlCreativeWork).subscribe((data: any) => {
@@ -234,6 +254,7 @@ export class ResultComponent {
 
       this.resultSvc.getData(this.queryUrlPoblacion).subscribe((data: any) => {
         this.poblacion = data.results.bindings.find((lugar: any) => lugar.nameRefArea.value === this.lugarBuscado).poblac.value;
+        this.dataDownload[0].habitantes = this.poblacion;
 
         this.comunidadActual = data.results.bindings[0].nameRefArea.value;
 
@@ -267,6 +288,8 @@ export class ResultComponent {
       this.resultSvc.getData(this.queryUrlIncendios).subscribe((data: any) => {
         this.incendiosUltimosAnos = data.results.bindings[0].incendios.value;
         this.hectareasQuemadas = data.results.bindings[0].superficie_forestal_afectada.value;
+        this.dataDownload[0].incendiosDesde2022 = this.incendiosUltimosAnos;
+        this.dataDownload[0].hectareasAfectadasPorIncendios = this.hectareasQuemadas;
       });
 
       this.resultSvc.getData(this.queryUrlEsPoblado).subscribe((data) => {
@@ -277,7 +300,9 @@ export class ResultComponent {
         this.edadMediaMujeres = Number(data.results.bindings[0].val.value).toFixed(2);
         this.edadMediaHombres = Number(data.results.bindings[1].val.value).toFixed(2);
       })
-    })
+    });
+
+
 
   }
 
@@ -306,5 +331,23 @@ export class ResultComponent {
     return (
       this.leerMas ? text : reducedText
     )
+  }
+
+  fileDownload() {
+    const options = {
+      fieldSeparator: ',',
+      quoteStrings: '"',
+      decimalseparator: '.',
+      showLabels: true,
+      showTitle: true,
+      title: `Ficha de ${this.lugarBuscado}`,
+      useBom: true,
+      noDownload: false,
+      headers: ["Nombre", "Email", "Teléfono", "Dirección", "Código Postal", "Habitantes", "Suelo Rural", "Suelo Urbano", "Densidad de población", "Polígonos Industriales", "Alojamientos Turísticos", "Explotaciones Ganaderas", "Plazas Hoteleras", "Incendios desde 2002", "Hectáreas afectadas"],
+      eol: '\n'
+    };
+
+    new ngxCsv(this.dataDownload, `Datos de ${this.lugarBuscado}`, options);
+    console.log(this.dataDownload);
   }
 }

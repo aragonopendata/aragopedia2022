@@ -129,6 +129,15 @@ section.container {
             }
         }
 
+        .btn {
+            margin: auto;
+            margin-top: 3em;
+            outline: none;
+            border-width: 0;
+            cursor: pointer;
+            display: block;
+        }
+
     }
 
     .template__img-municipio {
