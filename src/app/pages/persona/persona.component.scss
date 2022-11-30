@@ -2,6 +2,7 @@
 @media screen and (max-width: 576px) {
     .template {
         margin: auto;
+        margin-top: 2em;
     }
 
     .container {
@@ -73,8 +74,14 @@
 
 // Tablet
 @media screen and (max-width: 992px) {
+
+    .template {
+        margin-top: 2em;
+    }
+
     .template__persona {
         flex-direction: column;
+
     }
 
     .container {
@@ -87,6 +94,8 @@
 
 .template {
     margin: auto;
+    margin-top: 2em;
+    min-height: 400px;
 }
 
 .template__persona {

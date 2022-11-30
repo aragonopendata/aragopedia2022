@@ -55,6 +55,7 @@ export class ResultComponent {
   leerMas: boolean = false;
   personasIlustres: any;
   entidadesSingulares: any;
+  entidadesSingularesId: any;
 
   //Queries variables
   queryIdWikiData!: string;
@@ -95,13 +96,16 @@ export class ResultComponent {
     //Obtenemos id y tipo de localidad antes de nada
 
     this.resultSvc.getData(this.queryIdWikiData).subscribe((data: any) => {
+      // const found = data.results.bindings.find((element: any) => this.capitalizeString(element['callret-1'].value) == this.lugarBuscado);
+      // console.log(data.results.bindings.find((element: any) => {
+      //   element['callret-1'].value.toUpperCase() === this.lugarBuscado.toUpperCase();
+      // }))
+      // console.log(found);
 
-      const found = data.results.bindings.find((element: any) => this.capitalizeString(element['callret-1'].value) == this.lugarBuscado);
-      this.codigoIne = found.id.value;
+      // this.codigoIne = found.id.value;
 
-
-      const urlAnalizada = found.s.value.split('/');
-      this.tipoLocalidad = urlAnalizada[6];
+      // const urlAnalizada = found.s.value.split('/');
+      // this.tipoLocalidad = urlAnalizada[6];
 
       if (this.codigoIne !== undefined) {
 
@@ -129,6 +133,8 @@ export class ResultComponent {
         //Obtención de datos por ID
 
         this.resultSvc.getData(this.queryUrlPoligonos).subscribe((data: any) => {
+          console.log(this.queryUrlPoligonos);
+
           this.poligonos = data.results.bindings[0]['callret-0'].value;
         });
 
@@ -158,7 +164,6 @@ export class ResultComponent {
 
         this.resultSvc.getData(this.queryUrlEntidadesSingulares).subscribe((data) => {
           this.entidadesSingulares = data.results.bindings;
-
         })
 
         this.resultSvc.getData(this.queryUrlGetCodigoIne).subscribe((data) => {
@@ -188,8 +193,9 @@ export class ResultComponent {
 
     this.resultSvc.getData(this.queryNombresIne).subscribe(data => {
       const nombreMunicipio = data.results.bindings[0].nombre.value;
-      this.lugarBuscado = this.capitalizeString(nombreMunicipio);
+      this.lugarBuscado = nombreMunicipio;
       this.lugarBuscadoParsed = this.deleteSpace(this.lugarBuscado);
+
 
       // Queries con nombres
 
@@ -278,7 +284,16 @@ export class ResultComponent {
   //Métodos
   capitalizeString(str: any): string {
     return str.replace(/\w\S*/g, function (txt: any) {
-      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+      for (let i = 0; i < txt.length; i++) {
+        if (txt[i].toLowerCase() !== 'de'
+          && txt[i].toLowerCase() !== 'del'
+          && txt[i].toLowerCase() !== 'la'
+          && txt[i].toLowerCase() !== 'las'
+          && txt[i].toLowerCase() !== 'los') {
+          return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+        }
+      }
+
     });
   }
 

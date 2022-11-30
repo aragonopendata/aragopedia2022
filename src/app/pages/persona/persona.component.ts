@@ -26,6 +26,9 @@ export class PersonaComponent implements OnInit {
   queryUrlCreativeWorks!: string;
   idMunicipio!: string;
   sectorPersona!: string;
+  municipio!: string;
+  nombre!: string;
+  puesto!: string
 
 
   ngOnInit(): void {
@@ -36,15 +39,18 @@ export class PersonaComponent implements OnInit {
     this.queryUrlCreativeWorks = `https://opendata.aragon.es/sparql?default-graph-uri=&query=select+distinct+%3Ftitle+%3Fabstract+%3Furl+from+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fei2av2%3E+%7B%0D%0A++%3Fx+a+%3Chttp%3A%2F%2Fschema.org%2FCreativeWork%3E%3B%0D%0A++++++schema%3Aabout+%3C${this.idPersona}%3E%3B%0D%0A++++++schema%3Atitle+%3Ftitle%3B%0D%0A++++++schema%3Aabstract+%3Fabstract%3B%0D%0A++++++schema%3Aurl+%3Furl.%0D%0A%7D%0D%0Alimit+100&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`;
 
     this.personaSvc.getData(this.queryUrlCargo).subscribe(data => {
-      console.log('Cargos: ', data.results.bindings);
-      this.cargos = data.results.bindings;
-      const urlMunicipio = data.results.bindings[0].org.value.split('/');
+      this.cargos = data.results.bindings[0];
+      console.log('Cargos: ', this.cargos);
+      const urlMunicipio = this.cargos.org.value.split('/');
       this.idMunicipio = urlMunicipio[urlMunicipio.length - 1];
+      this.municipio = this.capitalizeString(this.cargos.nombreOrg.value);
+      this.puesto = this.capitalizeString(this.cargos.nombreRol.value)
     });
     this.personaSvc.getData(this.queryUrlDatosContacto).subscribe(data => {
-      console.log('Datos contacto: ', data.results.bindings);
 
-      this.datosContacto = data.results.bindings;
+      this.datosContacto = data.results.bindings[0];
+      this.nombre = this.capitalizeString(this.datosContacto.name.value)
+      console.log('Datos contacto: ', this.datosContacto);
 
     });
     this.personaSvc.getData(this.queryUrlDatosAdicionales).subscribe(data => {
@@ -52,10 +58,11 @@ export class PersonaComponent implements OnInit {
 
       this.datosAdicionales = data.results.bindings;
       const urlSector = this.datosAdicionales[0].addT.value.split('/');
-      this.sectorPersona = urlSector[urlSector.length - 1].replace('-', ' ');
+      this.sectorPersona = this.capitalizeString(urlSector[urlSector.length - 1].replace('-', ' '));
     });
     this.personaSvc.getData(this.queryUrlCreativeWorks).subscribe(data => {
       console.log('CreativeWorks: ', data.results.bindings);
+      console.log(this.queryUrlCreativeWorks);
 
       this.creativeWorks = data.results.bindings;
     })
