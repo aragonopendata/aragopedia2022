@@ -111,6 +111,9 @@ section.container {
         margin: 1em;
         background-color: #f4f4f4;
         border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
 
         h2 {
             font-size: 22px;

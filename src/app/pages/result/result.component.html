@@ -33,20 +33,24 @@
                 </ul>
             </div>
             <div class="inicio__contact">
-                <h2>Contacto</h2>
-                <ul>
-                    <li><b>Dirección</b> {{this.direccion}}</li>
-                    <li><b>Código postal</b> {{this.codPostal}}</li>
-                    <li><b>Teléfono</b> {{this.telefono}}</li>
-                    <li><b>email</b> {{this.email}}</li>
-                </ul>
+                <div>
+                    <h2>Contacto</h2>
+                    <ul>
+                        <li><b>Dirección</b> {{this.direccion}}</li>
+                        <li><b>Código postal</b> {{this.codPostal}}</li>
+                        <li><b>Teléfono</b> {{this.telefono}}</li>
+                        <li><b>email</b> {{this.email}}</li>
+                    </ul>
+                </div>
 
-                <h2>Entidades singulares</h2>
-                <ul *ngFor="let entidad of entidadesSingulares">
-                    <li><a
-                            href="/{{this.tipoLocalidad}}/{{this.capitalizeString(entidad.nombreEntidad.value)}}">{{this.capitalizeString(entidad.nombreEntidad.value)}}</a>
-                    </li>
-                </ul>
+                <div>
+                    <h2>Entidades singulares</h2>
+                    <ul *ngFor="let entidad of entidadesSingulares">
+                        <li><a
+                                href="/{{this.tipoLocalidad}}/{{this.capitalizeString(entidad.nombreEntidad.value)}}">{{this.capitalizeString(entidad.nombreEntidad.value)}}</a>
+                        </li>
+                    </ul>
+                </div>
                 <div class="download">
                     <button class="btn btn-download" type="button" (click)="fileDownload()">DESCARGAR FICHA</button>
                 </div>

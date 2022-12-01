@@ -85,7 +85,7 @@ export class ResultComponent {
 
   // Download data
 
-  dataDownload = this.temp || [{ nombre: '', email: '', telefono: '', direccion: '', codigoPostal: '', habitantes: '', sueloRural: '', sueloUrbano: '', densidad: '', poligonosIndustriales: '', alojamientosTuristicos: '', explotacionesGanaderas: '', plazasHoteleras: '', incendiosDesde2022: '', hectareasAfectadasPorIncendios: '' }];
+  dataDownload = this.temp || [{ nombre: '', email: '', telefono: '', direccion: '', codigoPostal: '', habitantes: '', sueloRural: '', sueloUrbano: '', densidad: '', poligonosIndustriales: '', explotacionesGanaderas: '', plazasHoteleras: '', incendiosDesde2022: '', hectareasAfectadasPorIncendios: '', mencionesEnPublicaciones: '', alojamientosTuristicos: '', urlImagen: '', porcentajeSueloRural: '', porcentajeSueloUrbano: '', esDeLosMasPoblados: '', edadMediaHombres: '', edadMediaMujeres: '', creativeWorks: '', miembrosPleno: '', personasIlustres: '', entidadesSingulares: '' }];
 
 
 
@@ -161,6 +161,10 @@ export class ResultComponent {
         this.resultSvc.getData(this.queryUrlMiembrosPleno).subscribe((data: any) => {
           this.miembrosPleno = data.results.bindings;
 
+          this.miembrosPleno.forEach((element: any) => {
+            let miembro = `Nombre: ${element.nombrePersona.value}; Cargo: ${element.cargo.value}; URL: ${element.persona.value}`
+            this.dataDownload[0].miembrosPleno += miembro;
+          });
         });
 
         this.resultSvc.getData(this.queryUrlAlojamientosTuristicos).subscribe((data: any) => {
@@ -180,6 +184,10 @@ export class ResultComponent {
 
         this.resultSvc.getData(this.queryUrlEntidadesSingulares).subscribe((data) => {
           this.entidadesSingulares = data.results.bindings;
+          this.entidadesSingulares.forEach((element: any) => {
+            let entidad = `Entidad: ${element.nombreEntidad.value}; URI: ${element.s.value}`
+            this.dataDownload[0].entidadesSingulares += entidad;
+          });
         })
 
         this.resultSvc.getData(this.queryUrlGetCodigoIne).subscribe((data) => {
@@ -192,10 +200,16 @@ export class ResultComponent {
 
           this.resultSvc.getData(this.queryImageWikiData).subscribe((data: any) => {
             this.imageWikiDataUrl = data.results.bindings[0].img.value;
+            this.dataDownload[0].urlImagen = this.imageWikiDataUrl;
           });
 
           this.resultSvc.getData(this.queryUrlPersonasIlustres).subscribe((data) => {
             this.personasIlustres = data.results.bindings;
+
+            this.personasIlustres.forEach((element: any) => {
+              let persona = `Nombre: ${element.itemLabel.value}; URL Wikipedia: ${element.about.value}`;
+              this.dataDownload[0].personasIlustres += persona;
+            });
           })
 
         });
@@ -249,7 +263,15 @@ export class ResultComponent {
 
       this.resultSvc.getData(this.queryUrlCreativeWork).subscribe((data: any) => {
         this.creativeWork = data.results.bindings;
-        this.numberOfCreativeWork = data.results.bindings.length
+
+        this.numberOfCreativeWork = data.results.bindings.length;
+        this.dataDownload[0].mencionesEnPublicaciones = this.numberOfCreativeWork;
+
+        this.creativeWork.forEach((element: any) => {
+          let publicaciones = `Titulo: ${element.title.value}; url: ${element.url.value}; Tema: ${element.tema.value}; Abstract: ${element.resumen.value}`;
+          this.dataDownload[0].creativeWorks += publicaciones;
+        });
+
       });
 
       this.resultSvc.getData(this.queryUrlPoblacion).subscribe((data: any) => {
@@ -283,6 +305,9 @@ export class ResultComponent {
 
         this.porcentajeSueloRural = ((this.sueloRural / totalRural) * 100).toFixed(2);
         this.porcentajeSueloUrbano = ((this.sueloUrbano / totalUrbano) * 100).toFixed(2);
+
+        this.dataDownload[0].porcentajeSueloRural = this.porcentajeSueloRural;
+        this.dataDownload[0].porcentajeSueloUrbano = this.porcentajeSueloUrbano;
       });
 
       this.resultSvc.getData(this.queryUrlIncendios).subscribe((data: any) => {
@@ -294,11 +319,15 @@ export class ResultComponent {
 
       this.resultSvc.getData(this.queryUrlEsPoblado).subscribe((data) => {
         this.esPoblado = data.results.bindings[0].esta.value;
+        this.dataDownload[0].esDeLosMasPoblados = this.esPoblado;
+
       });
 
       this.resultSvc.getData(this.queryUrlEdadMedia).subscribe((data) => {
         this.edadMediaMujeres = Number(data.results.bindings[0].val.value).toFixed(2);
         this.edadMediaHombres = Number(data.results.bindings[1].val.value).toFixed(2);
+        this.dataDownload[0].edadMediaHombres = this.edadMediaHombres;
+        this.dataDownload[0].edadMediaMujeres = this.edadMediaMujeres;
       })
     });
 
@@ -343,11 +372,10 @@ export class ResultComponent {
       title: `Ficha de ${this.lugarBuscado}`,
       useBom: true,
       noDownload: false,
-      headers: ["Nombre", "Email", "Teléfono", "Dirección", "Código Postal", "Habitantes", "Suelo Rural", "Suelo Urbano", "Densidad de población", "Polígonos Industriales", "Alojamientos Turísticos", "Explotaciones Ganaderas", "Plazas Hoteleras", "Incendios desde 2002", "Hectáreas afectadas"],
+      headers: ["Nombre", "Email", "Teléfono", "Dirección", "Código Postal", "Habitantes", "Suelo Rural", "Suelo Urbano", "Densidad de población", "Polígonos Industriales", "Explotaciones Ganaderas", "Plazas Hoteleras", "Incendios desde 2002", "Hectáreas afectadas", "Menciones en publicaciones", "Alojamientos Turísticos", "Imagen de portada", "Porcentaje de suelo rural con respecto Aragón", "Porcentaje de suelo urbano con respecto Aragón", "Es uno de los 20 municipios más poblados", "Edad media de los hombres", "Edad media de las mujeres", "Creative Works", "Miembros del pleno", "Personas ilustres nacidas en el municipio", "Entidades singulares"],
       eol: '\n'
     };
 
     new ngxCsv(this.dataDownload, `Datos de ${this.lugarBuscado}`, options);
-    console.log(this.dataDownload);
   }
 }
