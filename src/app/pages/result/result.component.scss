@@ -108,12 +108,11 @@ section.container {
     .inicio__contact {
 
         padding: 1.5em;
-        margin: 1em;
         background-color: #f4f4f4;
         border-radius: 10px;
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
+        justify-content: center;
 
         h2 {
             font-size: 22px;
@@ -134,7 +133,7 @@ section.container {
 
         .btn {
             margin: auto;
-            margin-top: 3em;
+            margin-top: .5em;
             outline: none;
             border-width: 0;
             cursor: pointer;
@@ -145,16 +144,21 @@ section.container {
 
     .template__img-municipio {
         max-width: 700px;
-        margin: 2em auto;
+        margin: .5em auto;
+
+        figure {
+            margin: 0;
+        }
 
         img {
-            border-radius: 10px;
+            border-radius: 3px;
             box-shadow: var(--shadow);
             margin: auto;
         }
 
         figcaption {
             margin-top: 1em;
+            font-size: 12px;
         }
     }
 
@@ -310,6 +314,7 @@ section.container {
             display: flex;
             flex-wrap: wrap;
             justify-content: space-around;
+            align-items: center;
 
             .inicio__img {
                 flex: 0 0 20%;

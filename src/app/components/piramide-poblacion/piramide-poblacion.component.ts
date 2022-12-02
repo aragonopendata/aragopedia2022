@@ -66,8 +66,11 @@ export class PiramidePoblacionComponent implements OnInit {
 
   ngOnInit() {
 
-    this.codigoIne = this.capitalizeString(this._route.snapshot.paramMap.get('municipio'));
+    // this.codigoIne = this.capitalizeString(this._route.snapshot.paramMap.get('municipio'));
     // this.lugarBuscadoParsed = this.deleteSpace(this._route.snapshot.paramMap.get('municipio'));
+    this._route.queryParams.subscribe(params => {
+      this.codigoIne = params['id'];
+    })
     this.queryNombresIne = `https://opendata.aragon.es/sparql?default-graph-uri=&query=prefix+dbpedia%3A+%3Chttp%3A%2F%2Fdbpedia.org%2Fontology%2F%3E+%0D%0Aprefix+org%3A+%3Chttp%3A%2F%2Fwww.w3.org%2Fns%2Forg%23%3E%0D%0Aprefix+aragopedia%3A+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2FAragopedia%23%3E%0D%0A%0D%0Aselect+%3Fnombre+from+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fei2av2%3E++where+%7B%0D%0A++%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fsector-publico%2Forganizacion%2Fmunicipio%2F${this.codigoIne}%3E+dc%3Atitle+%3Fnombre%0D%0A%7D&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`;
 
     this.piramidePoblacionSvc.getPiramidePoblacion(this.queryNombresIne).subscribe(data => {

@@ -60,17 +60,24 @@ export class SelectLocationComponent implements OnInit {
     } else if (this.provinciaSelected !== '' && this.comarcaSelected === '' && this.municipioSelected === '') {
       this.tipoLocalidad = 'provincia';
       // this.router.navigate([`/${this.tipoLocalidad}/${this.provinciaSelected}`])
-      this.router.navigate([`/${this.tipoLocalidad}/${this.idSelected}`])
+      // this.router.navigate([`/${this.tipoLocalidad}/${this.idSelected}`])
+      this.router.navigate(['detalles'], { queryParams: { tipo: this.tipoLocalidad, id: this.idSelected } })
     } else if (this.comarcaSelected !== '' && this.municipioSelected === '') {
       this.tipoLocalidad = 'comarca';
       // this.router.navigate([`/${this.tipoLocalidad}/${this.comarcaSelected}`])
-      this.router.navigate([`/${this.tipoLocalidad}/${this.idSelected}`])
+      // this.router.navigate([`/${this.tipoLocalidad}/${this.idSelected}`])
+      this.router.navigate(['detalles'], { queryParams: { tipo: this.tipoLocalidad, id: this.idSelected } })
     } else {
       this.tipoLocalidad = 'municipio';
       // this.router.navigate([`/${this.tipoLocalidad}/${this.municipioSelected}`])
-      this.router.navigate([`/${this.tipoLocalidad}/${this.idSelected}`])
+      // this.router.navigate([`/${this.tipoLocalidad}/${this.idSelected}`])
+      this.router.navigate(['detalles'], { queryParams: { tipo: this.tipoLocalidad, id: this.idSelected } })
     }
 
+  }
+
+  goToAragon() {
+    this.router.navigate(['detalles'], { queryParams: { tipo: 'comunidad', id: '2' } })
   }
 
 }

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ResultService } from './result.service';
 import { ActivatedRoute } from '@angular/router';
 import { ngxCsv } from 'ngx-csv/ngx-csv';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-result',
@@ -13,9 +14,33 @@ export class ResultComponent {
 
   constructor(public resultSvc: ResultService, private _route: ActivatedRoute) { }
 
+  temp = undefined;
+  aragon = this.temp || {
+    direccion: '',
+    codPostal: '',
+    telefono: '',
+    email: '',
+    poblacion: '',
+    densidad: '',
+    poligonos: '',
+    explotGanaderas: '',
+    indencios: '',
+    haAfectadas: '',
+    menciones: '',
+    plazasHotelereas: '',
+    alojamientosTuristicos: '',
+    extension: '',
+    sueloUrbano: '',
+    sueloRural: '',
+    imageUrl: '',
+    miembrosPleno: [],
+    creativeWorks: [],
+    personasIlustres: []
+
+  }
+
   currentLink: any;
 
-  temp = undefined;
 
   lugarBuscado: any;
   lugarBuscadoParsed!: string;
@@ -36,6 +61,7 @@ export class ResultComponent {
   creativeWork: any;
   numberOfCreativeWork: any;
   miembrosPleno: any;
+  cantidadMiembrosPleno!: number;
   alojamientosTuristicos: any;
   oficinasTurismo: any;
   comunidad: string[] = [];
@@ -59,6 +85,7 @@ export class ResultComponent {
   personasIlustres: any;
   entidadesSingulares: any;
   entidadesSingularesId: any;
+  cantidadPersonasIlustres!: number;
 
 
   //Queries variables
@@ -96,8 +123,14 @@ export class ResultComponent {
 
     // this.lugarBuscado = this.capitalizeString(this._route.snapshot.paramMap.get('municipio'));
     // this.lugarBuscadoParsed = this.deleteSpace(this._route.snapshot.paramMap.get('municipio'));
-    this.tipoLocalidad = this.deleteSpace(this._route.snapshot.paramMap.get('tipoLocalidad'));
-    this.codigoIne = this._route.snapshot.paramMap.get('municipio');
+    // this.tipoLocalidad = this.deleteSpace(this._route.snapshot.paramMap.get('tipoLocalidad'));
+    // console.log(this.tipoLocalidad);
+
+    // this.codigoIne = this._route.snapshot.paramMap.get('municipio');
+    this._route.queryParams.subscribe(params => {
+      this.codigoIne = params['id'];
+      this.tipoLocalidad = params['tipo']
+    })
 
     //Sacamos el nombre del municipio a través del codigo INE
     this.queryNombresIne = `https://opendata.aragon.es/sparql?default-graph-uri=&query=prefix+dbpedia%3A+%3Chttp%3A%2F%2Fdbpedia.org%2Fontology%2F%3E+%0D%0Aprefix+org%3A+%3Chttp%3A%2F%2Fwww.w3.org%2Fns%2Forg%23%3E%0D%0Aprefix+aragopedia%3A+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2FAragopedia%23%3E%0D%0A%0D%0Aselect+%3Fnombre+from+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fei2av2%3E++where+%7B%0D%0A++%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fsector-publico%2Forganizacion%2Fmunicipio%2F${this.codigoIne}%3E+dc%3Atitle+%3Fnombre%0D%0A%7D&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`;
@@ -160,6 +193,7 @@ export class ResultComponent {
 
         this.resultSvc.getData(this.queryUrlMiembrosPleno).subscribe((data: any) => {
           this.miembrosPleno = data.results.bindings;
+          this.cantidadMiembrosPleno = this.miembrosPleno.length;
 
           this.miembrosPleno.forEach((element: any) => {
             let miembro = `Nombre: ${element.nombrePersona.value}; Cargo: ${element.cargo.value}; URL: ${element.persona.value}`
@@ -205,6 +239,8 @@ export class ResultComponent {
 
           this.resultSvc.getData(this.queryUrlPersonasIlustres).subscribe((data) => {
             this.personasIlustres = data.results.bindings;
+            this.cantidadPersonasIlustres = this.personasIlustres.length;
+            console.log(this.personasIlustres);
 
             this.personasIlustres.forEach((element: any) => {
               let persona = `Nombre: ${element.itemLabel.value}; URL Wikipedia: ${element.about.value}`;
@@ -252,6 +288,9 @@ export class ResultComponent {
       this.resultSvc.getData(this.queryUrlExtension).subscribe((data: any) => {
         this.sueloUrbano = data.results.bindings[1].urbano.value;
         this.sueloRural = data.results.bindings[1].rustico.value;
+        console.log(data);
+        this.aragon.sueloUrbano = data.results.bindings[0].urbano.value;
+        this.aragon.sueloRural = data.results.bindings[0].rustico.value;
         this.dataDownload[0].sueloRural = this.sueloRural;
         this.dataDownload[0].sueloUrbano = this.sueloUrbano;
       });
