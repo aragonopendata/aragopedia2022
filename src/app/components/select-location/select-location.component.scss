@@ -18,6 +18,12 @@
     color: #d22333;
 }
 
+.btn-aragon {
+    cursor: pointer;
+    border-color: transparent;
+    margin-top: 2em;
+}
+
 @media screen and (min-width:992px) {
     .location-form {
         display: flex;

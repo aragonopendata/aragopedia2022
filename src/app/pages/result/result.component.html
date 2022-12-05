@@ -48,7 +48,7 @@
                     <h2>Entidades singulares</h2>
                     <ul *ngFor="let entidad of entidadesSingulares">
                         <li><a
-                                href="/{{this.tipoLocalidad}}/{{this.capitalizeString(entidad.nombreEntidad.value)}}">{{this.capitalizeString(entidad.nombreEntidad.value)}}</a>
+                                href="/detalles?tipo={{this.tipoLocalidad}}&id={{this.codigoIne}}">{{this.capitalizeString(entidad.nombreEntidad.value)}}</a>
                         </li>
                     </ul>
                 </div>
@@ -211,8 +211,8 @@
                 <h2>Miembros del pleno municipal</h2>
                 <ul>
                     <li *ngFor="let miembro of miembrosPleno"><b>{{miembro.cargo.value}}: </b>
-                        <a [routerLink]="['/persona/', miembro.persona.value]" routerLinkActive="router-link-active"
-                            target="_blank">{{miembro.nombrePersona.value}}</a>
+                        <a [routerLink]="['/persona/', miembro.persona.value]"
+                            routerLinkActive="router-link-active">{{miembro.nombrePersona.value}}</a>
                     </li>
                 </ul>
             </div>

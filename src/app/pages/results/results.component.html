@@ -2,28 +2,30 @@
     <section class="results">
         <div class="results__filter-desktop">
             <div class="desktop__timeline">
-                <app-timeline></app-timeline>
+                <app-timeline [yearsSelected]="this.selectedYears"></app-timeline>
             </div>
             <!-- <div class="desktop__location">
                 <app-select-location></app-select-location>
             </div> -->
-            <div *ngIf="this.results.length !== 1">
-                <div class="desktop__buscador">
-                    <!-- BUSCADOR -->
-                    <div class="main-search container">
-                        <form>
-                            <input type="text" class="main-search__input" id="main-search"
-                                placeholder="Buscar en los resultados" [(ngModel)]="filterResult" name="filterResult">
-                        </form>
-                    </div>
-                    <!-- buscador -->
-                </div>
-            </div>
+
         </div>
+
         <h2 class="results__title">Resultados de la búsqueda. Encontrados <u>{{this.results.length}} resultados de
                 {{this.temasSelected}}
                 entre {{this.firstYear}} y {{this.lastYear}}:</u>
         </h2>
+        <div *ngIf="this.results.length !== 1">
+            <div class="desktop__buscador">
+                <!-- BUSCADOR -->
+                <div class="main-search container">
+                    <form>
+                        <input type="text" class="main-search__input" id="main-search"
+                            placeholder="Buscar en los resultados" [(ngModel)]="filterResult" name="filterResult">
+                    </form>
+                </div>
+                <!-- buscador -->
+            </div>
+        </div>
         <div class="results__filter">
             <div class="results__filter-menu" (click)="toggleSidebar()">
                 <mat-icon>reorder</mat-icon>
@@ -60,14 +62,17 @@
             <mat-icon>close</mat-icon> <span>Cerrar filtros</span>
         </div>
         <div class="sidebar__timeline">
-            <app-timeline [yearsSelected]="selectedYears"></app-timeline>
+            <app-timeline [yearsSelected]="this.selectedYears"></app-timeline>
         </div>
         <!-- <div class="sidebar__location">
             <app-select-location></app-select-location>
         </div> -->
-        <div class="sidebar__buscador">
-            <app-search></app-search>
-        </div>
+        <!-- <div class="sidebar__buscador">
+            <form>
+                <input type="text" class="main-search__input" id="main-search" placeholder="Buscar en los resultados"
+                    [(ngModel)]="filterResult" name="filterResult">
+            </form>
+        </div> -->
         <div class="sidebar__categories">
             <h3 class="sidebar__categories-title">Categorías</h3>
             <ul *ngFor="let tema of temasParsed">

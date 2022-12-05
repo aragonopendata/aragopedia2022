@@ -1,6 +1,6 @@
 <div class="container template">
     <div class="breadcrumbs">
-        <p>Inicio > <a [routerLink]="['/municipio/', this.idMunicipio]">{{municipio}}</a>
+        <p><a href="/">Inicio</a> > <a href="/detalles?tipo=municipio&id={{this.idMunicipio}}">{{municipio}}</a>
             > {{nombre}}</p>
     </div>
 
@@ -10,9 +10,13 @@
     </div> -->
         <div class="persona__content">
             <h2 class="persona__name">{{nombre}}</h2>
+            <div *ngIf="this.datosContacto.biog !== undefined" class="bio">
+                <p><strong>Biografía</strong></p>
+                <p class="persona__bio">{{deleteTags(this.datosContacto.biog.value)}}</p>
+            </div>
             <p><strong>Cargo</strong></p>
             <ul class="persona__cargos">
-                <li>{{puesto}} de <a [routerLink]="['/municipio/', this.idMunicipio]">{{municipio}}</a></li>
+                <li>{{puesto}} de <a href="/detalles?tipo=municipio&id={{this.idMunicipio}}">{{municipio}}</a></li>
             </ul>
             <p><strong>Ámbito</strong></p>
             <ul class="persona__partido">
@@ -25,6 +29,7 @@
                 <div *ngIf="datosContacto.phone">
                     <ul class="more__data">
                         <li>{{datosContacto.phone.value}}</li>
+                        <li>{{datosContacto.mbox.value}}</li>
                     </ul>
                 </div>
                 <div *ngIf="!datosContacto.phone">
@@ -38,12 +43,16 @@
     </section>
 
     <section class="container template">
+        <h2>Menciones en publicaciones ({{numberOfCreativeWorks}})</h2>
         <div class="creative-works">
-            <h2>Menciones en publicaciones</h2>
-
-            <div *ngFor="let publicacion of creativeWorks" class="creative-works__articles">
-
-            </div>
+            <article *ngFor="let publicacion of pageOfItems" class="creative-works__articles">
+                <h3 class="article__title">{{publicacion.title.value}}</h3>
+                <p class="article__abstract">{{reduceText(publicacion.abstract.value)}}...</p>
+                <a href="{{publicacion.url.value}}" target="_blank" class="article__link">Leer más</a>
+            </article>
+        </div>
+        <div *ngIf="this.items.length !== 1 " class="results__pagination">
+            <jw-pagination [items]="items" (changePage)="onChangePage($event)"></jw-pagination>
         </div>
     </section>
 

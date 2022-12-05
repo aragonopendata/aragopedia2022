@@ -97,13 +97,19 @@
         margin-top: 5em;
     }
 
+    .desktop__buscador {
+        max-width: 400px;
+        margin: auto;
+        margin-bottom: 1.5em;
+    }
+
     .main-search {
         margin: 3em auto 0;
 
         form {
             display: flex;
             flex-wrap: wrap;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
             margin: auto;
         }
@@ -206,6 +212,7 @@ ul.pagination {
                 h3 {
                     font-size: 20px;
                     margin: 0 0 0 10px;
+                    flex: 0 0 90%;
                 }
             }
         }
@@ -277,6 +284,7 @@ ul.pagination {
     top: 0;
     left: 0;
     right: 0;
+    height: 100%;
 }
 
 @media screen and (min-width:992px) {
@@ -287,7 +295,8 @@ ul.pagination {
         margin: auto;
 
         .desktop__buscador {
-            margin-bottom: 1.5em;
+            max-width: 800px;
+            margin: 0 auto 1.5em auto;
         }
 
         .results {
@@ -312,8 +321,8 @@ ul.pagination {
             max-width: 320px;
             height: fit-content;
             border-radius: 10px;
-            position: sticky;
-            top: 100px;
+            position: static;
+            margin-top: 100px;
 
             .sidebar__cerrar,
             .sidebar__timeline,

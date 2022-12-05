@@ -31,6 +31,7 @@ import { FilterPipe } from './pipes/filter.pipe';
 import { AragopediaComponent } from './pages/aragopedia/aragopedia.component';
 import { JwPaginationModule } from 'jw-angular-pagination';
 import { PersonaModule } from './pages/persona/persona.module';
+import { FichaAragonComponent } from './pages/result/ficha-aragon/ficha-aragon.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import { PersonaModule } from './pages/persona/persona.module';
     PiramidePoblacionComponent,
     FilterPipe,
     AragopediaComponent,
+    FichaAragonComponent,
   ],
   imports: [
     BrowserModule,

@@ -7,6 +7,7 @@ import { PersonaComponent } from './pages/persona/persona.component';
 import { ResultComponent } from './pages/result/result.component';
 import { ResultsComponent } from './pages/results/results.component';
 import { AragopediaComponent } from './pages/aragopedia/aragopedia.component';
+import { FichaAragonComponent } from './pages/result/ficha-aragon/ficha-aragon.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/', pathMatch: 'full' },
@@ -15,6 +16,7 @@ const routes: Routes = [
   { path: 'general', component: GeneralComponent },
   { path: 'results/:temas/:years', component: ResultsComponent },
   { path: 'detalles', component: ResultComponent },
+  { path: 'detalles/aragon', component: FichaAragonComponent },
   { path: 'aragopedia', component: AragopediaComponent },
   { path: '**', pathMatch: 'full', component: NotFoundComponent }
 ];
