@@ -23,7 +23,8 @@ export class SelectLocationComponent implements OnInit {
   provinciaSelected!: string;
   municipioSelected!: string;
   comarcaSelected!: string;
-  idSelected!: string;
+  idMunicipio!: string;
+  idComarca!: string;
   tipoLocalidad!: string;
   error: boolean = false;
 
@@ -42,17 +43,18 @@ export class SelectLocationComponent implements OnInit {
     this.provinciaSelected = this.provincia.selectedProvincia;
     this.comarcaSelected = this.comarca.selectedComarca;
     this.municipioSelected = this.municipio.selectedMunicipio;
-    this.idSelected = this.municipio.id;
-    console.log('Provincia: ' + this.provinciaSelected + '| Comarca: ' + this.comarcaSelected + '| Municipio: ' + this.municipioSelected);
+    this.idMunicipio = this.municipio.id;
+    this.idComarca = this.comarca.selectedId;
   }
 
   submit() {
     this.provinciaSelected = this.provincia.selectedProvincia;
     this.comarcaSelected = this.comarca.selectedComarca;
     this.municipioSelected = this.municipio.selectedMunicipio;
-    this.idSelected = this.municipio.selectedId;
+    this.idMunicipio = this.municipio.selectedId;
+    this.idComarca = this.comarca.selectedId;
 
-    console.log(this.idSelected);
+    console.log(this.idComarca);
 
 
     if (this.provinciaSelected === '' && this.comarcaSelected === '' && this.municipioSelected === '') {
@@ -60,18 +62,18 @@ export class SelectLocationComponent implements OnInit {
     } else if (this.provinciaSelected !== '' && this.comarcaSelected === '' && this.municipioSelected === '') {
       this.tipoLocalidad = 'provincia';
       // this.router.navigate([`/${this.tipoLocalidad}/${this.provinciaSelected}`])
-      // this.router.navigate([`/${this.tipoLocalidad}/${this.idSelected}`])
-      this.router.navigate(['detalles'], { queryParams: { tipo: this.tipoLocalidad, id: this.idSelected } })
+      // this.router.navigate([`/${this.tipoLocalidad}/${this.idMunicipio}`])
+      this.router.navigate(['detalles'], { queryParams: { tipo: this.tipoLocalidad, id: this.idMunicipio } })
     } else if (this.comarcaSelected !== '' && this.municipioSelected === '') {
       this.tipoLocalidad = 'comarca';
       // this.router.navigate([`/${this.tipoLocalidad}/${this.comarcaSelected}`])
-      // this.router.navigate([`/${this.tipoLocalidad}/${this.idSelected}`])
-      this.router.navigate(['detalles'], { queryParams: { tipo: this.tipoLocalidad, id: this.idSelected } })
+      // this.router.navigate([`/${this.tipoLocalidad}/${this.idComarca}`])
+      this.router.navigate(['detalles'], { queryParams: { tipo: this.tipoLocalidad, id: this.idComarca } })
     } else {
       this.tipoLocalidad = 'municipio';
       // this.router.navigate([`/${this.tipoLocalidad}/${this.municipioSelected}`])
-      // this.router.navigate([`/${this.tipoLocalidad}/${this.idSelected}`])
-      this.router.navigate(['detalles'], { queryParams: { tipo: this.tipoLocalidad, id: this.idSelected } })
+      // this.router.navigate([`/${this.tipoLocalidad}/${this.idMunicipio}`])
+      this.router.navigate(['detalles'], { queryParams: { tipo: this.tipoLocalidad, id: this.idMunicipio } })
     }
 
   }
