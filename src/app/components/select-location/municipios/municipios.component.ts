@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 import { SelectLocationService } from '../select-location.service';
 
 
@@ -10,7 +11,7 @@ import { SelectLocationService } from '../select-location.service';
 })
 
 export class SelectMunicipioComponent implements OnInit {
-  constructor(private locationSvc: SelectLocationService, private fb: FormBuilder) { }
+  constructor(private locationSvc: SelectLocationService, private fb: FormBuilder, private router: Router) { }
 
   selected: string = '';
   selectedId!: string;
@@ -45,19 +46,6 @@ export class SelectMunicipioComponent implements OnInit {
         });
       });
     });
-
-    //Añado código INE a a la lista de municipios
-    // setTimeout(() => {
-    //   this.municipiosParsed.forEach((municipio: any, index: number) => {
-    //     const id = municipio.id;
-    //     const queryUrlGetCodigoIne = `https:opendata.aragon.es/sparql?default-graph-uri=http%3A%2F%2Fopendata.aragon.es%2Fdef%2Fei2av2&query=select+%3Fwikidata+%3Faragopedia+where+%7B%0D%0A++%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fsector-publico%2Forganizacion%2Fmunicipio%2F${id}%3E+skos%3AexactMatch+%3Fwikidata%3B%0D%0A+++owl%3AsameAs+%3Faragopedia.%0D%0A++FILTER%28regex%28%3Fwikidata%2C+%22http%3A%2F%2Fwww.wikidata.org%2F%22%29%29.%0D%0A++FILTER%28regex%28%3Faragopedia%2C+%22http%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fterritorio%2FMunicipio%2F%22%29%29.%0D%0A%7D&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`
-
-    //     this.locationSvc.getData(queryUrlGetCodigoIne).subscribe(data => {
-    //       const codigoIne = data.results.bindings[0].wikidata.value.split('/')[4];
-    //       this.municipiosParsed[index].codigoIne = codigoIne;
-    //     })
-    //   })
-    // }, 1000)
   }
 
   initForm() {
@@ -69,11 +57,13 @@ export class SelectMunicipioComponent implements OnInit {
       this.selected = this.selectedMunicipio;
       this.municipiosParsed.forEach((municipio: any) => {
         if (municipio.nombre === this.selectedMunicipio) {
-          console.log(municipio.id);
-
           this.selectedId = municipio.id;
         }
       })
+      if (this.selectedId !== '') {
+        this.router.navigate(['detalles'], { queryParams: { tipo: 'municipio', id: this.selectedId } })
+      }
+
       this.filterData(response);
     });
   }

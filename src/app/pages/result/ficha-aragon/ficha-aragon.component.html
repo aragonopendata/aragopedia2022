@@ -33,24 +33,7 @@
                 </ul>
             </div>
             <div class="inicio__contact">
-                <div>
-                    <h2>Contacto</h2>
-                    <ul>
-                        <li><b>Dirección</b> {{this.direccion}}</li>
-                        <li><b>Código postal</b> {{this.codPostal}}</li>
-                        <li><b>Teléfono</b> {{this.telefono}}</li>
-                        <li><b>email</b> {{this.email}}</li>
-                    </ul>
-                </div>
 
-                <!-- <div>
-                    <h2>Entidades singulares</h2>
-                    <ul *ngFor="let entidad of entidadesSingulares">
-                        <li><a
-                                href="/{{this.tipoLocalidad}}/{{this.capitalizeString(entidad.nombreEntidad.value)}}">{{this.capitalizeString(entidad.nombreEntidad.value)}}</a>
-                        </li>
-                    </ul>
-                </div> -->
                 <div class="template__img-municipio" *ngIf="this.imageWikiDataUrl">
                     <div class="loading" *ngIf="!this.imageWikiDataUrl">
                         <mat-spinner [diameter]="50"></mat-spinner>
@@ -78,33 +61,11 @@
         <section class="container template__caracteristicas">
             <h2>Características del municipio</h2>
             <div class="caracteristicas__list">
-                <div *ngIf="this.porcentajeSueloRural !== 'NaN'" class="caracteristica__item">
-                    <mat-icon>people</mat-icon> Ocupa un {{this.porcentajeSueloRural}}% del <b>suelo rural</b> de Aragón
-                </div>
-                <div class="caracteristica__item" *ngIf="this.porcentajeSueloUrbano !== 'NaN'">
-                    <mat-icon>people</mat-icon> Ocupa un {{this.porcentajeSueloUrbano}}% del <b>suelo urbano</b> de
-                    Aragón
-                </div>
-                <div class="caracteristica__item" *ngIf="esPoblado == '1'; else noPoblado">
-                    <mat-icon>people</mat-icon> {{this.lugarBuscado}} es uno de los <b>20 {{this.tipoLocalidad}}s más
-                        poblados</b> de Aragón
-                </div>
-                <ng-template #noPoblado>
-                    <div class="caracteristica__item">
-                        <mat-icon>people</mat-icon> {{this.lugarBuscado}} no es uno de los <b>20 {{this.tipoLocalidad}}s
-                            más
-                            poblados</b> de
-                        Aragón
-                    </div>
-                </ng-template>
                 <div class="caracteristica__item">
                     <mat-icon>people</mat-icon> La edad media de los <b>hombres</b> es de {{this.edadMediaHombres}} años
                 </div>
                 <div class="caracteristica__item">
                     <mat-icon>people</mat-icon> La edad media de las <b>mujeres</b> es de {{this.edadMediaMujeres}} años
-                </div>
-                <div class="caracteristica__item">
-                    <mat-icon>people</mat-icon> Municipio número 15 con más población de Teruel
                 </div>
             </div>
         </section>
@@ -128,23 +89,6 @@
                         <th>{{this.comunidad[0]}}</th>
                         <td *ngFor="let element of tablaPoblacion">
                             <span *ngIf="element.nameRefArea.value == this.comunidad[0]">
-                                {{element.poblac.value}}
-                            </span>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <th>{{this.provincia[0]}}</th>
-                        <td *ngFor="let element of tablaPoblacion">
-                            <span *ngIf="element.nameRefArea.value == this.provincia[0]">
-                                {{element.poblac.value}}
-                            </span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>{{this.municipio[0]}}</th>
-                        <td *ngFor="let element of tablaPoblacion">
-                            <span *ngIf="element.nameRefArea.value == this.municipio[0]">
                                 {{element.poblac.value}}
                             </span>
                         </td>
@@ -204,16 +148,6 @@
                         </mat-tab>
                     </mat-tab-group>
                 </div>
-            </div>
-
-            <div class="graphics__item miembros" *ngIf="this.cantidadMiembrosPleno !== 0">
-                <h2>Miembros del pleno municipal</h2>
-                <ul>
-                    <li *ngFor="let miembro of miembrosPleno"><b>{{miembro.cargo.value}}: </b>
-                        <a [routerLink]="['/persona/', miembro.persona.value]" routerLinkActive="router-link-active"
-                            target="_blank">{{miembro.nombrePersona.value}}</a>
-                    </li>
-                </ul>
             </div>
             <div class="graphics__item personas-ilustres" *ngIf="this.cantidadPersonasIlustres !== 0">
                 <h2>Personas Ilustres nacidas en {{this.lugarBuscado}}</h2>

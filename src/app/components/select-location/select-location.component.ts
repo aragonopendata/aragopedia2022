@@ -25,6 +25,7 @@ export class SelectLocationComponent implements OnInit {
   comarcaSelected!: string;
   idMunicipio!: string;
   idComarca!: string;
+  idProvincia!: string;
   tipoLocalidad!: string;
   error: boolean = false;
 
@@ -45,6 +46,8 @@ export class SelectLocationComponent implements OnInit {
     this.municipioSelected = this.municipio.selectedMunicipio;
     this.idMunicipio = this.municipio.id;
     this.idComarca = this.comarca.selectedId;
+    this.idProvincia = this.provincia.selectedId;
+
   }
 
   submit() {
@@ -53,33 +56,25 @@ export class SelectLocationComponent implements OnInit {
     this.municipioSelected = this.municipio.selectedMunicipio;
     this.idMunicipio = this.municipio.selectedId;
     this.idComarca = this.comarca.selectedId;
-
-    console.log(this.idComarca);
-
+    this.idProvincia = this.provincia.selectedId;
 
     if (this.provinciaSelected === '' && this.comarcaSelected === '' && this.municipioSelected === '') {
       this.error = true;
     } else if (this.provinciaSelected !== '' && this.comarcaSelected === '' && this.municipioSelected === '') {
-      this.tipoLocalidad = 'provincia';
-      // this.router.navigate([`/${this.tipoLocalidad}/${this.provinciaSelected}`])
-      // this.router.navigate([`/${this.tipoLocalidad}/${this.idMunicipio}`])
-      this.router.navigate(['detalles'], { queryParams: { tipo: this.tipoLocalidad, id: this.idMunicipio } })
+      this.tipoLocalidad = 'diputacion';
+      this.router.navigate(['detalles'], { queryParams: { tipo: this.tipoLocalidad, id: this.idProvincia } })
     } else if (this.comarcaSelected !== '' && this.municipioSelected === '') {
       this.tipoLocalidad = 'comarca';
-      // this.router.navigate([`/${this.tipoLocalidad}/${this.comarcaSelected}`])
-      // this.router.navigate([`/${this.tipoLocalidad}/${this.idComarca}`])
       this.router.navigate(['detalles'], { queryParams: { tipo: this.tipoLocalidad, id: this.idComarca } })
     } else {
       this.tipoLocalidad = 'municipio';
-      // this.router.navigate([`/${this.tipoLocalidad}/${this.municipioSelected}`])
-      // this.router.navigate([`/${this.tipoLocalidad}/${this.idMunicipio}`])
       this.router.navigate(['detalles'], { queryParams: { tipo: this.tipoLocalidad, id: this.idMunicipio } })
     }
 
   }
 
   goToAragon() {
-    this.router.navigate(['detalles'], { queryParams: { tipo: 'comunidad', id: '2' } })
+    this.router.navigate(['detalles/aragon'], { queryParams: { tipo: 'comunidad', id: '2' } })
   }
 
 }

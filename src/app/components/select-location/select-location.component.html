@@ -1,5 +1,8 @@
 <div class="container space" style="margin:auto">
-    <h2>Selecciona un municipio</h2>
+    <h2><mat-icon> place</mat-icon> Selecciona una localidad o <span class="link-aragon" (click)="goToAragon()"> accede
+            a
+            los datos de la Comunidad de
+            Aragón</span></h2>
     <p *ngIf="error" class="error">Debes seleccionar alguna localidad</p>
     <form class="location-form" [formGroup]="locationForm" (onChange)="locationSelected()" (ngSubmit)="submit()">
         <div class="location-form__input">
@@ -13,7 +16,8 @@
         <div class="location-form__input">
             <app-select-municipio></app-select-municipio>
         </div>
-        <button type="submit" class="btn">Buscar</button>
+        <!-- <button type="submit" class="btn">Buscar</button> -->
     </form>
-    <button class="btn btn-aragon" (click)="goToAragon()">Comunidad de Aragón</button>
+    <!-- <span class="link-aragon" (click)="goToAragon()"><mat-icon> place</mat-icon> Acceder a los datos de la Comunidad de
+        Aragón</span> -->
 </div>

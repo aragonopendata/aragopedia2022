@@ -6,10 +6,6 @@ import { Observable } from 'rxjs';
 export class TemasService {
     constructor(private http: HttpClient) { }
 
-    // getTemas(): Observable<any> {
-    //     return this.http.get(this.temasURL);
-    // }
-
     getResults(query: string): Observable<any> {
         return this.http.get(query);
     }
