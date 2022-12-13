@@ -76,6 +76,12 @@
         .creative-works__articles {
             flex: 0 0 100% !important;
             max-width: 400px;
+            box-shadow: var(--shadow);
+            transition: box-shadow all 0.3s;
+
+            &:hover {
+                box-shadow: var(--shadow-hover);
+            }
         }
     }
 

@@ -99,6 +99,14 @@ export class PiramidePoblacionComponent implements OnInit {
         this.lugarBuscadoParsed = this.replaceCaspe(this.capitalAfterHyphen(this.capitalAfterSlash(this.deleteSpace(this.capitalizeString(this.lugarBuscado)))));
         if (this.lugarBuscadoParsed === 'Litera-La_LLitera,_La') {
           this.lugarBuscadoParsed = 'La_Litera/La_Llitera';
+        } else if (this.lugarBuscadoParsed === 'AzAnuy-Alins') {
+          this.lugarBuscadoParsed = 'Azanuy-Alins'
+        } else if (this.lugarBuscadoParsed === 'Jacetania,_La') {
+          this.lugarBuscadoParsed = 'La_Jacetania'
+        } else if (this.lugarBuscadoParsed === 'Ribagorza,_La') {
+          this.lugarBuscadoParsed = 'La_Ribagorza'
+        } else if (this.lugarBuscadoParsed === 'Monegros,_Los') {
+          this.lugarBuscadoParsed = 'Los_Monegros'
         }
       };
 
@@ -112,33 +120,35 @@ export class PiramidePoblacionComponent implements OnInit {
       }
 
       this.piramidePoblacionSvc.getPiramidePoblacion(this.queryPiramidePoblacion).subscribe((data: any) => {
-        this.piramidePoblacion = data.results.bindings
-        this.piramidePoblacion.forEach((element: any) => {
-          let auxDatoPiramide: ItemPiramide = { sexo: "", personas: 0, grupo: "" };
+        if (data.results.bindings.length !== 0) {
+          this.piramidePoblacion = data.results.bindings
+          this.piramidePoblacion.forEach((element: any) => {
+            let auxDatoPiramide: ItemPiramide = { sexo: "", personas: 0, grupo: "" };
 
-          auxDatoPiramide.grupo = element.grupo.value;
-          auxDatoPiramide.sexo = element.sexo.value;
-          auxDatoPiramide.personas = element.personas.value;
+            auxDatoPiramide.grupo = element.grupo.value;
+            auxDatoPiramide.sexo = element.sexo.value;
+            auxDatoPiramide.personas = element.personas.value;
 
-          if ((element.sexo.value) == "Mujeres") {
-            if (this.piramideMujeres.find(v => v.grupo === auxDatoPiramide.grupo) && this.piramideMujeres.find(v => v.grupo === auxDatoPiramide.grupo) != undefined) {
+            if ((element.sexo.value) == "Mujeres") {
+              if (this.piramideMujeres.find(v => v.grupo === auxDatoPiramide.grupo) && this.piramideMujeres.find(v => v.grupo === auxDatoPiramide.grupo) != undefined) {
 
-              this.piramideMujeres.find(v => v.grupo == auxDatoPiramide.grupo)!.personas = Number(element.personas.value);
+                this.piramideMujeres.find(v => v.grupo == auxDatoPiramide.grupo)!.personas = Number(element.personas.value);
 
+              }
+            } else {
+              if (this.piramideHombres.find(v => v.grupo === auxDatoPiramide.grupo) && this.piramideHombres.find(v => v.grupo === auxDatoPiramide.grupo) != undefined) {
+
+                this.piramideHombres.find(v => v.grupo == auxDatoPiramide.grupo)!.personas = Number(element.personas.value);
+
+              }
             }
-          } else {
-            if (this.piramideHombres.find(v => v.grupo === auxDatoPiramide.grupo) && this.piramideHombres.find(v => v.grupo === auxDatoPiramide.grupo) != undefined) {
+          });
 
-              this.piramideHombres.find(v => v.grupo == auxDatoPiramide.grupo)!.personas = Number(element.personas.value);
+          let maxHombres = Math.max.apply(Math, this.piramideHombres.map(function (o) { return o.personas; }))
+          let maxMujeres = Math.max.apply(Math, this.piramideMujeres.map(function (o) { return o.personas; }))
 
-            }
-          }
-        });
-
-        let maxHombres = Math.max.apply(Math, this.piramideHombres.map(function (o) { return o.personas; }))
-        let maxMujeres = Math.max.apply(Math, this.piramideMujeres.map(function (o) { return o.personas; }))
-
-        this.max = Math.max(maxHombres, maxMujeres);
+          this.max = Math.max(maxHombres, maxMujeres);
+        }
       });
     })
 
@@ -180,14 +190,27 @@ export class PiramidePoblacionComponent implements OnInit {
   }
 
   capitalAfterHyphen(str: string): string {
-    if (str.includes('-')) {
-      const index = str.indexOf('-');
-      const replacement = str[index + 1].toUpperCase();
-      return str
-        .replaceAll(str[index + 1], replacement)
-        .replace('ArcoS', 'Arcos');
+    let newStr = str[0];
+    for (let i = 0; i < str.length - 1; i++) {
+
+      const char = str[i];
+      if (char === '-') {
+        newStr += str[i + 1].toUpperCase()
+      } else {
+        newStr += str[i + 1]
+      }
     }
-    return str;
+
+    // if (str.includes('-')) {
+    //   const index = str.indexOf('-');
+    //   const replacement = str[index + 1].toUpperCase();
+    //   return str
+    //     .replaceAll(str[index + 1], replacement)
+    //     .replace('ArcoS', 'Arcos')
+    //     .replace('MonfLorite', 'Monflorite')
+    //     .replace('AínSa', 'Aínsa')
+    // }
+    return newStr;
   }
 
   replaceWord(str: string): string {
@@ -199,6 +222,7 @@ export class PiramidePoblacionComponent implements OnInit {
       .replace('GUDAR', 'GÚDAR')
       .replace('ALBARRACIN', 'ALBARRACÍN')
       .replace('VALDEJALON', 'VALDEJALÓN')
+      .replace('ZARAGÓZA', 'ZARAGOZA')
       .replace('/', '-')
   }
 

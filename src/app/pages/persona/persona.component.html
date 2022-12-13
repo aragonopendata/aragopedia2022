@@ -1,7 +1,7 @@
 <div class="container template">
     <div class="breadcrumbs">
         <p><a href="/">Inicio</a> > <a href="/detalles?tipo=municipio&id={{this.idMunicipio}}">{{municipio}}</a>
-            > {{nombre}}</p>
+            > Personas > {{nombre}}</p>
     </div>
 
     <section class="container template__persona">
@@ -10,9 +10,9 @@
     </div> -->
         <div class="persona__content">
             <h2 class="persona__name">{{nombre}}</h2>
-            <div *ngIf="this.datosContacto.biog !== undefined" class="bio">
+            <div *ngIf="this.biografia" class="bio">
                 <p><strong>Biografía</strong></p>
-                <p class="persona__bio">{{deleteTags(this.datosContacto.biog.value)}}</p>
+                <p class="persona__bio">{{this.biografia}}</p>
             </div>
             <p><strong>Cargo</strong></p>
             <ul class="persona__cargos">
@@ -26,13 +26,13 @@
         <div class="persona__data sidebar">
             <div class="sidebar__more">
                 <h3>Datos de contacto</h3>
-                <div *ngIf="datosContacto.phone">
+                <div *ngIf="datosContacto">
                     <ul class="more__data">
-                        <li>{{datosContacto.phone.value}}</li>
-                        <li>{{datosContacto.mbox.value}}</li>
+                        <li *ngIf="this.datosContacto.phone.value">{{datosContacto.phone.value}}</li>
+                        <li *ngIf="this.datosContacto.mbox">{{datosContacto.mbox.value}}</li>
                     </ul>
                 </div>
-                <div *ngIf="!datosContacto.phone">
+                <div *ngIf="!datosContacto">
                     <p>No hay datos de contacto</p>
                 </div>
             </div>
@@ -45,13 +45,13 @@
     <section class="container template">
         <h2>Menciones en publicaciones ({{numberOfCreativeWorks}})</h2>
         <div class="creative-works">
-            <article *ngFor="let publicacion of pageOfItems" class="creative-works__articles">
+            <article *ngFor="let publicacion of creativeWorks" class="creative-works__articles">
                 <h3 class="article__title">{{publicacion.title.value}}</h3>
-                <p class="article__abstract">{{reduceText(publicacion.abstract.value)}}...</p>
+                <p class="article__abstract">{{this.reduceText(publicacion.abstract.value)}}...</p>
                 <a href="{{publicacion.url.value}}" target="_blank" class="article__link">Leer más</a>
             </article>
         </div>
-        <div *ngIf="this.items.length !== 1 " class="results__pagination">
+        <div *ngIf="this.items" class="results__pagination">
             <jw-pagination [items]="items" (changePage)="onChangePage($event)"></jw-pagination>
         </div>
     </section>

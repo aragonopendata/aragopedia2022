@@ -36,11 +36,8 @@ export class SelectComarcaComponent implements OnInit {
       const listId = data.results.bindings;
       let index = 0;
 
-
       this.comarcas.forEach((comarca: string) => {
         listId.forEach((element: any) => {
-          comarca.replace('La Litera/La Llitera', 'litera/la llitera, la');
-
           if (this.removeSpace(this.removeAccents(comarca.toLowerCase())) == this.replaceSlash(this.removeAccents(element['callret-1'].value.toLowerCase()))) {
             this.comarcasParsed[index] = {
               nombre: comarca,
@@ -52,6 +49,7 @@ export class SelectComarcaComponent implements OnInit {
           }
         });
       });
+
     });
 
   }
@@ -73,6 +71,7 @@ export class SelectComarcaComponent implements OnInit {
       if (this.selectedId !== '') {
         this.router.navigate(['detalles'], { queryParams: { tipo: 'comarca', id: this.selectedId } })
       }
+
       this.filterData(response);
     });
   }
@@ -87,8 +86,10 @@ export class SelectComarcaComponent implements OnInit {
     this.locationSvc.getComarcas().subscribe(response => {
       this.comarcas = response;
       this.filteredComarcas = response;
-      const index = this.comarcas.indexOf('La Litera/La Llitera');
-      this.comarcas[index] = 'litera/la llitera, la';
+      this.comarcas[this.comarcas.indexOf('La Litera/La Llitera')] = 'litera/la llitera, la';
+      this.comarcas[this.comarcas.indexOf('La Jacetania')] = 'jacetania, la';
+      this.comarcas[this.comarcas.indexOf('La Ribagorza')] = 'ribagorza, la';
+      this.comarcas[this.comarcas.indexOf('Los Monegros')] = 'monegros, los';
     })
   }
 
@@ -110,10 +111,12 @@ export class SelectComarcaComponent implements OnInit {
       .replace('andorra/', 'andorra-')
       .replace('Andorra/', 'Andorra-')
       .replace('La Litera/La Llitera', 'litera/la llitera, la')
+      .replace('JACETANIA, LA', 'la jacetania')
   }
 
   fixNames(str: string): string {
     return str
       .replace('La Litera/La Llitera', 'litera/la llitera, la')
+      .replace('JACETANIA, LA', 'la jacetania')
   }
 }

@@ -1,7 +1,7 @@
 <ng-container *ngIf="this.tipoLocalidad === 'municipio' || this.tipoLocalidad === 'diputacion'">
     <div class="container template">
         <section class="container breadcrumbs">
-            <p><a [routerLink]="['/']">Inicio</a> > {{this.capitalizeString(this.tipoLocalidad)}} >
+            <p><a [routerLink]="['/']">Inicio</a> > {{this.tipoLocalidad}} >
                 {{this.lugarBuscado}}</p>
         </section>
         <section class="container container template__inicio">
@@ -15,9 +15,10 @@
             </div>
             <div class="inicio__data">
                 <ul>
-                    <li><span class="big-number">{{this.sueloUrbano}}</span>Hectáreas de suelo urbano</li>
+                    <li><span class="big-number">{{this.sueloUrbano}}</span>Hectáreas de suelo
+                        urbano</li>
                     <li><span class="big-number">{{this.sueloRural}}</span>Hectáreas de suelo rural</li>
-                    <li><span class="big-number">1</span><b>Centro de salud</b></li>
+                    <li><span class="big-number">{{this.oficinasComarcales}}</span>Oficinas comarcales</li>
                     <li><span class="big-number">{{this.poblacion}}</span>Habitantes</li>
                     <li><span class="big-number">{{this.densidadPoblacion}}</span>Habitantes por KM2</li>
                     <li><span class="big-number">{{this.poligonos}}</span>Polígonos industriales</li>
@@ -82,33 +83,33 @@
         <section class="container template__caracteristicas">
             <h2>Características del municipio</h2>
             <div class="caracteristicas__list">
-                <div *ngIf="this.porcentajeSueloRural !== 'NaN'" class="caracteristica__item">
-                    <mat-icon>people</mat-icon> Ocupa un {{this.porcentajeSueloRural}}% del <b>suelo rural</b> de Aragón
+                <div *ngIf="this.porcentajeSueloRural !== undefined || this.porcentajeSueloRural !== 'NaN'"
+                    class="caracteristica__item">
+                    <mat-icon>people</mat-icon> Ocupa un {{this.porcentajeSueloRural}}% del <b>suelo rural</b>
+                    de Aragón
                 </div>
-                <div class="caracteristica__item" *ngIf="this.porcentajeSueloUrbano !== 'NaN'">
-                    <mat-icon>people</mat-icon> Ocupa un {{this.porcentajeSueloUrbano}}% del <b>suelo urbano</b> de
+                <div class="caracteristica__item"
+                    *ngIf="this.porcentajeSueloUrbano !== undefined || this.porcentajeSueloUrbano !== 'NaN'">
+                    <mat-icon>people</mat-icon> Ocupa un {{this.porcentajeSueloUrbano}}% del <b>suelo urbano</b>
+                    de
                     Aragón
                 </div>
                 <div class="caracteristica__item" *ngIf="esPoblado == '1'; else noPoblado">
-                    <mat-icon>people</mat-icon> {{this.lugarBuscado}} es uno de los <b>20 {{this.tipoLocalidad}}s más
-                        poblados</b> de Aragón
+                    <mat-icon>people</mat-icon> {{this.lugarBuscado}} está entre una de <b>las 20 localidades más
+                        pobladas</b> de Aragón
                 </div>
                 <ng-template #noPoblado>
                     <div class="caracteristica__item">
-                        <mat-icon>people</mat-icon> {{this.lugarBuscado}} no es uno de los <b>20 {{this.tipoLocalidad}}s
-                            más
-                            poblados</b> de
-                        Aragón
+                        <mat-icon>people</mat-icon> {{this.lugarBuscado}} no está entre una de <b>las 20
+                            localidades más
+                            pobladas</b> de Aragón
                     </div>
                 </ng-template>
-                <div class="caracteristica__item">
+                <div *ngIf="this.edadMediaHombres" class="caracteristica__item">
                     <mat-icon>people</mat-icon> La edad media de los <b>hombres</b> es de {{this.edadMediaHombres}} años
                 </div>
-                <div class="caracteristica__item">
+                <div *ngIf="this.edadMediaMujeres" class="caracteristica__item">
                     <mat-icon>people</mat-icon> La edad media de las <b>mujeres</b> es de {{this.edadMediaMujeres}} años
-                </div>
-                <div class="caracteristica__item">
-                    <mat-icon>people</mat-icon> Municipio número 15 con más población de Teruel
                 </div>
             </div>
         </section>
@@ -263,6 +264,7 @@
                     <li><span class="big-number">1</span><b>Centro de salud</b></li> -->
                     <li><span class="big-number">{{this.poblacion}}</span>Habitantes</li>
                     <li><span class="big-number">{{this.densidadPoblacion}}</span>Habitantes por KM2</li>
+                    <li><span class="big-number">{{this.oficinasComarcales}}</span>Oficinas comarcales</li>
                     <li><span class="big-number">{{this.poligonos}}</span>Polígonos industriales</li>
                     <!-- <li><span class="big-number">{{this.explotacionesGanaderas}}</span>Explotaciones ganaderas</li> -->
                     <li><span class="big-number">{{this.incendiosUltimosAnos}}</span>Incendios desde 2002</li>
@@ -282,48 +284,26 @@
                     <li><b>Teléfono</b> {{this.telefono}}</li>
                     <li><b>email</b> {{this.email}}</li>
                 </ul>
-            </div>
-        </section>
-
-        <section class="container template__img-municipio" *ngIf="this.imageWikiDataUrl">
-            <figure>
-                <img src="{{this.imageWikiDataUrl}}" alt="Imagen principal de {{this.lugarBuscado}}">
-                <figcaption>Foto de <b>{{this.lugarBuscado}}</b> aportada por <a
-                        href="https://www.wikidata.org/wiki/Wikidata:Main_Page" target="_blank">Wikidata</a>
-                </figcaption>
-            </figure>
-        </section>
-
-        <!-- <section class="container template__caracteristicas">
-            <h2>Características del municipio</h2>
-            <div class="caracteristicas__list">
-                <div class="caracteristica__item">
-                    <mat-icon>people</mat-icon> Ocupa un {{this.porcentajeSueloRural}}% del <b>suelo rural</b> de Aragón
-                </div>
-                <div class="caracteristica__item">
-                    <mat-icon>people</mat-icon> Ocupa un {{this.porcentajeSueloUrbano}}% del <b>suelo urbano</b> de
-                    Aragón
-                </div>
-                <div class="caracteristica__item" *ngIf="esPoblado == '1'; else noPoblado">
-                    <mat-icon>people</mat-icon> {{this.lugarBuscado}} es uno de los <b>20 {{this.tipoLocalidad}}s más
-                        poblados</b> de Aragón
-                </div>
-                <ng-template #noPoblado>
-                <div class="caracteristica__item">
-                        <mat-icon>people</mat-icon> {{this.lugarBuscado}} no es uno de los <b>20 {{this.tipoLocalidad}}s
-                            más
-                            poblados</b> de
-                        Aragón
+                <div class="template__img-municipio" *ngIf="this.imageWikiDataUrl">
+                    <div class="loading" *ngIf="!this.imageWikiDataUrl">
+                        <mat-spinner [diameter]="50"></mat-spinner>
                     </div>
-                </ng-template>
-                <div class="caracteristica__item">
-                    <mat-icon>people</mat-icon> La edad media de los <b>hombres</b> es de {{this.edadMediaHombres}} años
-                </div>
-                <div class="caracteristica__item">
-                    <mat-icon>people</mat-icon> La edad media de las <b>mujeres</b> es de {{this.edadMediaMujeres}} años
+                    <figure>
+                        <a href="{{this.imageWikiDataUrl}}" target="_blank" rel="nofollow noopener"><img
+                                src="{{this.imageWikiDataUrl}}" alt="Imagen principal de {{this.lugarBuscado}}"></a>
+                        <figcaption>Este archivo está disponible bajo la licencia <a
+                                href="https://en.wikipedia.org/wiki/es:Creative_Commons" target="_blank"
+                                rel="nofollow noopener">Creative Commons</a> <a
+                                href="https://creativecommons.org/licenses/by/4.0/deed.es" target="_blank"
+                                rel="nofollow noopener">
+                                Atribución 4.0
+                                Internaciona
+                            </a>
+                        </figcaption>
+                    </figure>
                 </div>
             </div>
-        </section> -->
+        </section>
 
         <section class="container template__graphics">
             <div class="graphics__item" style="width: 100%;">
