@@ -273,22 +273,37 @@ section.container {
 .tabla-poblacion {
     display: flex;
     flex-direction: row;
+    justify-content: center;
+    align-items: center;
     empty-cells: hide;
     border-collapse: collapse;
     border-spacing: 5px;
     font-size: 16px;
-    padding-bottom: 2em;
+    border: 1px solid #dbdbdb;
+    border-radius: 6px;
+    width: fit-content;
+    height: fit-content;
+    margin-bottom: 2em;
 
     tr {
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
         align-items: flex-start;
-        padding-right: 1.5em;
+        padding: 1em;
+        border-left: 1px solid #dbdbdb;
+        border-right: 1px solid #dbdbdb;
+        border-radius: 2px;
         text-align: center;
 
         th {
             flex: 0 0 20%;
+            text-transform: uppercase;
+            color: var(--accent-color);
+            margin-bottom: 1em;
+            padding: .5em 1.5em;
+            background-color: #D6EAF0;
+            border-radius: 3px;
         }
 
         td {
@@ -297,6 +312,8 @@ section.container {
 
             span {
                 display: flex;
+                font-size: 16px;
+                margin-bottom: 10px;
             }
         }
     }

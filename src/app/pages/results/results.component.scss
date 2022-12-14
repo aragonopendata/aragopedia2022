@@ -28,6 +28,17 @@
     }
 }
 
+.hide {
+    display: none;
+}
+
+.hide.error {
+    display: block;
+    font-size: 18px;
+    color: #d22333;
+    text-align: center;
+}
+
 ::ng-deep {
 
     ul.pagination {
@@ -43,12 +54,15 @@
             color: var(--text-color);
             margin: auto;
             display: block;
-            width: 50px;
             text-align: center;
             transition: background-color 0.3s;
 
             &:hover {
                 background-color: #EDEDEC;
+            }
+
+            .page-link {
+                padding: .5em 1em;
             }
         }
 
@@ -92,10 +106,7 @@
 
 .results-page {
     position: relative;
-
-    .desktop__timeline {
-        margin-top: 5em;
-    }
+    margin-top: 3em;
 
     .desktop__buscador {
         max-width: 400px;
@@ -135,8 +146,58 @@ ul.pagination {
 .results {
     margin: 1em auto;
 
+
+    .filter-temas {
+        width: 100%;
+        margin: auto;
+        margin-bottom: 2em;
+        display: grid;
+        grid-gap: 5px;
+        grid-template-columns: repeat(3, auto);
+
+        .filter-temas__item {
+            text-align: center;
+            cursor: pointer;
+            display: block;
+            font-size: 16px;
+            width: fit-content;
+            padding: .5em 1em;
+            border-radius: 3px;
+            transition: all 0.3s;
+
+
+            &:hover {
+                background-color: #EDEDEC;
+            }
+
+            input {
+                display: none;
+            }
+        }
+
+        .tema-checked {
+            color: var(--accent-color);
+            background-color: #EDEDEC;
+            font-weight: 500;
+        }
+    }
+
+
     .results__filter-desktop {
         display: none;
+        margin-bottom: 2em;
+
+
+        .filter-btn {
+            cursor: pointer;
+            margin: auto;
+            display: block;
+            border-color: transparent;
+        }
+    }
+
+    .active {
+        display: block;
     }
 
     .results__title {
@@ -151,7 +212,6 @@ ul.pagination {
         display: flex;
         justify-content: space-evenly;
         width: 100%;
-        padding: 10px 0;
         border-top: 1px solid #aaa;
         border-bottom: 1px solid #aaa;
         position: relative;
@@ -168,6 +228,10 @@ ul.pagination {
         }
 
 
+        .filter-active {
+            background-color: #EDEDEC;
+        }
+
         .results__filter-menu,
         .results__filter-order {
             display: flex;
@@ -175,6 +239,13 @@ ul.pagination {
             justify-content: center;
             width: 100%;
             cursor: pointer;
+            padding: 10px 0;
+            transition: all 0.3s;
+
+
+            &:hover {
+                background-color: #EDEDEC;
+            }
 
             p {
                 margin: 0 0 0 5px;
@@ -289,10 +360,15 @@ ul.pagination {
 
 @media screen and (min-width:992px) {
 
+    .sidebar {
+        display: none;
+    }
+
     .results-page {
         display: flex;
         flex-direction: row-reverse;
         margin: auto;
+        margin-top: 5em;
 
         .desktop__buscador {
             max-width: 800px;
@@ -304,14 +380,7 @@ ul.pagination {
             width: 100%;
 
             .results__title {
-                text-align: left;
-                padding: 0;
-            }
-
-            .results__filter-desktop {
-                display: block;
-                margin-bottom: 2em;
-                margin-top: -5em;
+                font-size: 26px;
             }
 
         }

@@ -25,6 +25,7 @@ export class ResultsComponent implements OnInit {
   @ViewChild(TimeLineComponent) years: any;
 
   active: boolean = false;
+  error: boolean = false;
 
   temas: any = [];
   temasSelected: any;
@@ -34,7 +35,7 @@ export class ResultsComponent implements OnInit {
   temp = undefined;
   filterResult = '';
   results = this.temp || [{ category: '', categoryURL: '', title: '', resultURL: '', year: '' }];
-  temasParsed = this.temp || [{ title: '', url: '' }];
+  temasParsed = this.temp || [{ title: '', url: '', check: false }];
   selectedUrl: string[] = [];
   items: any;
   pageOfItems!: Array<any>;
@@ -76,7 +77,7 @@ export class ResultsComponent implements OnInit {
       this.temasUnicosUrl = [... new Set(this.temasUrl)];
 
       this.temasUnicos.forEach((element: any, i: any) => {
-        this.temasParsed[i] = { title: element, url: this.temasUnicosUrl[i] }
+        this.temasParsed[i] = { title: element, url: this.temasUnicosUrl[i], check: false }
       });
 
 
@@ -156,6 +157,24 @@ export class ResultsComponent implements OnInit {
     setTimeout(function () {
       window.location.reload()
     }, 500)
+  }
+
+  filterByYears() {
+    let temasFiltered: string[] = [];
+    this.temasParsed.forEach(tema => {
+      tema.check ? temasFiltered.push(tema.title) : tema.check;
+    });
+
+    this.selectedYears = this.years.yearsSelected;
+    this.yearsURL = `${this.selectedYears[0]}-${this.selectedYears[1]}`
+    if (temasFiltered.length >= 1 && temasFiltered.length <= 3) {
+      this.router.navigate([`results/${temasFiltered}/${this.yearsURL}`]);
+      setTimeout(function () {
+        window.location.reload()
+      }, 500)
+    } else {
+      this.error = true;
+    }
   }
 
 }

@@ -14,22 +14,28 @@
             </div>
             <div class="inicio__data">
                 <ul>
-                    <li><span class="big-number">{{this.sueloUrbano}}</span>Hectáreas de suelo urbano</li>
-                    <li><span class="big-number">{{this.sueloRural}}</span>Hectáreas de suelo rural</li>
-                    <li><span class="big-number">1</span><b>Centro de salud</b></li>
-                    <li><span class="big-number">{{this.poblacion}}</span>Habitantes</li>
-                    <li><span class="big-number">{{this.densidadPoblacion}}</span>Habitantes por KM2</li>
-                    <li><span class="big-number">{{this.poligonos}}</span>Polígonos industriales</li>
-                    <li><span class="big-number">{{this.explotacionesGanaderas}}</span>Explotaciones ganaderas</li>
-                    <li><span class="big-number">{{this.incendiosUltimosAnos}}</span>Incendios desde 2002</li>
-                    <li><span class="big-number">{{this.hectareasQuemadas}}</span>Hectáreas afectadas por
-                        incendios</li>
-                    <li><span class="big-number">{{this.numberOfCreativeWork}}</span>Menciones en publicaciones
-                        <!-- <a class="inicio__data-link">Ver
-                                publicaciones</a>-->
+                    <li *ngIf="this.sueloUrbano"><span class="big-number">{{this.sueloUrbano}}</span>Hectáreas de suelo
+                        urbano</li>
+                    <li *ngIf="this.sueloRural"><span class="big-number">{{this.sueloRural}}</span>Hectáreas de suelo
+                        rural</li>
+                    <li *ngIf="this.oficinasComarcales"><span
+                            class="big-number">{{this.oficinasComarcales}}</span>Oficinas comarcales</li>
+                    <li *ngIf="this.poblacion"><span class="big-number">{{this.poblacion}}</span>Habitantes</li>
+                    <li *ngIf="this.densidadPoblacion"><span
+                            class="big-number">{{this.densidadPoblacion}}</span>Habitantes por KM2</li>
+                    <li *ngIf="this.poligonos"><span class="big-number">{{this.poligonos}}</span>Polígonos industriales
                     </li>
-                    <li><span class="big-number">{{this.plazasHoteleras}}</span>Plazas hoteleras</li>
-                    <li><span class="big-number">{{this.alojamientosTuristicos}}</span>Alojamientos turísticos</li>
+                    <li *ngIf="this.explotacionesGanaderas"><span
+                            class="big-number">{{this.explotacionesGanaderas}}</span>Explotaciones ganaderas</li>
+                    <li *ngIf="this.incendiosUltimosAnos"><span
+                            class="big-number">{{this.incendiosUltimosAnos}}</span>Incendios desde 2002</li>
+                    <li *ngIf="this.hectareasQuemadas"><span
+                            class="big-number">{{this.hectareasQuemadas}}</span>Hectáreas afectadas por
+                        incendios</li>
+                    <li *ngIf="this.plazasHoteleras"><span class="big-number">{{this.plazasHoteleras}}</span>Plazas
+                        hoteleras</li>
+                    <li *ngIf="this.alojamientosTuristicos"><span
+                            class="big-number">{{this.alojamientosTuristicos}}</span>Alojamientos turísticos</li>
                 </ul>
             </div>
             <div class="inicio__contact">
@@ -59,13 +65,15 @@
         </section>
 
         <section class="container template__caracteristicas">
-            <h2>Características del municipio</h2>
+            <h2>Características de la Comunidad de Aragón</h2>
             <div class="caracteristicas__list">
                 <div class="caracteristica__item">
-                    <mat-icon>people</mat-icon> La edad media de los <b>hombres</b> es de {{this.edadMediaHombres}} años
+                    <mat-icon>people</mat-icon> La edad media de los <b>hombres</b> es de {{this.edadMediaHombres}}
+                    años
                 </div>
                 <div class="caracteristica__item">
-                    <mat-icon>people</mat-icon> La edad media de las <b>mujeres</b> es de {{this.edadMediaMujeres}} años
+                    <mat-icon>people</mat-icon> La edad media de las <b>mujeres</b> es de {{this.edadMediaMujeres}}
+                    años
                 </div>
             </div>
         </section>

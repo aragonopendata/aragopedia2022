@@ -32,6 +32,7 @@ import { AragopediaComponent } from './pages/aragopedia/aragopedia.component';
 import { JwPaginationModule } from 'jw-angular-pagination';
 import { PersonaModule } from './pages/persona/persona.module';
 import { FichaAragonComponent } from './pages/result/ficha-aragon/ficha-aragon.component';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [
@@ -68,7 +69,8 @@ import { FichaAragonComponent } from './pages/result/ficha-aragon/ficha-aragon.c
     MatTabsModule,
     MatProgressSpinnerModule,
     JwPaginationModule,
-    PersonaModule
+    PersonaModule,
+    MatCheckboxModule
   ],
   providers: [ResultService],
   bootstrap: [AppComponent]
