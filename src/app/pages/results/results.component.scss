@@ -28,6 +28,25 @@
     }
 }
 
+.search-error {
+    padding: 2em 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    p {
+        font-size: 18px;
+
+        a {
+            cursor: pointer;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+}
+
 .hide {
     display: none;
 }

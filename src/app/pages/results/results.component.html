@@ -49,9 +49,12 @@
                 <!-- buscador -->
             </div>
         </div>
-        <div class="loading" *ngIf="this.results.length === 1">
+        <div class="loading" *ngIf="this.items === undefined">
             <mat-spinner [diameter]="70"></mat-spinner>
             <p>Obteniendo datos</p>
+        </div>
+        <div *ngIf="this.numberOfResults === 0" class="search-error">
+            <p>No es han encontrado resultados, prueba a <a (click)="toggleSidebar()">aplicar otros filtros.</a></p>
         </div>
         <div *ngFor="let result of pageOfItems | filter:filterResult" class="search__results">
             <article class="search__results-item">

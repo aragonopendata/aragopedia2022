@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { ResultService } from './result.service';
 import { ActivatedRoute } from '@angular/router';
 import { ngxCsv } from 'ngx-csv/ngx-csv';
-import { getLocaleFirstDayOfWeek } from '@angular/common';
 
 @Component({
   selector: 'app-result',

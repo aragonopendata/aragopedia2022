@@ -59,6 +59,10 @@ export class FichaAragonComponent implements OnInit {
   oficinasComarcales!: string;
   miembrosPleno!: Persona[];
   cantidadMiembrosPleno!: number;
+  direccion!: string;
+  codPostal!: string;
+  email!: string;
+  telefono!: string;
 
 
   //Queries variables
@@ -81,6 +85,7 @@ export class FichaAragonComponent implements OnInit {
   queryNombresIne!: string;
   queryUrlOficinasComarcales!: string;
   queryUrlMiembrosPleno!: string;
+  queryUrlContacto!: string;
 
   // Download data
 
@@ -210,6 +215,8 @@ export class FichaAragonComponent implements OnInit {
 
       this.queryUrlMiembrosPleno = `https://opendata.aragon.es/sparql?default-graph-uri=&query=prefix+org%3A+%3Chttp%3A%2F%2Fwww.w3.org%2Fns%2Forg%23%3E%0D%0Aprefix+ei2av2%3A+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fei2av2%23%3E%0D%0A%0D%0Aselect+distinct+%3Forg+%3ForgTitle+%3Fpersona+%3Fnombre%0D%0Afrom+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fei2av2%3E+where+%7B%0D%0A+++%3Forg+%3Fp+%3Fo%3B%0D%0A+++ei2av2%3Alegislature+%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fsector-publico%2Flegislatura%2F25%3E%3B%0D%0A+++dc%3Atitle+%3ForgTitle%3B%0D%0A++ei2av2%3Aorder+%3Forder.%0D%0A++%3Fcargo+org%3ApostIn+%3Forg+%3B%0D%0A+++++++++%3Chttp%3A%2F%2Fopendata.aragon.es%2Forder%3E+%221%22%5E%5E%3Chttp%3A%2F%2Fwww.w3.org%2F2001%2FXMLSchema%23int%3E.%0D%0A%0D%0A++%3Fpersona+org%3Aholds+%3Fcargo%3B%0D%0A+++++++foaf%3Aname+%3Fnombre.%0D%0A%0D%0A+++FILTER+NOT+EXISTS+%7B+%3Forg+org%3AsubOrganizationOf+%3Fx%7D%0D%0A+%7D%0D%0Aorder+by+%3Forder&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`;
 
+      this.queryUrlContacto = `https://opendata.aragon.es/sparql?default-graph-uri=&query=PREFIX+rdf%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F1999%2F02%2F22-rdf-syntax-ns%23%3E%0D%0APREFIX+ns%3A+%3Chttp%3A%2F%2Fwww.w3.org%2Fns%2Fprov%23%3E%0D%0APREFIX+vcard%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2006%2Fvcard%2Fns%23%3E%0D%0A%0D%0ASELECT+%3Femail+%3Ftel+%3Ffax+%3Fdireccion+%3FcodPostal+%0D%0AFROM+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fei2av2%3E%0D%0AWHERE+%7B%0D%0A++%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fsector-publico%2Forganizacion%2Funidad-organizativa%2F3036%3E+%3Chttp%3A%2F%2Fwww.w3.org%2Fns%2Forg%23hasSite%3E+%3FsiteAddress.%0D%0A%0D%0A++%3FsiteAddress+%3Chttp%3A%2F%2Fwww.w3.org%2Fns%2Forg%23siteAddress%3E+%3Faddress2.%0D%0A%0D%0A++OPTIONAL+%7B%3Faddress2+vcard%3Aemail+%3Femail+%7D.%0D%0A++OPTIONAL+%7B%3Faddress2+vcard%3Atel+%3Ftel+%7D.%0D%0A++OPTIONAL+%7B%3Faddress2+vcard%3Afax+%3Ffax+%7D.%0D%0A++OPTIONAL+%7B%3Faddress2+vcard%3Astreet-address%3Fdireccion+%7D.%0D%0A+++OPTIONAL+%7B%3Faddress2+vcard%3Apostal-code+%3FcodPostal+%7D.%0D%0A%7D&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`;
+
 
       //Obtención de datos NOMBRE MUNICIPIO
 
@@ -291,6 +298,18 @@ export class FichaAragonComponent implements OnInit {
         this.miembrosPleno = data.results.bindings;
         this.cantidadMiembrosPleno = this.miembrosPleno.length;
       })
+
+      this.resultSvc.getData(this.queryUrlContacto).subscribe(data => {
+        console.log(data);
+
+        this.direccion = data.results.bindings[0].direccion.value;
+        this.codPostal = data.results.bindings[0].codPostal.value;
+        this.email = data.results.bindings[0].email.value;
+        this.telefono = data.results.bindings[0].tel.value;
+        console.log(this.telefono);
+
+      })
+
     });
 
 

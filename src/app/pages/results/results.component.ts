@@ -46,6 +46,7 @@ export class ResultsComponent implements OnInit {
   yearsURL!: string;
   initialData: any;
   selectedUrlSplit: string = '';
+  numberOfResults!: number;
 
   // Queries URL
   queryUrlResultTemas!: string;
@@ -78,7 +79,6 @@ export class ResultsComponent implements OnInit {
 
       this.temasUnicos.forEach((element: any, i: any) => {
         this.temasParsed[i] = { title: element, url: this.temasUnicosUrl[i], check: false }
-
         this.temasSelected?.forEach((tema: any) => {
           this.temasParsed.forEach(temaParsed => {
             if (tema === temaParsed.title) {
@@ -113,8 +113,10 @@ export class ResultsComponent implements OnInit {
           const title = element['callret-3'].value
           this.results[i] = { categoryURL: element.item.value, title: title, category: element.labelTema.value, resultURL: element.item.value, year: element.year.value }
         });
+        this.items = this.results;
+        this.numberOfResults = this.items.length - 1;
       });
-      this.items = this.results;
+
     });
 
     //### parseo de temas
@@ -181,6 +183,7 @@ export class ResultsComponent implements OnInit {
 
     this.selectedYears = this.years.yearsSelected;
     this.yearsURL = `${this.selectedYears[0]}-${this.selectedYears[1]}`
+
     if (temasFiltered.length >= 1 && temasFiltered.length <= 3) {
       this.router.navigate([`results/${temasFiltered}/${this.yearsURL}`]);
       setTimeout(function () {
