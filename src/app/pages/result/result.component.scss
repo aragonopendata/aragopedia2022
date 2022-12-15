@@ -1,3 +1,33 @@
+.return {
+    width: fit-content;
+    position: fixed;
+    bottom: 30px;
+    right: 0;
+    left: 0;
+    margin: auto;
+    z-index: 999;
+
+    .return__btn {
+        margin: auto;
+        outline: none;
+        border-width: 0;
+        cursor: pointer;
+        display: block;
+        width: fit-content;
+        // box-shadow: var(--shadow-hover);
+        background: rgba(0, 71, 92, 0.65);
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(4.5px);
+        -webkit-backdrop-filter: blur(4.5px);
+        transition: all 0.3s;
+
+        &:hover {
+            background: var(--accent-color);
+            box-shadow: 0 0 15px 10px rgba(0, 0, 0, 0.1);
+        }
+    }
+}
+
 // Mat table styles
 
 .mat-tab-group {
@@ -10,6 +40,7 @@ section.container {
 
 .template {
     margin: auto;
+    margin-top: 2em;
 
     .breadcrumbs {
         text-align: center;
@@ -77,9 +108,11 @@ section.container {
     .inicio__contact {
 
         padding: 1.5em;
-        margin: 1em;
         background-color: #f4f4f4;
         border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
 
         h2 {
             font-size: 22px;
@@ -98,20 +131,34 @@ section.container {
             }
         }
 
+        .btn {
+            margin: auto;
+            margin-top: .5em;
+            outline: none;
+            border-width: 0;
+            cursor: pointer;
+            display: block;
+        }
+
     }
 
     .template__img-municipio {
         max-width: 700px;
-        margin: 2em auto;
+        margin: .5em auto;
+
+        figure {
+            margin: 0;
+        }
 
         img {
-            border-radius: 10px;
+            border-radius: 3px;
             box-shadow: var(--shadow);
             margin: auto;
         }
 
         figcaption {
             margin-top: 1em;
+            font-size: 12px;
         }
     }
 
@@ -200,13 +247,42 @@ section.container {
         }
     }
 
-    .miembros ul li {
-        b {
-            margin-right: 30px;
+    .miembros {
+        ul {
+
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+
+            li {
+                text-transform: uppercase;
+                flex: 0 0 50%;
+                font-size: 16px;
+
+                b {
+                    display: block;
+                    margin: 10px 0;
+                }
+            }
         }
 
-        a {
-            color: var(--accent-color);
+    }
+
+    .personas-ilustres {
+
+        ul {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        li {
+            flex: 0 0 50%;
+            margin-bottom: .3em;
+
+            a {
+                font-size: 16px;
+                color: var(--accent-color);
+            }
         }
     }
 }
@@ -214,22 +290,37 @@ section.container {
 .tabla-poblacion {
     display: flex;
     flex-direction: row;
+    justify-content: center;
+    align-items: center;
     empty-cells: hide;
     border-collapse: collapse;
     border-spacing: 5px;
     font-size: 16px;
-    padding-bottom: 2em;
+    border: 1px solid #dbdbdb;
+    border-radius: 6px;
+    width: fit-content;
+    height: fit-content;
+    margin-bottom: 2em;
 
     tr {
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
         align-items: flex-start;
-        padding-right: 1.5em;
+        padding: 1em;
+        border-left: 1px solid #dbdbdb;
+        border-right: 1px solid #dbdbdb;
+        border-radius: 2px;
         text-align: center;
 
         th {
             flex: 0 0 20%;
+            text-transform: uppercase;
+            color: var(--accent-color);
+            margin-bottom: 1em;
+            padding: .5em 1.5em;
+            background-color: #D6EAF0;
+            border-radius: 3px;
         }
 
         td {
@@ -238,6 +329,8 @@ section.container {
 
             span {
                 display: flex;
+                font-size: 16px;
+                margin-bottom: 10px;
             }
         }
     }
@@ -255,6 +348,7 @@ section.container {
             display: flex;
             flex-wrap: wrap;
             justify-content: space-around;
+            align-items: center;
 
             .inicio__img {
                 flex: 0 0 20%;
@@ -272,6 +366,14 @@ section.container {
                 grid-template-columns: repeat(3, 1fr);
                 grid-gap: 10px;
             }
+        }
+
+        .inicio__data-aragon {
+            ul {
+                grid-template-columns: repeat(2, 1fr);
+                grid-gap: 10px;
+            }
+
         }
 
         .inicio__contact {

@@ -1,3 +1,14 @@
 ::ng-deep #range-selector {
     height: 200px;
 }
+
+.years-selected {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    p {
+        text-align: center;
+        font-size: 20px;
+    }
+}

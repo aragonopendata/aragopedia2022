@@ -1,14 +1,44 @@
 <div class="results-page container">
     <section class="results">
-        <div class="results__filter-desktop">
-            <div class="desktop__timeline">
-                <app-timeline></app-timeline>
-            </div>
-            <div class="desktop__location">
-                <app-select-location></app-select-location>
-            </div>
-            <div class="desktop__buscador">
 
+        <h2 class="results__title">Resultados de la búsqueda. Encontrados <u>{{this.results.length}} resultados de
+                {{this.temasSelected}}
+                entre {{this.firstYear}} y {{this.lastYear}}:</u>
+        </h2>
+
+        <form class="desktop__timeline" (ngSubmit)="filterByYears()">
+            <app-timeline [yearsSelected]="this.selectedYears"></app-timeline>
+            <div class="results__filter-desktop" [ngClass]="{'active': active}">
+
+                <div class="filter-temas">
+                    <label class="filter-temas__item" *ngFor="let tema of temasParsed" for="{{tema.title}}"
+                        [ngClass]="{'tema-checked' : tema.check }">
+                        <input type="checkbox" value="{{tema.title}}" id="{{tema.title}}" [checked]="tema.check"
+                            (change)="tema.check = !tema.check">{{tema.title}}
+                    </label>
+                </div>
+                <p class="hide" [ngClass]="{'error' : this.error}">Debes seleccionar entre 1 y 3 temas y un mínimo de 3
+                    años</p>
+                <div class="buttons">
+                    <button class="btn filter-btn" type="submit">Aplicar filtros</button>
+                    <a class="uncheck-btn" (click)="uncheckTemas($event)">Borrar temas seleccionados</a>
+                </div>
+            </div>
+        </form>
+
+        <div class="results__filter">
+            <div class="results__filter-menu" [ngClass]="{'filter-active': this.active}" (click)="toggleSidebar()">
+                <mat-icon>reorder</mat-icon>
+                <p *ngIf="this.active">Ocultar filtros</p>
+                <p *ngIf="!this.active">Mostrar filtros</p>
+            </div>
+            <div class="results__filter-order" (click)="sortResults(pageOfItems)">
+                <mat-icon>swap_vert</mat-icon>
+                <p>Orden <span *ngIf="sortByName">A - Z</span><span *ngIf="!sortByName">Z - A</span></p>
+            </div>
+        </div>
+        <div *ngIf="this.results.length !== 1">
+            <div class="desktop__buscador">
                 <!-- BUSCADOR -->
                 <div class="main-search container">
                     <form>
@@ -17,71 +47,47 @@
                     </form>
                 </div>
                 <!-- buscador -->
-
             </div>
         </div>
-        <h2 class="results__title">Resultados de la búsqueda</h2>
-        <div class="results__filter">
-            <div class="results__filter-menu" (click)="toggleSidebar()">
-                <mat-icon>reorder</mat-icon>
-                <p>Filtrar</p>
-            </div>
-            <div class="results__filter-order" (click)="sortResults(results)">
-                <mat-icon>swap_vert</mat-icon>
-                <p>Orden <span>A - Z</span></p>
-            </div>
+        <div class="loading" *ngIf="this.results.length === 1">
+            <mat-spinner [diameter]="70"></mat-spinner>
+            <p>Obteniendo datos</p>
         </div>
-
-        <div *ngFor="let result of results | filter:filterResult" class="search__results">
-
+        <div *ngFor="let result of pageOfItems | filter:filterResult" class="search__results">
             <article class="search__results-item">
-                <p class="item__category">{{result.category}}</p>
-                <a href="{{result.title}}" target="_blank" class="item__title">
+                <p class="item__category">{{result.category}} - {{result.year}}</p>
+                <a href="{{result.resultURL}}" target="_blank" class="item__title">
                     <mat-icon>open_in_new</mat-icon>
-                    <h3>{{result.title.slice(26,65)}}</h3>
+                    <h3>{{result.title}}</h3>
                 </a>
             </article>
 
         </div>
+        <div *ngIf="this.items">
+            <div *ngIf="this.items.length !== 1 " class="results__pagination">
+                <jw-pagination [items]="items" (changePage)="onChangePage($event)"></jw-pagination>
+            </div>
+        </div>
     </section>
 
-    <section class="sidebar" [ngClass]="{'active': active}">
+    <!-- <section class="sidebar" [ngClass]="{'active': active}">
         <div class="sidebar__cerrar" (click)="toggleSidebar()">
             <mat-icon>close</mat-icon> <span>Cerrar filtros</span>
         </div>
         <div class="sidebar__timeline">
-            <app-timeline></app-timeline>
-        </div>
-        <div class="sidebar__location">
-            <app-select-location></app-select-location>
-        </div>
-        <div class="sidebar__buscador">
-            <app-search></app-search>
+            <app-timeline [yearsSelected]="this.selectedYears"></app-timeline>
         </div>
         <div class="sidebar__categories">
             <h3 class="sidebar__categories-title">Categorías</h3>
             <ul *ngFor="let tema of temasParsed">
                 <li>
-                    <mat-icon>chevron_right</mat-icon><a href="">{{tema.title}}</a>
+                    <mat-icon>chevron_right</mat-icon><a (click)="filterByCategory(tema.title)">{{tema.title}}</a>
                 </li>
             </ul>
-
-            <h3 class="sidebar__categories-title">Tipos</h3>
-            <ul>
-                <li>
-                    <mat-icon>chevron_right</mat-icon><a href="">Lugar</a>
-                </li>
-                <li>
-                    <mat-icon>chevron_right</mat-icon><a href="">Persona</a>
-                </li>
-                <li>
-                    <mat-icon>chevron_right</mat-icon><a href="">Organización</a>
-                </li>
-                <li>
-                    <mat-icon>chevron_right</mat-icon><a href="">Temas</a>
-                </li>
-            </ul>
-
         </div>
-    </section>
+    </section> -->
+
+    <div class="return">
+        <button class="btn return__btn" [routerLink]="['/']">Reanudar búsqueda</button>
+    </div>
 </div>

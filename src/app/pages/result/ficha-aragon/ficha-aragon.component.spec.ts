@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EventosComponent } from './eventos.component';
+import { FichaAragonComponent } from './ficha-aragon.component';
 
-describe('EventosComponent', () => {
-  let component: EventosComponent;
-  let fixture: ComponentFixture<EventosComponent>;
+describe('FichaAragonComponent', () => {
+  let component: FichaAragonComponent;
+  let fixture: ComponentFixture<FichaAragonComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ EventosComponent ]
+      declarations: [ FichaAragonComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(EventosComponent);
+    fixture = TestBed.createComponent(FichaAragonComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

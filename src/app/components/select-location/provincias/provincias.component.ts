@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { SelectLocationService } from '../select-location.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -10,7 +10,7 @@ import { SelectLocationService } from '../select-location.service';
 })
 
 export class SelectProvinciaComponent implements OnInit {
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private router: Router) { }
 
   selected: string = '';
   formGroup!: FormGroup;
@@ -18,6 +18,33 @@ export class SelectProvinciaComponent implements OnInit {
   provincias!: string[];
   filteredProvincias: any;
   myControlProvincias = new FormControl('');
+  idLocalidad!: string;
+  selectedId!: string;
+  queryIdWikiData!: string;
+  // temp = undefined;
+  provinciasParsed: object[] = [
+    {
+      nombreCompleto: 'Diputación Provincial de Zaragoza',
+      nombre: 'Zaragoza',
+      url: 'http://opendata.aragon.es/recurso/sector-publico/organizacion/diputacion/7823',
+      id: '7823',
+      codigoIne: ''
+    },
+    {
+      nombreCompleto: 'Diputación Provincial de Huesca',
+      nombre: 'Huesca',
+      url: 'http://opendata.aragon.es/recurso/sector-publico/organizacion/diputacion/7824',
+      id: '7824',
+      codigoIne: ''
+    },
+    {
+      nombreCompleto: 'Diputación Provincial de Teruel',
+      nombre: 'Teruel',
+      url: 'http://opendata.aragon.es/recurso/sector-publico/organizacion/diputacion/7825',
+      id: '7825',
+      codigoIne: ''
+    }
+  ];
 
   ngOnInit(): void {
     this.initForm();
@@ -29,8 +56,16 @@ export class SelectProvinciaComponent implements OnInit {
       'municipio': [this.selectedProvincia]
     })
     this.formGroup.get('municipio')?.valueChanges.subscribe(response => {
+      this.selected = this.selectedProvincia;
       this.selectedProvincia = response;
-      this.selected = this.selectedProvincia
+      this.provinciasParsed.forEach((provincia: any) => {
+        if (provincia.nombre.toLowerCase() === this.selectedProvincia.toLowerCase()) {
+          this.selectedId = provincia.id;
+        }
+      });
+      if (this.selectedId) {
+        this.router.navigate(['detalles'], { queryParams: { tipo: 'diputacion', id: this.selectedId } })
+      }
       this.filterData(response);
     });
   }

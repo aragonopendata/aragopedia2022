@@ -1,6 +1,43 @@
 //Mobile
+
+.return {
+    width: fit-content;
+    position: fixed;
+    bottom: 30px;
+    right: 0;
+    left: 0;
+    margin: auto;
+    z-index: 999;
+
+    .return__btn {
+        margin: auto;
+        outline: none;
+        border-width: 0;
+        cursor: pointer;
+        display: block;
+        width: fit-content;
+        // box-shadow: var(--shadow-hover);
+        background: rgba(0, 71, 92, 0.65);
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(4.5px);
+        -webkit-backdrop-filter: blur(4.5px);
+        transition: all 0.3s;
+
+        &:hover {
+            background: var(--accent-color);
+            box-shadow: 0 0 15px 10px rgba(0, 0, 0, 0.1);
+        }
+    }
+}
+
 @media screen and (max-width: 576px) {
     .template {
+        margin: auto;
+        margin-top: 2em;
+
+    }
+
+    .container {
         margin: auto;
     }
 
@@ -52,17 +89,6 @@
             padding: 1rem;
             background-color: #F8F8F8;
             border-radius: 6px;
-
-            ul {
-                display: flex;
-                flex-wrap: wrap;
-            }
-
-            li {
-                flex: 0 0 50%;
-                margin-left: 0;
-                margin-bottom: 20px;
-            }
         }
 
         h3 {
@@ -74,14 +100,39 @@
             margin: auto;
         }
 
-
     }
+
+    .creative-works {
+
+        .creative-works__articles {
+            flex: 0 0 100% !important;
+            max-width: 400px;
+            box-shadow: var(--shadow);
+            transition: box-shadow all 0.3s;
+
+            &:hover {
+                box-shadow: var(--shadow-hover);
+            }
+        }
+    }
+
+
 }
 
 // Tablet
 @media screen and (max-width: 992px) {
+
+    .template {
+        margin-top: 2em;
+    }
+
     .template__persona {
         flex-direction: column;
+
+    }
+
+    .container {
+        margin: auto;
     }
 }
 
@@ -90,21 +141,31 @@
 
 .template {
     margin: auto;
+    margin-top: 2em;
+    min-height: 400px;
+
+    p,
+    li,
+    a,
+    span {
+        font-size: 16px;
+    }
 }
 
 .template__persona {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    align-items: center;
-    margin: auto;
+    align-items: flex-start;
+    margin: 2em auto;
+
 
     .persona__content {
-        flex: 0 0 40%;
+        flex: 0 0 65%;
     }
 
     .persona__name {
-        font-weight: 800;
+        font-size: 32px;
 
         &::after {
             content: "";
@@ -140,13 +201,7 @@
         background-color: #F8F8F8;
         border-radius: 6px;
 
-        ul {
-            display: flex;
-            flex-wrap: wrap;
-        }
-
         li {
-            flex: 0 0 50%;
             margin-left: 0;
             margin-bottom: 20px;
         }
@@ -161,5 +216,90 @@
         margin: auto;
     }
 
+}
 
+.creative-works {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    .creative-works__articles {
+        flex: 0 0 33%;
+        // max-width: 300px;
+        border: 2px solid #D9D9D9;
+        padding: 1em;
+        border-radius: 6px;
+        max-height: 300px;
+        overflow: hidden;
+        margin: 1em;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        .article__title {
+            font-size: 20px;
+        }
+    }
+}
+
+::ng-deep {
+
+    ul.pagination {
+        display: flex;
+        justify-content: space-evenly;
+        list-style: none;
+        margin: auto;
+        padding: 0 1em;
+
+        .page-item {
+            cursor: pointer;
+            font-size: 18px;
+            color: var(--text-color);
+            margin: auto;
+            display: block;
+            width: 50px;
+            text-align: center;
+            transition: background-color 0.3s;
+
+            &:hover {
+                background-color: #EDEDEC;
+            }
+        }
+
+        .disabled {
+            filter: opacity(0.5);
+            cursor: default;
+        }
+
+        .active {
+            font-weight: bold;
+            color: #00607a;
+            background-color: #EDEDEC;
+
+            &::after {
+                content: '';
+                display: block;
+                height: 3px;
+                width: 100%;
+                background-color: #00607a;
+            }
+        }
+
+        .first-item {
+            visibility: hidden;
+
+            &::after {
+
+                content: "Principio";
+                visibility: visible;
+            }
+        }
+
+        .first-item,
+        .last-item,
+        .previous-item,
+        .next-item {
+            display: none;
+        }
+    }
 }

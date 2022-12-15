@@ -1,45 +1,61 @@
 <div class="container template">
     <div class="breadcrumbs">
-        <p>Inicio > Personas > Ababuj</p>
+        <p><a href="/">Inicio</a> > <a href="/detalles?tipo=municipio&id={{this.idMunicipio}}">{{municipio}}</a>
+            > Personas > {{nombre}}</p>
     </div>
-</div>
-<div class="container template__persona">
-    <div class="persona__img">
+
+    <section class="container template__persona">
+        <!-- <div class="persona__img">
         <img src="assets/persona.png" alt="Foto de la persona">
-    </div>
-    <div class="persona__content">
-        <h2 class="persona__name">Alfonso López Pastor</h2>
-        <ul class="persona__cargos">
-            <p><strong>Cargos</strong></p>
-            <li>Alcalde de Ababuj</li>
-            <li>Miembro del Pleno Municipal</li>
-        </ul>
-        <ul class="persona__partido">
-            <p><strong>Partido</strong></p>
-            <li>Ciudadanos</li>
-        </ul>
-    </div>
-    <div class="persona__data sidebar">
-        <div class="sidebar__more">
-            <h3>Datos similares</h3>
-            <ul class="more__data">
-                <li>Ababuj (Teruel)</li>
-                <li>Dpto. de Agricultura</li>
-                <li>Diputación de Teruel</li>
-                <li>Salud</li>
+    </div> -->
+        <div class="persona__content">
+            <h2 class="persona__name">{{nombre}}</h2>
+            <div *ngIf="this.biografia" class="bio">
+                <p><strong>Biografía</strong></p>
+                <p class="persona__bio">{{this.biografia}}</p>
+            </div>
+            <p><strong>Cargo</strong></p>
+            <ul class="persona__cargos">
+                <li>{{puesto}} de <a href="/detalles?tipo=municipio&id={{this.idMunicipio}}">{{municipio}}</a></li>
+            </ul>
+            <p><strong>Ámbito</strong></p>
+            <ul class="persona__partido">
+                <li>{{sectorPersona}}</li>
             </ul>
         </div>
-        <div class="sidebar__other">
-            <h3>Otros datos</h3>
-            <ul class="more__data">
-                <li>Lorem Ipsum</li>
-                <li>Lorem Ipsum</li>
-                <li>Lorem Ipsum</li>
-                <li>Lorem Ipsum</li>
-            </ul>
+        <div class="persona__data sidebar">
+            <div class="sidebar__more">
+                <h3>Datos de contacto</h3>
+                <div *ngIf="datosContacto">
+                    <ul class="more__data">
+                        <li *ngIf="this.datosContacto.phone.value">{{datosContacto.phone.value}}</li>
+                        <li *ngIf="this.datosContacto.mbox">{{datosContacto.mbox.value}}</li>
+                    </ul>
+                </div>
+                <div *ngIf="!datosContacto">
+                    <p>No hay datos de contacto</p>
+                </div>
+            </div>
+            <div class="sidebar__button">
+                <a class="btn new-search" [routerLink]="['/']">Nueva búsqueda</a>
+            </div>
         </div>
-        <div class="sidebar__button">
-            <a class="btn new-search" href="#">Nueva búsqueda</a>
+    </section>
+
+    <section class="container template">
+        <h2>Menciones en publicaciones ({{numberOfCreativeWorks}})</h2>
+        <div class="creative-works">
+            <article *ngFor="let publicacion of creativeWorks" class="creative-works__articles">
+                <h3 class="article__title">{{publicacion.title.value}}</h3>
+                <p class="article__abstract">{{this.reduceText(publicacion.abstract.value)}}...</p>
+                <a href="{{publicacion.url.value}}" target="_blank" class="article__link">Leer más</a>
+            </article>
         </div>
+        <div *ngIf="this.items" class="results__pagination">
+            <jw-pagination [items]="items" (changePage)="onChangePage($event)"></jw-pagination>
+        </div>
+    </section>
+    <div class="return">
+        <button class="btn return__btn" [routerLink]="['/']">Reanudar búsqueda</button>
     </div>
 </div>

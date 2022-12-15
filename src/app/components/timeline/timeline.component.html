@@ -1,10 +1,14 @@
-<div *ngIf=" this.dataSource !==[]" class="space container" style="margin:auto">
+<div class="loading" *ngIf="this.dataSource.length === 1">
+    <mat-spinner [diameter]="70"></mat-spinner>
+    <p>Cargando línea temporal</p>
+</div>
+<div *ngIf="this.dataSource.length !== 1" class="space container" style="margin:auto; margin-bottom: 1rem">
     <dx-range-selector (onValueChanged)="getData($event.value)" id="range-selector" title="Selecciona un rango de años"
-        [value]="['2010', '2022']" [dataSource]="dataSource">
+        [value]="yearsSelected" [dataSource]="dataSource">
         <dxo-margin [top]="50"></dxo-margin>
+        <dxo-size [height]="280"></dxo-size>
         <dxo-chart>
             <dxi-series valueField="dataQuantity" color="#00607A"></dxi-series>
-            <!-- <dxi-series valueField="nightT"></dxi-series> -->
             <dxo-common-series-settings type="steparea" argumentField="date">
             </dxo-common-series-settings>
         </dxo-chart>
@@ -13,4 +17,10 @@
         </dxo-scale>
         <dxo-slider-marker format="day"></dxo-slider-marker>
     </dx-range-selector>
+    <div class="years-selected" style="margin-top: 100px;">
+        <p>Años seleccionados:
+            <b> {{yearsURL}} </b>
+        </p>
+
+    </div>
 </div>

@@ -7,4 +7,9 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'aragopool';
+
+  onActivate() {
+    window.scroll(0, 0);
+  }
+
 }

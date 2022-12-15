@@ -1,8 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { SelectLocationComponent } from '../select-location/select-location.component';
 import { TemasComponent } from '../temas/temas.component';
 import { YearsPeriod, TimeLineSvc } from '../timeline/timeline.service';
+import { TimeLineComponent } from '../timeline/timeline.component';
 
 @Component({
   selector: 'app-home',
@@ -10,39 +11,37 @@ import { YearsPeriod, TimeLineSvc } from '../timeline/timeline.service';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
+  constructor(private timelineSvc: TimeLineSvc, private router: Router) {
+  }
 
   @ViewChild(SelectLocationComponent) location: any;
   @ViewChild(TemasComponent) temas: any;
+  @ViewChild(TimeLineComponent) years: any;
+  @ViewChild(TimeLineComponent) yearsSelectedURL: any;
 
-  years!: YearsPeriod[];
+  // selectedYears: any[] = [];
   firstYearSelected: any;
   lastYearSelected: any;
+  selectedYears: any = ['1978', '2022'];
+  yearsURL: string = ``;
   provinciaSelected!: string;
   municipioSelected!: string;
   comarcaSelected!: string;
   temasSelected!: string[];
-
-  constructor(private timelineSvc: TimeLineSvc, private router: Router) { }
-
+  error: boolean = false;
 
   ngOnInit(): void {
-
   }
 
-  search(): void {
-    // this.years = this.timelineSvc.getCurrentYears();
-    // this.firstYearSelected = this.years[0];
-    // this.lastYearSelected = this.years[1];
-    this.provinciaSelected = this.location.provincia.selected;
-    this.municipioSelected = this.location.municipio.selected;
-    this.comarcaSelected = this.location.comarca.selected;
+  submit(): void {
     this.temasSelected = this.temas.temasSeleccionados;
-
-    this.router.navigate([`results/${this.temasSelected}`]);
-
-    console.log(this.years, this.provinciaSelected, this.municipioSelected, this.comarcaSelected, this.temasSelected);
-
-
+    this.selectedYears = this.years.yearsSelected;
+    this.yearsURL = this.yearsSelectedURL.yearsURL;
+    if ((this.temasSelected.length > 0 && this.temasSelected.length < 4) && Number(this.selectedYears[1]) - Number(this.selectedYears[0]) >= 3) {
+      this.router.navigate([`results/${this.temasSelected}/${this.yearsURL}`]);
+    } else {
+      this.error = true;
+    }
   }
 
 }

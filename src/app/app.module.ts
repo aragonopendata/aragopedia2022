@@ -31,6 +31,11 @@ import { FilterPipe } from './pipes/filter.pipe';
 import { AragopediaComponent } from './pages/aragopedia/aragopedia.component';
 import { AragopediaSelectorTemasComponent } from './components/aragopedia-selector-temas/aragopedia-selector-temas.component';
 import { AragopediaTablaDatosComponent } from './components/aragopedia-tabla-datos/aragopedia-tabla-datos.component';
+import { JwPaginationModule } from 'jw-angular-pagination';
+import { PersonaModule } from './pages/persona/persona.module';
+import { FichaAragonComponent } from './pages/result/ficha-aragon/ficha-aragon.component';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+
 
 @NgModule({
   declarations: [
@@ -52,6 +57,7 @@ import { AragopediaTablaDatosComponent } from './components/aragopedia-tabla-dat
     AragopediaComponent,
     AragopediaSelectorTemasComponent,
     AragopediaTablaDatosComponent,
+    FichaAragonComponent
   ],
   imports: [
     BrowserModule,
@@ -67,7 +73,10 @@ import { AragopediaTablaDatosComponent } from './components/aragopedia-tabla-dat
     MatTableModule,
     HttpClientModule,
     MatTabsModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    JwPaginationModule,
+    PersonaModule,
+    MatCheckboxModule
   ],
   providers: [ResultService],
   bootstrap: [AppComponent]
