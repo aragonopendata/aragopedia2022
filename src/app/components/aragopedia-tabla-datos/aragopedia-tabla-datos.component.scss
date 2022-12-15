@@ -1,0 +1,35 @@
+table {
+    width: 100%;
+    align-self: center;
+}
+
+.table-container {
+    width: 90%;
+    margin: 5%;
+}
+
+tr:nth-child(even) {
+    background: #deecf0
+}
+
+tr:nth-child(odd) {
+    background: #cee5eb
+}
+
+th {
+    background: #EDEDEC;
+}
+
+.btn-descarga {
+    background-color: #ffffff;
+    border: solid 1px #00475C;
+    color: #00475C;
+}
+
+.divDescarga {
+    display: flex;
+    gap: 30px;
+    margin: 0 20px;
+    margin-bottom: 1rem;
+    justify-content: right;
+}

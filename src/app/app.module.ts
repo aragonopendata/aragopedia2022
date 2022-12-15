@@ -29,6 +29,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTableModule } from '@angular/material/table';
 import { FilterPipe } from './pipes/filter.pipe';
 import { AragopediaComponent } from './pages/aragopedia/aragopedia.component';
+import { AragopediaSelectorTemasComponent } from './components/aragopedia-selector-temas/aragopedia-selector-temas.component';
+import { AragopediaTablaDatosComponent } from './components/aragopedia-tabla-datos/aragopedia-tabla-datos.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +50,8 @@ import { AragopediaComponent } from './pages/aragopedia/aragopedia.component';
     PiramidePoblacionComponent,
     FilterPipe,
     AragopediaComponent,
+    AragopediaSelectorTemasComponent,
+    AragopediaTablaDatosComponent,
   ],
   imports: [
     BrowserModule,
@@ -60,6 +64,7 @@ import { AragopediaComponent } from './pages/aragopedia/aragopedia.component';
     MatInputModule,
     FormsModule,
     MatIconModule,
+    MatTableModule,
     HttpClientModule,
     MatTabsModule,
     MatProgressSpinnerModule
