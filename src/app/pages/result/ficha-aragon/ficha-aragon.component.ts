@@ -307,7 +307,6 @@ export class FichaAragonComponent implements OnInit {
         this.email = data.results.bindings[0].email.value;
         this.telefono = data.results.bindings[0].tel.value;
         console.log(this.telefono);
-
       })
 
     });
