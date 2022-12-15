@@ -29,10 +29,13 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTableModule } from '@angular/material/table';
 import { FilterPipe } from './pipes/filter.pipe';
 import { AragopediaComponent } from './pages/aragopedia/aragopedia.component';
+import { AragopediaSelectorTemasComponent } from './components/aragopedia-selector-temas/aragopedia-selector-temas.component';
+import { AragopediaTablaDatosComponent } from './components/aragopedia-tabla-datos/aragopedia-tabla-datos.component';
 import { JwPaginationModule } from 'jw-angular-pagination';
 import { PersonaModule } from './pages/persona/persona.module';
 import { FichaAragonComponent } from './pages/result/ficha-aragon/ficha-aragon.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+
 
 @NgModule({
   declarations: [
@@ -52,7 +55,9 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     PiramidePoblacionComponent,
     FilterPipe,
     AragopediaComponent,
-    FichaAragonComponent,
+    AragopediaSelectorTemasComponent,
+    AragopediaTablaDatosComponent,
+    FichaAragonComponent
   ],
   imports: [
     BrowserModule,
@@ -65,6 +70,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MatInputModule,
     FormsModule,
     MatIconModule,
+    MatTableModule,
     HttpClientModule,
     MatTabsModule,
     MatProgressSpinnerModule,
