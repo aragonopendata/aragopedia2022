@@ -19,7 +19,10 @@
                 </div>
                 <p class="hide" [ngClass]="{'error' : this.error}">Debes seleccionar entre 1 y 3 temas y un mínimo de 3
                     años</p>
-                <button class="btn filter-btn" type="submit">Aplicar filtros</button>
+                <div class="buttons">
+                    <button class="btn filter-btn" type="submit">Aplicar filtros</button>
+                    <a class="uncheck-btn" (click)="uncheckTemas($event)">Borrar temas seleccionados</a>
+                </div>
             </div>
         </form>
 
@@ -85,6 +88,6 @@
     </section> -->
 
     <div class="return">
-        <button class="btn return__btn" [routerLink]="['/']">Nueva búsqueda</button>
+        <button class="btn return__btn" [routerLink]="['/']">Reanudar búsqueda</button>
     </div>
 </div>

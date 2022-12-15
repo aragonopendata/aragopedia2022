@@ -19,8 +19,8 @@
                         urbano</li>
                     <li *ngIf="this.sueloRural"><span class="big-number">{{this.sueloRural}}</span>Hectáreas de suelo
                         rural</li>
-                    <li *ngIf="this.oficinasComarcales"><span
-                            class="big-number">{{this.oficinasComarcales}}</span>Oficinas comarcales</li>
+                    <li *ngIf="this.locales"><span class="big-number">{{this.locales}}</span>Edificios destinados a
+                        locales</li>
                     <li *ngIf="this.poblacion"><span class="big-number">{{this.poblacion}}</span>Habitantes</li>
                     <li *ngIf="this.densidadPoblacion"><span
                             class="big-number">{{this.densidadPoblacion}}</span>Habitantes por KM2</li>
@@ -89,7 +89,7 @@
         </section>
 
         <section class="container template__caracteristicas">
-            <h2>Características del municipio</h2>
+            <h2>Características del territorio</h2>
             <div class="caracteristicas__list">
                 <div *ngIf="this.porcentajeSueloRural !== undefined && this.porcentajeSueloRural !== 'NaN'"
                     class="caracteristica__item">
@@ -119,6 +119,15 @@
                 <div *ngIf="this.edadMediaMujeres" class="caracteristica__item">
                     <mat-icon>people</mat-icon> La edad media de las <b>mujeres</b> es de {{this.edadMediaMujeres}} años
                 </div>
+
+                <div class="caracteristica__item" *ngIf="tieneOficinaComarcal === 0; else noLocales">
+                    <mat-icon>people</mat-icon> {{this.lugarBuscado}} no cuenta con <b>oficina comarcal</b>
+                </div>
+                <ng-template #noLocales>
+                    <div class="caracteristica__item">
+                        <mat-icon>people</mat-icon> {{this.lugarBuscado}} cuenta con <b>oficina comarcal</b>
+                    </div>
+                </ng-template>
             </div>
         </section>
 
@@ -221,7 +230,7 @@
             </div>
 
             <div class="graphics__item miembros" *ngIf="this.cantidadMiembrosPleno !== 0">
-                <h2>Miembros del pleno municipal</h2>
+                <h2>Miembros del pleno territorial</h2>
                 <ul>
                     <li *ngFor="let miembro of miembrosPleno"><b>{{miembro.cargo.value}}: </b>
                         <a [routerLink]="['/persona/', miembro.persona.value]"
@@ -244,7 +253,7 @@
 
     </div>
     <div class="return">
-        <button class="btn return__btn" [routerLink]="['/']">Nueva búsqueda</button>
+        <button class="btn return__btn" [routerLink]="['/']">Reanudar búsqueda</button>
     </div>
 </ng-container>
 
@@ -272,8 +281,8 @@
                         urbano</li>
                     <li *ngIf="this.sueloRural"><span class="big-number">{{this.sueloRural}}</span>Hectáreas de suelo
                         rural</li>
-                    <li *ngIf="this.oficinasComarcales"><span
-                            class="big-number">{{this.oficinasComarcales}}</span>Oficinas comarcales</li>
+                    <li *ngIf="this.locales"><span class="big-number">{{this.locales}}</span>Edificios destinados a
+                        locales</li>
                     <li *ngIf="this.poblacion"><span class="big-number">{{this.poblacion}}</span>Habitantes</li>
                     <li *ngIf="this.densidadPoblacion"><span
                             class="big-number">{{this.densidadPoblacion}}</span>Habitantes por KM2</li>

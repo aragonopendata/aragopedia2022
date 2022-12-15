@@ -152,11 +152,9 @@ ul.pagination {
         margin: auto;
         margin-bottom: 2em;
         display: grid;
-        grid-gap: 5px;
-        grid-template-columns: repeat(3, auto);
+        grid-template-columns: repeat(2, auto);
 
         .filter-temas__item {
-            text-align: center;
             cursor: pointer;
             display: block;
             font-size: 16px;
@@ -188,11 +186,25 @@ ul.pagination {
         margin-bottom: 2em;
 
 
-        .filter-btn {
-            cursor: pointer;
-            margin: auto;
-            display: block;
-            border-color: transparent;
+        .buttons {
+
+            display: flex;
+            justify-content: center;
+
+            .filter-btn {
+                cursor: pointer;
+                display: block;
+                border-color: transparent;
+                margin-right: 10px;
+            }
+
+            .uncheck-btn {
+                cursor: pointer;
+                font-size: 18px;
+                align-self: center;
+                margin-left: 10px;
+                text-decoration: underline;
+            }
         }
     }
 
@@ -356,6 +368,14 @@ ul.pagination {
     left: 0;
     right: 0;
     height: 100%;
+}
+
+@media screen and (min-width: 712px) {
+    .results {
+        .filter-temas {
+            grid-template-columns: repeat(3, auto);
+        }
+    }
 }
 
 @media screen and (min-width:992px) {

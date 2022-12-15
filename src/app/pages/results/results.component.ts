@@ -78,6 +78,14 @@ export class ResultsComponent implements OnInit {
 
       this.temasUnicos.forEach((element: any, i: any) => {
         this.temasParsed[i] = { title: element, url: this.temasUnicosUrl[i], check: false }
+
+        this.temasSelected?.forEach((tema: any) => {
+          this.temasParsed.forEach(temaParsed => {
+            if (tema === temaParsed.title) {
+              temaParsed.check = true;
+            }
+          })
+        });
       });
 
 
@@ -161,8 +169,14 @@ export class ResultsComponent implements OnInit {
 
   filterByYears() {
     let temasFiltered: string[] = [];
+
     this.temasParsed.forEach(tema => {
-      tema.check ? temasFiltered.push(tema.title) : tema.check;
+      // tema.check ? temasFiltered.filter(temaFiltered => temaFiltered !== tema.title) : temasFiltered;
+      if (tema.check) {
+        temasFiltered.push(tema.title)
+      } else {
+        temasFiltered.filter((temaFiltered) => temaFiltered !== tema.title)
+      }
     });
 
     this.selectedYears = this.years.yearsSelected;
@@ -175,6 +189,13 @@ export class ResultsComponent implements OnInit {
     } else {
       this.error = true;
     }
+  }
+
+  uncheckTemas(event: Event) {
+    event.preventDefault();
+    this.temasParsed.forEach(tema => {
+      tema.check ? tema.check = false : null;
+    })
   }
 
 }

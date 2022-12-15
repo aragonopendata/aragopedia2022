@@ -247,19 +247,36 @@ section.container {
         }
     }
 
-    .miembros ul li {
-        b {
-            margin-right: 30px;
+    .miembros {
+        ul {
+
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+
+            li {
+                text-transform: uppercase;
+                flex: 0 0 50%;
+                font-size: 16px;
+
+                b {
+                    display: block;
+                    margin: 10px 0;
+                }
+            }
         }
 
-        a {
-            color: var(--accent-color);
-        }
     }
 
     .personas-ilustres {
 
+        ul {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
         li {
+            flex: 0 0 50%;
             margin-bottom: .3em;
 
             a {
@@ -349,6 +366,14 @@ section.container {
                 grid-template-columns: repeat(3, 1fr);
                 grid-gap: 10px;
             }
+        }
+
+        .inicio__data-aragon {
+            ul {
+                grid-template-columns: repeat(2, 1fr);
+                grid-gap: 10px;
+            }
+
         }
 
         .inicio__contact {

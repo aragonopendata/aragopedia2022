@@ -12,7 +12,7 @@
                 </a>
                 <a href={{this.urlMap}} target="_blank" class="btn map_btn">Ver en el mapa</a>
             </div>
-            <div class="inicio__data">
+            <div class="inicio__data inicio__data-aragon">
                 <ul>
                     <li *ngIf="this.sueloUrbano"><span class="big-number">{{this.sueloUrbano}}</span>Hectáreas de suelo
                         urbano</li>
@@ -107,7 +107,8 @@
             <div class="graphics__item" fragment="creative-works">
                 <div class="graphics__item-cw">
                     <h2>Enlaces de interés</h2>
-                    <p class="big-number"><b>{{this.numberOfCreativeWork}} </b>Menciones en publicaciones</p>
+                    <p class="big-number"><b>{{this.numberOfCreativeWork}} </b>Menciones en publicaciones (Mostrando las
+                        últimas 10 publicaciones)</p>
                 </div>
                 <div class="slides">
                     <mat-tab-group mat-align-tabs="start">
@@ -157,6 +158,17 @@
                     </mat-tab-group>
                 </div>
             </div>
+
+            <div class="graphics__item miembros" *ngIf="this.cantidadMiembrosPleno !== 0">
+                <h2>Miembros del pleno municipal</h2>
+                <ul>
+                    <li *ngFor="let miembro of this.miembrosPleno"><b>{{miembro.orgTitle.value}}: </b>
+                        <a [routerLink]="['/persona/', miembro.persona.value]"
+                            routerLinkActive="router-link-active">{{miembro.nombre.value}}</a>
+                    </li>
+                </ul>
+            </div>
+
             <div class="graphics__item personas-ilustres" *ngIf="this.cantidadPersonasIlustres !== 0">
                 <h2>Personas Ilustres nacidas en {{this.lugarBuscado}}</h2>
                 <ul>
@@ -172,6 +184,6 @@
 
     </div>
     <div class="return">
-        <button class="btn return__btn" [routerLink]="['/']">Nueva búsqueda</button>
+        <button class="btn return__btn" [routerLink]="['/']">Reanudar búsqueda</button>
     </div>
 </ng-container>
