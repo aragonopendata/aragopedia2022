@@ -79,6 +79,10 @@ export class AragopediaTablaDatosComponent {
     return "columna" + columna;
   }
 
+  createCSV() {
+
+  }
+
 }
 
 

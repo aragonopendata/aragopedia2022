@@ -1,16 +1,21 @@
-<div class="container space" style="margin:auto;">
-    <mat-form-field class="temas">
-        <mat-label>
-            Tema
-        </mat-label>
-        <input [(ngModel)]="selectedTema" matInput [formControl]="temasControl" type="select" [matAutocomplete]="auto"
-            formControlName="temas" />
-        <!-- <input [(ngModel)]="selected"  matInput [formControl]="myControlMunicipios" type="select"
-            [matAutocomplete]="auto" />-->
-        <mat-autocomplete #auto="matAutocomplete">
-            <mat-option *ngFor="let tema of temas" [value]="tema.DescripcionMejorada">
-                {{tema.DescripcionMejorada}}
-            </mat-option>
-        </mat-autocomplete>
-    </mat-form-field>
-</div>
+<form (ngSubmit)="submit()">
+    <div class="container space" style="margin:auto;">
+        <app-location></app-location>
+    </div>
+    <button class="btn" type="submit">Seleccionar</button>
+
+    <div (click)="generateTemas()">
+        <mat-form-field class="temas">
+            <mat-label>
+                Tema
+            </mat-label>
+            <input [(ngModel)]="selectedTema" matInput [formControl]="temasControl" type="select"
+                [matAutocomplete]="auto" formControlName="temas" />
+            <mat-autocomplete #auto="matAutocomplete">
+                <mat-option *ngFor="let tema of showTemas" [value]="tema.DescripcionMejorada">
+                    {{tema.DescripcionMejorada}}
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+    </div>
+</form>

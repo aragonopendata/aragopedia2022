@@ -1,0 +1,14 @@
+<form [formGroup]="formGroup" (onChange)="this.selectedId">
+    <mat-form-field>
+        <mat-label>
+            Provincias
+        </mat-label>
+        <input (ngModelChange)="selectProvincia()" [(ngModel)]="selectedProvincia" matInput
+            [formControl]="myControlProvincias" type="select" [matAutocomplete]="auto" formControlName="municipio" />
+        <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngFor="let provincia of provincias" [value]="provincia">
+                {{provincia}}
+            </mat-option>
+        </mat-autocomplete>
+    </mat-form-field>
+</form>
