@@ -12,7 +12,8 @@
             <input formControlName="temas" [(ngModel)]="selectedTema" matInput [formControl]="temasControl"
                 type="select" [matAutocomplete]="auto" />
             <mat-autocomplete #auto="matAutocomplete">
-                <mat-option *ngFor="let tema of showTemas" [value]="tema.DescripcionMejorada">
+                <mat-option *ngFor="let tema of showTemas" (click)="temaSelected(tema)"
+                    [value]="tema.DescripcionMejorada">
                     {{tema.DescripcionMejorada}}
                 </mat-option>
             </mat-autocomplete>
