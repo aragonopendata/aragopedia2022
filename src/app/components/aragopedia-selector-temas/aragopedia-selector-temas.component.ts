@@ -30,6 +30,9 @@ export class AragopediaSelectorTemasComponent implements OnInit {
   selectedProvincia: any = '';
   selectedComarca: any = '';
   selectedMunicipio: any = '';
+  selectedProvinciaNombre: any = '';
+  selectedComarcaNombre: any = '';
+  selectedMunicipioNombre: any = '';
   unique: any;
   temas!: any;
 
@@ -82,10 +85,14 @@ export class AragopediaSelectorTemasComponent implements OnInit {
     this.selectedComarca = this.location.idComarca;
     this.selectedMunicipio = this.location.idMunicipio;
 
+    this.selectedMunicipioNombre = this.location.municipioSelected;
+    this.selectedProvinciaNombre = this.location.provinciaSelected;
+    this.selectedComarcaNombre = this.location.comarcaSelected;
+
     if (this.selectedProvincia !== undefined) {
       this.showTemas = this.temasProvincia;
       this.temasActive = true;
-      console.log(this.showTemas);
+
 
     } else if (this.selectedComarca !== undefined) {
       this.showTemas = this.temasComarca;
@@ -94,6 +101,9 @@ export class AragopediaSelectorTemasComponent implements OnInit {
       this.showTemas = this.temasMunicipio;
       this.temasActive = true;
     }
+    console.log(this.selectedProvincia);
+    console.log(this.selectedComarca);
+    console.log(this.selectedMunicipio);
   }
 
   temaSelected(tema: any) {
@@ -126,7 +136,30 @@ export class AragopediaSelectorTemasComponent implements OnInit {
       query += " ?refArea rdfs:label ?nameRefArea.";
       query += ' FILTER ( lang(?nameRefArea) = "es" ).\n';
 
-      //Añadir código zonas
+      if (rutaLimpia.charAt(rutaLimpia.length - 1) != "A") {
+
+        this.showTemas
+        let tipoZona = "";
+        let nombreZona = "";
+
+        if (this.selectedProvincia != undefined) {
+          tipoZona = "Provincia"
+          nombreZona = this.selectedProvinciaNombre
+        } else if (this.selectedComarca != undefined) {
+          tipoZona = "Comarca"
+          nombreZona = this.selectedComarcaNombre
+        } else if (this.selectedMunicipio != undefined) {
+          tipoZona = "Municipio"
+          nombreZona = this.selectedMunicipioNombre
+        }
+
+        console.log(this.deleteSpace(nombreZona));
+
+        let uriPrefix = "<http://opendata.aragon.es/recurso/territorio/" + tipoZona + "/";
+        query += "FILTER (?refArea IN (";
+        query += uriPrefix + this.deleteSpace(nombreZona) + ">";
+        query += ")).\n";
+      }
 
       this.columnas.forEach((element: any) => {
         let nombreColumnaAux = element['callret-2'].value.replaceAll(' ', '_').toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
@@ -139,6 +172,104 @@ export class AragopediaSelectorTemasComponent implements OnInit {
 
       console.log(query);
 
+
+
     })
+
   }
+
+  correctWordInverse(name: string, word: string) {
+    let str = name;
+    if (str.startsWith(word + " ")) {
+      return str.replace(new RegExp(word + ' ', 'g'), '') + " (" + word + ")";
+    } else {
+      return str;
+    }
+  }
+
+  getAragopediaURIfromName(itemOrig: any, type: any) {
+    let item = itemOrig;
+    if (type == "Municipio") {
+      item = this.correctWordInverse(item, "La");
+      item = this.correctWordInverse(item, "El");
+      item = this.correctWordInverse(item, "Las");
+      item = this.correctWordInverse(item, "Los");
+    }
+    item = item.replace(new RegExp(' \/ ', 'g'), '/');
+    if (item == "Beranuy") {
+      item = "Veracruz";
+    }
+    if (item == "Torla-Ordesa") {
+      item = "Torla";
+    }
+    if (item == "Monflorite Lascasas") {
+      item = "Monflorite-Lascasas";
+    }
+    if (item == "Lascellas Ponzano") {
+      item = "Lascellas-Ponzano";
+    }
+    item = item.replace(new RegExp(' ', 'g'), '_');
+    return item;
+  }
+
+  capitalizeString(str: any): string {
+    return str.replace(/\w\S*/g, function (txt: any) {
+      for (let i = 0; i < txt.length; i++) {
+        if (txt.toLowerCase() === 'el'
+          || txt.toLowerCase() === 'y'
+          || txt.toLowerCase() === 'del'
+          || txt.toLowerCase() === 'de'
+          || txt.toLowerCase() === 'las') {
+          return txt.toLowerCase();
+        }
+        if (txt.toLowerCase() !== 'de'
+          || txt.toLowerCase() !== 'del'
+          || txt.toLowerCase() !== 'la'
+          || txt.toLowerCase() !== 'las'
+          || txt.toLowerCase() !== 'los') {
+          return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+        }
+        else {
+          return txt.toLowerCase()
+        }
+      }
+
+    });
+  }
+
+  capitalAfterSlash(str: string): string {
+    const index = str.indexOf('/');
+    const replacement = str[index + 1].toUpperCase();
+    return str.replace(str[index + 1], replacement);
+  }
+
+  capitalAfterHyphen(str: string): string {
+    let newStr = str[0];
+    for (let i = 0; i < str.length - 1; i++) {
+
+      const char = str[i];
+      if (char === '-') {
+        newStr += str[i + 1].toUpperCase()
+      } else {
+        newStr += str[i + 1]
+      }
+    }
+
+    // if (str.includes('-')) {
+    //   const index = str.indexOf('-');
+    //   const replacement = str[index + 1].toUpperCase();
+    //   return str
+    //     .replaceAll(str[index + 1], replacement)
+    //     .replace('ArcoS', 'Arcos')
+    //     .replace('MonfLorite', 'Monflorite')
+    //     .replace('AínSa', 'Aínsa')
+    // }
+    return newStr;
+  }
+
+  deleteSpace(str: any): string {
+    return str.split(' ').join('_');
+  }
+
 }
+
