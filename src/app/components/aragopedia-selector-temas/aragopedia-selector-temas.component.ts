@@ -74,7 +74,6 @@ export class AragopediaSelectorTemasComponent implements OnInit {
       });
     });
 
-
   }
 
   submit() {
@@ -85,6 +84,8 @@ export class AragopediaSelectorTemasComponent implements OnInit {
     if (this.selectedProvincia !== undefined) {
       this.showTemas = this.temasProvincia;
       this.temasActive = true;
+      console.log(this.showTemas);
+
     } else if (this.selectedComarca !== undefined) {
       this.showTemas = this.temasComarca;
       this.temasActive = true;

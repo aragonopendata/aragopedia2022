@@ -40,7 +40,6 @@ import { ComarcasComponent } from './components/aragopedia-selector-temas/locati
 import { MunicipiosComponent } from './components/aragopedia-selector-temas/location/municipios/municipios.component';
 import { LocationComponent } from './components/aragopedia-selector-temas/location/location.component';
 
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -65,7 +64,7 @@ import { LocationComponent } from './components/aragopedia-selector-temas/locati
     ProvinciasComponent,
     ComarcasComponent,
     MunicipiosComponent,
-    LocationComponent
+    LocationComponent,
   ],
   imports: [
     BrowserModule,
@@ -84,7 +83,7 @@ import { LocationComponent } from './components/aragopedia-selector-temas/locati
     MatProgressSpinnerModule,
     JwPaginationModule,
     PersonaModule,
-    MatCheckboxModule
+    MatCheckboxModule,
   ],
   providers: [ResultService],
   bootstrap: [AppComponent]
