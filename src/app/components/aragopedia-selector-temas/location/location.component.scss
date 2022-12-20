@@ -1,0 +1,30 @@
+::ng-deep {
+    .mat-form-field.mat-focused {
+
+        .mat-form-field-label {
+            color: var(--accent-color);
+        }
+
+        .mat-form-field-ripple {
+            background-color: var(--accent-color);
+        }
+    }
+}
+
+.location-selected {
+    font-size: 20px;
+    color: var(--accent-color);
+}
+
+.location-form__input {
+    display: flex;
+    align-items: flex-end;
+}
+
+.link-location {
+    font-size: 16px;
+    cursor: pointer;
+    text-decoration: underline;
+    color: var(--accent-color);
+    margin-left: 15px;
+}

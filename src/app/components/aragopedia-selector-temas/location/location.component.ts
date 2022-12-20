@@ -24,6 +24,10 @@ export class LocationComponent implements OnInit {
   idProvincia!: string;
   tipoLocalidad!: string;
   error: boolean = false;
+  provinciasActive: boolean = true;
+  comarcasActive: boolean = true;
+  municipiosActive: boolean = true;
+  selected!: string;
 
   @ViewChild(ProvinciasComponent) provincia: any;
   @ViewChild(MunicipiosComponent) municipio: any;
@@ -31,36 +35,33 @@ export class LocationComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.provinciaSelected = this.provincia.selectedProvincia;
-    this.comarcaSelected = this.comarca.selectedComarca;
-    this.municipioSelected = this.municipio.selectedMunicipio;
-    this.idMunicipio = this.municipio.id;
-    this.idComarca = this.comarca.selectedId;
-    this.idProvincia = this.provincia.selectedId;
-
   }
 
 
-  locationSelected(): void {
-    this.provinciaSelected = this.provincia.selectedProvincia;
-    this.comarcaSelected = this.comarca.selectedComarca;
-    this.municipioSelected = this.municipio.selectedMunicipio;
-    this.idMunicipio = this.municipio.id;
-    this.idComarca = this.comarca.selectedId;
-    this.idProvincia = this.provincia.selectedId;
-    console.log('Provincia: ', this.idProvincia, 'Comarca: ', this.idComarca, 'Municipio: ', this.idMunicipio);
-  }
+  // locationSelected(): void {
+  //   this.provinciaSelected = this.provincia.selectedProvincia;
+  //   this.comarcaSelected = this.comarca.selectedComarca;
+  //   this.municipioSelected = this.municipio.selectedMunicipio;
+  //   this.idMunicipio = this.municipio.id;
+  //   this.idComarca = this.comarca.selectedId;
+  //   this.idProvincia = this.provincia.selectedId;
+  //   console.log('Provincia: ', this.provinciaSelected, 'Comarca: ', this.comarcaSelected, 'Municipio: ', this.municipioSelected, this.selected);
+  // }
 
-  submit() {
+  selectProvincia() {
     this.provinciaSelected = this.provincia.selectedProvincia;
+    this.idProvincia = this.provincia.selectedId;
+    this.selected = this.provinciaSelected;
+  }
+  selectComarca() {
     this.comarcaSelected = this.comarca.selectedComarca;
+    this.idComarca = this.comarca.selectedId;
+    this.selected = this.comarcaSelected
+  }
+  selectMunicipio() {
     this.municipioSelected = this.municipio.selectedMunicipio;
     this.idMunicipio = this.municipio.selectedId;
-    this.idComarca = this.comarca.selectedId;
-    this.idProvincia = this.provincia.selectedId;
-
-    // console.log('Provincia: ', this.idProvincia, 'Comarca: ', this.idComarca, 'Municipio: ', this.idMunicipio);
-
+    this.selected = this.municipioSelected;
   }
 
 }
