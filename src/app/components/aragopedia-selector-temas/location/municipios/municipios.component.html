@@ -1,0 +1,16 @@
+<form [formGroup]="formGroup">
+    <mat-form-field>
+        <mat-label>
+            Municipios
+        </mat-label>
+        <input (ngModelChange)="selectMunicipio()" [(ngModel)]="selectedMunicipio" matInput
+            [formControl]="myControlMunicipios" type="select" [matAutocomplete]="auto" formControlName="municipio" />
+        <!-- <input [(ngModel)]="selected"  matInput [formControl]="myControlMunicipios" type="select"
+        [matAutocomplete]="auto" />-->
+        <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngFor="let municipio of filteredMunicipios" [value]="municipio['callret-0'].value">
+                {{municipio['callret-0'].value}}
+            </mat-option>
+        </mat-autocomplete>
+    </mat-form-field>
+</form>

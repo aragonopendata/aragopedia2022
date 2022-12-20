@@ -1,0 +1,28 @@
+<div class="container space" style="margin:auto">
+    <h2><mat-icon> place</mat-icon> Selecciona una entidad territorial</h2>
+    <p *ngIf="error" class="error">Debes seleccionar alguna localidad</p>
+    <form *ngIf="!this.selected" class="location-form" [formGroup]="locationForm">
+        <div class="location-form__input">
+            <app-provincias></app-provincias>
+            <p (click)="selectProvincia()" class="link-location">Seleccionar esta provincia</p>
+
+        </div>
+
+        <div class="location-form__input">
+            <app-comarcas></app-comarcas>
+            <p (click)="selectComarca()" class="link-location">Seleccionar esta comarca</p>
+
+        </div>
+
+        <div class="location-form__input">
+            <app-municipios></app-municipios>
+            <p (click)="selectMunicipio()" class="link-location">Seleccionar este municipio</p>
+
+        </div>
+        <!-- <button type="submit" class="btn">Seleccionar entidad territorial</button> -->
+    </form>
+    <p *ngIf="this.selected" class="location-selected">Has seleccionado: <b>{{this.selected}}</b><br> Haz click en el
+        siguiente
+        botón para generar
+        los temas disponibles.</p>
+</div>

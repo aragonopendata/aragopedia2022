@@ -35,7 +35,10 @@ import { JwPaginationModule } from 'jw-angular-pagination';
 import { PersonaModule } from './pages/persona/persona.module';
 import { FichaAragonComponent } from './pages/result/ficha-aragon/ficha-aragon.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-
+import { ProvinciasComponent } from './components/aragopedia-selector-temas/location/provincias/provincias.component';
+import { ComarcasComponent } from './components/aragopedia-selector-temas/location/comarcas/comarcas.component';
+import { MunicipiosComponent } from './components/aragopedia-selector-temas/location/municipios/municipios.component';
+import { LocationComponent } from './components/aragopedia-selector-temas/location/location.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +60,11 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     AragopediaComponent,
     AragopediaSelectorTemasComponent,
     AragopediaTablaDatosComponent,
-    FichaAragonComponent
+    FichaAragonComponent,
+    ProvinciasComponent,
+    ComarcasComponent,
+    MunicipiosComponent,
+    LocationComponent,
   ],
   imports: [
     BrowserModule,
@@ -76,7 +83,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MatProgressSpinnerModule,
     JwPaginationModule,
     PersonaModule,
-    MatCheckboxModule
+    MatCheckboxModule,
   ],
   providers: [ResultService],
   bootstrap: [AppComponent]

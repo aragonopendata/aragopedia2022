@@ -1,6 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { dateFormat } from 'dc';
 import { AragopediaService } from '../aragopedia-tabla-datos/aragopediaService';
+import { ComarcasComponent } from './location/comarcas/comarcas.component';
+import { LocationComponent } from './location/location.component';
+import { MunicipiosComponent } from './location/municipios/municipios.component';
+import { ProvinciasComponent } from './location/provincias/provincias.component';
 
 @Component({
   selector: 'app-aragopedia-selector-temas',
@@ -9,29 +14,87 @@ import { AragopediaService } from '../aragopedia-tabla-datos/aragopediaService';
 })
 export class AragopediaSelectorTemasComponent implements OnInit {
 
-  constructor(public aragopediaSvc: AragopediaService) { }
+  constructor(public aragopediaSvc: AragopediaService, private fb: FormBuilder) { }
+
+  @ViewChild(LocationComponent) location: any;
+
+
+  temp = undefined;
+
+  formGroup!: FormGroup;
 
   queryTemas!: string;
   temasControl = new FormControl('');
-  selectedTema: string = '';
+  selectedTema: any = '';
+
+  selectedProvincia: any = '';
+  selectedComarca: any = '';
+  selectedMunicipio: any = '';
   unique: any;
   temas!: any;
 
+  temasComunidad = [{}];
+  temasProvincia = [{}];
+  temasComarca = [{}];
+  temasMunicipio = [{}];
+
+  queryUrlWikiData!: string;
+
+  queryUrlComarcasId!: string
+  queryUrlMunicipiosId!: string;
+
+  showTemas: any;
+  temasActive: boolean = false;
+
+
+
   ngOnInit(): void {
+    this.formGroup = this.fb.group({
+      temas: [''],
+      location: ['']
+    });
 
     this.queryTemas = "https://opendata.aragon.es/solrWIKI/informesIAEST/select?q=*&rows=2000&omitHeader=true&wt=json";
 
     this.aragopediaSvc.getData(this.queryTemas).subscribe((data: any) => {
-      console.log(data.response.docs)
-
       this.temas = data.response.docs;
-
       this.unique = [...new Set(data.response.docs.map((item: { Descripcion: any; }) => item.Descripcion))];
 
-      console.log(this.unique)
-    })
+      // Construcción temas por tipo de territorio
+      this.temas.forEach((tema: any) => {
+        if (tema.Tipo === 'A') {
+          this.temasComunidad.push(tema)
+        } else if (tema.Tipo === 'TP') {
+          this.temasProvincia.push(tema)
+        } else if (tema.Tipo === 'TC') {
+          this.temasComarca.push(tema)
+        } else if (tema.Tipo === 'TM') {
+          this.temasMunicipio.push(tema);
+        }
+      });
+    });
 
   }
+
+  submit() {
+    this.selectedProvincia = this.location.idProvincia;
+    this.selectedComarca = this.location.idComarca;
+    this.selectedMunicipio = this.location.idMunicipio;
+
+    if (this.selectedProvincia !== undefined) {
+      this.showTemas = this.temasProvincia;
+      this.temasActive = true;
+      console.log(this.showTemas);
+
+    } else if (this.selectedComarca !== undefined) {
+      this.showTemas = this.temasComarca;
+      this.temasActive = true;
+    } else if (this.selectedMunicipio !== undefined) {
+      this.showTemas = this.temasMunicipio;
+      this.temasActive = true;
+    }
+  }
+
 
 
 }
