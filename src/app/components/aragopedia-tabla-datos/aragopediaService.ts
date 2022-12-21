@@ -12,9 +12,12 @@ class Prefix {
 
 
 export class AragopediaService {
+
     queryTemas!: string;
-    queryTemasReady: boolean = false;
     queryTemasObserver: Subject<string> = new Subject<string>();
+
+    columnasTabla!: any;
+    columnasTablaObserver: Subject<string> = new Subject<string>();
 
     constructor(private http: HttpClient) {
 
@@ -30,6 +33,12 @@ export class AragopediaService {
         this.queryTemas = query;
         console.log(this.queryTemas)
         this.queryTemasObserver.next(this.queryTemas);
+    }
+
+    changeColumnas(columnas: any) {
+        this.columnasTabla = columnas;
+        console.log(this.columnasTabla)
+        this.columnasTablaObserver.next(this.columnasTabla);
     }
 
 

@@ -321,13 +321,13 @@ export class FichaAragonComponent implements OnInit {
       })
 
       this.resultSvc.getData(this.queryUrlContacto).subscribe(data => {
-        console.log(data);
+        //console.log(data);
 
         this.direccion = data.results.bindings[0].direccion.value;
         this.codPostal = data.results.bindings[0].codPostal.value;
         this.email = data.results.bindings[0].email.value;
         this.telefono = data.results.bindings[0].tel.value;
-        console.log(this.telefono);
+        //console.log(this.telefono);
       })
 
     });
@@ -364,10 +364,10 @@ export class FichaAragonComponent implements OnInit {
   filterData(enteredData: any) {
 
 
-    console.log(this.showTemas);
+    //console.log(this.showTemas);
 
     this.filteredTemas = this.showTemas.filter((item: any) => {
-      console.log(item);
+      //console.log(item);
       return item.DescripcionMejorada.toLowerCase().indexOf(enteredData.toLowerCase()) > -1
     })
   }
@@ -378,7 +378,7 @@ export class FichaAragonComponent implements OnInit {
     })
 
     this.formGroup.get('tema')?.valueChanges.subscribe(response => {
-      console.log(response);
+      //console.log(response);
       this.selectedTema = response;
       this.filterData(response)
     })
@@ -493,8 +493,8 @@ export class FichaAragonComponent implements OnInit {
       query += "ORDER BY ASC(?refArea) ASC(?refPeriod)\n";
       query += "LIMIT 200\n"
 
-      console.log(query);
-      console.log(encodeURIComponent(query));
+      //console.log(query);
+      //console.log(encodeURIComponent(query));
 
       this.sparql(query);
 
@@ -519,7 +519,7 @@ export class FichaAragonComponent implements OnInit {
     params.append("format", "json");
 
     this.http.get(('https://opendata.aragon.es/sparql?default-graph-uri=&query=' + encodeURIComponent(query) + '&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on'), httpOptions).subscribe((data: any) => {
-      console.log(data);
+      //console.log(data);
 
       if (data.results.bindings.length === 0) {
         this.errorTabla = true;

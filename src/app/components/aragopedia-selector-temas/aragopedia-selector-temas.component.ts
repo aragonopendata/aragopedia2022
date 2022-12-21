@@ -125,7 +125,7 @@ export class AragopediaSelectorTemasComponent implements OnInit {
     console.log(this.showTemas);
 
     this.filteredTemas = this.showTemas.filter((item: any) => {
-      console.log(item);
+      //console.log(item);
       return item.DescripcionMejorada.toLowerCase().indexOf(enteredData.toLowerCase()) > -1
     })
   }
@@ -159,6 +159,8 @@ export class AragopediaSelectorTemasComponent implements OnInit {
         let nombreColumnaAux = element['callret-2'].value.replaceAll(' ', '_').toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[{(/,.)}]/g, '');
         query += '?' + nombreColumnaAux + ' as ' + '?' + nombreColumnaAux + ' '
       });
+
+      this.aragopediaSvc.changeColumnas(this.columnas);
 
       let queryPrefijo = "<http://reference.data.gov.uk/id/year/"
 

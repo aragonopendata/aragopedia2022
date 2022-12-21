@@ -27,23 +27,28 @@ export class AragopediaTablaDatosComponent {
   tablaDibujable!: any;
   stringelementonameref!: any;
   isJqueryWorking!: string;
+  nombresColumnas!: any;
 
 
   @ViewChild(AragopediaSelectorTemasComponent) selectorTemas!: AragopediaSelectorTemasComponent;
 
   ngOnInit() {
-    console.log(this.aragopediaSvc.queryTemas)
+    //console.log(this.aragopediaSvc.queryTemas)
 
 
     this.linkDescargaCSV = this.sanitizer.bypassSecurityTrustUrl(this.queryAragopediaCSV);
 
+    this.aragopediaSvc.columnasTablaObserver.subscribe((dataColumnas: any) => {
+      this.nombresColumnas = dataColumnas;
+    });
+
     this.aragopediaSvc.queryTemasObserver.subscribe((data: any) => {
       this.aragopediaSvc.getData(data).subscribe((response: any) => {
-        console.log(response)
-        //var tipodato: any = data.results.bindings;
         var dato = response.results.bindings[0]
 
         this.displayedColumns = Object.keys(dato);
+
+        console.log(this.displayedColumns)
 
         const blobConfigJSON = new Blob(
           [JSON.stringify(response.results.bindings)],
@@ -58,24 +63,6 @@ export class AragopediaTablaDatosComponent {
     });
 
   }
-
-  ngAfterViewInit() {
-    console.log(this.aragopediaSvc.queryTemas)
-
-  }
-
-  receiveQuery($event: any) {
-    this.queryAragopedia = $event;
-    console.log(this.queryAragopedia);
-
-  }
-
-  mostrarTabla() {
-
-    console.log(this.selectorTemas.queryTabla);
-  }
-
-
 
   getKeys(element: any, columna: string): string {
 
