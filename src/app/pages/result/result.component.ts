@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { ResultService } from './result.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ngxCsv } from 'ngx-csv/ngx-csv';
 import { AragopediaSelectorTemasComponent } from 'src/app/components/aragopedia-selector-temas/aragopedia-selector-temas.component';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
