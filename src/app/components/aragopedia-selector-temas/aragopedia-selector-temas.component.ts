@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewChild, Output, EventEmitter, Input } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { dateFormat } from 'dc';
 import { AragopediaService } from '../aragopedia-tabla-datos/aragopediaService';
@@ -30,12 +30,13 @@ export class AragopediaSelectorTemasComponent implements OnInit {
   temasControl = new FormControl('');
   selectedTema: any = '';
 
-  selectedProvincia: any = '';
-  selectedComarca: any = '';
-  selectedMunicipio: any = '';
-  selectedProvinciaNombre: any = '';
-  selectedComarcaNombre: any = '';
-  selectedMunicipioNombre: any = '';
+  @Input() selectedProvincia: any = '';
+  @Input() selectedComarca: any = '';
+  @Input() selectedMunicipio: any = '';
+  @Input() selectedProvinciaNombre: any = '';
+  @Input() selectedComarcaNombre: any = '';
+  @Input() selectedMunicipioNombre: any = '';
+
   unique: any;
   temas!: any;
 

@@ -20,11 +20,11 @@ export class AragopediaService {
 
     }
 
-    host: string = '';
-    repository: string = '';
-    PREFIXES: Array<Prefix> = [
-        { prefix: '', namespace: '' }
-    ]
+    // host: string = '';
+    // repository: string = '';
+    // PREFIXES: Array<Prefix> = [
+    //     { prefix: '', namespace: '' }
+    // ]
 
     change(query: string) {
         this.queryTemas = query;
@@ -33,14 +33,14 @@ export class AragopediaService {
     }
 
 
-    getTables() {
-        let selectString = `
-        
-        `;
-        let query = "select distinct ?value where {\n";
-        query += "{ ?obs0 a qb:Observation .\n";
+    // getTables() {
+    //     let selectString = `
 
-    }
+    //     `;
+    //     let query = "select distinct ?value where {\n";
+    //     query += "{ ?obs0 a qb:Observation .\n";
+
+    // }
 
     public getData(query: string): Observable<any> {
         return this.http.get(query);
