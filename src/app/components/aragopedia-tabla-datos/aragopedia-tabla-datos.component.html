@@ -5,6 +5,7 @@
             class="btn btn-descarga">CSV</a>
         <a [href]="linkDescargaJSON" bypassSecurityTrustUrl id="descargarJSON" download="aragopediaFile.json"
             class="btn btn-descarga">JSON</a>
+        <button (click)="mostrarTabla()">vertabla</button>
     </div>
 
     <mat-table mat-tablev [dataSource]="tablaConsulta" class="mat-elevation-z8">

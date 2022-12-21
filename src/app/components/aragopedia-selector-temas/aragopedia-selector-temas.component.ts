@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { dateFormat } from 'dc';
 import { AragopediaService } from '../aragopedia-tabla-datos/aragopediaService';
@@ -6,6 +6,9 @@ import { ComarcasComponent } from './location/comarcas/comarcas.component';
 import { LocationComponent } from './location/location.component';
 import { MunicipiosComponent } from './location/municipios/municipios.component';
 import { ProvinciasComponent } from './location/provincias/provincias.component';
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { map } from 'rxjs/operators';
+import { outputAst } from '@angular/compiler';
 
 @Component({
   selector: 'app-aragopedia-selector-temas',
@@ -14,7 +17,7 @@ import { ProvinciasComponent } from './location/provincias/provincias.component'
 })
 export class AragopediaSelectorTemasComponent implements OnInit {
 
-  constructor(public aragopediaSvc: AragopediaService, private fb: FormBuilder) { }
+  constructor(public aragopediaSvc: AragopediaService, private fb: FormBuilder, private http: HttpClient) { }
 
   @ViewChild(LocationComponent) location: any;
 
@@ -45,6 +48,9 @@ export class AragopediaSelectorTemasComponent implements OnInit {
 
   queryUrlComarcasId!: string
   queryUrlMunicipiosId!: string;
+
+  queryTabla: string = '';
+  @Output() queryEmitter = new EventEmitter<String>();
 
   showTemas: any;
   temasActive: boolean = false;
@@ -118,7 +124,7 @@ export class AragopediaSelectorTemasComponent implements OnInit {
       this.columnas = data.results.bindings;
 
       this.columnas.forEach((element: any) => {
-        let nombreColumnaAux = element['callret-2'].value.replaceAll(' ', '_').toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+        let nombreColumnaAux = element['callret-2'].value.replaceAll(' ', '_').toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[{()}]/g, '');
         query += '?' + nombreColumnaAux + ' as ' + '?' + nombreColumnaAux + ' '
       });
 
@@ -162,19 +168,49 @@ export class AragopediaSelectorTemasComponent implements OnInit {
       }
 
       this.columnas.forEach((element: any) => {
-        let nombreColumnaAux = element['callret-2'].value.replaceAll(' ', '_').toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+        let nombreColumnaAux = element['callret-2'].value.replaceAll(' ', '_').toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[{()}]/g, '');
         query += "OPTIONAL {  ?obs <" + element.colUri.value + "> ?" + nombreColumnaAux + " } .\n";
         element
       });
 
       query += "} \n";
       query += "ORDER BY ASC(?refArea) ASC(?refPeriod)\n";
+      query += "LIMIT 200\n"
 
       console.log(query);
+      console.log(encodeURIComponent(query));
 
+      this.sparql(query);
 
+      this.queryTabla = 'https://opendata.aragon.es/sparql?default-graph-uri=&query=' + encodeURIComponent(query) + '&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on';
+
+      this.aragopediaSvc.change(this.queryTabla);
+    })
+
+  }
+
+  sendQuery() {
+    this.queryEmitter.emit(this.queryTabla);
+  }
+  sparql(query: any) {
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      })
+    };
+
+    this.http.get('your-url', httpOptions);
+
+    let params = new URLSearchParams();
+    params.append("query", ("https://opendata.aragon.es/sparql" + query));
+    params.append("format", "json");
+
+    this.http.get(('https://opendata.aragon.es/sparql?default-graph-uri=&query=' + encodeURIComponent(query) + '&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on'), httpOptions).subscribe(data => {
+      console.log(data);
 
     })
+
 
   }
 
