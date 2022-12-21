@@ -1,3 +1,28 @@
+::ng-deep {
+
+    mat-table {
+        border-radius: 10px;
+    }
+
+    tr.mat-header-row.cdk-header-row.ng-star-inserted>th {
+        background: var(--accent-color) !important;
+        color: #cee5eb;
+        text-align: center;
+        font-size: 16px;
+        padding-top: 17px;
+    }
+
+    tr.mat-row.cdk-row.ng-star-inserted td {
+        text-align: center;
+        font-size: 16px;
+    }
+
+    td.mat-cell.cdk-cell.cdk-column-refArea.mat-column-refArea.ng-star-inserted {
+        padding-top: 17px;
+    }
+
+}
+
 table {
     width: 100%;
     align-self: center;

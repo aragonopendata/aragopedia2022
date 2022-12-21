@@ -211,7 +211,7 @@ export class AragopediaSelectorTemasComponent implements OnInit {
       query += "ORDER BY ASC(?refArea) ASC(?refPeriod)\n";
       query += "LIMIT 200\n"
 
-      //console.log(query);
+      console.log(query);
       //console.log(encodeURIComponent(query));
 
       this.sparql(query);
@@ -226,6 +226,7 @@ export class AragopediaSelectorTemasComponent implements OnInit {
   sendQuery() {
     this.queryEmitter.emit(this.queryTabla);
   }
+
   sparql(query: any) {
 
     const httpOptions = {
@@ -242,10 +243,7 @@ export class AragopediaSelectorTemasComponent implements OnInit {
 
     this.http.get(('https://opendata.aragon.es/sparql?default-graph-uri=&query=' + encodeURIComponent(query) + '&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on'), httpOptions).subscribe(data => {
       //console.log(data);
-
     })
-
-
   }
 
   correctWordInverse(name: string, word: string) {

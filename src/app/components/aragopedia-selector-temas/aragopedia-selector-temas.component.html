@@ -3,8 +3,9 @@
     <form [formGroup]="formGroup" (submit)="submit()">
         <div class="container space" style="margin:auto;">
             <app-location></app-location>
+            <button class="btn" type="submit">Generar temas</button>
         </div>
-        <button class="btn" type="submit">Generar temas</button>
+
 
         <div *ngIf="temasActive === true">
             <mat-form-field class="temas">

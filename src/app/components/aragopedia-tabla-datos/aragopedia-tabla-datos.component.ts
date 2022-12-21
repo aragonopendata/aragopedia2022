@@ -45,8 +45,12 @@ export class AragopediaTablaDatosComponent {
     this.aragopediaSvc.queryTemasObserver.subscribe((data: any) => {
       this.aragopediaSvc.getData(data).subscribe((response: any) => {
         var dato = response.results.bindings[0]
+        let datos = response.results.bindings;
 
         this.displayedColumns = Object.keys(dato);
+
+        this.displayedColumns.splice((this.displayedColumns.indexOf('refArea')), 1);
+        this.displayedColumns.splice((this.displayedColumns.indexOf('refPeriod')), 1);
 
         //console.log(this.displayedColumns)
 
@@ -56,6 +60,23 @@ export class AragopediaTablaDatosComponent {
         )
 
         this.linkDescargaJSON = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(blobConfigJSON));
+
+        datos.forEach((item: any) => {
+          for (const key in item) {
+            const element = item[key].value;
+
+            if (element.startsWith('http')) {
+              const index = element.lastIndexOf('/')
+              element.substring(index);
+              item[key].value = element.substring(index + 1);
+            }
+
+          }
+        });
+
+
+        console.log(response.results.bindings);
+
         this.tablaConsulta = response.results.bindings;
 
       })
