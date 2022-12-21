@@ -353,6 +353,7 @@ export class FichaAragonComponent implements OnInit {
       });
 
       this.showTemas = this.temasComunidad;
+      this.filteredTemas = this.showTemas
 
       this.showTemas.shift()
       this.initForm();
