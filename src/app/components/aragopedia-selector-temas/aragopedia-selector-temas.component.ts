@@ -111,9 +111,9 @@ export class AragopediaSelectorTemasComponent implements OnInit {
       this.showTemas = this.temasMunicipio;
       this.temasActive = true;
     }
-    console.log(this.selectedProvincia);
-    console.log(this.selectedComarca);
-    console.log(this.selectedMunicipio);
+    //console.log(this.selectedProvincia);
+    //console.log(this.selectedComarca);
+    //console.log(this.selectedMunicipio);
 
     this.showTemas.shift()
     this.initForm();
@@ -122,7 +122,7 @@ export class AragopediaSelectorTemasComponent implements OnInit {
   filterData(enteredData: any) {
 
 
-    console.log(this.showTemas);
+    //console.log(this.showTemas);
 
     this.filteredTemas = this.showTemas.filter((item: any) => {
       //console.log(item);
@@ -136,7 +136,7 @@ export class AragopediaSelectorTemasComponent implements OnInit {
     })
 
     this.formGroup.get('tema')?.valueChanges.subscribe(response => {
-      console.log(response);
+      //console.log(response);
       this.selectedTema = response;
       this.filterData(response)
     })
@@ -193,7 +193,7 @@ export class AragopediaSelectorTemasComponent implements OnInit {
           nombreZona = this.selectedMunicipioNombre
         }
 
-        console.log(this.deleteSpace(nombreZona));
+        //console.log(this.deleteSpace(nombreZona));
 
         let uriPrefix = "<http://opendata.aragon.es/recurso/territorio/" + tipoZona + "/";
         query += "FILTER (?refArea IN (";
@@ -211,8 +211,8 @@ export class AragopediaSelectorTemasComponent implements OnInit {
       query += "ORDER BY ASC(?refArea) ASC(?refPeriod)\n";
       query += "LIMIT 200\n"
 
-      console.log(query);
-      console.log(encodeURIComponent(query));
+      //console.log(query);
+      //console.log(encodeURIComponent(query));
 
       this.sparql(query);
 
@@ -241,7 +241,7 @@ export class AragopediaSelectorTemasComponent implements OnInit {
     params.append("format", "json");
 
     this.http.get(('https://opendata.aragon.es/sparql?default-graph-uri=&query=' + encodeURIComponent(query) + '&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on'), httpOptions).subscribe(data => {
-      console.log(data);
+      //console.log(data);
 
     })
 

@@ -48,7 +48,7 @@ export class AragopediaTablaDatosComponent {
 
         this.displayedColumns = Object.keys(dato);
 
-        console.log(this.displayedColumns)
+        //console.log(this.displayedColumns)
 
         const blobConfigJSON = new Blob(
           [JSON.stringify(response.results.bindings)],

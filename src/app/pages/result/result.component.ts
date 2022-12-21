@@ -244,7 +244,7 @@ export class ResultComponent {
         });
 
         this.resultSvc.getData(this.queryUrlMiembrosPleno).subscribe((data: any) => {
-          console.log(this.queryUrlMiembrosPleno);
+          //console.log(this.queryUrlMiembrosPleno);
 
           this.miembrosPleno = data?.results.bindings;
           this.cantidadMiembrosPleno = this.miembrosPleno.length;
@@ -348,7 +348,7 @@ export class ResultComponent {
       }
 
 
-      console.log(this.lugarBuscadoParsed)
+      //console.log(this.lugarBuscadoParsed)
 
       // Queries con nombres
 
@@ -497,7 +497,7 @@ export class ResultComponent {
       });
 
       this.resultSvc.getData(this.queryUrlLocales).subscribe(data => {
-        console.log(this.queryUrlLocales);
+        //console.log(this.queryUrlLocales);
 
         this.locales = data.results.bindings[0]['callret-4'].value;
       });
@@ -720,8 +720,8 @@ export class ResultComponent {
       query += "ORDER BY ASC(?refArea) ASC(?refPeriod)\n";
       query += "LIMIT 200\n"
 
-      console.log(query);
-      console.log(encodeURIComponent(query));
+      //console.log(query);
+      //console.log(encodeURIComponent(query));
 
       this.sparql(query);
 
@@ -735,10 +735,10 @@ export class ResultComponent {
   filterData(enteredData: any) {
 
 
-    console.log(this.showTemas);
+    //console.log(this.showTemas);
 
     this.filteredTemas = this.showTemas.filter((item: any) => {
-      console.log(item);
+      //console.log(item);
       return item.DescripcionMejorada.toLowerCase().indexOf(enteredData.toLowerCase()) > -1
     })
   }
@@ -749,7 +749,7 @@ export class ResultComponent {
     })
 
     this.formGroup.get('tema')?.valueChanges.subscribe(response => {
-      console.log(response);
+      //console.log(response);
       this.selectedTema = response;
       this.filterData(response)
     })
@@ -772,7 +772,7 @@ export class ResultComponent {
     params.append("format", "json");
 
     this.http.get(('https://opendata.aragon.es/sparql?default-graph-uri=&query=' + encodeURIComponent(query) + '&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on'), httpOptions).subscribe((data: any) => {
-      console.log(data);
+      //console.log(data);
 
       if (data.results.bindings.length === 0) {
         this.errorTabla = true;
