@@ -53,17 +53,20 @@ export class AragopediaSelectorTemasComponent implements OnInit {
   queryTabla: string = '';
   @Output() queryEmitter = new EventEmitter<String>();
 
-  showTemas: any;
+  showTemas: any = [];
   temasActive: boolean = false;
+  filteredTemas: any;
 
   columnas: any;
 
 
   ngOnInit(): void {
-    this.formGroup = this.fb.group({
-      temas: [''],
-      location: ['']
-    });
+    //    this.formGroup = this.fb.group({
+    //      temas: [''],
+    //      location: ['']
+    //    });
+
+
 
     this.queryTemas = "https://opendata.aragon.es/solrWIKI/informesIAEST/select?q=*&rows=2000&omitHeader=true&wt=json";
 
@@ -111,6 +114,34 @@ export class AragopediaSelectorTemasComponent implements OnInit {
     console.log(this.selectedProvincia);
     console.log(this.selectedComarca);
     console.log(this.selectedMunicipio);
+
+    this.showTemas.shift()
+    this.initForm();
+  }
+
+  filterData(enteredData: any) {
+
+
+    console.log(this.showTemas);
+
+    this.filteredTemas = this.showTemas.filter((item: any) => {
+      console.log(item);
+      return item.DescripcionMejorada.toLowerCase().indexOf(enteredData.toLowerCase()) > -1
+    })
+  }
+
+  initForm() {
+    this.formGroup = this.fb.group({
+      "tema": [this.selectedTema]
+    })
+
+    this.formGroup.get('tema')?.valueChanges.subscribe(response => {
+      console.log(response);
+      this.selectedTema = response;
+      this.filterData(response)
+    })
+
+
   }
 
   temaSelected(tema: any) {
@@ -125,7 +156,7 @@ export class AragopediaSelectorTemasComponent implements OnInit {
       this.columnas = data.results.bindings;
 
       this.columnas.forEach((element: any) => {
-        let nombreColumnaAux = element['callret-2'].value.replaceAll(' ', '_').toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[{()}]/g, '');
+        let nombreColumnaAux = element['callret-2'].value.replaceAll(' ', '_').toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[{(/,.)}]/g, '');
         query += '?' + nombreColumnaAux + ' as ' + '?' + nombreColumnaAux + ' '
       });
 
@@ -169,7 +200,7 @@ export class AragopediaSelectorTemasComponent implements OnInit {
       }
 
       this.columnas.forEach((element: any) => {
-        let nombreColumnaAux = element['callret-2'].value.replaceAll(' ', '_').toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[{()}]/g, '');
+        let nombreColumnaAux = element['callret-2'].value.replaceAll(' ', '_').toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[{(/,.)}]/g, '')
         query += "OPTIONAL {  ?obs <" + element.colUri.value + "> ?" + nombreColumnaAux + " } .\n";
         element
       });

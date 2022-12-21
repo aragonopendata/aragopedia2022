@@ -11,10 +11,10 @@
                 <mat-label>
                     Tema
                 </mat-label>
-                <input formControlName="temas" [(ngModel)]="selectedTema" matInput [formControl]="temasControl"
+                <input formControlName="tema" [(ngModel)]="selectedTema" matInput [formControl]="temasControl"
                     type="select" [matAutocomplete]="auto" />
                 <mat-autocomplete #auto="matAutocomplete">
-                    <mat-option *ngFor="let tema of showTemas" (click)="temaSelected(tema)"
+                    <mat-option *ngFor="let tema of filteredTemas" (click)="temaSelected(tema)"
                         [value]="tema.DescripcionMejorada">
                         {{tema.DescripcionMejorada}}
                     </mat-option>

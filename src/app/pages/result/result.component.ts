@@ -3,7 +3,7 @@ import { ResultService } from './result.service';
 import { ActivatedRoute } from '@angular/router';
 import { ngxCsv } from 'ngx-csv/ngx-csv';
 import { AragopediaSelectorTemasComponent } from 'src/app/components/aragopedia-selector-temas/aragopedia-selector-temas.component';
-import { FormControl } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AragopediaService } from 'src/app/components/aragopedia-tabla-datos/aragopediaService';
 
@@ -15,7 +15,7 @@ import { AragopediaService } from 'src/app/components/aragopedia-tabla-datos/ara
 
 export class ResultComponent {
 
-  constructor(public resultSvc: ResultService, private _route: ActivatedRoute, private http: HttpClient, public aragopediaSvc: AragopediaService) { }
+  constructor(public resultSvc: ResultService, private fb: FormBuilder, private _route: ActivatedRoute, private http: HttpClient, public aragopediaSvc: AragopediaService) { }
 
   temp = undefined;
   currentLink: any;
@@ -115,6 +115,10 @@ export class ResultComponent {
   queryTabla!: string;
   columnas: any;
   errorTabla: boolean = false;
+
+  filteredTemas: any;
+  formGroup!: FormGroup;
+
 
   // Download data
 
@@ -527,7 +531,8 @@ export class ResultComponent {
         this.showTemas = this.temasProvincia
       }
 
-
+      this.showTemas.shift()
+      this.initForm();
     })
   }
 
@@ -664,7 +669,7 @@ export class ResultComponent {
       this.columnas = data.results.bindings;
 
       this.columnas.forEach((element: any) => {
-        let nombreColumnaAux = element['callret-2'].value.replaceAll(' ', '_').toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[{()}]/g, '');
+        let nombreColumnaAux = element['callret-2'].value.replaceAll(' ', '_').toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[{(/,.)}]/g, '');
         query += '?' + nombreColumnaAux + ' as ' + '?' + nombreColumnaAux + ' '
       });
 
@@ -706,7 +711,7 @@ export class ResultComponent {
       }
 
       this.columnas.forEach((element: any) => {
-        let nombreColumnaAux = element['callret-2'].value.replaceAll(' ', '_').toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[{()}]/g, '');
+        let nombreColumnaAux = element['callret-2'].value.replaceAll(' ', '_').toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[{(/,.)}]/g, '');
         query += "OPTIONAL {  ?obs <" + element.colUri.value + "> ?" + nombreColumnaAux + " } .\n";
         element
       });
@@ -726,6 +731,32 @@ export class ResultComponent {
     })
 
   }
+
+  filterData(enteredData: any) {
+
+
+    console.log(this.showTemas);
+
+    this.filteredTemas = this.showTemas.filter((item: any) => {
+      console.log(item);
+      return item.DescripcionMejorada.toLowerCase().indexOf(enteredData.toLowerCase()) > -1
+    })
+  }
+
+  initForm() {
+    this.formGroup = this.fb.group({
+      "tema": [this.selectedTema]
+    })
+
+    this.formGroup.get('tema')?.valueChanges.subscribe(response => {
+      console.log(response);
+      this.selectedTema = response;
+      this.filterData(response)
+    })
+
+
+  }
+
   sparql(query: any) {
 
     const httpOptions = {

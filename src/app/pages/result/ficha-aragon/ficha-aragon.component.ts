@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ngxCsv } from 'ngx-csv';
 import { AragopediaService } from 'src/app/components/aragopedia-tabla-datos/aragopediaService';
 import { ResultService } from '../result.service';
@@ -20,7 +20,7 @@ interface Persona {
 
 export class FichaAragonComponent implements OnInit {
 
-  constructor(public resultSvc: ResultService, private http: HttpClient, public aragopediaSvc: AragopediaService) { }
+  constructor(public resultSvc: ResultService, private fb: FormBuilder, private http: HttpClient, public aragopediaSvc: AragopediaService) { }
 
   temp = undefined;
 
@@ -104,6 +104,9 @@ export class FichaAragonComponent implements OnInit {
   queryTabla!: string;
   columnas: any;
   errorTabla: boolean = false;
+
+  filteredTemas: any;
+  formGroup!: FormGroup;
 
   // Download data
 
@@ -351,8 +354,35 @@ export class FichaAragonComponent implements OnInit {
 
       this.showTemas = this.temasComunidad;
 
+      this.showTemas.shift()
+      this.initForm();
 
     })
+
+  }
+
+  filterData(enteredData: any) {
+
+
+    console.log(this.showTemas);
+
+    this.filteredTemas = this.showTemas.filter((item: any) => {
+      console.log(item);
+      return item.DescripcionMejorada.toLowerCase().indexOf(enteredData.toLowerCase()) > -1
+    })
+  }
+
+  initForm() {
+    this.formGroup = this.fb.group({
+      "tema": [this.selectedTema]
+    })
+
+    this.formGroup.get('tema')?.valueChanges.subscribe(response => {
+      console.log(response);
+      this.selectedTema = response;
+      this.filterData(response)
+    })
+
 
   }
 
@@ -412,7 +442,7 @@ export class FichaAragonComponent implements OnInit {
       this.columnas = data.results.bindings;
 
       this.columnas.forEach((element: any) => {
-        let nombreColumnaAux = element['callret-2'].value.replaceAll(' ', '_').toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[{()}]/g, '');
+        let nombreColumnaAux = element['callret-2'].value.replaceAll(' ', '_').toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[{(/,.)}]/g, '');
         query += '?' + nombreColumnaAux + ' as ' + '?' + nombreColumnaAux + ' '
       });
 
@@ -454,7 +484,7 @@ export class FichaAragonComponent implements OnInit {
       }
 
       this.columnas.forEach((element: any) => {
-        let nombreColumnaAux = element['callret-2'].value.replaceAll(' ', '_').toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[{()}]/g, '');
+        let nombreColumnaAux = element['callret-2'].value.replaceAll(' ', '_').toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[{(/,.)}]/g, '');
         query += "OPTIONAL {  ?obs <" + element.colUri.value + "> ?" + nombreColumnaAux + " } .\n";
         element
       });
