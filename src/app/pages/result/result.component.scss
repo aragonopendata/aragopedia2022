@@ -297,7 +297,7 @@ section.container {
 
 .tabla-poblacion {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     empty-cells: hide;
@@ -309,6 +309,7 @@ section.container {
     width: fit-content;
     height: fit-content;
     margin-bottom: 2em;
+    width: 100%;
 
     tr {
         display: flex;
@@ -320,6 +321,7 @@ section.container {
         border-right: 1px solid #dbdbdb;
         border-radius: 2px;
         text-align: center;
+        width: 100%;
 
         th {
             flex: 0 0 20%;
@@ -329,6 +331,7 @@ section.container {
             padding: .5em 1.5em;
             background-color: #D6EAF0;
             border-radius: 3px;
+            align-self: center;
         }
 
         td {
@@ -345,6 +348,9 @@ section.container {
 }
 
 @media screen and (min-width: 992px) {
+    .tabla-poblacion {
+        flex-direction: row;
+    }
 
     .template {
 

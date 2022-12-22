@@ -48,7 +48,6 @@ export class PersonaComponent implements OnInit {
     this.personaSvc.getData(this.queryUrlCargo).subscribe(data => {
 
       this.cargos = data?.results.bindings[0];
-      console.log(this.cargos);
 
       const urlMunicipio = this.cargos.org?.value.split('/');
       this.idMunicipio = urlMunicipio[urlMunicipio.length - 1];
@@ -61,7 +60,6 @@ export class PersonaComponent implements OnInit {
       this.nombre = this.capitalizeString(this.datosContacto.name.value);
       this.email = this.datosContacto.mbox?.value
       this.biografia = this.deleteTags(this.datosContacto.biog.value);
-      console.log(this.biografia);
 
     });
 
