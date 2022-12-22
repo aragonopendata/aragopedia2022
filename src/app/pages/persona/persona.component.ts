@@ -60,7 +60,9 @@ export class PersonaComponent implements OnInit {
       this.datosContacto = data.results.bindings[0];
       this.nombre = this.capitalizeString(this.datosContacto.name.value);
       this.email = this.datosContacto.mbox?.value
-      this.biografia = this.deleteTags(this.datosContacto.biog.value)
+      this.biografia = this.deleteTags(this.datosContacto.biog.value);
+      console.log(this.biografia);
+
     });
 
     this.personaSvc.getData(this.queryUrlDatosAdicionales).subscribe(data => {
@@ -99,7 +101,7 @@ export class PersonaComponent implements OnInit {
   }
 
   deleteTags(str: string): string {
-    return str.replace(/[<p></p>]/g, '');
+    return str.replace(/(<([^>]+)>)/ig, '');
   }
 
 }
