@@ -71,7 +71,7 @@
                     <figure>
                         <a href="{{this.imageWikiDataUrl}}" target="_blank" rel="nofollow noopener"><img
                                 src="{{this.imageWikiDataUrl}}" alt="Imagen principal de {{this.lugarBuscado}}"></a>
-                        <figcaption>Este archivo está disponible bajo la licencia <a
+                        <figcaption>Imagen obtenida de WikiData. Este archivo está disponible bajo la licencia <a
                                 href="https://en.wikipedia.org/wiki/es:Creative_Commons" target="_blank"
                                 rel="nofollow noopener">Creative Commons</a> <a
                                 href="https://creativecommons.org/licenses/by/4.0/deed.es" target="_blank"
@@ -239,7 +239,8 @@
                 </ul>
             </div>
             <div class="graphics__item personas-ilustres" *ngIf="this.cantidadPersonasIlustres !== 0">
-                <h2>Personas Ilustres nacidas en {{this.lugarBuscado}}</h2>
+                <h2>Personas Ilustres nacidas en {{this.lugarBuscado}} (Obtenido de WikiData bajo licencia CC 4.0.0)
+                </h2>
                 <ul>
                     <li *ngFor="let persona of personasIlustres"><a href="{{persona.about.value}}"
                             target="_blank">{{persona.itemLabel.value}}</a></li>
@@ -342,13 +343,13 @@
                     <figure>
                         <a href="{{this.imageWikiDataUrl}}" target="_blank" rel="nofollow noopener"><img
                                 src="{{this.imageWikiDataUrl}}" alt="Imagen principal de {{this.lugarBuscado}}"></a>
-                        <figcaption>Este archivo está disponible bajo la licencia <a
+                        <figcaption>Imagen obtenida de WikiData. Este archivo está disponible bajo la licencia <a
                                 href="https://en.wikipedia.org/wiki/es:Creative_Commons" target="_blank"
                                 rel="nofollow noopener">Creative Commons</a> <a
                                 href="https://creativecommons.org/licenses/by/4.0/deed.es" target="_blank"
                                 rel="nofollow noopener">
                                 Atribución 4.0
-                                Internaciona
+                                Internacional
                             </a>
                         </figcaption>
                     </figure>

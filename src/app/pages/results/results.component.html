@@ -1,7 +1,12 @@
 <div class="results-page container">
     <section class="results">
-
-        <h2 class="results__title">Resultados de la búsqueda. Encontrados <u>{{this.results.length}} resultados de
+        <h2 *ngIf="this.results.length >= 1">Resultados de la búsqueda. Encontrados <u>{{this.results.length - 1}}
+                resultados de
+                {{this.temasSelected}}
+                entre {{this.firstYear}} y {{this.lastYear}}:</u>
+        </h2>
+        <h2 *ngIf="this.results.length > 1" class="results__title">Resultados de la búsqueda. Encontrados
+            <u>{{this.results.length}} resultados de
                 {{this.temasSelected}}
                 entre {{this.firstYear}} y {{this.lastYear}}:</u>
         </h2>
@@ -54,7 +59,7 @@
             <p>Obteniendo datos</p>
         </div>
         <div *ngIf="this.numberOfResults === 0" class="search-error">
-            <p>No es han encontrado resultados, prueba a <a (click)="toggleSidebar()">aplicar otros filtros.</a></p>
+            <p>No se han encontrado resultados, prueba a <a (click)="toggleSidebar()">aplicar otros filtros.</a></p>
         </div>
         <div *ngFor="let result of pageOfItems | filter:filterResult" class="search__results">
             <article class="search__results-item">
