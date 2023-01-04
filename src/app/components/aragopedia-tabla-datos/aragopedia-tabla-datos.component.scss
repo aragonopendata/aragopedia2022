@@ -9,7 +9,7 @@
         color: #cee5eb;
         text-align: center;
         font-size: 16px;
-        padding-top: 17px;
+        padding: 17px;
     }
 
     tr.mat-row.cdk-row.ng-star-inserted td {
@@ -21,6 +21,13 @@
         padding-top: 15px !important;
     }
 
+}
+
+@media only screen and (max-width: 600px) {
+
+    .table-container {
+        overflow-x: scroll; //add horizontal bar option in html
+    }
 }
 
 table {
@@ -43,6 +50,7 @@ tr:nth-child(odd) {
 
 th {
     background: #EDEDEC;
+    min-width: fit-content;
 }
 
 .btn-descarga {
