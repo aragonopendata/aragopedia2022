@@ -22,7 +22,8 @@ export class HomeComponent implements OnInit {
   // selectedYears: any[] = [];
   firstYearSelected: any;
   lastYearSelected: any;
-  selectedYears: any = ['1978', '2022'];
+  currentYear: string = (new Date().getFullYear()).toString();
+  selectedYears: any = ['1978', this.currentYear];
   yearsURL: string = ``;
   provinciaSelected!: string;
   municipioSelected!: string;

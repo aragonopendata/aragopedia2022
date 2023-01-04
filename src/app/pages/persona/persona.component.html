@@ -29,7 +29,8 @@
         <div class="persona__data sidebar">
             <div class="sidebar__more">
                 <h3>Datos de contacto</h3>
-                <div *ngIf="datosContacto">
+                <p *ngIf="!this.datosContacto.phone"> No hay datos de contacto</p>
+                <div *ngIf="this.datosContacto.phone">
                     <ul class="more__data">
                         <li *ngIf="this.datosContacto.phone.value">{{datosContacto.phone.value}}</li>
                         <li *ngIf="this.datosContacto.mbox">{{datosContacto.mbox.value}}</li>
@@ -45,7 +46,7 @@
         </div>
     </section>
 
-    <section class="container template">
+    <section class="container template" *ngIf="numberOfCreativeWorks > 0">
         <h2>Menciones en publicaciones ({{numberOfCreativeWorks}})</h2>
         <div class="creative-works">
             <article *ngFor="let publicacion of creativeWorks" class="creative-works__articles">

@@ -1,6 +1,7 @@
 <div class="results-page container">
     <section class="results">
-        <h2 *ngIf="this.results.length >= 1">Resultados de la búsqueda. Encontrados <u>{{this.results.length - 1}}
+        <h2 class="results__title" *ngIf="this.results.length <= 1">Resultados de la búsqueda. Encontrados
+            <u>{{this.results.length - 1}}
                 resultados de
                 {{this.temasSelected}}
                 entre {{this.firstYear}} y {{this.lastYear}}:</u>

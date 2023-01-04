@@ -161,7 +161,9 @@ export class PiramidePoblacionComponent implements OnInit {
         if (txt.toLowerCase() === 'el'
           || txt.toLowerCase() === 'y'
           || txt.toLowerCase() === 'del'
-          || txt.toLowerCase() === 'de') {
+          || txt.toLowerCase() === 'de'
+          || txt.toLowerCase() === 'las'
+          || txt.toLowerCase() === 'los') {
           return txt.toLowerCase();
         }
         else if (txt.toLowerCase() !== 'de'
