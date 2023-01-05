@@ -41,14 +41,14 @@
                     <li *ngIf="this.plazasHoteleras"><span
                             class="big-number">{{this.plazasHoteleras}}</span>Alojamientos hoteleros</li>
                     <li *ngIf="this.alojamientosTuristicos"><span
-                            class="big-number">{{this.alojamientosTuristicos}}</span>Alojamientos turísticos</li>
+                            class="big-number">{{this.alojamientosTuristicos}}</span>Alojamientos de turismo rural</li>
                 </ul>
             </div>
             <div class="inicio__contact">
                 <div>
                     <h2>Contacto</h2>
                     <ul>
-                        <li *ngIf="this.direccion"><b>Dirección</b> {{this.direccion}}</li>
+                        <li *ngIf="this.direccion"><b>Dirección</b> {{this.capitalizeString(this.direccion)}}</li>
                         <li *ngIf="this.codPostal"><b>Código postal</b> {{this.codPostal}}</li>
                         <li *ngIf="this.telefono"><b>Teléfono</b> <a href="tel:{{this.telefono}}">{{this.telefono}}</a>
                         </li>
@@ -250,7 +250,7 @@
         </section>
 
         <section class="container template__statistics">
-            <h2>Encuentra los datos estadísticos de {{this.lugarBuscado}}</h2>
+            <h2>Encuentra los datos estadísticos de {{this.tituloFicha}}</h2>
             <!-- <app-aragopedia-selector-temas [selectedMunicipioNombre]="'Ababuj'"></app-aragopedia-selector-temas> -->
             <form [formGroup]="formGroup">
                 <div class="selector-temas">
@@ -288,7 +288,7 @@
 <ng-container *ngIf="this.tipoLocalidad === 'comarca'">
     <div class="container template">
         <section class="container breadcrumbs">
-            <p><a [routerLink]="['/']">Inicio</a> > {{this.capitalizeString(this.tipoLocalidad)}} >
+            <p><a [routerLink]="['/']">Inicio</a> > {{this.capitalizeString(this.tipoLocalidad)}}>
                 {{this.tituloFicha}}</p>
         </section>
         <section class="container container template__inicio">
@@ -326,13 +326,13 @@
                     <li *ngIf="this.plazasHoteleras"><span
                             class="big-number">{{this.plazasHoteleras}}</span>Alojamientos hoteleros</li>
                     <li *ngIf="this.alojamientosTuristicos"><span
-                            class="big-number">{{this.alojamientosTuristicos}}</span>Alojamientos turísticos</li>
+                            class="big-number">{{this.alojamientosTuristicos}}</span>Alojamientos de turismo rural</li>
                 </ul>
             </div>
             <div class="inicio__contact">
                 <h2>Contacto</h2>
                 <ul>
-                    <li *ngIf="this.direccion"><b>Dirección</b> {{this.direccion}}</li>
+                    <li *ngIf="this.direccion"><b>Dirección</b> {{this.capitalizeString(this.direccion)}}</li>
                     <li *ngIf="this.codPostal"><b>Código postal</b> {{this.codPostal}}</li>
                     <li *ngIf="this.telefono"><b>Teléfono</b> <a href="tel:{{this.telefono}}">{{this.telefono}}</a></li>
                     <li *ngIf="this.email"><b>email</b> <a href="mailto:{{this.email}}">{{this.email}}</a></li>
