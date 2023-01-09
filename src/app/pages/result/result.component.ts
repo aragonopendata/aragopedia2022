@@ -523,18 +523,21 @@ export class ResultComponent {
 
       if (this.tipoLocalidad === 'comarca') {
         this.showTemas = this.temasComarca;
-        this.filteredTemas = this.showTemas
+        this.filteredTemas = this.showTemas;
+
       } else if (this.tipoLocalidad === 'municipio') {
         this.showTemas = this.temasMunicipio;
-        this.filteredTemas = this.showTemas
+        this.filteredTemas = this.showTemas;
+
       } else if (this.tipoLocalidad === 'diputacion') {
         this.showTemas = this.temasProvincia
         this.filteredTemas = this.showTemas
       }
 
-      this.showTemas.shift()
+      this.showTemas.shift();
       this.initForm();
-    })
+    });
+
   }
 
   //Métodos
