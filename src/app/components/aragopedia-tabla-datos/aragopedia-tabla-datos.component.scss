@@ -23,12 +23,11 @@
 
 }
 
-@media only screen and (max-width: 600px) {
-
-    .table-container {
-        overflow-x: scroll; //add horizontal bar option in html
-    }
+.table-container {
+    overflow-x: scroll; //add horizontal bar option in html
 }
+
+@media only screen and (max-width: 600px) {}
 
 table {
     width: 100%;

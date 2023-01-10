@@ -6,6 +6,16 @@
     width: 100%;
 }
 
+// Parte final Aragopedia
+
+.hidden {
+    display: none;
+}
+
+.template__statistics {
+    margin-bottom: 20em;
+}
+
 .return {
     width: fit-content;
     position: fixed;
@@ -202,7 +212,6 @@ section.container {
                 .mat-icon {
                     display: block;
                     margin: 15px auto;
-                    font-size: 32px;
                 }
             }
         }
@@ -243,7 +252,8 @@ section.container {
 
             .leer-mas {
                 cursor: pointer;
-                display: block;
+                display: flex;
+                align-items: center;
                 font-size: 14px;
             }
         }

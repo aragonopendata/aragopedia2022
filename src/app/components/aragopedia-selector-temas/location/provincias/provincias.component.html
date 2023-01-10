@@ -3,7 +3,7 @@
         <mat-label>
             Provincias
         </mat-label>
-        <input (ngModelChange)="selectProvincia()" [(ngModel)]="selectedProvincia" matInput
+        <input (onValueChange)="selectProvincia()" [(ngModel)]="selectedProvincia" matInput
             [formControl]="myControlProvincias" type="select" [matAutocomplete]="auto" formControlName="municipio" />
         <mat-autocomplete #auto="matAutocomplete">
             <mat-option *ngFor="let provincia of provincias" [value]="provincia">

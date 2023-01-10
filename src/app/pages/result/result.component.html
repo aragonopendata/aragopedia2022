@@ -94,39 +94,40 @@
             <div class="caracteristicas__list">
                 <div *ngIf="this.porcentajeSueloRural !== undefined && this.porcentajeSueloRural !== 'NaN'"
                     class="caracteristica__item">
-                    <mat-icon>people</mat-icon> Ocupa un {{this.porcentajeSueloRural}}% del <b>suelo rural</b>
+                    <mat-icon> local_florist</mat-icon> Ocupa un {{this.porcentajeSueloRural}}% del <b>suelo rural</b>
                     de Aragón
                 </div>
                 <div class="caracteristica__item"
                     *ngIf="this.porcentajeSueloUrbano !== undefined && this.porcentajeSueloUrbano !== 'NaN'">
-                    <mat-icon>people</mat-icon> Ocupa un {{this.porcentajeSueloUrbano}}% del <b>suelo urbano</b>
+                    <mat-icon>zoom_out_map</mat-icon> Ocupa un {{this.porcentajeSueloUrbano}}% del <b>suelo urbano</b>
                     de
                     Aragón
                 </div>
                 <div class="caracteristica__item" *ngIf="esPoblado == '1'; else noPoblado">
-                    <mat-icon>people</mat-icon> {{this.tituloFicha}} está entre una de <b>las 20 localidades más
+                    <mat-icon>insert_chart_outlined</mat-icon> {{this.tituloFicha}} está entre uno de <b>los 20
+                        territorios más
                         pobladas</b> de Aragón
                 </div>
                 <ng-template #noPoblado>
                     <div class="caracteristica__item">
-                        <mat-icon>people</mat-icon> {{this.tituloFicha}} no está entre una de <b>las 20
-                            localidades más
+                        <mat-icon>insert_chart_outlined</mat-icon> {{this.tituloFicha}} no está entre uno de <b>l0s 20
+                            territorios más
                             pobladas</b> de Aragón
                     </div>
                 </ng-template>
                 <div *ngIf="this.edadMediaHombres" class="caracteristica__item">
-                    <mat-icon>people</mat-icon> La edad media de los <b>hombres</b> es de {{this.edadMediaHombres}} años
+                    <mat-icon>person</mat-icon> La edad media de los <b>hombres</b> es de {{this.edadMediaHombres}} años
                 </div>
                 <div *ngIf="this.edadMediaMujeres" class="caracteristica__item">
-                    <mat-icon>people</mat-icon> La edad media de las <b>mujeres</b> es de {{this.edadMediaMujeres}} años
+                    <mat-icon>person</mat-icon> La edad media de las <b>mujeres</b> es de {{this.edadMediaMujeres}} años
                 </div>
 
                 <div class="caracteristica__item" *ngIf="tieneOficinaComarcal === 0; else noLocales">
-                    <mat-icon>people</mat-icon> {{this.tituloFicha}} no cuenta con <b>oficina comarcal</b>
+                    <mat-icon>business</mat-icon> {{this.tituloFicha}} no cuenta con <b>oficina comarcal</b>
                 </div>
                 <ng-template #noLocales>
                     <div class="caracteristica__item">
-                        <mat-icon>people</mat-icon> {{this.tituloFicha}} cuenta con <b>oficina comarcal</b>
+                        <mat-icon>business</mat-icon> {{this.tituloFicha}} cuenta con <b>oficina comarcal</b>
                     </div>
                 </ng-template>
             </div>
@@ -178,7 +179,8 @@
             <div *ngIf="this.numberOfCreativeWork !== 0" class="graphics__item" fragment="creative-works">
                 <div class="graphics__item-cw">
                     <h2>Enlaces de interés</h2>
-                    <p class="big-number"><b>{{this.numberOfCreativeWork}} </b>Menciones en publicaciones (Mostrando las
+                    <p *ngIf="numberOfCreativeWork >= 10" class="big-number"><b>{{this.numberOfCreativeWork}}
+                        </b>Menciones en publicaciones (Mostrando las
                         últimas 10 publicaciones)</p>
                 </div>
                 <div class="slides">
@@ -217,11 +219,12 @@
                                     href="/results/">Medio Ambiente</a>
                             </span>
                             <p class="slides__abstract" *ngIf="leerMas">{{link.resumen.value}} <span class="leer-mas"
-                                    (click)="this.leerMas = !this.leerMas">Reducir resumen</span></p>
+                                    (click)="this.leerMas = !this.leerMas">Reducir resumen
+                                    <mat-icon>keyboard_arrow_up</mat-icon></span></p>
                             <p class=" slides__abstract" *ngIf="leerMas === false">
                                 {{this.reduceText(link.resumen.value)}}... <span class="leer-mas"
                                     (click)="this.leerMas = !this.leerMas">Ver
-                                    resumen completo</span></p>
+                                    resumen completo <mat-icon>keyboard_arrow_down</mat-icon></span></p>
 
 
                             <a href="{{link.url.value}}" target="_blank" class="slide__link">Leer más</a>
@@ -256,7 +259,7 @@
                 <div class="selector-temas">
                     <mat-form-field class="temas">
                         <mat-label>
-                            Tema
+                            SELECCIONAR TEMA
                         </mat-label>
                         <input formControlName="tema" [(ngModel)]="selectedTema" matInput [formControl]="temasControl"
                             type="select" [matAutocomplete]="auto" />
@@ -271,7 +274,9 @@
             </form>
             <div>
                 <p [ngClass]="{'errorTabla' : !this.errorTabla}">No se encontraron datos</p>
-                <app-aragopedia-tabla-datos [ngClass]="{'errorTabla' : this.errorTabla}" class="tabla-datos">
+                <app-aragopedia-tabla-datos
+                    [ngClass]="{'errorTabla' : this.errorTabla, 'hidden': this.selectedTema === ''}"
+                    class="tabla-datos">
                 </app-aragopedia-tabla-datos>
             </div>
         </section>
