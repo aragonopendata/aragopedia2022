@@ -103,7 +103,6 @@ export class AragopediaSelectorTemasComponent implements OnInit {
       this.showTemas = this.temasProvincia;
       this.temasActive = true;
 
-
     } else if (this.selectedComarca !== undefined) {
       this.showTemas = this.temasComarca;
       this.temasActive = true;

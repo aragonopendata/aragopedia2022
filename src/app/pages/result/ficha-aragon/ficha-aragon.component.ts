@@ -362,6 +362,11 @@ export class FichaAragonComponent implements OnInit {
 
   }
 
+  createNameForUrl(str: string): string {
+    const nameIndex = str.lastIndexOf('/') + 1;
+    return str.substring(nameIndex);
+  }
+
   filterData(enteredData: any) {
 
 
