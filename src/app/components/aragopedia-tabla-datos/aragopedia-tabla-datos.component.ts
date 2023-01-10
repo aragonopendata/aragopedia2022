@@ -59,7 +59,8 @@ export class AragopediaTablaDatosComponent {
           { type: 'text/json;charset=utf-8' }
         )
 
-        this.linkDescargaJSON = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(blobConfigJSON)); //TODO: Cambiar la url para que descargue directamente del sparql
+        this.linkDescargaJSON = this.aragopediaSvc.queryTemas;
+        console.log(this.linkDescargaJSON)
 
         datos.forEach((item: any) => {
           for (const key in item) {
@@ -73,9 +74,6 @@ export class AragopediaTablaDatosComponent {
 
           }
         });
-
-
-        console.log(response.results.bindings);
 
         this.tablaConsulta = response.results.bindings;
 
