@@ -58,8 +58,8 @@
 
                 <div *ngIf="this.numeroEntidadesSingulares !== 0">
                     <h2>Entidades singulares</h2>
-                    <ul *ngFor="let entidad of entidadesSingulares">
-                        <li>
+                    <ul class="entidades">
+                        <li class="entidades__item" *ngFor="let entidad of entidadesSingulares">
                             <a href="{{entidad.s.value}}"
                                 target="_blank">{{this.capitalizeString(entidad.nombreEntidad.value)}}</a>
                         </li>
