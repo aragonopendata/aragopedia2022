@@ -37,6 +37,7 @@ export class SelectComarcaComponent implements OnInit {
       let index = 0;
 
       this.comarcas.forEach((comarca: string) => {
+        console.log(comarca.toUpperCase());
         listId.forEach((element: any) => {
           if (this.removeSpace(this.removeAccents(comarca.toLowerCase())) == this.replaceSlash(this.removeAccents(element['callret-1'].value.toLowerCase()))) {
             this.comarcasParsed[index] = {

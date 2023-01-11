@@ -4,8 +4,8 @@ import { map, Observable } from 'rxjs';
 @Injectable({ providedIn: 'root' })
 export class SelectLocationService {
 
-    comarcasURL: string = 'https://opendata.aragon.es/sparql?default-graph-uri=&query=select++str%28%3Fnombre%29%0D%0Awhere++%7B%0D%0A++++++++++++%3Fs+%3Chttp%3A%2F%2Fwww.w3.org%2F1999%2F02%2F22-rdf-syntax-ns%23type%3E++%3Chttp%3A%2F%2Fdbpedia.org%2Fontology%2FGovernmentalAdministrativeRegion%3E+.+%0D%0A++++++++++++%3Fs+%3Chttp%3A%2F%2Fwww.w3.org%2F2000%2F01%2Frdf-schema%23label%3E+%3Fnombre.%0D%0A++++++++++++%3Fs+a+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2FAragopedia%23Comarca%3E.%0D%0A%7D%0D%0Aorder+by+asc%28%3Fs%29+&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on';
-    municipiosURL: string = 'https://opendata.aragon.es/sparql?default-graph-uri=&query=select+str%28%3Fnombre%29%0D%0Awhere++%7B%0D%0A++++++++++++%3Fs+%3Chttp%3A%2F%2Fwww.w3.org%2F1999%2F02%2F22-rdf-syntax-ns%23type%3E++%3Chttp%3A%2F%2Fdbpedia.org%2Fontology%2FGovernmentalAdministrativeRegion%3E+.+%0D%0A++++++++++++%3Fs+%3Chttp%3A%2F%2Fwww.w3.org%2F2000%2F01%2Frdf-schema%23label%3E+%3Fnombre.%0D%0A++++++++++++%3Fs+a+dbo%3AMunicipality.%0D%0A%7D%0D%0Aorder+by+asc%28%3Fs%29+&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on';
+    comarcasURL: string = 'https://opendata.aragon.es/sparql?default-graph-uri=http%3A%2F%2Fopendata.aragon.es%2Fdef%2Fei2av2&query=select+distinct+%3Fnombre+from+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fei2av2%3E+where+%7B%0D%0A%3Fx+a+%3Chttp%3A%2F%2Fwww.w3.org%2Fns%2Forg%23Organization%3E%3B%0D%0A++++++dc%3Atitle+%3Fnombre.%0D%0Afilter%28regex%28%3Fx+%2C+%22http%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fsector-publico%2Forganizacion%2Fcomarca%2F%22%29%29%0D%0A%7D%0D%0Aorder+by+%3Fnombre&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on';
+    municipiosURL: string = 'https://opendata.aragon.es/sparql?default-graph-uri=http%3A%2F%2Fopendata.aragon.es%2Fdef%2Fei2av2&query=select+distinct+%3Fnombre+from+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fei2av2%3E+where+%7B%0D%0A%3Fx+a+%3Chttp%3A%2F%2Fwww.w3.org%2Fns%2Forg%23Organization%3E%3B%0D%0A++++++dc%3Atitle+%3Fnombre.%0D%0Afilter%28ucase%28%3Fnombre%29%21%3D%3Fnombre%29.%0D%0Afilter%28regex%28%3Fx+%2C+%22http%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fsector-publico%2Forganizacion%2Fmunicipio%2F%22%29%29%0D%0A%7D%0D%0Aorder+by+%3Fnombre&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on';
 
 
 
@@ -14,18 +14,44 @@ export class SelectLocationService {
     getComarcas() {
         return this.http.get(this.comarcasURL)
             .pipe(
-                map((response: any) => response.results.bindings.map((item: any) => item['callret-0'].value))
+                map((response: any) => response.results.bindings.map((item: any) => this.capitalizeString(item.nombre.value)))
             )
     }
 
     getMunicipios() {
         return this.http.get(this.municipiosURL)
             .pipe(
-                map((response: any) => response.results.bindings.map((item: any) => item['callret-0'].value))
+                map((response: any) => response.results.bindings.map((item: any) => item.nombre.value))
             )
     }
 
     getData(query: string): Observable<any> {
         return this.http.get(query);
+    }
+
+    capitalizeString(str: any): string {
+        return str.replace(/\w\S*/g, function (txt: any) {
+            for (let i = 0; i < txt.length; i++) {
+                if (txt.toLowerCase() === 'el'
+                    || txt.toLowerCase() === 'y'
+                    || txt.toLowerCase() === 'del'
+                    || txt.toLowerCase() === 'de'
+                    || txt.toLowerCase() === 'las'
+                    || txt.toLowerCase() === 'los') {
+                    return txt.toLowerCase();
+                }
+                if (txt.toLowerCase() !== 'de'
+                    || txt.toLowerCase() !== 'del'
+                    || txt.toLowerCase() !== 'la'
+                    || txt.toLowerCase() !== 'las'
+                    || txt.toLowerCase() !== 'los') {
+                    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+                }
+                else {
+                    return txt.toLowerCase()
+                }
+            }
+
+        });
     }
 }
