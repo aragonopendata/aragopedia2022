@@ -23,7 +23,7 @@
                             (change)="tema.check = !tema.check">{{tema.title}}
                     </label>
                 </div>
-                <p class="hide" [ngClass]="{'error' : this.error}">Debes seleccionar entre 1 y 3 temas y un mínimo de 3
+                <p class="hide" [ngClass]="{'error' : this.error}">Debes seleccionar entre 1 y 4 temas y un mínimo de 3
                     años</p>
                 <div class="buttons">
                     <button class="btn filter-btn" type="submit">Aplicar filtros</button>
@@ -53,8 +53,23 @@
                     </form>
                 </div>
                 <!-- buscador -->
+                <div class="filter-type__container">
+                    <button class="filter-type" [ngClass]="{'active-type': activeAll}" (click)="this.showAll()">Todos
+                        ({{this.results.length}})</button>
+                    <button class="filter-type" [ngClass]="{'active-type': activeDataset}"
+                        (click)="this.filterByDataset()">Datasets ({{this.totalDatasets}})</button>
+                    <button class="filter-type" [ngClass]="{'active-type': activeCube}"
+                        (click)="this.filterByCube()">Cubos
+                        estadísticos ({{this.totalCubes}})</button>
+                    <button class="filter-type" [ngClass]="{'active-type': activeEli}" (click)="this.filterByEli()">ELI
+                        ({{this.totalEli}})</button>
+                    <button class="filter-type" [ngClass]="{'active-type': activeSiua}"
+                        (click)="this.filterBySiua()">Archivos SIUa
+                        ({{this.totalSiua}})</button>
+                </div>
             </div>
         </div>
+
         <div class="loading" *ngIf="this.items === undefined">
             <mat-spinner [diameter]="70"></mat-spinner>
             <p>Obteniendo datos</p>
@@ -64,7 +79,11 @@
         </div>
         <div *ngFor="let result of pageOfItems | filter:filterResult" class="search__results">
             <article class="search__results-item">
-                <p class="item__category">{{result.category}} - {{result.year}}</p>
+                <p class="item__category"><span class="type"><mat-icon>bookmark_border</mat-icon>
+                        {{result.category}}</span> | <span class="type"><mat-icon>calendar_today</mat-icon>
+                        {{result.year}}</span> |
+                    <span class="type"><mat-icon> category</mat-icon> {{result.type}}</span>
+                </p>
                 <a href="{{result.resultURL}}" target="_blank" class="item__title">
                     <mat-icon>open_in_new</mat-icon>
                     <h3>{{result.title}}</h3>

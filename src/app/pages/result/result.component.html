@@ -106,13 +106,13 @@
                 <div class="caracteristica__item" *ngIf="esPoblado == '1'; else noPoblado">
                     <mat-icon>insert_chart_outlined</mat-icon> {{this.tituloFicha}} está entre uno de <b>los 20
                         territorios más
-                        pobladas</b> de Aragón
+                        poblados</b> de Aragón
                 </div>
                 <ng-template #noPoblado>
                     <div class="caracteristica__item">
-                        <mat-icon>insert_chart_outlined</mat-icon> {{this.tituloFicha}} no está entre uno de <b>l0s 20
+                        <mat-icon>insert_chart_outlined</mat-icon> {{this.tituloFicha}} no está entre uno de <b>los 20
                             territorios más
-                            pobladas</b> de Aragón
+                            poblados</b> de Aragón
                     </div>
                 </ng-template>
                 <div *ngIf="this.edadMediaHombres" class="caracteristica__item">

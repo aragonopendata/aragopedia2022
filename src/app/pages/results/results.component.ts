@@ -26,6 +26,16 @@ export class ResultsComponent implements OnInit {
 
   active: boolean = true;
   error: boolean = false;
+  activeAll: boolean = true;
+  activeDataset: boolean = false;
+  activeCube: boolean = false;
+  activeEli: boolean = false;
+  activeSiua: boolean = false;
+
+  totalDatasets: number = 0;
+  totalCubes: number = 0;
+  totalEli: number = 0;
+  totalSiua: number = 0;
 
   temas: any = [];
   temasSelected: any;
@@ -34,7 +44,7 @@ export class ResultsComponent implements OnInit {
   temasUnicosUrl: any;
   temp = undefined;
   filterResult = '';
-  results = this.temp || [{ category: '', categoryURL: '', title: '', resultURL: '', year: '' }];
+  results = this.temp || [{ category: '', categoryURL: '', title: '', resultURL: '', year: '', type: '' }];
   temasParsed = this.temp || [{ title: '', url: '', check: false }];
   selectedUrl: string[] = [];
   items: any;
@@ -108,15 +118,25 @@ export class ResultsComponent implements OnInit {
       this.temasSvc.getResults(this.queryUrlResultTemas).subscribe(data => {
         const results = data.results.bindings;
         results.forEach((element: any, i: any) => {
-          const title = element['callret-3'].value
-          this.results[i] = { categoryURL: element.item.value, title: title, category: element.labelTema.value, resultURL: element.item.value, year: element.year.value }
+          // const title = ;
+          this.results[i] = { categoryURL: element.item.value, title: element['callret-3'].value, category: element.labelTema.value, resultURL: element.item.value, year: element.year.value, type: element.tipo.value }
+          if (element.tipo.value === 'dataset_ckan') {
+            this.totalDatasets += 1;
+          } else if (element.tipo.value === 'cubo_estadistico') {
+            this.totalCubes += 1;
+          } else if (element.tipo.value === 'eli') {
+            this.totalEli += 1;
+          } else if (element.tipo.value === 'archivoSIUa') {
+            this.totalSiua += 1;
+          }
         });
+
         this.items = this.results;
-        this.numberOfResults = this.items.length - 1;
+        this.numberOfResults = this.items.length;
+
       });
 
     });
-
     //### parseo de temas
 
   }
@@ -180,7 +200,7 @@ export class ResultsComponent implements OnInit {
     this.selectedYears = this.years.yearsSelected;
     this.yearsURL = `${this.selectedYears[0]}-${this.selectedYears[1]}`
 
-    if (temasFiltered.length >= 1 && temasFiltered.length <= 3) {
+    if (temasFiltered.length >= 1 && temasFiltered.length <= 5) {
       this.router.navigate([`results/${temasFiltered}/${this.yearsURL}`]);
       setTimeout(function () {
         window.location.reload()
@@ -188,6 +208,80 @@ export class ResultsComponent implements OnInit {
     } else {
       this.error = true;
     }
+  }
+
+  showAll() {
+    this.items = this.results;
+    this.activeAll = true;
+    this.activeDataset = false;
+    this.activeCube = false;
+    this.activeEli = false;
+    this.activeSiua = false;
+  }
+
+  filterByDataset() {
+    const datasetResults = [{}];
+    this.results.forEach((element: any) => {
+      if (element.type === 'dataset_ckan') {
+        datasetResults.push(element);
+      }
+    });
+    this.activeDataset = true;
+    this.activeAll = false;
+    this.activeCube = false;
+    this.activeSiua = false;
+    this.activeEli = false;
+    datasetResults.shift();
+    this.items = datasetResults;
+    // this.totalDatasets = datasetResults.length;
+  }
+
+  filterByCube() {
+    const cubeResults = [{}];
+    this.results.forEach((element: any) => {
+      if (element.type === 'cubo_estadistico') {
+        cubeResults.push(element);
+      }
+    });
+    this.activeCube = true;
+    this.activeAll = false;
+    this.activeDataset = false;
+    this.activeSiua = false;
+    this.activeEli = false;
+    cubeResults.shift();
+    this.items = cubeResults;
+  }
+
+  filterByEli() {
+    const eliResults = [{}];
+    this.results.forEach((element: any) => {
+      if (element.type === 'eli') {
+        eliResults.push(element);
+      }
+    });
+    this.activeEli = true;
+    this.activeCube = false;
+    this.activeAll = false;
+    this.activeSiua = false;
+    this.activeDataset = false;
+    eliResults.shift();
+    this.items = eliResults;
+  }
+
+  filterBySiua() {
+    const siuaResults = [{}];
+    this.results.forEach((element: any) => {
+      if (element.type === 'archivoSIUa') {
+        siuaResults.push(element);
+      }
+    });
+    this.activeSiua = true;
+    this.activeEli = false;
+    this.activeCube = false;
+    this.activeAll = false;
+    this.activeDataset = false;
+    siuaResults.shift();
+    this.items = siuaResults;
   }
 
   uncheckTemas(event: Event) {
