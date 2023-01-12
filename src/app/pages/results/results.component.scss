@@ -284,17 +284,13 @@ ul.pagination {
         border-bottom: 1px solid #aaa;
         position: relative;
 
-        &::after {
-            content: "";
-            height: 100%;
-            width: 1px;
-            background-color: #aaa;
-            display: block;
-            position: absolute;
-            inset: 0;
-            margin: auto;
+        .results__filter-menu {
+            border-right: 1px solid #aaaaaa;
         }
 
+        .results__filter-order:not(:last-of-type) {
+            border-right: 1px solid #aaaaaa;
+        }
 
         .filter-active {
             background-color: #EDEDEC;

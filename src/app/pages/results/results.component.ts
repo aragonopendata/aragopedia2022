@@ -32,6 +32,9 @@ export class ResultsComponent implements OnInit {
   activeEli: boolean = false;
   activeSiua: boolean = false;
 
+  yearAsc: boolean = true;
+  yearDesc: boolean = false;
+
   totalDatasets: number = 0;
   totalCubes: number = 0;
   totalEli: number = 0;
@@ -164,6 +167,26 @@ export class ResultsComponent implements OnInit {
       });
     }
     return results;
+  }
+
+  sortByYearAsc() {
+    const resultsByYear = this.results.sort((a: any, b: any) => {
+      return Number(a.year.substring(0, 4)) - Number(b.year.substring(0, 4));
+    });
+    this.yearAsc = true;
+    this.yearDesc = false;
+    this.items = resultsByYear;
+    this.pageOfItems = resultsByYear;
+  }
+
+  sortByYearDesc() {
+    const resultsByYear = this.results.sort((a: any, b: any) => {
+      return Number(b.year.substring(0, 4)) - Number(a.year.substring(0, 4));
+    });
+    this.yearAsc = false;
+    this.yearDesc = true;
+    this.items = resultsByYear;
+    this.pageOfItems = resultsByYear;
   }
 
   toggleSidebar(): void {

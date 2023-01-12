@@ -42,6 +42,14 @@
                 <mat-icon>swap_vert</mat-icon>
                 <p>Orden <span *ngIf="sortByName">A - Z</span><span *ngIf="!sortByName">Z - A</span></p>
             </div>
+            <div *ngIf="this.yearDesc" class="results__filter-order" (click)="sortByYearAsc()">
+                <mat-icon>keyboard_arrow_down</mat-icon>
+                <p>Año descendente</p>
+            </div>
+            <div *ngIf="this.yearAsc" class="results__filter-order" (click)="sortByYearDesc()">
+                <mat-icon>keyboard_arrow_up</mat-icon>
+                <p>Año ascendente</p>
+            </div>
         </div>
         <div *ngIf="this.results.length !== 1">
             <div class="desktop__buscador">
