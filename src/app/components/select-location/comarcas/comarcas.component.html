@@ -1,10 +1,14 @@
-<form [formGroup]="formGroup">
+<div class="loading-location" *ngIf="!show">
+    <mat-spinner [diameter]="30"></mat-spinner>
+</div>
+
+<form [formGroup]="formGroup" *ngIf="show">
     <mat-form-field>
         <mat-label>
             Comarcas
         </mat-label>
         <input [(ngModel)]="selectedComarca" matInput [formControl]="myControlComarcas" type="select"
-            [matAutocomplete]="auto" formControlName="municipio" />
+            [matAutocomplete]="auto" formControlName="municipio" (change)="initForm()" />
         <!-- <input [(ngModel)]="selected"  matInput [formControl]="myControlMunicipios" type="select"
         [matAutocomplete]="auto" />-->
         <mat-autocomplete #auto="matAutocomplete">

@@ -86,7 +86,7 @@
 
         <section class="container template__graphics">
             <div class="graphics__item" style="width: 100%;">
-                <h2>Pirámide de población</h2>
+                <h2>Pirámide de población (Datos de 2011)</h2>
                 <app-piramide-poblacion></app-piramide-poblacion>
             </div>
         </section>
@@ -169,8 +169,8 @@
                 <h2>Miembros del Gobierno de Aragón</h2>
                 <ul>
                     <li *ngFor="let miembro of this.miembrosPleno"><b>{{miembro.orgTitle.value}}: </b>
-                        <a [routerLink]="['/persona/', miembro.persona.value]"
-                            routerLinkActive="router-link-active">{{miembro.nombre.value}}</a>
+                        <a
+                            [routerLink]="['/persona/', this.createNameForUrl(miembro.persona.value)]">{{miembro.nombre.value}}</a>
                     </li>
                 </ul>
             </div>

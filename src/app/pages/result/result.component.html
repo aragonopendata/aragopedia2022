@@ -58,8 +58,8 @@
 
                 <div *ngIf="this.numeroEntidadesSingulares !== 0">
                     <h2>Entidades singulares</h2>
-                    <ul *ngFor="let entidad of entidadesSingulares">
-                        <li>
+                    <ul class="entidades">
+                        <li class="entidades__item" *ngFor="let entidad of entidadesSingulares">
                             <a href="{{entidad.s.value}}"
                                 target="_blank">{{this.capitalizeString(entidad.nombreEntidad.value)}}</a>
                         </li>
@@ -106,13 +106,13 @@
                 <div class="caracteristica__item" *ngIf="esPoblado == '1'; else noPoblado">
                     <mat-icon>insert_chart_outlined</mat-icon> {{this.tituloFicha}} está entre uno de <b>los 20
                         territorios más
-                        pobladas</b> de Aragón
+                        poblados</b> de Aragón
                 </div>
                 <ng-template #noPoblado>
                     <div class="caracteristica__item">
-                        <mat-icon>insert_chart_outlined</mat-icon> {{this.tituloFicha}} no está entre uno de <b>l0s 20
+                        <mat-icon>insert_chart_outlined</mat-icon> {{this.tituloFicha}} no está entre uno de <b>los 20
                             territorios más
-                            pobladas</b> de Aragón
+                            poblados</b> de Aragón
                     </div>
                 </ng-template>
                 <div *ngIf="this.edadMediaHombres" class="caracteristica__item">
@@ -135,7 +135,7 @@
 
         <section class="container template__graphics">
             <div class="graphics__item" style="width: 100%;">
-                <h2>Pirámide de población</h2>
+                <h2>Pirámide de población (Datos de 2011)</h2>
                 <app-piramide-poblacion></app-piramide-poblacion>
             </div>
         </section>
@@ -365,7 +365,7 @@
 
         <section class="container template__graphics">
             <div class="graphics__item" style="width: 100%;">
-                <h2>Pirámide de población</h2>
+                <h2>Pirámide de población (Datos de 2011)</h2>
                 <app-piramide-poblacion></app-piramide-poblacion>
             </div>
         </section>
