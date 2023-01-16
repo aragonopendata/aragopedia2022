@@ -1,14 +1,13 @@
 <section class="section-selector-temas">
     <div class="container space" style="margin:auto">
         <div class="filtrosDiv">
-
             <form [formGroup]="formGroup" (submit)="submit()">
                 <div>
                     <app-location></app-location>
                 </div>
 
-
-                <div *ngIf="temasActive === true">
+                <div *ngIf="temasActive === true" class="seleccionar-datos">
+                    <h2><mat-icon> table_chart</mat-icon> Seleccionar datos</h2>
                     <mat-form-field class="temas">
                         <mat-label>
                             Datos
@@ -26,7 +25,7 @@
             </form>
         </div>
 
-        <h3 [hidden]="firstLand || !displayTema">Datos seleccionados: {{displayTema}}</h3>
+        <h3 class="datos-seleccionados" [hidden]="firstLand || !displayTema"><b>Datos seleccionados:</b><br> <u>{{displayTema}}</u></h3>
 
         <app-aragopedia-tabla-datos class="tabla-datos" [hidden]="errorTabla || firstLand"></app-aragopedia-tabla-datos>
 
