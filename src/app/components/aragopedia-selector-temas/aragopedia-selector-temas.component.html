@@ -25,7 +25,7 @@
             </form>
         </div>
 
-        <h3 class="datos-seleccionados" [hidden]="firstLand"><b>Datos seleccionados:</b><br> <u>{{displayTema}}</u></h3>
+        <h3 class="datos-seleccionados" [hidden]="firstLand || !displayTema"><b>Datos seleccionados:</b><br> <u>{{displayTema}}</u></h3>
 
         <app-aragopedia-tabla-datos class="tabla-datos" [hidden]="errorTabla || firstLand"></app-aragopedia-tabla-datos>
 
