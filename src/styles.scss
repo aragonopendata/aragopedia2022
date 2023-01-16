@@ -108,32 +108,15 @@ a {
     }
 }
 
-//Mobile
 
-@media screen and (max-width: 576px) {
-    main section main .container {
-        width: 100%;
-        padding: 0 15px;
-    }
-}
-
-
-// Tablet
-
-@media screen and (max-width: 992px) {
-
-    main section,
-    main .container {
-        max-width: 700px;
-    }
-}
 
 // Desktop
 
 main section,
 main .container,
 footer .container {
-    max-width: 1400px;
+    max-width: 1300px;
+    padding: 0 50px;
 }
 
 .btn {
@@ -146,4 +129,27 @@ footer .container {
     font-weight: 600;
     padding: 15px 40px;
     border-radius: 3px;
+}
+
+//Mobile
+
+@media screen and (max-width: 576px) {
+
+    main section,
+    main .container {
+        // width: 100%;
+        padding: 0 10px;
+
+    }
+}
+
+
+// Tablet
+
+@media screen and (max-width: 992px) {
+
+    main section,
+    main .container {
+        max-width: 700px;
+    }
 }

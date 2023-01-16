@@ -132,6 +132,7 @@ export class AragopediaSelectorTemasComponent implements OnInit {
       this.router.navigate(['aragopedia'], { queryParams: { tipo: this.tipoLocalidad, id: this.selectedProvincia } })
 
     } else if (this.selectedComarca !== '') {
+
       this.showTemas = this.temasComarca;
       this.temasActive = true;
 
