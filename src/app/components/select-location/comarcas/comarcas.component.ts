@@ -35,7 +35,6 @@ export class SelectComarcaComponent implements OnInit {
       this.locationSvc.getData(this.queryIdWikiData).subscribe(data => {
         const listId = data.results.bindings;
         let index = 0;
-
         this.comarcas.forEach((comarca: string) => {
           listId.forEach((element: any) => {
             if (this.removeSpace(this.removeAccents(comarca.toLowerCase())) == this.replaceSlash(this.removeAccents(element['callret-1'].value.toLowerCase()))) {
@@ -51,11 +50,10 @@ export class SelectComarcaComponent implements OnInit {
         });
       });
       this.show = true;
-    }, 3000)
+    }, 3000);
+
     this.initForm();
     this.getNames();
-
-
   }
 
   initForm() {

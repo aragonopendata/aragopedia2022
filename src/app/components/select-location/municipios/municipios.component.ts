@@ -80,7 +80,7 @@ export class SelectMunicipioComponent implements OnInit {
   filterData(enteredData: any) {
     this.filteredMunicipios = this.municipios.filter((item: any) => {
       return item.toLowerCase().indexOf(enteredData.toLowerCase()) > -1
-    })
+    });
   }
 
   getNames() {

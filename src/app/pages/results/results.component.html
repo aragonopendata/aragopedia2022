@@ -88,8 +88,9 @@
         <div *ngFor="let result of pageOfItems | filter:filterResult" class="search__results">
             <article class="search__results-item">
                 <p class="item__category"><span class="type"><mat-icon>bookmark_border</mat-icon>
-                        {{result.category}}</span> | <span class="type"><mat-icon>calendar_today</mat-icon>
-                        {{result.year}}</span> |
+                        {{result.category}}</span> | <span *ngIf="result.year !== ' - '"
+                        class="type"><mat-icon>calendar_today</mat-icon>
+                        {{result.year}}</span> <span *ngIf="result.year !== ' - '">|</span>
                     <span class="type"><mat-icon> category</mat-icon> {{result.type}}</span>
                 </p>
                 <a href="{{result.resultURL}}" target="_blank" class="item__title">
