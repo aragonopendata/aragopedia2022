@@ -28,7 +28,7 @@
                     </label>
                     <ul class="menu__links">
                         <li><span class="link-submenu" class="link-submenu" (click)="this.openSubMenuDatos()"
-                                [ngClass]="{'active':activeDatos}">Datos</span>
+                                [ngClass]="{'active':activeDatos}">Datos <mat-icon>keyboard_arrow_down</mat-icon></span>
                             <!-- (click)="activeDatos = !activeDatos; activeServicios = false; activeInfo = false;"
                                 -->
                             <div class="submenu" [ngClass]="{'submenu__active-datos': activeDatos}">
@@ -51,7 +51,8 @@
                         </li>
                         <li>
                             <span class="link-submenu" (click)="this.openSubMenuServicios()"
-                                [ngClass]="{'active':activeServicios}">Servicios</span>
+                                [ngClass]="{'active':activeServicios}">Servicios
+                                <mat-icon>keyboard_arrow_down</mat-icon></span>
                             <!--  (click)="activeServicios = !activeServicios; activeDatos = false; activeInfo = false;" -->
                             <div class="submenu" [ngClass]="{'submenu__active-servicios': activeServicios}">
                                 <div class="submenu__left">
@@ -93,8 +94,8 @@
                         </li>
                         <li>
                             <span class="link-submenu" (click)="this.openSubMenuInfo()"
-                                [ngClass]="{'active':activeInfo}">Información</span>
-                            <!--  (click)="activeInfo = !activeInfo; activeServicios = false; activeDatos = false;" -->
+                                [ngClass]="{'active':activeInfo}">Información
+                                <mat-icon>keyboard_arrow_down</mat-icon></span>
                             <div class="submenu" [ngClass]="{'submenu__active-info': activeInfo}">
                                 <div class="submenu__left">
                                     <h3>Información</h3>
