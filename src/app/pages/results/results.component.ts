@@ -119,9 +119,8 @@ export class ResultsComponent implements OnInit {
 
 
       this.temasSvc.getResults(this.queryUrlResultTemas).subscribe(data => {
-        const results = data.results.bindings;
+        const results = data?.results.bindings;
         results.forEach((element: any, i: any) => {
-          // const title = ;
           this.results[i] = { categoryURL: element.item.value, title: element['callret-3'].value, category: element.labelTema.value, resultURL: element.item.value, year: element.year.value, type: element.tipo.value }
           if (element.tipo.value === 'dataset_ckan') {
             this.totalDatasets += 1;
@@ -133,12 +132,12 @@ export class ResultsComponent implements OnInit {
             this.totalSiua += 1;
           }
         });
-
         this.items = this.results;
         this.numberOfResults = this.items.length;
 
       });
 
+      this.showAll();
     });
     //### parseo de temas
 
