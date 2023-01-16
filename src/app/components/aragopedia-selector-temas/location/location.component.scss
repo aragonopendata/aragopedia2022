@@ -9,6 +9,10 @@
             background-color: var(--accent-color);
         }
     }
+
+    .mat-form-field {
+        width: 230px;
+    }
 }
 
 form.location-form {
@@ -22,6 +26,7 @@ form.location-form {
 }
 
 .location-form__input {
+    margin-right: 2em;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
