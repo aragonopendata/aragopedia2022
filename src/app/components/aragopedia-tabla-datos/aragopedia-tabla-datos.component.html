@@ -1,11 +1,10 @@
-<div class="divDescarga">
-    <!-- <a [href]="linkDescargaCSV" bypassSecurityTrustUrl id="descargarCSV" download="aragopediaFile.csv"
+<div class="table-container">
+    <div class="divDescarga">
+        <!-- <a [href]="linkDescargaCSV" bypassSecurityTrustUrl id="descargarCSV" download="aragopediaFile.csv"
                 class="btn btn-descarga">CSV</a>
             -->
-    <a [href]="linkDescargaJSON" bypassSecurityTrustUrl id="descargarJSON" class="btn btn-descarga">JSON</a>
-</div>
-<div class="table-container">
-
+        <a [href]="linkDescargaJSON" bypassSecurityTrustUrl id="descargarJSON" class="btn btn-descarga">JSON</a>
+    </div>
     <mat-table mat-tablev [dataSource]="tablaConsulta" class="mat-elevation-z8">
         <ng-container *ngFor="let columna of displayedColumns;" matColumnDef="{{columna}}" id="setColumnName(columna)">
             <th mat-header-cell *matHeaderCellDef style="width: 1000px;">{{columna}}</th>

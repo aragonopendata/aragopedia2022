@@ -19,6 +19,9 @@ export class AragopediaService {
     columnasTabla!: any;
     columnasTablaObserver: Subject<string> = new Subject<string>();
 
+    triggerSubmit: boolean = true;
+    triggerSubmitObserver: Subject<boolean> = new Subject<boolean>();
+
     constructor(private http: HttpClient) {
 
     }
@@ -41,6 +44,10 @@ export class AragopediaService {
         this.columnasTablaObserver.next(this.columnasTabla);
     }
 
+    changeTriggerSubmitObserver() {
+
+        this.triggerSubmitObserver.next(this.triggerSubmit)
+    }
 
     // getTables() {
     //     let selectString = `

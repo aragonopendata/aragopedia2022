@@ -18,6 +18,8 @@ export class AragopediaTablaDatosComponent {
 
   constructor(public aragopediaSvc: AragopediaService, private sanitizer: DomSanitizer) { }
 
+
+
   displayedColumns!: string[];
   queryAragopedia: string = "";
   queryAragopediaCSV!: string;
@@ -47,17 +49,17 @@ export class AragopediaTablaDatosComponent {
         var dato = response.results.bindings[0]
         let datos = response.results.bindings;
 
-        this.displayedColumns = Object.keys(dato);
+        if (dato !== undefined) {
+          this.displayedColumns = Object.keys(dato);
+        }
+        else {
+          this.displayedColumns = [];
+        }
 
         this.displayedColumns.splice((this.displayedColumns.indexOf('refArea')), 1);
         this.displayedColumns.splice((this.displayedColumns.indexOf('refPeriod')), 1);
 
         //console.log(this.displayedColumns)
-
-        const blobConfigJSON = new Blob(
-          [JSON.stringify(response.results.bindings)],
-          { type: 'text/json;charset=utf-8' }
-        )
 
         this.linkDescargaJSON = this.aragopediaSvc.queryTemas;
         console.log(this.linkDescargaJSON)

@@ -3,8 +3,8 @@
         <mat-label>
             Comarcas
         </mat-label>
-        <input (ngModelChange)="selectComarca()" [(ngModel)]="selectedComarca" matInput
-            [formControl]="myControlComarcas" type="select" [matAutocomplete]="auto" formControlName="municipio" />
+        <input [(ngModel)]="selectedComarca" matInput [formControl]="myControlComarcas" type="select"
+            [matAutocomplete]="auto" formControlName="municipio" />
         <!-- <input [(ngModel)]="selected"  matInput [formControl]="myControlMunicipios" type="select"
         [matAutocomplete]="auto" />-->
         <mat-autocomplete #auto="matAutocomplete">

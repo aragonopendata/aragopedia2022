@@ -71,6 +71,7 @@ export class SelectProvinciaComponent implements OnInit {
   }
 
   filterData(enteredData: any) {
+
     this.filteredProvincias = this.provincias.filter((item: any) => {
       return item.toLowerCase().indexOf(enteredData.toLowerCase()) > -1
     })

@@ -1,6 +1,10 @@
+import { UniqueSelectionDispatcher } from '@angular/cdk/collections';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AragopediaService } from '../../aragopedia-tabla-datos/aragopediaService';
 import { ComarcasComponent } from './comarcas/comarcas.component';
+import { LocationServiceService } from './location-service.service';
 import { MunicipiosComponent } from './municipios/municipios.component';
 import { ProvinciasComponent } from './provincias/provincias.component';
 
@@ -11,17 +15,17 @@ import { ProvinciasComponent } from './provincias/provincias.component';
 })
 export class LocationComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router, private _route: ActivatedRoute, public locationService: LocationServiceService, public aragopediaService: AragopediaService) { }
   locationForm = new FormGroup('');
 
   searchValue!: string;
 
-  provinciaSelected: string = '';
-  municipioSelected: string = '';
-  comarcaSelected: string = '';
-  idMunicipio!: string;
-  idComarca!: string;
-  idProvincia!: string;
+  provinciaSelected: any = '';
+  municipioSelected: any = '';
+  comarcaSelected: any = '';
+  idMunicipio!: any;
+  idComarca!: any;
+  idProvincia!: any;
   tipoLocalidad!: string;
   error: boolean = false;
   provinciasActive: boolean = true;
@@ -35,6 +39,50 @@ export class LocationComponent implements OnInit {
 
   ngOnInit(): void {
 
+
+
+    this._route.queryParams.subscribe(params => {
+
+      this.locationService.provinciaObserver.subscribe((provincia: any) => {
+
+        //console.log("location comp " + provincia);
+        this.provincia = provincia;
+        this.comarca
+        this.selectProvincia();
+        //console.log("provincia " + this.provincia)
+        //console.log("comarca " + this.comarca)
+
+      });
+
+      this.locationService.comarcaObserver.subscribe((comarca: any) => {
+        this.selectComarca(this.locationService.comarcaNombre, this.locationService.comarcaId)
+      })
+
+      this.locationService.municipioObserver.subscribe((municipio: any) => {
+        this.selectMunicipio(this.locationService.municipioNombre, this.locationService.municipioId)
+      })
+
+      /*
+            this.tipoLocalidad = params['tipo'];
+      
+            if (this.tipoLocalidad === 'diputacion') {
+              this.provincia.selectedProvincia = params['id'];
+              this.provincia.selectedId = params['id'];
+              console.log(this.provincia)
+              this.selectProvincia();
+            } else if (this.tipoLocalidad === 'comarca') {
+              this.comarca.selectedComarca = params['id'];
+              this.selectComarca();
+            } else if (this.tipoLocalidad === 'municipio') {
+              this.municipio.selectedMunicipio = params['id'];
+              this.selectMunicipio();
+            } 
+      
+            console.log(this.provinciaSelected);
+            console.log(this.comarcaSelected);
+            console.log(this.municipioSelected);
+      */
+    });
   }
 
 
@@ -49,19 +97,47 @@ export class LocationComponent implements OnInit {
   // }
 
   selectProvincia() {
-    this.provinciaSelected = this.provincia.selectedProvincia;
-    this.idProvincia = this.provincia.selectedId;
+    this.provinciaSelected = this.provincia.nombre;
+    this.idProvincia = this.provincia.id;
     this.selected = this.provinciaSelected;
+
+    this.comarcaSelected = '';
+    this.idComarca = '';
+
+    this.municipioSelected = '';
+    this.idMunicipio = '';
+
+    this.updateTemas()
   }
-  selectComarca() {
-    this.comarcaSelected = this.comarca.selectedComarca;
-    this.idComarca = this.comarca.selectedId;
+  selectComarca(newComarcaName: any, newComarcaId: any) {
+    this.comarcaSelected = newComarcaName;
+    this.idComarca = newComarcaId;
     this.selected = this.comarcaSelected
+
+    this.provinciaSelected = '';
+    this.idProvincia = '';
+
+    this.municipioSelected = '';
+    this.idMunicipio = '';
+
+    this.updateTemas()
   }
-  selectMunicipio() {
-    this.municipioSelected = this.municipio.selectedMunicipio;
-    this.idMunicipio = this.municipio.selectedId;
+  selectMunicipio(newMunicipioName: any, newMunicipioId: any) {
+    this.municipioSelected = newMunicipioName;
+    this.idMunicipio = newMunicipioId;
     this.selected = this.municipioSelected;
+
+    this.comarcaSelected = '';
+    this.idComarca = '';
+
+    this.provinciaSelected = undefined;
+    this.idProvincia = '';
+
+    this.updateTemas()
+  }
+
+  updateTemas() {
+    this.aragopediaService.changeTriggerSubmitObserver();
   }
 
 }

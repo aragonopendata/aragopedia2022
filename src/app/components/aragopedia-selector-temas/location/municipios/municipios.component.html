@@ -3,8 +3,8 @@
         <mat-label>
             Municipios
         </mat-label>
-        <input (ngModelChange)="selectMunicipio()" [(ngModel)]="selectedMunicipio" matInput
-            [formControl]="myControlMunicipios" type="select" [matAutocomplete]="auto" formControlName="municipio" />
+        <input [(ngModel)]="selectedMunicipio" matInput [formControl]="formControlMunicipio" type="select"
+            [matAutocomplete]="auto" formControlName="municipio" />
         <!-- <input [(ngModel)]="selected"  matInput [formControl]="myControlMunicipios" type="select"
         [matAutocomplete]="auto" />-->
         <mat-autocomplete #auto="matAutocomplete">
