@@ -8,6 +8,7 @@ import { MunicipiosComponent } from './location/municipios/municipios.component'
 import { ProvinciasComponent } from './location/provincias/provincias.component';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { map } from 'rxjs/operators';
+import { ActivatedRoute, Router } from '@angular/router';
 import { outputAst } from '@angular/compiler';
 
 @Component({
@@ -17,7 +18,7 @@ import { outputAst } from '@angular/compiler';
 })
 export class AragopediaSelectorTemasComponent implements OnInit {
 
-  constructor(public aragopediaSvc: AragopediaService, private fb: FormBuilder, private http: HttpClient) { }
+  constructor(private router: Router, private _route: ActivatedRoute, public aragopediaSvc: AragopediaService, private fb: FormBuilder, private http: HttpClient) { }
 
   @ViewChild(LocationComponent) location: any;
 
@@ -29,6 +30,7 @@ export class AragopediaSelectorTemasComponent implements OnInit {
   queryTemas!: string;
   temasControl = new FormControl('');
   selectedTema: any = '';
+  displayTema!: string;
 
   @Input() selectedProvincia: any = '';
   @Input() selectedComarca: any = '';
@@ -36,6 +38,11 @@ export class AragopediaSelectorTemasComponent implements OnInit {
   @Input() selectedProvinciaNombre: any = '';
   @Input() selectedComarcaNombre: any = '';
   @Input() selectedMunicipioNombre: any = '';
+
+  tipoLocalidad: any = '';
+  error: boolean = false;
+  errorTabla: boolean = false;
+  firstLand: boolean = true
 
   unique: any;
   temas!: any;
@@ -65,13 +72,11 @@ export class AragopediaSelectorTemasComponent implements OnInit {
     //      temas: [''],
     //      location: ['']
     //    });
-
-
-
     this.queryTemas = "https://opendata.aragon.es/solrWIKI/informesIAEST/select?q=*&rows=2000&omitHeader=true&wt=json";
 
     this.aragopediaSvc.getData(this.queryTemas).subscribe((data: any) => {
       this.temas = data.response.docs;
+      console.log('temas init')
       this.unique = [...new Set(data.response.docs.map((item: { Descripcion: any; }) => item.Descripcion))];
 
       // Construcción temas por tipo de territorio
@@ -87,10 +92,30 @@ export class AragopediaSelectorTemasComponent implements OnInit {
         }
       });
     });
+    this._route.queryParams.subscribe(params => {  //DE AQUI LEES LOS PARAMETROS DE LA URL PARAMETROS URL
+
+      this.tipoLocalidad = params['tipo'];
+
+      this.aragopediaSvc.triggerSubmitObserver.subscribe((trigger: any) => {
+        this.selectedTema = '';
+        this.displayTema = '';
+        this.firstLand = true;
+        console.log('trigger' + trigger)
+        this.submit()
+      })
+    });
+
 
   }
 
   submit() {
+
+    console.log(this.selectedProvincia);
+    console.log(this.selectedComarca);
+    console.log(this.selectedMunicipio);
+
+
+
     this.selectedProvincia = this.location.idProvincia;
     this.selectedComarca = this.location.idComarca;
     this.selectedMunicipio = this.location.idMunicipio;
@@ -99,29 +124,35 @@ export class AragopediaSelectorTemasComponent implements OnInit {
     this.selectedProvinciaNombre = this.location.provinciaSelected;
     this.selectedComarcaNombre = this.location.comarcaSelected;
 
-    if (this.selectedProvincia !== undefined) {
+    if (this.selectedProvincia !== '') {
       this.showTemas = this.temasProvincia;
       this.temasActive = true;
 
-    } else if (this.selectedComarca !== undefined) {
+      this.tipoLocalidad = 'diputacion';
+      this.router.navigate(['aragopedia'], { queryParams: { tipo: this.tipoLocalidad, id: this.selectedProvincia } })
+
+    } else if (this.selectedComarca !== '') {
+
       this.showTemas = this.temasComarca;
       this.temasActive = true;
-    } else if (this.selectedMunicipio !== undefined) {
+
+      this.tipoLocalidad = 'comarca';
+      this.router.navigate(['aragopedia'], { queryParams: { tipo: this.tipoLocalidad, id: this.selectedComarca } })
+
+    } else if (this.selectedMunicipio !== '') {
       this.showTemas = this.temasMunicipio;
       this.temasActive = true;
+
+      this.tipoLocalidad = 'municipio';
+      this.router.navigate(['aragopedia'], { queryParams: { tipo: this.tipoLocalidad, id: this.selectedMunicipio } })
+
     }
-    //console.log(this.selectedProvincia);
-    //console.log(this.selectedComarca);
-    //console.log(this.selectedMunicipio);
 
     this.showTemas.shift()
     this.initForm();
   }
 
   filterData(enteredData: any) {
-
-
-    //console.log(this.showTemas);
 
     this.filteredTemas = this.showTemas.filter((item: any) => {
       //console.log(item);
@@ -130,6 +161,8 @@ export class AragopediaSelectorTemasComponent implements OnInit {
   }
 
   initForm() {
+
+    this.filterData('')
     this.formGroup = this.fb.group({
       "tema": [this.selectedTema]
     })
@@ -137,9 +170,8 @@ export class AragopediaSelectorTemasComponent implements OnInit {
     this.formGroup.get('tema')?.valueChanges.subscribe(response => {
       //console.log(response);
       this.selectedTema = response;
-      this.filterData(response)
-    })
 
+    })
 
   }
 
@@ -148,10 +180,15 @@ export class AragopediaSelectorTemasComponent implements OnInit {
 
     let index = tema.Ruta.indexOf('/')
 
+    console.log(tema.Ruta.substring(index + 1).replaceAll('/', '-'));
+
     let rutaLimpia = '/' + tema.Ruta.substring(index + 1).replaceAll('/', '-')
     let queryColumna: string = `https://opendata.aragon.es/sparql?default-graph-uri=&query=select+distinct+%3FcolUri+%3FtipoCol+str%28%3FnombreCol%29%0D%0A+where+%7B%0D%0A++%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fiaest%2Fdataset${rutaLimpia}%3E+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fcube%23structure%3E+%3Fdsd.%0D%0A++%3Fdsd+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fcube%23component%3E+%3Fcol.%0D%0A++%3Fcol+%3FtipoCol+%3FcolUri.%0D%0A++%3FcolUri+rdfs%3Alabel+%3FnombreCol.%0D%0A%7D%0D%0A%0D%0ALIMIT+500%0D%0A&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`
 
     this.aragopediaSvc.getData(queryColumna).subscribe(data => {
+
+      console.log('temas temaselected');
+
       this.columnas = data.results.bindings;
 
       this.columnas.forEach((element: any) => {
@@ -181,16 +218,23 @@ export class AragopediaSelectorTemasComponent implements OnInit {
         let tipoZona = "";
         let nombreZona = "";
 
-        if (this.selectedProvincia != undefined) {
+        console.log(this.selectedProvinciaNombre != '');
+        console.log(this.selectedComarcaNombre != '');
+        console.log(this.selectedMunicipioNombre != '');
+
+
+        if (this.selectedProvincia != '') {
           tipoZona = "Provincia"
           nombreZona = this.selectedProvinciaNombre
-        } else if (this.selectedComarca != undefined) {
+        } else if (this.selectedComarca != '') {
           tipoZona = "Comarca"
           nombreZona = this.selectedComarcaNombre
-        } else if (this.selectedMunicipio != undefined) {
+        } else if (this.selectedMunicipio != '') {
           tipoZona = "Municipio"
           nombreZona = this.selectedMunicipioNombre
         }
+
+        console.log("nombre zona " + nombreZona);
 
         //console.log(this.deleteSpace(nombreZona));
 
@@ -218,12 +262,11 @@ export class AragopediaSelectorTemasComponent implements OnInit {
       this.queryTabla = 'https://opendata.aragon.es/sparql?default-graph-uri=&query=' + encodeURIComponent(query) + '&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on';
 
       this.aragopediaSvc.change(this.queryTabla);
+      this.displayTema = this.selectedTema;
+      this.selectedTema = '';
+      this.firstLand = false;
     })
 
-  }
-
-  sendQuery() {
-    this.queryEmitter.emit(this.queryTabla);
   }
 
   sparql(query: any) {
@@ -240,9 +283,15 @@ export class AragopediaSelectorTemasComponent implements OnInit {
     params.append("query", ("https://opendata.aragon.es/sparql" + query));
     params.append("format", "json");
 
-    this.http.get(('https://opendata.aragon.es/sparql?default-graph-uri=&query=' + encodeURIComponent(query) + '&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on'), httpOptions).subscribe(data => {
+    this.http.get(('https://opendata.aragon.es/sparql?default-graph-uri=&query=' + encodeURIComponent(query) + '&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on'), httpOptions).subscribe((data: any) => {
       //console.log(data);
+      if (data.results.bindings.length === 0) {
+        this.errorTabla = true;
+      } else {
+        this.errorTabla = false;
+      }
     })
+
   }
 
   correctWordInverse(name: string, word: string) {

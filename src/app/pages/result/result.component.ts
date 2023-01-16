@@ -140,7 +140,7 @@ export class ResultComponent {
     // console.log(this.tipoLocalidad);
 
     // this.codigoIne = this._route.snapshot.paramMap.get('municipio');
-    this._route.queryParams.subscribe(params => {
+    this._route.queryParams.subscribe(params => {  //DE AQUI LEES LOS PARAMETROS DE LA URL PARAMETROS URL
       this.codigoIne = params['id'];
       this.tipoLocalidad = params['tipo'];
     });

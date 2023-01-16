@@ -1,28 +1,37 @@
-<div class="filtrosDiv">
+<section class="section-selector-temas">
+    <div class="container space" style="margin:auto">
+        <div class="filtrosDiv">
 
-    <form [formGroup]="formGroup" (submit)="submit()">
-        <div class="container space" style="margin:auto;">
-            <app-location></app-location>
-            <button class="btn" type="submit">Generar temas</button>
+            <form [formGroup]="formGroup" (submit)="submit()">
+                <div>
+                    <app-location></app-location>
+                </div>
+
+
+                <div *ngIf="temasActive === true">
+                    <mat-form-field class="temas">
+                        <mat-label>
+                            Datos
+                        </mat-label>
+                        <input formControlName="tema" [(ngModel)]="selectedTema" matInput [formControl]="temasControl"
+                            type="select" [matAutocomplete]="auto" />
+                        <mat-autocomplete #auto="matAutocomplete">
+                            <mat-option *ngFor="let tema of filteredTemas" (click)="temaSelected(tema)"
+                                [value]="tema.DescripcionMejorada">
+                                {{tema.DescripcionMejorada}}
+                            </mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                </div>
+            </form>
         </div>
 
+        <h3 [hidden]="firstLand">Datos seleccionados: {{displayTema}}</h3>
 
-        <div *ngIf="temasActive === true">
-            <mat-form-field class="temas">
-                <mat-label>
-                    Tema
-                </mat-label>
-                <input formControlName="tema" [(ngModel)]="selectedTema" matInput [formControl]="temasControl"
-                    type="select" [matAutocomplete]="auto" />
-                <mat-autocomplete #auto="matAutocomplete">
-                    <mat-option *ngFor="let tema of filteredTemas" (click)="temaSelected(tema)"
-                        [value]="tema.DescripcionMejorada">
-                        {{tema.DescripcionMejorada}}
-                    </mat-option>
-                </mat-autocomplete>
-            </mat-form-field>
+        <app-aragopedia-tabla-datos class="tabla-datos" [hidden]="errorTabla || firstLand"></app-aragopedia-tabla-datos>
+
+        <div [hidden]="!errorTabla || !firstLand">
+            <p>No se encontraron datos</p>
         </div>
-    </form>
-</div>
-
-<app-aragopedia-tabla-datos class="tabla-datos"></app-aragopedia-tabla-datos>
+    </div>
+</section>

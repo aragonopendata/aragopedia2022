@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AragopediaService } from 'src/app/components/aragopedia-tabla-datos/aragopediaService';
+import { LocationServiceService } from '../location-service.service';
 
 @Component({
   selector: 'app-comarcas',
@@ -9,7 +11,9 @@ import { AragopediaService } from 'src/app/components/aragopedia-tabla-datos/ara
 })
 export class ComarcasComponent implements OnInit {
 
-  constructor(private aragopediaSvc: AragopediaService, private fb: FormBuilder) { }
+  constructor(private router: Router, private _route: ActivatedRoute, private aragopediaSvc: AragopediaService, private fb: FormBuilder, public locationService: LocationServiceService) { }
+
+  formControlComarca = new FormControl('');
 
   selected: string = '';
   formGroup!: FormGroup;
@@ -27,9 +31,13 @@ export class ComarcasComponent implements OnInit {
   ngOnInit(): void {
     this.queryIdWikiData = `https://opendata.aragon.es/sparql?default-graph-uri=&query=select+%3Fs+str%28%3Fnombre%29+%3Fid+%3Fclasif%0D%0Awhere++%7B%0D%0A++++++%3Fs+%3Chttp%3A%2F%2Fwww.w3.org%2Fns%2Forg%23classification%3E+%3Fclasif.+%0D%0A++++++%3Fs+dc%3Aidentifier+%3Fid.+%0D%0A+++++%3Fs+dc%3Atitle+%3Fnombre.%0D%0A+++++VALUES+%3Fclasif+%7B%3Chttps%3A%2F%2Fwww.geonames.org%2Fontology%23A.ADM2%3E+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fkos%2Fcomarca%3E+%3Chttps%3A%2F%2Fwww.geonames.org%2Fontology%23P.PPL%3E%7D%0D%0A%7D%0D%0Aorder+by+asc%28%3Fclasif%29+%3Fid+%0D%0A&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`;
     this.queryUrlComarcasId = `https://opendata.aragon.es/sparql?default-graph-uri=&query=select++str%28%3Fnombre%29%0D%0Awhere++%7B%0D%0A++++++++++++%3Fs+%3Chttp%3A%2F%2Fwww.w3.org%2F1999%2F02%2F22-rdf-syntax-ns%23type%3E++%3Chttp%3A%2F%2Fdbpedia.org%2Fontology%2FGovernmentalAdministrativeRegion%3E+.+%0D%0A++++++++++++%3Fs+%3Chttp%3A%2F%2Fwww.w3.org%2F2000%2F01%2Frdf-schema%23label%3E+%3Fnombre.%0D%0A++++++++++++%3Fs+a+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2FAragopedia%23Comarca%3E.%0D%0A%7D%0D%0Aorder+by+asc%28%3Fs%29+&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`;
-    this.initForm();
-    this.getNames();
 
+    this.getNames();
+    this.initForm();
+
+    this.locationService.comarcaObserver.subscribe((comarca: any) => {
+      this.selectedComarca = comarca;
+    });
 
     //Añado URL e ID a la lista de municipios
     this.aragopediaSvc.getData(this.queryIdWikiData).subscribe(data => {
@@ -49,49 +57,84 @@ export class ComarcasComponent implements OnInit {
           }
         });
       });
+      this._route.queryParams.subscribe(params => {  //DE AQUI LEES LOS PARAMETROS DE LA URL PARAMETROS URL
+
+        let tipoLocalidad = params['tipo'];
+
+        if (tipoLocalidad === 'comarca') {
+          let idComa = params['id'];
+          this.selectComarcaFromURL(idComa);
+        }
+
+      });
     });
 
   }
 
   initForm() {
+
     this.formGroup = this.fb.group({
       'municipio': [this.selectedComarca]
     })
+
+    console.log('initform fuera');
     this.formGroup.get('municipio')?.valueChanges.subscribe(response => {
 
+      console.log('initform ' + response);
       this.selected = this.selectedComarca;
       this.selectedComarca = response;
+
+      this.selectComarca(response);
 
       this.comarcasParsed.forEach((comarca: any) => {
         if (comarca.nombre === this.selectedComarca) {
           comarca.id[0] === '0' ? this.selectedId = comarca.id.substring(1) : this.selectedId = comarca.id;
         }
       })
+
+
       this.filterData(response);
     });
+
   }
 
   filterData(enteredData: any) {
+    console.log('???' + enteredData);
     this.filteredComarcas = this.comarcas.filter((item: any) => {
       return item['callret-0'].value.toLowerCase().indexOf(enteredData.toLowerCase()) > -1
     });
   }
 
-  selectComarca() {
-    this.formGroup = this.fb.group({
-      'municipio': [this.selectedComarca]
-    })
-    this.formGroup.get('municipio')?.valueChanges.subscribe(response => {
+  selectComarca(comarcaAux: any) {
 
-      this.selected = this.selectedComarca;
-      this.selectedComarca = response;
-      this.comarcasParsed.forEach((comarca: any) => {
-        if (comarca.nombre === this.selectedComarca) {
-          comarca.id[0] === '0' ? this.selectedId = comarca.id.substring(1) : this.selectedId = comarca.id;
-        }
-      })
+
+    this.selected = this.selectedComarca;
+    this.selectedComarca = comarcaAux;
+    this.comarcasParsed.forEach((comarca: any) => {
+      if (comarca.nombre === this.selectedComarca) {
+        comarca.id[0] === '0' ? this.selectedId = comarca.id.substring(1) : this.selectedId = comarca.id;
+        //console.log("if foreach comarca " + this.selectedComarca + " id " + this.selectedId)
+        this.locationService.changeMunicipio('', '');
+        this.locationService.changeProvincia('');
+        this.locationService.changeComarca(this.selectedComarca, this.selectedId);
+      }
     });
 
+  }
+
+  selectComarcaFromURL(idComa: any) {
+
+    this.comarcasParsed.forEach((comarca: any) => {
+      if (comarca.id === idComa) {
+
+        this.selectedId = comarca.id;
+        this.selectedComarca = comarca.nombre;
+
+        this.locationService.changeMunicipio('', '');
+        this.locationService.changeProvincia('');
+        this.locationService.changeComarca(this.selectedComarca, this.selectedId);
+      }
+    });
   }
 
   getNames() {
