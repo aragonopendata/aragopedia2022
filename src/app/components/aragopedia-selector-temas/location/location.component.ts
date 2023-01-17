@@ -106,10 +106,12 @@ export class LocationComponent implements OnInit {
 
     this.municipioSelected = '';
     this.idMunicipio = '';
-    if (this.provinciaSelected != '' || this.provinciaSelected != undefined) {
+    if (this.provinciaSelected !== '' && this.provinciaSelected !== undefined) {
+
 
       // console.log(this.provinciaSelected)
       this.updateTemas('provincia')
+
     }
   }
   selectComarca(newComarcaName: any, newComarcaId: any) {
