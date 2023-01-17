@@ -99,9 +99,10 @@ export class AragopediaSelectorTemasComponent implements OnInit {
       this.tipoLocalidad = params['tipo'];
 
       this.aragopediaSvc.triggerSubmitObserver.subscribe((trigger: any) => {
-        this.selectedTema = '';
-        this.displayTema = '';
-        this.firstLand = true;
+
+        /*  this.selectedTema = '';
+         this.displayTema = '';
+         this.firstLand = true; */
         console.log('trigger' + trigger)
         this.submit()
       })
@@ -112,7 +113,7 @@ export class AragopediaSelectorTemasComponent implements OnInit {
 
   submit() {
 
-    console.log(this.selectedProvincia);
+    console.log('submit' + this.selectedProvincia);
     console.log(this.selectedComarca);
     console.log(this.selectedMunicipio);
 
@@ -157,9 +158,11 @@ export class AragopediaSelectorTemasComponent implements OnInit {
 
     this._route.queryParams.subscribe(params => {  //DE AQUI LEES LOS PARAMETROS DE LA URL PARAMETROS URL
 
-      this.rutaLimpia = params['datos'];
+      if (this.rutaLimpia !== params['datos']) {
 
-      this.temaSelected(this.rutaLimpia);
+        this.rutaLimpia = params['datos'];
+        this.temaSelected(this.rutaLimpia);
+      }
 
     });
 
@@ -191,7 +194,9 @@ export class AragopediaSelectorTemasComponent implements OnInit {
   }
 
   temaSelected(tema: any) {
-    this.displayTema = this.selectedTema;
+    /* this.displayTema = this.selectedTema; */
+    console.log('selectedtema ' + this.selectedTema);
+
     let rutaUsable: string;
 
     if (tema.Ruta) {
@@ -286,7 +291,10 @@ export class AragopediaSelectorTemasComponent implements OnInit {
       this.queryTabla = 'https://opendata.aragon.es/sparql?default-graph-uri=&query=' + encodeURIComponent(query) + '&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on';
 
       this.aragopediaSvc.change(this.queryTabla);
-      this.displayTema = this.selectedTema;
+
+      if (this.selectedTema != '') {
+        this.displayTema = this.selectedTema;
+      }
 
       this.selectedTema = '';
       this.firstLand = false;
@@ -315,6 +323,10 @@ export class AragopediaSelectorTemasComponent implements OnInit {
 
     this.http.get(('https://opendata.aragon.es/sparql?default-graph-uri=&query=' + encodeURIComponent(query) + '&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on'), httpOptions).subscribe((data: any) => {
       //console.log(data);
+
+      this.displayTema = this.selectedTema;
+      this.selectedTema = ''
+
       if (data.results.bindings.length === 0) {
         this.errorTabla = true;
       } else {

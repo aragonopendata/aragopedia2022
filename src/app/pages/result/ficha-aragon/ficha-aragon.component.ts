@@ -100,6 +100,7 @@ export class FichaAragonComponent implements OnInit {
   temasMunicipio = [{}];
   temasControl = new FormControl('');
   selectedTema: any = '';
+  displayTema: any = '';
   showTemas: any;
   queryTabla!: string;
   columnas: any;
@@ -526,6 +527,9 @@ export class FichaAragonComponent implements OnInit {
 
     this.http.get(('https://opendata.aragon.es/sparql?default-graph-uri=&query=' + encodeURIComponent(query) + '&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on'), httpOptions).subscribe((data: any) => {
       //console.log(data);
+
+      this.displayTema = this.selectedTema;
+      this.selectedTema = ''
 
       if (data.results.bindings.length === 0) {
         this.errorTabla = true;
