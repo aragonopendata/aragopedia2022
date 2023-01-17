@@ -112,6 +112,7 @@ export class ResultComponent {
   temasMunicipio = [{}];
   temasControl = new FormControl('');
   selectedTema: any = '';
+  displayTema: any = '';
   showTemas: any;
   queryTabla!: string;
   columnas: any;
@@ -786,13 +787,17 @@ export class ResultComponent {
     params.append("format", "json");
 
     this.http.get(('https://opendata.aragon.es/sparql?default-graph-uri=&query=' + encodeURIComponent(query) + '&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on'), httpOptions).subscribe((data: any) => {
-      //console.log(data);
+      console.log(data);
+
+      this.displayTema = this.selectedTema;
+      this.selectedTema = ''
 
       if (data.results.bindings.length === 0) {
         this.errorTabla = true;
       } else {
         this.errorTabla = false;
       }
+
 
     })
 
