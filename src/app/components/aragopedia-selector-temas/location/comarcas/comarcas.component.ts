@@ -77,15 +77,16 @@ export class ComarcasComponent implements OnInit {
       'municipio': [this.selectedComarca]
     })
 
-    console.log('initform fuera');
+    //console.log('initform fuera');
     this.formGroup.get('municipio')?.valueChanges.subscribe(response => {
 
-      console.log('initform ' + response);
+      //console.log('initform ' + response);
       this.selected = this.selectedComarca;
       this.selectedComarca = response;
 
-      this.selectComarca(response);
-
+      if (response !== '') {
+        this.selectComarca(response);
+      }
       this.comarcasParsed.forEach((comarca: any) => {
         if (comarca.nombre === this.selectedComarca) {
           comarca.id[0] === '0' ? this.selectedId = comarca.id.substring(1) : this.selectedId = comarca.id;
@@ -99,7 +100,7 @@ export class ComarcasComponent implements OnInit {
   }
 
   filterData(enteredData: any) {
-    console.log('???' + enteredData);
+    //console.log('???' + enteredData);
     this.filteredComarcas = this.comarcas.filter((item: any) => {
       return item['callret-0'].value.toLowerCase().indexOf(enteredData.toLowerCase()) > -1
     });
@@ -107,16 +108,18 @@ export class ComarcasComponent implements OnInit {
 
   selectComarca(comarcaAux: any) {
 
-
     this.selected = this.selectedComarca;
     this.selectedComarca = comarcaAux;
     this.comarcasParsed.forEach((comarca: any) => {
       if (comarca.nombre === this.selectedComarca) {
         comarca.id[0] === '0' ? this.selectedId = comarca.id.substring(1) : this.selectedId = comarca.id;
-        //console.log("if foreach comarca " + this.selectedComarca + " id " + this.selectedId)
-        this.locationService.changeMunicipio('', '');
-        this.locationService.changeProvincia('');
-        this.locationService.changeComarca(this.selectedComarca, this.selectedId);
+        ////console.log("if foreach comarca " + this.selectedComarca + " id " + this.selectedId)
+        if (this.locationService.municipioNombre != '' || this.locationService.provincia != '') {
+
+          this.locationService.changeMunicipio('', '');
+          this.locationService.changeProvincia('');
+          this.locationService.changeComarca(this.selectedComarca, this.selectedId);
+        }
       }
     });
 
@@ -130,8 +133,10 @@ export class ComarcasComponent implements OnInit {
         this.selectedId = comarca.id;
         this.selectedComarca = comarca.nombre;
 
-        this.locationService.changeMunicipio('', '');
-        this.locationService.changeProvincia('');
+        if (this.locationService.municipioNombre != '' || this.locationService.provincia != '') {
+          this.locationService.changeMunicipio('', '');
+          this.locationService.changeProvincia('');
+        }
         this.locationService.changeComarca(this.selectedComarca, this.selectedId);
       }
     });

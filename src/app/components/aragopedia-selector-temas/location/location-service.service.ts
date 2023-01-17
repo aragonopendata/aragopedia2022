@@ -21,25 +21,20 @@ export class LocationServiceService {
 
   changeProvincia(newProvincia: any) {
     this.provincia = newProvincia;
+    this.provinciaObserver.next(this.provincia)
 
-    if (newProvincia !== '' && newProvincia !== undefined) {
-      this.provinciaObserver.next(this.provincia)
-    }
   }
 
   changeComarca(newComarcaNombre: any, newComarcaId: any) {
     this.comarcaNombre = newComarcaNombre;
     this.comarcaId = newComarcaId;
-    if (newComarcaNombre !== '') {
-      this.comarcaObserver.next(this.comarcaNombre)
-    }
+    this.comarcaObserver.next(this.comarcaNombre)
+
   }
 
   changeMunicipio(newMunicipioNombre: any, newMunicipioId: any) {
     this.municipioNombre = newMunicipioNombre;
     this.municipioId = newMunicipioId;
-    if (newMunicipioNombre !== '') {
-      this.municipioObserver.next(this.municipioNombre)
-    }
+    this.municipioObserver.next(this.municipioNombre)
   }
 }

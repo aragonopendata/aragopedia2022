@@ -83,7 +83,9 @@ export class ProvinciasComponent implements OnInit {
   initForm() {
 
     this.formControlProvincia.valueChanges.subscribe(response => {
-      this.selectProvincia(response);
+      if (response !== '' && response !== undefined) {
+        this.selectProvincia(response);
+      }
     });
 
     this.formGroup = this.fb.group({
@@ -106,15 +108,17 @@ export class ProvinciasComponent implements OnInit {
     this.formGroup = this.fb.group({
       'municipio': [this.selectedProvincia]
     })
-    //console.log(prov)
+    ////console.log(prov)
     this.provinciasParsed.forEach((provincia: any) => {
-      //console.log("foreach: " + prov.nombre)
+      ////console.log("foreach: " + prov.nombre)
       if (prov.nombre && provincia.nombre.toLowerCase() === prov.nombre.toLowerCase()) {
         this.selectedProvincia = provincia.nombre;
-        this.locationService.changeComarca('', '');
-        this.locationService.changeMunicipio('', '');
-        this.locationService.changeProvincia(provincia);
-        //console.log("foreach dentro: " + prov)
+        if (this.locationService.comarcaNombre != '' || this.locationService.municipioNombre != '') {
+          this.locationService.changeComarca('', '');
+          this.locationService.changeMunicipio('', '');
+          this.locationService.changeProvincia(provincia);
+        }
+        ////console.log("foreach dentro: " + prov)
       }
     });
   }
@@ -126,9 +130,11 @@ export class ProvinciasComponent implements OnInit {
 
         this.selectedProvincia = provincia.nombre;
 
-        this.locationService.changeComarca('', '');
-        this.locationService.changeMunicipio('', '');
-        this.locationService.changeProvincia(provincia);
+        if (this.locationService.comarcaNombre != '' || this.locationService.municipioNombre != '') {
+          this.locationService.changeComarca('', '');
+          this.locationService.changeMunicipio('', '');
+          this.locationService.changeProvincia(provincia);
+        }
       }
     });
   }
