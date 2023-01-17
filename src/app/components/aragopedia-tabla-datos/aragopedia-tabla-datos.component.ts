@@ -98,7 +98,7 @@ export class AragopediaTablaDatosComponent {
 
   getKeys(element: any, columna: string): string {
     let value: string = element?.[columna]?.value;
-    return value;
+    return value
   }
 
   setColumnName(columna: string): string {
