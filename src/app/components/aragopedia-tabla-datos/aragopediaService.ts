@@ -45,7 +45,7 @@ export class AragopediaService {
     }
 
     changeTriggerSubmitObserver(tipoZona: string) {
-        console.log(tipoZona)
+        // console.log(tipoZona)
         this.triggerSubmitObserver.next(tipoZona)
     }
 
