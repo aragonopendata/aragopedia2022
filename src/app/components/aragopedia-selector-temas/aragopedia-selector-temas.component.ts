@@ -170,22 +170,22 @@ export class AragopediaSelectorTemasComponent implements OnInit {
   filterData(enteredData: any) {
 
     this.filteredTemas = this.showTemas.filter((item: any) => {
-      //console.log(item);
       return item.DescripcionMejorada.toLowerCase().indexOf(enteredData.toLowerCase()) > -1
     })
   }
 
   initForm() {
 
-    this.filterData('')
     this.formGroup = this.fb.group({
       "tema": [this.selectedTema]
     })
 
     this.formGroup.get('tema')?.valueChanges.subscribe(response => {
-      //console.log(response);
       this.selectedTema = response;
+      this.displayTema = response;
+      console.log('DISPLAY TEMA: ', this.displayTema);
 
+      this.filterData(response);
     })
 
   }
@@ -287,6 +287,7 @@ export class AragopediaSelectorTemasComponent implements OnInit {
 
       this.aragopediaSvc.change(this.queryTabla);
       this.displayTema = this.selectedTema;
+
       this.selectedTema = '';
       this.firstLand = false;
     })

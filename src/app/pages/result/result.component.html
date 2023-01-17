@@ -9,7 +9,7 @@
                 <h1 class="inicio__name">{{this.tituloFicha}} <span *ngIf="this.comunidadActual"
                         class="inicio__name-comunidad">({{this.comunidadActual}})</span></h1>
                 <a href={{this.urlMap}} target="_blank">
-                    <img *ngIf="this.map" src={{this.map}} alt="Mapa de {{this.tituloFicha}}">
+                    <img *ngIf="this.map" src={{this.map}} alt="Mapa de {{this.tituloFicha}}" width="200" height="280">
                 </a>
                 <a href={{this.urlMap}} target="_blank" class="btn map_btn">Ver en el mapa</a>
             </div>
@@ -71,7 +71,8 @@
                     </div>
                     <figure>
                         <a href="{{this.imageWikiDataUrl}}" target="_blank" rel="nofollow noopener"><img
-                                src="{{this.imageWikiDataUrl}}" alt="Imagen principal de {{this.lugarBuscado}}"></a>
+                                src="{{this.imageWikiDataUrl}}" alt="Imagen principal de {{this.lugarBuscado}}"
+                                width="220" height="160"></a>
                         <figcaption>Imagen obtenida de WikiData. Este archivo está disponible bajo la licencia <a
                                 href="https://en.wikipedia.org/wiki/es:Creative_Commons" target="_blank"
                                 rel="nofollow noopener">Creative Commons</a> <a

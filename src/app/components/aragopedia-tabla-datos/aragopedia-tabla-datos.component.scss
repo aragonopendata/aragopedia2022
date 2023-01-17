@@ -24,19 +24,15 @@
 }
 
 .table-container {
+    width: 100%;
     overflow-x: scroll; //add horizontal bar option in html
 }
 
-@media only screen and (max-width: 600px) {}
+
 
 table {
     width: 100%;
     align-self: center;
-}
-
-.table-container {
-    width: 90%;
-    min-width: fit-content;
 }
 
 tr:nth-child(even) {

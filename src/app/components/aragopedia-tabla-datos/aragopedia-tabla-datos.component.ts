@@ -18,8 +18,7 @@ export class AragopediaTablaDatosComponent {
 
   constructor(public aragopediaSvc: AragopediaService, private sanitizer: DomSanitizer) { }
 
-
-
+  ocultarPeriod: boolean = false;
   displayedColumns!: string[];
   queryAragopedia: string = "";
   queryAragopediaCSV!: string;
@@ -51,6 +50,18 @@ export class AragopediaTablaDatosComponent {
 
         if (dato !== undefined) {
           this.displayedColumns = Object.keys(dato);
+          let nameRefPeriod = false;
+          let mes_y_ano = false;
+          this.displayedColumns.forEach((titulo: any) => {
+            if (titulo === 'nameRefPeriod') {
+              nameRefPeriod = true;
+            } else if (titulo === 'mes_y_ano') {
+              mes_y_ano = true;
+            }
+          });
+          if (nameRefPeriod && mes_y_ano) {
+            this.displayedColumns.splice((this.displayedColumns.indexOf('nameRefPeriod')), 1);
+          }
         }
         else {
           this.displayedColumns = [];
