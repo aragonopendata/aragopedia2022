@@ -173,22 +173,22 @@ export class AragopediaSelectorTemasComponent implements OnInit {
   filterData(enteredData: any) {
 
     this.filteredTemas = this.showTemas.filter((item: any) => {
-      //console.log(item);
       return item.DescripcionMejorada.toLowerCase().indexOf(enteredData.toLowerCase()) > -1
     })
   }
 
   initForm() {
 
-    this.filterData('')
     this.formGroup = this.fb.group({
       "tema": [this.selectedTema]
     })
 
     this.formGroup.get('tema')?.valueChanges.subscribe(response => {
-      //console.log(response);
       this.selectedTema = response;
+      this.displayTema = response;
+      console.log('DISPLAY TEMA: ', this.displayTema);
 
+      this.filterData(response);
     })
 
   }
@@ -291,9 +291,11 @@ export class AragopediaSelectorTemasComponent implements OnInit {
       this.queryTabla = 'https://opendata.aragon.es/sparql?default-graph-uri=&query=' + encodeURIComponent(query) + '&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on';
 
       this.aragopediaSvc.change(this.queryTabla);
+
       if (this.selectedTema != '') {
         this.displayTema = this.selectedTema;
       }
+
       this.selectedTema = '';
       this.firstLand = false;
     })

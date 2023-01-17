@@ -3,7 +3,8 @@
         <!-- <a [href]="linkDescargaCSV" bypassSecurityTrustUrl id="descargarCSV" download="aragopediaFile.csv"
                 class="btn btn-descarga">CSV</a>
             -->
-        <a [href]="linkDescargaJSON" bypassSecurityTrustUrl id="descargarJSON" class="btn btn-descarga" target="_blank">JSON</a>
+        <a [href]="linkDescargaJSON" bypassSecurityTrustUrl id="descargarJSON" class="btn btn-descarga"
+            target="_blank">JSON</a>
     </div>
     <mat-table mat-tablev [dataSource]="tablaConsulta" class="mat-elevation-z8">
         <ng-container *ngFor="let columna of displayedColumns;" matColumnDef="{{columna}}" id="setColumnName(columna)">

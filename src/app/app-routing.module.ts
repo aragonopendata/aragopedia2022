@@ -11,14 +11,14 @@ import { FichaAragonComponent } from './pages/result/ficha-aragon/ficha-aragon.c
 
 const routes: Routes = [
   { path: '', redirectTo: '/', pathMatch: 'full' },
-  { path: '', component: HomeComponent },
-  { path: 'persona/:id', component: PersonaComponent },
+  { path: '', component: HomeComponent, title: 'Aragopedia - Inicio' },
+  { path: 'persona/:id', component: PersonaComponent, title: 'Aragopedia - Personas' },
   { path: 'general', component: GeneralComponent },
-  { path: 'results/:temas/:years', component: ResultsComponent },
-  { path: 'detalles', component: ResultComponent },
-  { path: 'detalles/aragon', component: FichaAragonComponent },
-  { path: 'aragopedia', component: AragopediaComponent },
-  { path: '**', pathMatch: 'full', component: NotFoundComponent }
+  { path: 'results/:temas/:years', component: ResultsComponent, title: 'Aragopedia - Resultados de búsqueda' },
+  { path: 'detalles', component: ResultComponent, title: 'Aragopedia - Detalles' },
+  { path: 'detalles/aragon', component: FichaAragonComponent, title: 'Aragopedia - Detalles' },
+  { path: 'aragopedia', component: AragopediaComponent, title: 'Aragopedia - Datos estadísticos' },
+  { path: '**', pathMatch: 'full', component: NotFoundComponent, title: 'Aragopedia - Error 404' }
 ];
 
 @NgModule({
