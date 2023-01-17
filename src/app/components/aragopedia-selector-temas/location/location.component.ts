@@ -108,8 +108,10 @@ export class LocationComponent implements OnInit {
     this.idMunicipio = '';
     if (this.provinciaSelected !== '' && this.provinciaSelected !== undefined) {
 
-      console.log(this.provinciaSelected)
-      this.updateTemas('diputacion')
+
+      // console.log(this.provinciaSelected)
+      this.updateTemas('provincia')
+
     }
   }
   selectComarca(newComarcaName: any, newComarcaId: any) {
@@ -123,7 +125,7 @@ export class LocationComponent implements OnInit {
     this.municipioSelected = '';
     this.idMunicipio = '';
     if (this.comarcaSelected != '') {
-      console.log(this.comarcaSelected)
+      // console.log(this.comarcaSelected)
       this.updateTemas('comarca')
     }
   }
@@ -139,7 +141,7 @@ export class LocationComponent implements OnInit {
     this.idProvincia = '';
     if (this.municipioSelected != '') {
 
-      console.log(this.municipioSelected)
+      // console.log(this.municipioSelected)
       this.updateTemas('municipio')
     }
   }

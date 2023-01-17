@@ -1,3 +1,13 @@
+@keyframes APARECER {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
 header {
     height: 90px;
     width: 100%;
@@ -291,6 +301,7 @@ header {
             right: 0;
             margin: auto;
             margin-top: 10px;
+            animation: APARECER 0.3s;
 
             .submenu__left {
 
