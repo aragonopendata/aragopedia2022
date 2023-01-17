@@ -78,8 +78,9 @@ export class MunicipiosComponent implements OnInit {
     this.formGroup.get('municipio')?.valueChanges.subscribe(response => {
       this.selectedMunicipio = response;
       this.selected = this.selectedMunicipio;
-
-      this.selectMunicipio(response);
+      if (response !== '') {
+        this.selectMunicipio(response);
+      }
 
       this.municipiosParsed.forEach((municipio: any) => {
         if (municipio.nombre === this.selectedMunicipio) {
@@ -100,9 +101,12 @@ export class MunicipiosComponent implements OnInit {
     this.municipiosParsed.forEach((municipio: any) => {
       if (municipio.nombre === this.selectedMunicipio) {
         this.selectedId = municipio.id;
-        this.locationService.changeComarca('', '');
-        this.locationService.changeProvincia('');
-        this.locationService.changeMunicipio(this.selectedMunicipio, this.selectedId);
+        if (this.locationService.comarcaNombre != '' || this.locationService.provincia != '') {
+
+          this.locationService.changeComarca('', '');
+          this.locationService.changeProvincia('');
+          this.locationService.changeMunicipio(this.selectedMunicipio, this.selectedId);
+        }
       }
     });
   }
@@ -115,9 +119,12 @@ export class MunicipiosComponent implements OnInit {
         this.selectedId = municipio.id;
         this.selectedMunicipio = municipio.nombre;
 
-        this.locationService.changeComarca('', '');
-        this.locationService.changeProvincia('');
-        this.locationService.changeMunicipio(this.selectedMunicipio, this.selectedId);
+        if (this.locationService.comarcaNombre != '' || this.locationService.provincia != '') {
+
+          this.locationService.changeComarca('', '');
+          this.locationService.changeProvincia('');
+          this.locationService.changeMunicipio(this.selectedMunicipio, this.selectedId);
+        }
       }
     });
   }

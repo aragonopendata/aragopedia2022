@@ -31,7 +31,7 @@
 
         <app-aragopedia-tabla-datos class="tabla-datos" [hidden]="errorTabla || firstLand"></app-aragopedia-tabla-datos>
 
-        <div [hidden]="!errorTabla || !firstLand">
+        <div *ngIf="errorTabla">
             <p>No se encontraron datos</p>
         </div>
     </div>
