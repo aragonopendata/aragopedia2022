@@ -9,7 +9,7 @@
     <mat-table mat-tablev [dataSource]="tablaConsulta" class="mat-elevation-z8">
         <ng-container *ngFor="let columna of displayedColumns;" matColumnDef="{{columna}}" id="setColumnName(columna)">
             <th mat-header-cell *matHeaderCellDef style="width: 1000px;">{{columna}}</th>
-            <td mat-cell *matCellDef="let element">{{ getKeys(element, columna) }}</td>
+            <td mat-cell *matCellDef="let element; let i = index">{{ getKeys(element, columna) }}</td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

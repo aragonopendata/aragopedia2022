@@ -50,6 +50,7 @@ export class AragopediaTablaDatosComponent {
 
         if (dato !== undefined) {
           this.displayedColumns = Object.keys(dato);
+
           let nameRefPeriod = false;
           let mes_y_ano = false;
           this.displayedColumns.forEach((titulo: any) => {
@@ -70,10 +71,9 @@ export class AragopediaTablaDatosComponent {
         this.displayedColumns.splice((this.displayedColumns.indexOf('refArea')), 1);
         this.displayedColumns.splice((this.displayedColumns.indexOf('refPeriod')), 1);
 
-        //console.log(this.displayedColumns)
-
         this.linkDescargaJSON = this.aragopediaSvc.queryTemas;
         console.log(this.linkDescargaJSON)
+        console.log(datos);
 
         datos.forEach((item: any) => {
           for (const key in item) {
@@ -97,18 +97,12 @@ export class AragopediaTablaDatosComponent {
   }
 
   getKeys(element: any, columna: string): string {
-
-    let value: string = element?.[columna].value;
-
+    let value: string = element?.[columna]?.value;
     return value;
   }
 
   setColumnName(columna: string): string {
     return "columna" + columna;
-  }
-
-  createCSV() {
-
   }
 
 }
