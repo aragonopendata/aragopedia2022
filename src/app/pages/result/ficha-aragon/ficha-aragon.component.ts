@@ -128,10 +128,10 @@ export class FichaAragonComponent implements OnInit {
 
     this.resultSvc.getData(this.queryIdWikiData).subscribe((data: any) => {
       // const found = data.results.bindings.find((element: any) => this.capitalizeString(element['callret-1'].value) == this.lugarBuscado);
-      // //////console.log(data.results.bindings.find((element: any) => {
+      //console.log(data.results.bindings.find((element: any) => {
       //   element['callret-1'].value.toUpperCase() === this.lugarBuscado.toUpperCase();
       // }))
-      // //////console.log(found);
+      //console.log(found);
 
       // this.codigoIne = found.id.value;
 
