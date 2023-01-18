@@ -34,6 +34,8 @@ export class AragopediaTablaDatosComponent {
   @ViewChild(AragopediaSelectorTemasComponent) selectorTemas!: AragopediaSelectorTemasComponent;
 
   ngOnInit() {
+    ////////console.log(this.aragopediaSvc.queryTemas)
+
 
     this.linkDescargaCSV = this.sanitizer.bypassSecurityTrustUrl(this.queryAragopediaCSV);
 
@@ -70,7 +72,10 @@ export class AragopediaTablaDatosComponent {
         this.displayedColumns.splice((this.displayedColumns.indexOf('refPeriod')), 1);
 
         this.linkDescargaJSON = this.aragopediaSvc.queryTemas;
-         datos.forEach((item: any) => {
+        //////console.log(this.linkDescargaJSON)
+        //////console.log(datos);
+
+        datos.forEach((item: any) => {
           for (const key in item) {
             const element = item[key].value;
 

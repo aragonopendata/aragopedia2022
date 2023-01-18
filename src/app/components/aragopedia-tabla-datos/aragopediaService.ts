@@ -24,6 +24,7 @@ export class AragopediaService {
 
     lastZona: string = '';
 
+
     constructor(private http: HttpClient) {
 
     }
