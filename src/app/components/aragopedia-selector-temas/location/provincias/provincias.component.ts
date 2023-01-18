@@ -32,6 +32,7 @@ export class ProvinciasComponent implements OnInit {
   idLocalidad!: string;
   selectedId: string = '';
   queryIdWikiData!: string;
+  URLparameters: any = [];
   provinciasParsed: Provincia[] = [
     {
       nombreCompleto: 'Diputación Provincial de Zaragoza',
@@ -108,17 +109,18 @@ export class ProvinciasComponent implements OnInit {
     this.formGroup = this.fb.group({
       'municipio': [this.selectedProvincia]
     })
-    ////console.log(prov)
+    ////////console.log(prov)
     this.provinciasParsed.forEach((provincia: any) => {
-      ////console.log("foreach: " + prov.nombre)
+      ////////console.log("foreach: " + prov.nombre)
       if (prov.nombre && provincia.nombre.toLowerCase() === prov.nombre.toLowerCase()) {
         this.selectedProvincia = provincia.nombre;
-        if (this.locationService.comarcaNombre != '' || this.locationService.municipioNombre != '') {
+        if (this.locationService.comarcaNombre != '' || this.locationService.municipioNombre != '' || this.locationService.provincia != prov.nombre) {
+
           this.locationService.changeComarca('', '');
           this.locationService.changeMunicipio('', '');
           this.locationService.changeProvincia(provincia);
         }
-        ////console.log("foreach dentro: " + prov)
+        ////////console.log("foreach dentro: " + prov)
       }
     });
   }
@@ -130,7 +132,7 @@ export class ProvinciasComponent implements OnInit {
 
         this.selectedProvincia = provincia.nombre;
 
-        if (this.locationService.comarcaNombre != '' || this.locationService.municipioNombre != '') {
+        if (this.locationService.comarcaNombre != '' || this.locationService.municipioNombre != '' || this.locationService.provincia != idDipu) {
           this.locationService.changeComarca('', '');
           this.locationService.changeMunicipio('', '');
           this.locationService.changeProvincia(provincia);

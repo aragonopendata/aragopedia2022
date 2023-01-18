@@ -128,10 +128,10 @@ export class FichaAragonComponent implements OnInit {
 
     this.resultSvc.getData(this.queryIdWikiData).subscribe((data: any) => {
       // const found = data.results.bindings.find((element: any) => this.capitalizeString(element['callret-1'].value) == this.lugarBuscado);
-      // //console.log(data.results.bindings.find((element: any) => {
+      // //////console.log(data.results.bindings.find((element: any) => {
       //   element['callret-1'].value.toUpperCase() === this.lugarBuscado.toUpperCase();
       // }))
-      // //console.log(found);
+      // //////console.log(found);
 
       // this.codigoIne = found.id.value;
 
@@ -145,7 +145,7 @@ export class FichaAragonComponent implements OnInit {
 
         this.urlMap = `https://idearagon.aragon.es/visor/index.html`
 
-        this.queryUrlPoligonos = `https://opendata.aragon.es/sparql?default-graph-uri=http%3A%2F%2Fopendata.aragon.es%2Fdef%2Fei2av2&query=PREFIX+org%3A+%3Chttp%3A%2F%2Fwww.w3.org%2Fns%2Forg%23%3E%0D%0Aselect++count%28distinct+%3Fs%29+from+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fei2av2%3E+where+%7B%0D%0A%3Fs+%3Fp+%3Fo%3B%0D%0A+++a+org%3AOrganization%3B%0D%0A+org%3Aclassification%09%3Chttps%3A%2F%2Fwww.geonames.org%2Fontology%23L.INDS%3E+%3B%0D%0A++++ns%3AwasUsedBy+%3Fproc.%0D%0A%3Fproc+ns%3AwasAssociatedWith+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdatos%2Fcatalogo%2Fdataset%2Fga-od-core%2F104%3E.%0D%0A%7D&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`;
+        this.queryUrlPoligonos = `hhttps://opendata.aragon.es/sparql?default-graph-uri=http%3A%2F%2Fopendata.aragon.es%2Fdef%2Fei2av2&query=PREFIX+org%3A+%3Chttp%3A%2F%2Fwww.w3.org%2Fns%2Forg%23%3E%0D%0Aselect++count%28distinct+%3Fs%29+from+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fei2av2%3E+where+%7B%0D%0A%3Fs+%3Fp+%3Fo%3B%0D%0A+++a+org%3AOrganization%3B%0D%0A+org%3Aclassification%09%3Chttps%3A%2F%2Fwww.geonames.org%2Fontology%23L.INDS%3E+%3B%0D%0A++++dc%3Asource+%3Chttps%3A%2F%2Fopendata.aragon.es%2Fdataset%2F0d8fab77-91db-4832-8184-ea83a0bc4ca5%2Fresource%2F66c34c59-7d01-4e1c-983c-7edc48602cda%3E.%0D%0A%7D&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`;
 
         this.queryUrlAlojamientosTuristicos = `https://opendata.aragon.es/sparql?default-graph-uri=&query=select++distinct+count%28%3Fs%29+from+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fei2av2%3E+where+%7B%0D%0A%3Fs+%3Fp+%3Fo%3B%0D%0A++++dc%3Asource+%3Chttps%3A%2F%2Fopendata.aragon.es%2Fdataset%2Fb58bc283-573f-4fa5-9c0c-ff9136eab2c1%2Fresource%2F993c5ebf-5ced-478a-8791-159b2e87e789%3E.%0D%0A%7D&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`;
 
@@ -322,13 +322,13 @@ export class FichaAragonComponent implements OnInit {
       })
 
       this.resultSvc.getData(this.queryUrlContacto).subscribe(data => {
-        ////console.log(data);
+        ////////console.log(data);
 
         this.direccion = data.results.bindings[0].direccion.value;
         this.codPostal = data.results.bindings[0].codPostal.value;
         this.email = data.results.bindings[0].email.value;
         this.telefono = data.results.bindings[0].tel.value;
-        ////console.log(this.telefono);
+        ////////console.log(this.telefono);
       })
 
     });
@@ -371,10 +371,10 @@ export class FichaAragonComponent implements OnInit {
   filterData(enteredData: any) {
 
 
-    ////console.log(this.showTemas);
+    ////////console.log(this.showTemas);
 
     this.filteredTemas = this.showTemas.filter((item: any) => {
-      ////console.log(item);
+      ////////console.log(item);
       return item.DescripcionMejorada.toLowerCase().indexOf(enteredData.toLowerCase()) > -1
     })
   }
@@ -385,7 +385,7 @@ export class FichaAragonComponent implements OnInit {
     })
 
     this.formGroup.get('tema')?.valueChanges.subscribe(response => {
-      ////console.log(response);
+      ////////console.log(response);
       this.selectedTema = response;
       this.filterData(response)
     })
@@ -500,8 +500,8 @@ export class FichaAragonComponent implements OnInit {
       query += "ORDER BY ASC(?refArea) ASC(?refPeriod)\n";
       query += "LIMIT 200\n"
 
-      ////console.log(query);
-      ////console.log(encodeURIComponent(query));
+      ////////console.log(query);
+      ////////console.log(encodeURIComponent(query));
 
       this.sparql(query);
 
@@ -526,7 +526,7 @@ export class FichaAragonComponent implements OnInit {
     params.append("format", "json");
 
     this.http.get(('https://opendata.aragon.es/sparql?default-graph-uri=&query=' + encodeURIComponent(query) + '&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on'), httpOptions).subscribe((data: any) => {
-      ////console.log(data);
+      ////////console.log(data);
 
       this.displayTema = this.selectedTema;
       this.selectedTema = ''

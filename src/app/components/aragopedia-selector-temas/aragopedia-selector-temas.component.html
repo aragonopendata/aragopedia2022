@@ -15,7 +15,7 @@
                         <input formControlName="tema" [(ngModel)]="selectedTema" matInput [formControl]="temasControl"
                             type="select" [matAutocomplete]="auto" />
                         <mat-autocomplete #auto="matAutocomplete">
-                            <mat-option *ngFor="let tema of filteredTemas" (click)="temaSelected(tema)"
+                            <mat-option *ngFor="let tema of filteredTemas" (click)="temaSelected(this.rutaLimpia)"
                                 [value]="tema.DescripcionMejorada">
                                 {{tema.DescripcionMejorada}}
                             </mat-option>
@@ -25,8 +25,8 @@
             </form>
         </div>
 
-        <h3 class="datos-seleccionados" [hidden]="firstLand || !displayTema"><b>Datos seleccionados:</b><br>
-            <u>{{displayTema}}</u>
+        <h3 class="datos-seleccionados" *ngIf="!firstLand || displayTema"><b>Datos seleccionados:</b><br>
+            <u>{{displayTema}}</u> en {{displayZona}}
         </h3>
 
         <app-aragopedia-tabla-datos class="tabla-datos" [hidden]="errorTabla || firstLand"></app-aragopedia-tabla-datos>

@@ -28,6 +28,7 @@ export class LocationServiceService {
   changeComarca(newComarcaNombre: any, newComarcaId: any) {
     this.comarcaNombre = newComarcaNombre;
     this.comarcaId = newComarcaId;
+
     this.comarcaObserver.next(this.comarcaNombre)
 
   }

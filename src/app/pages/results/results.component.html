@@ -78,28 +78,54 @@
             </div>
         </div>
 
-        <div class="loading" *ngIf="this.items === undefined">
+        <div class="loading" *ngIf="!this.items || !this.results || !this.pageOfItems">
             <mat-spinner [diameter]="70"></mat-spinner>
             <p>Obteniendo datos</p>
         </div>
         <div *ngIf="this.numberOfResults === 0" class="search-error">
             <p>No se han encontrado resultados, prueba a <a (click)="toggleSidebar()">aplicar otros filtros.</a></p>
         </div>
-        <div *ngFor="let result of pageOfItems | filter:filterResult" class="search__results">
-            <article class="search__results-item">
-                <p class="item__category"><span class="type"><mat-icon>bookmark_border</mat-icon>
-                        {{result.category}}</span> | <span *ngIf="result.year !== ' - '"
-                        class="type"><mat-icon>calendar_today</mat-icon>
-                        {{result.year}}</span> <span *ngIf="result.year !== ' - '">|</span>
-                    <span class="type"><mat-icon> category</mat-icon> {{result.type}}</span>
-                </p>
-                <a href="{{result.resultURL}}" target="_blank" class="item__title">
-                    <mat-icon>open_in_new</mat-icon>
-                    <h3>{{result.title}}</h3>
-                </a>
-            </article>
-
+        <div *ngIf="this.numberOfResults > 1">
+            <div *ngFor="let result of pageOfItems | filter:filterResult" class="search__results">
+                <article class="search__results-item">
+                    <p class="item__category"><span class="type"><mat-icon>bookmark_border</mat-icon>
+                            {{result.category}}</span> |
+                        <span *ngIf="result.year !== ' - ' && result.year !== '-'"
+                            class="type"><mat-icon>calendar_today</mat-icon>
+                            {{result.year}}</span>
+                        <span *ngIf="result.year !== ' - ' && result.year !== '-'">|</span>
+                        <span class="type"><mat-icon> category</mat-icon> {{result.type}}</span>
+                    </p>
+                    <a href="{{result.resultURL}}" target="_blank" class="item__title">
+                        <mat-icon>open_in_new</mat-icon>
+                        <h3>{{result.title}}</h3>
+                    </a>
+                </article>
+            </div>
         </div>
+
+        <div *ngIf="this.numberOfResults === 1">
+            <div *ngFor="let result of results | filter:filterResult" class="search__results">
+                <article class="search__results-item">
+                    <p class="item__category" *ngIf="result.category !== ''"><span
+                            class="type"><mat-icon>bookmark_border</mat-icon>
+                            {{result.category}}</span> | <span *ngIf="result.year !== ' - ' && result.year !== '-'"
+                            class="type"><mat-icon>calendar_today</mat-icon>
+                            {{result.year}}</span> <span *ngIf="result.year !== ' - ' && result.year !== '-'">|</span>
+                        <span class="type"><mat-icon> category</mat-icon> {{result.type}}</span>
+                    </p>
+                    <a *ngIf="result.resultURL !== ''" href="{{result.resultURL}}" target="_blank" class="item__title">
+                        <mat-icon>open_in_new</mat-icon>
+                        <h3>{{result.title}}</h3>
+                    </a>
+                    <div *ngIf="result.category  === ''" class="search-error">
+                        <p>No se han encontrado resultados, prueba a <a (click)="toggleSidebar()">aplicar otros
+                                filtros.</a></p>
+                    </div>
+                </article>
+            </div>
+        </div>
+
         <div *ngIf="this.items">
             <div *ngIf="this.items.length !== 1 " class="results__pagination">
                 <jw-pagination [items]="items" (changePage)="onChangePage($event)"></jw-pagination>
