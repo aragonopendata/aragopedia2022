@@ -120,7 +120,7 @@ export class PiramidePoblacionComponent implements OnInit {
       }
 
       this.piramidePoblacionSvc.getPiramidePoblacion(this.queryPiramidePoblacion).subscribe((data: any) => {
-        //console.log(this.queryPiramidePoblacion);
+        ////console.log(this.queryPiramidePoblacion);
 
         if (data.results.bindings.length !== 0) {
           this.piramidePoblacion = data.results.bindings
