@@ -78,7 +78,7 @@
             </div>
         </div>
 
-        <div class="loading" *ngIf="this.items === undefined">
+        <div class="loading" *ngIf="!this.items || !this.results || !this.pageOfItems">
             <mat-spinner [diameter]="70"></mat-spinner>
             <p>Obteniendo datos</p>
         </div>
