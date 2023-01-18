@@ -46,21 +46,21 @@ export class HeaderComponent implements OnInit {
     this.activeDatos = !this.activeDatos;
     this.activeInfo = false;
     this.activeServicios = false;
-    this.bodyOverlay = !this.bodyOverlay;
+    this.bodyOverlay ? !this.bodyOverlay : this.bodyOverlay = true;
   }
 
   openSubMenuInfo() {
     this.activeInfo = !this.activeInfo;
     this.activeDatos = false;
     this.activeServicios = false;
-    this.bodyOverlay = !this.bodyOverlay;
+    this.bodyOverlay ? !this.bodyOverlay : this.bodyOverlay = true;
   }
 
   openSubMenuServicios() {
     this.activeDatos = false;
     this.activeInfo = false;
     this.activeServicios = !this.activeServicios;
-    this.bodyOverlay = !this.bodyOverlay;
+    this.bodyOverlay ? !this.bodyOverlay : this.bodyOverlay = true;
 
   }
 
