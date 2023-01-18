@@ -37,30 +37,37 @@ export class HeaderComponent implements OnInit {
         this.activeServicios = false;
         this.bodyOverlay = false;
       }
-
     });
-
   }
 
   openSubMenuDatos() {
     this.activeDatos = !this.activeDatos;
     this.activeInfo = false;
     this.activeServicios = false;
-    this.bodyOverlay ? !this.bodyOverlay : this.bodyOverlay = true;
+    this.bodyOverlay = !this.bodyOverlay;
+    if (this.activeDatos || this.activeInfo || this.activeServicios) {
+      this.bodyOverlay = true;
+    }
   }
 
   openSubMenuInfo() {
     this.activeInfo = !this.activeInfo;
     this.activeDatos = false;
     this.activeServicios = false;
-    this.bodyOverlay ? !this.bodyOverlay : this.bodyOverlay = true;
+    this.bodyOverlay = !this.bodyOverlay;
+    if (this.activeDatos || this.activeInfo || this.activeServicios) {
+      this.bodyOverlay = true;
+    }
   }
 
   openSubMenuServicios() {
     this.activeDatos = false;
     this.activeInfo = false;
+    this.bodyOverlay = !this.bodyOverlay;
     this.activeServicios = !this.activeServicios;
-    this.bodyOverlay ? !this.bodyOverlay : this.bodyOverlay = true;
+    if (this.activeDatos || this.activeInfo || this.activeServicios) {
+      this.bodyOverlay = true;
+    }
 
   }
 

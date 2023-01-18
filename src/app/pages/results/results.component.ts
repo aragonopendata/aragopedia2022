@@ -130,21 +130,27 @@ export class ResultsComponent implements OnInit {
         const results = data?.results.bindings;
         results.forEach((element: any, i: any) => {
           this.results[i] = { categoryURL: element.item.value, title: element['callret-3'].value, category: element.labelTema.value, resultURL: element.item.value, year: element.year.value, type: element.tipo.value }
-          if (element.tipo.value === 'dataset_ckan') {
-            this.totalDatasets += 1;
-          } else if (element.tipo.value === 'cubo_estadistico') {
-            this.totalCubes += 1;
-          } else if (element.tipo.value === 'eli') {
-            this.totalEli += 1;
-          } else if (element.tipo.value === 'archivoSIUa') {
-            this.totalSiua += 1;
-          }
         });
+
         let i = this.results.length - 1;
+
         this.resultsSinFecha.forEach((item: any) => {
           this.results[i] = { categoryURL: item.item.value, title: item['callret-3'].value, category: item.labelTema.value, resultURL: item.item.value, year: item.year.value, type: item.tipo.value };
           i++;
         });
+
+        this.results.forEach((element: any) => {
+          if (element.type === 'dataset_ckan') {
+            this.totalDatasets += 1;
+          } else if (element.type === 'cubo_estadistico') {
+            this.totalCubes += 1;
+          } else if (element.type === 'eli') {
+            this.totalEli += 1;
+          } else if (element.type === 'archivoSIUa') {
+            this.totalSiua += 1;
+          }
+        })
+
         this.items = this.results;
         this.numberOfResults = this.items.length;
 
