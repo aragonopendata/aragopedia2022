@@ -152,8 +152,7 @@ export class LocationComponent implements OnInit {
 
     ////console.log(this.aragopediaService.lastZona)
 
-    if (this.municipioSelected != this.aragopediaService.lastZona) {
-
+    if (this.municipioSelected != '') {
       this.aragopediaService.lastZona = this.municipioSelected;
       this.updateTemas('municipio')
     }

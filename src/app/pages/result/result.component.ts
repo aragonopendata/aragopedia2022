@@ -345,12 +345,12 @@ export class ResultComponent {
           this.lugarBuscadoParsed = 'La_Ribagorza'
         } else if (this.lugarBuscadoParsed === 'Monegros,_Los') {
           this.lugarBuscadoParsed = 'Los_Monegros'
-        } else if (this.lugarBuscadoParsed === 'ÉPila') {
-          this.lugarBuscadoParsed = 'Épila'
-        } else if (this.lugarBuscadoParsed === 'Zaragóza') {
-          this.lugarBuscadoParsed = 'Zaragoza';
-        }
+        }////console.logs.lugarBuscadoParsed === 'ÉPila') {
+        this.lugarBuscadoParsed = 'Épila'
+      } else if (this.lugarBuscadoParsed === 'Zaragóza') {
+        this.lugarBuscadoParsed = 'Zaragoza';
       }
+    }
 
 
       ////////console.log(this.lugarBuscadoParsed)
@@ -358,451 +358,450 @@ export class ResultComponent {
       // Queries con nombres
 
       if (this.tipoLocalidad === 'municipio') {
-        this.tipoLocalidadGlobal = 'municipio';
-        this.sufijoCuboDatosGlobal = 'TM';
-      } else if (this.tipoLocalidad === 'comarca') {
-        this.tipoLocalidadGlobal = 'comarca';
-        this.sufijoCuboDatosGlobal = this.sufijoCuboDatos;
-      } else {
-        this.tipoLocalidadGlobal = 'provincia';
-        this.sufijoCuboDatosGlobal = 'TP';
+      this.tipoLocalidadGlobal = 'municipio';
+      this.sufijoCuboDatosGlobal = 'TM';
+    } else if (this.tipoLocalidad === 'comarca') {
+      this.tipoLocalidadGlobal = 'comarca';
+      this.sufijoCuboDatosGlobal = this.sufijoCuboDatos;
+    } else {
+      this.tipoLocalidadGlobal = 'provincia';
+      this.sufijoCuboDatosGlobal = 'TP';
+    }
+
+    this.queryUrlDensidadPoblacion = `https://opendata.aragon.es/sparql?default-graph-uri=&query=select+distinct+%3FrefArea+%3FnameRefArea+str%28%3Fyear%29+AS+%3FnameRefPeriod+%3Fdensidad_de_poblacion_habkm2+where+%7B%0D%0A%3Fobs+qb%3AdataSet+%3Fdataset.%0D%0AFILTER%28%3Fdataset+IN+%28%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fiaest%2Fdataset%2F02-020001${this.sufijoCuboDatosGlobal}%3E%29%29.%0D%0A%3Fobs+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refPeriod%3E+%3FrefPeriod.%0D%0A%3FrefPeriod+time%3AinXSDgYear+%3Fyear.%0D%0A%3Fobs+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refArea%3E+%3FrefArea.%0D%0A%3FrefArea+rdfs%3Alabel+%3FnameRefArea.%0D%0AFILTER+%28+lang%28%3FnameRefArea%29+%3D+%22es%22+%29.%0D%0ABIND+%28%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fterritorio%2F${this.capitalizeString(this.tipoLocalidadGlobal)}%2F${this.lugarBuscadoParsed}%3E+AS+%3Fmuni%29.%0D%0AFILTER+%28%3FrefArea+IN+%28%3Fmuni%29%29.%0D%0AOPTIONAL+%7B+%3Fobs+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fiaest%2Fmedida%23densidad-de-poblacion-habkm2%3E+%3Fdensidad_de_poblacion_habkm2+%7D+.%0D%0A%7D%0D%0Aorder+by+desc%28%3Fyear%29%0D%0ALIMIT+1%0D%0A&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`;
+
+    if (this.tipoLocalidad === 'diputacion' || this.tipoLocalidad === 'municipio') {
+      this.queryUrlExtension = `https://opendata.aragon.es/sparql?default-graph-uri=&query=select+distinct+%3FrefArea+%3FnameRefArea+str%28%3Fyear%29+AS+%3FnameRefPeriod+xsd%3Aint%28%3Frust%29+as+%3Frustico+xsd%3Aint%28%3Furba%29+as+%3Furbano+where+%7B%0D%0A%3Fobs+qb%3AdataSet+%3Fdataset.%0D%0AFILTER%28%3Fdataset+IN+%28%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fiaest%2Fdataset%2F01-010019A%3E%2C%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fiaest%2Fdataset%2F01-010019TC%3E%2C%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fiaest%2Fdataset%2F01-010019${this.sufijoCuboDatosGlobal}%3E%29%29.%0D%0A%3Fobs+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refPeriod%3E+%3FrefPeriod.%0D%0A%3FrefPeriod+time%3AinXSDgYear+%3Fyear.%0D%0A%3Fobs+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refArea%3E+%3FrefArea.%0D%0A%3FrefArea+rdfs%3Alabel+%3FnameRefArea.%0D%0AFILTER+%28+lang%28%3FnameRefArea%29+%3D+%22es%22+%29.%0D%0ABIND+%28%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fterritorio%2FMunicipio%2F${this.lugarBuscadoParsed}%3E+AS+%3Fmuni%29.%0D%0A%3Fmuni+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2FAragopedia%23enComarca%3E+%3Fcomarca.%0D%0A%3Fmuni+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2FAragopedia%23enComunidadAutonoma%3E+%3Fccaa.%0D%0AFILTER+%28%3FrefArea+IN+%28%3Fmuni%2C+%3Fccaa%29%29.%0D%0AOPTIONAL+%7B+%3Fobs+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fiaest%2Fmedida%23rustico-superficie%3E+%3Frust+%7D+.%0D%0AOPTIONAL+%7B+%3Fobs+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fiaest%2Fmedida%23urbano-superficie%3E+%3Furba+%7D+.%0D%0A%7D%0D%0AORDER+BY+desc%28%3Fyear%29%2C%3FrefArea%0D%0ALIMIT+2%0D%0A&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`;
+    } else {
+      this.queryUrlExtension = `https://opendata.aragon.es/sparql?default-graph-uri=&query=select+distinct+%3FrefArea+%3FnameRefArea+str%28%3Fyear%29+AS+%3FnameRefPeriod+xsd%3Aint%28%3Frust%29+as+%3Frustico+xsd%3Aint%28%3Furba%29+as+%3Furbano+where+%7B%0D%0A%3Fobs+qb%3AdataSet+%3Fdataset.%0D%0AFILTER%28%3Fdataset+IN+%28%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fiaest%2Fdataset%2F01-010019A%3E%2C%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fiaest%2Fdataset%2F01-010019TC%3E%2C%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fiaest%2Fdataset%2F01-010019${this.sufijoCuboDatosGlobal}%3E%29%29.%0D%0A%3Fobs+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refPeriod%3E+%3FrefPeriod.%0D%0A%3FrefPeriod+time%3AinXSDgYear+%3Fyear.%0D%0A%3Fobs+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refArea%3E+%3FrefArea.%0D%0A%3FrefArea+rdfs%3Alabel+%3FnameRefArea.%0D%0AFILTER+%28+lang%28%3FnameRefArea%29+%3D+%22es%22+%29.%0D%0ABIND+%28%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fterritorio%2FMunicipio%2F${this.lugarBuscadoParsed}%3E+AS+%3Fmuni%29.%0D%0A%3Fmuni+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2FAragopedia%23enComarca%3E+%3Fcomarca.%0D%0A%3Fmuni+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2FAragopedia%23enComunidadAutonoma%3E+%3Fccaa.%0D%0AFILTER+%28%3FrefArea+IN+%28%3Fmuni%2C+%3Fccaa%29%29.%0D%0AOPTIONAL+%7B+%3Fobs+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fiaest%2Fmedida%23rustico-superficie%3E+%3Frust+%7D+.%0D%0AOPTIONAL+%7B+%3Fobs+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fiaest%2Fmedida%23urbano-superficie%3E+%3Furba+%7D+.%0D%0A%7D%0D%0AORDER+BY+desc%28%3Fyear%29%2C%3FrefArea%0D%0ALIMIT+2%0D%0A&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`;
+    }
+    if (this.tipoLocalidad === 'municipio') {
+      this.queryUrlPoblacion = `https://opendata.aragon.es/sparql?default-graph-uri=&query=select+distinct+%3FrefArea+%3FnameRefArea+%3FnameRefPeriod+%3Fpoblac+where+%7B%0D%0A%0D%0Aselect+distinct+%3FrefArea+%3FnameRefArea+str%28%3Fyear%29+AS+%3FnameRefPeriod+xsd%3Aint%28%3Fpoblacion%29+as+%3Fpoblac+where+%7B%0D%0A%3Fobs+qb%3AdataSet+%3Fdataset.%0D%0AFILTER%28%3Fdataset+IN+%28%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fiaest%2Fdataset%2F03-030001A%3E%2C%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fiaest%2Fdataset%2F03-030001TC%3E%2C%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fiaest%2Fdataset%2F03-030001TM%3E%29%29.%0D%0A%3Fobs+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refPeriod%3E+%3FrefPeriod.%0D%0A%3FrefPeriod+time%3AinXSDgYear+%3Fyear.%0D%0A%3Fobs+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refArea%3E+%3FrefArea.%0D%0A%3FrefArea+rdfs%3Alabel+%3FnameRefArea.%0D%0AFILTER+%28+lang%28%3FnameRefArea%29+%3D+%22es%22+%29.%0D%0ABIND+%28%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fterritorio%2F${this.capitalizeString(this.tipoLocalidadGlobal)}%2F${this.lugarBuscadoParsed}%3E+AS+%3Fmuni%29.%0D%0A%3Fmuni+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2FAragopedia%23enComarca%3E+%3Fcomarca.%0D%0A%3Fmuni+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2FAragopedia%23enComunidadAutonoma%3E+%3Fccaa.%0D%0AFILTER+%28%3FrefArea+IN+%28%3Fmuni%2C+%3Fcomarca%2C+%3Fccaa%29%29.%0D%0AOPTIONAL+%7B+%3Fobs+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fiaest%2Fmedida%23poblacion%3E+%3Fpoblacion+%7D+.%0D%0A%7D%0D%0AORDER+BY+desc%28%3Fyear%29%2C+%3FrefArea%0D%0ALIMIT+15%0D%0A%7D%0D%0Aorder+by+%3FrefArea%0D%0A&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`;
+    } else if (this.tipoLocalidad === 'comarca') {
+      this.queryUrlPoblacion = `https://opendata.aragon.es/sparql?default-graph-uri=&query=select+distinct+%3FrefArea+%3FnameRefArea+%3FrefPeriod+%28strafter%28str%28%3FrefPeriod%29%2C+%22http%3A%2F%2Freference.data.gov.uk%2Fid%2Fyear%2F%22%29+AS+%3FnameRefPeriod%29+sum+%28%3Fpoblac+%29+as+%3Fpoblac++++where+%7B%0D%0A+%3Fobs+qb%3AdataSet+%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fiaest%2Fdataset%2F03-030001TC%3E.%0D%0A+%3Fobs+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refPeriod%3E+%3FrefPeriod.%0D%0AFILTER+%28%3FrefPeriod+IN+%28%3Chttp%3A%2F%2Freference.data.gov.uk%2Fid%2Fyear%2F2017%3E%2C%3Chttp%3A%2F%2Freference.data.gov.uk%2Fid%2Fyear%2F2018%3E%2C%3Chttp%3A%2F%2Freference.data.gov.uk%2Fid%2Fyear%2F2019%3E%2C%3Chttp%3A%2F%2Freference.data.gov.uk%2Fid%2Fyear%2F2020%3E%2C%3Chttp%3A%2F%2Freference.data.gov.uk%2Fid%2Fyear%2F2021%3E%29%29.%0D%0A+%3Fobs+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refArea%3E+%3FrefArea.%0D%0A+%3FrefArea+rdfs%3Alabel+%3FnameRefArea.+FILTER+%28+lang%28%3FnameRefArea%29+%3D+%22es%22+%29.FILTER+%28%3FrefArea+IN+%28%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fterritorio%2FComarca%2F${this.lugarBuscadoParsed}%3E%29%29.%0D%0AOPTIONAL+%7B++%3Fobs+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fiaest%2Fmedida%23poblacion%3E+%3Fpoblac++%7D+.%0D%0A%7D+%0D%0A%0D%0ALIMIT+300&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`
+    } else {
+      this.queryUrlPoblacion = `https://opendata.aragon.es/sparql?default-graph-uri=&query=select+distinct+%3FrefArea+%3FnameRefArea+%3FrefPeriod+%28strafter%28str%28%3FrefPeriod%29%2C+%22http%3A%2F%2Freference.data.gov.uk%2Fid%2Fyear%2F%22%29+AS+%3FnameRefPeriod%29+sum+%28%3Fpoblac+%29+as+%3Fpoblac++++where+%7B%0D%0A+%3Fobs+qb%3AdataSet+%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fiaest%2Fdataset%2F03-030001TM%3E.%0D%0A+%3Fobs+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refPeriod%3E+%3FrefPeriod.%0D%0AFILTER+%28%3FrefPeriod+IN+%28%3Chttp%3A%2F%2Freference.data.gov.uk%2Fid%2Fyear%2F2017%3E%2C%3Chttp%3A%2F%2Freference.data.gov.uk%2Fid%2Fyear%2F2018%3E%2C%3Chttp%3A%2F%2Freference.data.gov.uk%2Fid%2Fyear%2F2019%3E%2C%3Chttp%3A%2F%2Freference.data.gov.uk%2Fid%2Fyear%2F2020%3E%2C%3Chttp%3A%2F%2Freference.data.gov.uk%2Fid%2Fyear%2F2021%3E%29%29.%0D%0A+%3Fobs+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refArea%3E+%3FrefArea.%0D%0A+%3FrefArea+rdfs%3Alabel+%3FnameRefArea.+FILTER+%28+lang%28%3FnameRefArea%29+%3D+%22es%22+%29.FILTER+%28%3FrefArea+IN+%28%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fterritorio%2FMunicipio%2F${this.lugarBuscadoParsed}%3E%29%29.%0D%0AOPTIONAL+%7B++%3Fobs+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fiaest%2Fmedida%23poblacion%3E+%3Fpoblac++%7D+.%0D%0A%7D+%0D%0A%0D%0ALIMIT+300&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`
+    }
+
+    this.queryUrlCreativeWork = `https://opendata.aragon.es/sparql?default-graph-uri=&query=PREFIX+schema%3A+%3Chttp%3A%2F%2Fschema.org%2F%3E%0D%0A%0D%0Aselect+%3Ftitle+%3Furl+%3Ftema+%3Fresumen%0D%0Awhere+%7B%0D%0A++%3Fs+a+schema%3ACreativeWork%3B%0D%0A+++++++schema%3Aabout+%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fterritorio%2F${this.capitalizeString(this.tipoLocalidadGlobal)}%2F${this.lugarBuscadoParsed}%3E%3B%0D%0A+++++++schema%3Atitle+%3Ftitle%3B%0D%0A+++++++schema%3Aurl+%3Furl%3B%0D%0A+++++++schema%3Aconcept+%3Ftema%3B%0D%0Aschema%3Aabstract+%3Fresumen.%0D%0A%7D%0D%0Alimit+10&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`;
+
+    this.queryUrlTotalCreativeWork = `https://opendata.aragon.es/sparql?default-graph-uri=&query=PREFIX+schema%3A+%3Chttp%3A%2F%2Fschema.org%2F%3E%0D%0A%0D%0Aselect+%3Ftitle+%3Furl+%3Ftema+%3Fresumen%0D%0Awhere+%7B%0D%0A++%3Fs+a+schema%3ACreativeWork%3B%0D%0A+++++++schema%3Aabout+%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fterritorio%2F${this.capitalizeString(this.tipoLocalidadGlobal)}%2F${this.lugarBuscadoParsed}%3E%3B%0D%0A+++++++schema%3Atitle+%3Ftitle%3B%0D%0A+++++++schema%3Aurl+%3Furl%3B%0D%0A+++++++schema%3Aconcept+%3Ftema%3B%0D%0Aschema%3Aabstract+%3Fresumen.%0D%0A%7D&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`;
+
+    this.queryUrlRatioSuelo = `https://opendata.aragon.es/sparql?default-graph-uri=&query=select+distinct+%3FrefArea+%3FnameRefArea+%28strafter%28str%28%3FrefPeriod%29%2C+%22http%3A%2F%2Freference.data.gov.uk%2Fid%2Fyear%2F%22%29+AS+%3FnameRefPeriod%29+xsd%3Aint%28%3Frust%29+as+%3Frustico+xsd%3Aint%28%3Furba%29+as+%3Furbano+where+%7B%0D%0A+++%3Fobs+qb%3AdataSet+%3Fdataset.%0D%0A+++FILTER%28%3Fdataset+IN+%28%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fiaest%2Fdataset%2F01-010019A%3E%2C%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fiaest%2Fdataset%2F01-010019TC%3E%2C%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fiaest%2Fdataset%2F01-010019TM%3E%29%29.%0D%0A+%3Fobs+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refPeriod%3E+%3FrefPeriod.%0D%0A+FILTER+%28%3FrefPeriod+IN+%28%3Chttp%3A%2F%2Freference.data.gov.uk%2Fid%2Fyear%2F2018%3E%2C%3Chttp%3A%2F%2Freference.data.gov.uk%2Fid%2Fyear%2F2019%3E%2C%3Chttp%3A%2F%2Freference.data.gov.uk%2Fid%2Fyear%2F2020%3E%2C%3Chttp%3A%2F%2Freference.data.gov.uk%2Fid%2Fyear%2F2021%3E%29%29.%0D%0A+%3Fobs+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refArea%3E+%3FrefArea.%0D%0A+%3FrefArea+rdfs%3Alabel+%3FnameRefArea.+%0D%0A+FILTER+%28+lang%28%3FnameRefArea%29+%3D+%22es%22+%29.%0D%0A+BIND+%28%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fterritorio%2F${this.capitalizeString(this.tipoLocalidadGlobal)}%2F${this.lugarBuscadoParsed}%3E+AS+%3Fmuni%29.%0D%0A+%3Fmuni+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2FAragopedia%23enComarca%3E+%3Fcomarca.%0D%0A+%3Fmuni+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2FAragopedia%23enComunidadAutonoma%3E+%3Fccaa.%0D%0A+FILTER+%28%3FrefArea+IN+%28%3Fmuni%2C+%3Fccaa%29%29.%0D%0A+OPTIONAL+%7B++%3Fobs+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fiaest%2Fmedida%23rustico-superficie%3E+%3Frust++%7D+.%0D%0A+OPTIONAL+%7B++%3Fobs+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fiaest%2Fmedida%23urbano-superficie%3E+%3Furba++%7D+.%0D%0A%7D%0D%0AORDER+BY+desc%28%3FrefPeriod%29%2C%3FrefArea%0D%0ALIMIT+2%0D%0A&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`;
+
+    this.queryUrlIncendios = `https://opendata.aragon.es/sparql?default-graph-uri=&query=select+distinct++%3FrefArea+%3FnameRefArea+sum+%28%3Fincendios+%29+as+%3Fincendios+++sum+%28xsd%3Adouble%28%3Fsuperficie_forestal_afectada%29+%29+as+%3Fsuperficie_forestal_afectada+++%0D%0A+where+%7B%0D%0A+++%3Fobs+qb%3AdataSet+%3Fdataset.%0D%0A+++FILTER%28%3Fdataset+IN+%28%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fiaest%2Fdataset%2F04-040017${this.sufijoCuboDatosGlobal}%3E%29%29.%0D%0A+%3Fobs+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refPeriod%3E+%3FrefPeriod.%0D%0AFILTER+%28%3FrefPeriod+IN+%28%3Chttp%3A%2F%2Freference.data.gov.uk%2Fid%2Fyear%2F2001%3E%2C%3Chttp%3A%2F%2Freference.data.gov.uk%2Fid%2Fyear%2F2002%3E%2C%3Chttp%3A%2F%2Freference.data.gov.uk%2Fid%2Fyear%2F2003%3E%2C%3Chttp%3A%2F%2Freference.data.gov.uk%2Fid%2Fyear%2F2004%3E%2C%3Chttp%3A%2F%2Freference.data.gov.uk%2Fid%2Fyear%2F2005%3E%2C%3Chttp%3A%2F%2Freference.data.gov.uk%2Fid%2Fyear%2F2006%3E%2C%3Chttp%3A%2F%2Freference.data.gov.uk%2Fid%2Fyear%2F2007%3E%2C%3Chttp%3A%2F%2Freference.data.gov.uk%2Fid%2Fyear%2F2008%3E%2C%3Chttp%3A%2F%2Freference.data.gov.uk%2Fid%2Fyear%2F2009%3E%2C%3Chttp%3A%2F%2Freference.data.gov.uk%2Fid%2Fyear%2F2010%3E%2C%3Chttp%3A%2F%2Freference.data.gov.uk%2Fid%2Fyear%2F2011%3E%2C%3Chttp%3A%2F%2Freference.data.gov.uk%2Fid%2Fyear%2F2012%3E%2C%3Chttp%3A%2F%2Freference.data.gov.uk%2Fid%2Fyear%2F2013%3E%2C%3Chttp%3A%2F%2Freference.data.gov.uk%2Fid%2Fyear%2F2014%3E%2C%3Chttp%3A%2F%2Freference.data.gov.uk%2Fid%2Fyear%2F2015%3E%2C%3Chttp%3A%2F%2Freference.data.gov.uk%2Fid%2Fyear%2F2016%3E%2C%3Chttp%3A%2F%2Freference.data.gov.uk%2Fid%2Fyear%2F2017%3E%2C%3Chttp%3A%2F%2Freference.data.gov.uk%2Fid%2Fyear%2F2018%3E%2C%3Chttp%3A%2F%2Freference.data.gov.uk%2Fid%2Fyear%2F2019%3E%2C%3Chttp%3A%2F%2Freference.data.gov.uk%2Fid%2Fyear%2F2020%3E%29%29.%0D%0A+%3Fobs+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refArea%3E+%3FrefArea.%0D%0A+%3FrefArea+rdfs%3Alabel+%3FnameRefArea.+%0D%0A+FILTER+%28+lang%28%3FnameRefArea%29+%3D+%22es%22+%29.%0D%0A+BIND+%28%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fterritorio%2F${this.capitalizeString(this.tipoLocalidadGlobal)}%2F${this.lugarBuscadoParsed}%3E+AS+%3Fmuni%29.%0D%0A+FILTER+%28%3FrefArea+IN+%28%3Fmuni%29%29.%0D%0AOPTIONAL+%7B++%3Fobs+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fiaest%2Fmedida%23incendios%3E+%3Fincendios++%7D+.%0D%0AOPTIONAL+%7B++%3Fobs+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fiaest%2Fmedida%23superficie-forestal-afectada%3E+%3Fsuperficie_forestal_afectada++%7D+.%0D%0A%7D%0D%0Agroup+by+++%3FrefArea+%3FnameRefArea%0D%0ALIMIT+20%0D%0A&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`;
+
+
+    this.queryUrlEsPoblado = `https://opendata.aragon.es/sparql?default-graph-uri=&query=select+%3Festa+where%0D%0A%7B%0D%0A++select+distinct+%3FrefArea+%3FrefArea%3D%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fterritorio%2F${this.capitalizeString(this.tipoLocalidadGlobal)}%2F${this.lugarBuscadoParsed}%3E+as+%3Festa++where+%7B%0D%0A+++%3Fobs+qb%3AdataSet+%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fiaest%2Fdataset%2F03-030001${this.sufijoCuboDatosGlobal}%3E.%0D%0A+++%3Fobs+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refPeriod%3E+%3FrefPeriod.%0D%0A++%7B+select+distinct+%3FrefPeriod+where+%7B%0D%0A+++++++++++++++++++++++++++++++++++++++++++++++++++%3Fobs+qb%3AdataSet+%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fiaest%2Fdataset%2F03-030001${this.sufijoCuboDatosGlobal}%3E.%0D%0A++++++++++++++++++++++++++++++++++++++++++++++++++++%3Fobs+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refPeriod%3E+%3FrefPeriod.%0D%0A+++++++++++++++++++++++++++++++++++++++++++++%7D%0D%0A+++++++++++++++++++++++++++++++++++++++++++++ORDER+BY+desc%28%3FrefPeriod%29%0D%0A+++++++++++++++++++++++++++++++++++++++++++++LIMIT+1++%7D%0D%0A%0D%0A+++%3Fobs+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refArea%3E+%3FrefArea.%0D%0A+++%3FrefArea+rdfs%3Alabel+%3FnameRefArea.+%0D%0A+++FILTER+%28+lang%28%3FnameRefArea%29+%3D+%22es%22+%29.%0D%0A+++%3Fmuni+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2FAragopedia%23enComunidadAutonoma%3E+%3Fccaa.%0D%0A+++FILTER+%28%3FrefArea+IN+%28%3Fmuni%29%29.%0D%0A+++OPTIONAL+%7B++%3Fobs+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fiaest%2Fmedida%23poblacion%3E+%3Fpoblacion++%7D+.%0D%0A%7D%0D%0AORDER+BY+desc%28%3FrefPeriod%29%2C+desc%28%3Fpoblacion%29%2C+%3FrefArea%0D%0ALIMIT+20%0D%0A%7D%0D%0Aorder+by+desc+%28%3Festa%29%0D%0Alimit+1&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`;
+
+    this.queryUrlEdadMedia = `https://opendata.aragon.es/sparql?default-graph-uri=&query=select+distinct+%3Fobs+%3FrefArea+%3FnameRefArea+%28strafter%28str%28%3FrefPeriod%29%2C+%22http%3A%2F%2Freference.data.gov.uk%2Fid%2Fyear%2F%22%29+AS+%3FnameRefPeriod%29+xsd%3Afloat%28%3Fvalor%29+as+%3Fval+%3Fsexo+where+%7B%0D%0A+++%3Fobs+qb%3AdataSet+%3Fdataset.%0D%0A+++%3Fobs+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refPeriod%3E+%3FrefPeriod.%0D%0A++%7B+select+distinct+%3FrefPeriod+where+%7B%0D%0A+++++++++++++++++++++++++++++++++++++++++++++++++++%3Fobs+qb%3AdataSet+%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fiaest%2Fdataset%2F03-030006${this.sufijoCuboDatosGlobal}%3E.%0D%0A++++++++++++++++++++++++++++++++++++++++++++++++++++%3Fobs+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refPeriod%3E+%3FrefPeriod.%0D%0A+++++++++++++++++++++++++++++++++++++++++++++%7D%0D%0A+++++++++++++++++++++++++++++++++++++++++++++ORDER+BY+desc%28%3FrefPeriod%29%0D%0A+++++++++++++++++++++++++++++++++++++++++++++LIMIT+1++%7D%0D%0A%0D%0A+++%3Fobs+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refArea%3E+%3FrefArea.%0D%0A+++%3FrefArea+rdfs%3Alabel+%3FnameRefArea.+%0D%0AVALUES+%3Fdataset+%7B+%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fiaest%2Fdataset%2F03-030006TM%3E+%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fiaest%2Fdataset%2F03-030006TC%3E++%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fiaest%2Fdataset%2F03-030006A%3E%7D%0D%0A+++FILTER+%28+lang%28%3FnameRefArea%29+%3D+%22es%22+%29.%0D%0A+++BIND+%28%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fterritorio%2F${this.capitalizeString(this.tipoLocalidadGlobal)}%2F${this.lugarBuscadoParsed}%3E+AS+%3Fmuni%29.%0D%0A+++%3Fmuni+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2FAragopedia%23enComarca%3E+%3Fcomarca.%0D%0A+++%3Fmuni2+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2FAragopedia%23enComarca%3E+%3Fcomarca.%0D%0A+++%3Fmuni+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2FAragopedia%23enComunidadAutonoma%3E+%3Fccaa.%0D%0A+++FILTER+%28%3FrefArea+IN+%28%3Fmuni%2C+%3Fcomarca%2C+%3Fccaa%29%29.%0D%0A%3Fobs+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fiaest%2Fdimension%23sexo%3E+%3Ffoo1.%0D%0A+%3Ffoo1+skos%3AprefLabel+%3Fsexo++.%0D%0A+++OPTIONAL+%7B++%3Fobs+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fiaest%2Fmedida%23edad-media-de-la-poblacion%3E+%3Fvalor++%7D+.%0D%0A%7D%0D%0AORDER+BY+desc%28%3FrefPeriod%29%2C+desc%28%3Fval%29%2C+%3FrefArea%2C+%3Fsexo%0D%0ALIMIT+100%0D%0A&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`;
+
+    this.queryUrlLocales = `https://opendata.aragon.es/sparql?default-graph-uri=&query=select+distinct%0D%0A%3FrefArea+%3FnameRefArea+%3FrefPeriod+str%28%3Fyear%29+AS+%3FnameRefPeriod%0D%0Axsd%3Aint%28%3Fnumero_de_edificios%29+where+%7B%0D%0A%3Fobs+qb%3AdataSet+%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fiaest%2Fdataset%2F01-010009${this.sufijoCuboDatosGlobal}%3E.%0D%0A%3Fobs+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refPeriod%3E+%3FrefPeriod.%0D%0A%3FrefPeriod+time%3AinXSDgYear+%3Fyear.%0D%0A%3Fobs+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refArea%3E+%3FrefArea.%0D%0A%3FrefArea+rdfs%3Alabel+%3FnameRefArea.+FILTER+%28+lang%28%3FnameRefArea%29+%3D+%22es%22+%29.FILTER+%28%3FrefArea+IN+%28%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fterritorio%2F${this.capitalizeString(this.tipoLocalidadGlobal)}%2F${this.lugarBuscadoParsed}%3E%29%29.%0D%0A%3Fobs+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fiaest%2Fdimension%23tipo-edificio-detalle%3E+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fkos%2Fiaest%2Ftipo-edificio-detalle%2Flocales%3E.%0D%0A%3Fobs+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fiaest%2Fmedida%23numero-de-edificios%3E+%3Fnumero_de_edificios+.%0D%0A%7D%0D%0Aorder+by+desc%28%3Fyear%29%0D%0ALIMIT+1%0D%0A&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`
+
+
+    //Obtención de datos NOMBRE MUNICIPIO
+
+    this.resultSvc.getData(this.queryUrlExtension).subscribe((data: any) => {
+      if (data?.results.bindings.length !== 0) {
+        this.sueloUrbano = data.results.bindings[1].urbano.value;
+        this.sueloRural = data.results.bindings[1].rustico.value;
+        this.dataDownload[0].sueloRural = this.sueloRural;
+        this.dataDownload[0].sueloUrbano = this.sueloUrbano;
       }
+    });
 
-      this.queryUrlDensidadPoblacion = `https://opendata.aragon.es/sparql?default-graph-uri=&query=select+distinct+%3FrefArea+%3FnameRefArea+str%28%3Fyear%29+AS+%3FnameRefPeriod+%3Fdensidad_de_poblacion_habkm2+where+%7B%0D%0A%3Fobs+qb%3AdataSet+%3Fdataset.%0D%0AFILTER%28%3Fdataset+IN+%28%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fiaest%2Fdataset%2F02-020001${this.sufijoCuboDatosGlobal}%3E%29%29.%0D%0A%3Fobs+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refPeriod%3E+%3FrefPeriod.%0D%0A%3FrefPeriod+time%3AinXSDgYear+%3Fyear.%0D%0A%3Fobs+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refArea%3E+%3FrefArea.%0D%0A%3FrefArea+rdfs%3Alabel+%3FnameRefArea.%0D%0AFILTER+%28+lang%28%3FnameRefArea%29+%3D+%22es%22+%29.%0D%0ABIND+%28%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fterritorio%2F${this.capitalizeString(this.tipoLocalidadGlobal)}%2F${this.lugarBuscadoParsed}%3E+AS+%3Fmuni%29.%0D%0AFILTER+%28%3FrefArea+IN+%28%3Fmuni%29%29.%0D%0AOPTIONAL+%7B+%3Fobs+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fiaest%2Fmedida%23densidad-de-poblacion-habkm2%3E+%3Fdensidad_de_poblacion_habkm2+%7D+.%0D%0A%7D%0D%0Aorder+by+desc%28%3Fyear%29%0D%0ALIMIT+1%0D%0A&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`;
+    this.resultSvc.getData(this.queryUrlDensidadPoblacion).subscribe((data: any) => {
+      this.densidadPoblacion = (Number(data?.results.bindings[0].densidad_de_poblacion_habkm2.value)).toFixed(1);
+      this.dataDownload[0].densidad = this.densidadPoblacion;
+    });
 
-      if (this.tipoLocalidad === 'diputacion' || this.tipoLocalidad === 'municipio') {
-        this.queryUrlExtension = `https://opendata.aragon.es/sparql?default-graph-uri=&query=select+distinct+%3FrefArea+%3FnameRefArea+str%28%3Fyear%29+AS+%3FnameRefPeriod+xsd%3Aint%28%3Frust%29+as+%3Frustico+xsd%3Aint%28%3Furba%29+as+%3Furbano+where+%7B%0D%0A%3Fobs+qb%3AdataSet+%3Fdataset.%0D%0AFILTER%28%3Fdataset+IN+%28%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fiaest%2Fdataset%2F01-010019A%3E%2C%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fiaest%2Fdataset%2F01-010019TC%3E%2C%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fiaest%2Fdataset%2F01-010019${this.sufijoCuboDatosGlobal}%3E%29%29.%0D%0A%3Fobs+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refPeriod%3E+%3FrefPeriod.%0D%0A%3FrefPeriod+time%3AinXSDgYear+%3Fyear.%0D%0A%3Fobs+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refArea%3E+%3FrefArea.%0D%0A%3FrefArea+rdfs%3Alabel+%3FnameRefArea.%0D%0AFILTER+%28+lang%28%3FnameRefArea%29+%3D+%22es%22+%29.%0D%0ABIND+%28%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fterritorio%2FMunicipio%2F${this.lugarBuscadoParsed}%3E+AS+%3Fmuni%29.%0D%0A%3Fmuni+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2FAragopedia%23enComarca%3E+%3Fcomarca.%0D%0A%3Fmuni+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2FAragopedia%23enComunidadAutonoma%3E+%3Fccaa.%0D%0AFILTER+%28%3FrefArea+IN+%28%3Fmuni%2C+%3Fccaa%29%29.%0D%0AOPTIONAL+%7B+%3Fobs+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fiaest%2Fmedida%23rustico-superficie%3E+%3Frust+%7D+.%0D%0AOPTIONAL+%7B+%3Fobs+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fiaest%2Fmedida%23urbano-superficie%3E+%3Furba+%7D+.%0D%0A%7D%0D%0AORDER+BY+desc%28%3Fyear%29%2C%3FrefArea%0D%0ALIMIT+2%0D%0A&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`;
-      } else {
-        this.queryUrlExtension = `https://opendata.aragon.es/sparql?default-graph-uri=&query=select+distinct+%3FrefArea+%3FnameRefArea+str%28%3Fyear%29+AS+%3FnameRefPeriod+xsd%3Aint%28%3Frust%29+as+%3Frustico+xsd%3Aint%28%3Furba%29+as+%3Furbano+where+%7B%0D%0A%3Fobs+qb%3AdataSet+%3Fdataset.%0D%0AFILTER%28%3Fdataset+IN+%28%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fiaest%2Fdataset%2F01-010019A%3E%2C%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fiaest%2Fdataset%2F01-010019TC%3E%2C%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fiaest%2Fdataset%2F01-010019${this.sufijoCuboDatosGlobal}%3E%29%29.%0D%0A%3Fobs+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refPeriod%3E+%3FrefPeriod.%0D%0A%3FrefPeriod+time%3AinXSDgYear+%3Fyear.%0D%0A%3Fobs+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refArea%3E+%3FrefArea.%0D%0A%3FrefArea+rdfs%3Alabel+%3FnameRefArea.%0D%0AFILTER+%28+lang%28%3FnameRefArea%29+%3D+%22es%22+%29.%0D%0ABIND+%28%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fterritorio%2FMunicipio%2F${this.lugarBuscadoParsed}%3E+AS+%3Fmuni%29.%0D%0A%3Fmuni+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2FAragopedia%23enComarca%3E+%3Fcomarca.%0D%0A%3Fmuni+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2FAragopedia%23enComunidadAutonoma%3E+%3Fccaa.%0D%0AFILTER+%28%3FrefArea+IN+%28%3Fmuni%2C+%3Fccaa%29%29.%0D%0AOPTIONAL+%7B+%3Fobs+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fiaest%2Fmedida%23rustico-superficie%3E+%3Frust+%7D+.%0D%0AOPTIONAL+%7B+%3Fobs+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fiaest%2Fmedida%23urbano-superficie%3E+%3Furba+%7D+.%0D%0A%7D%0D%0AORDER+BY+desc%28%3Fyear%29%2C%3FrefArea%0D%0ALIMIT+2%0D%0A&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`;
-      }
-      if (this.tipoLocalidad === 'municipio') {
-        this.queryUrlPoblacion = `https://opendata.aragon.es/sparql?default-graph-uri=&query=select+distinct+%3FrefArea+%3FnameRefArea+%3FnameRefPeriod+%3Fpoblac+where+%7B%0D%0A%0D%0Aselect+distinct+%3FrefArea+%3FnameRefArea+str%28%3Fyear%29+AS+%3FnameRefPeriod+xsd%3Aint%28%3Fpoblacion%29+as+%3Fpoblac+where+%7B%0D%0A%3Fobs+qb%3AdataSet+%3Fdataset.%0D%0AFILTER%28%3Fdataset+IN+%28%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fiaest%2Fdataset%2F03-030001A%3E%2C%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fiaest%2Fdataset%2F03-030001TC%3E%2C%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fiaest%2Fdataset%2F03-030001TM%3E%29%29.%0D%0A%3Fobs+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refPeriod%3E+%3FrefPeriod.%0D%0A%3FrefPeriod+time%3AinXSDgYear+%3Fyear.%0D%0A%3Fobs+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refArea%3E+%3FrefArea.%0D%0A%3FrefArea+rdfs%3Alabel+%3FnameRefArea.%0D%0AFILTER+%28+lang%28%3FnameRefArea%29+%3D+%22es%22+%29.%0D%0ABIND+%28%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fterritorio%2F${this.capitalizeString(this.tipoLocalidadGlobal)}%2F${this.lugarBuscadoParsed}%3E+AS+%3Fmuni%29.%0D%0A%3Fmuni+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2FAragopedia%23enComarca%3E+%3Fcomarca.%0D%0A%3Fmuni+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2FAragopedia%23enComunidadAutonoma%3E+%3Fccaa.%0D%0AFILTER+%28%3FrefArea+IN+%28%3Fmuni%2C+%3Fcomarca%2C+%3Fccaa%29%29.%0D%0AOPTIONAL+%7B+%3Fobs+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fiaest%2Fmedida%23poblacion%3E+%3Fpoblacion+%7D+.%0D%0A%7D%0D%0AORDER+BY+desc%28%3Fyear%29%2C+%3FrefArea%0D%0ALIMIT+15%0D%0A%7D%0D%0Aorder+by+%3FrefArea%0D%0A&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`;
-      } else if (this.tipoLocalidad === 'comarca') {
-        this.queryUrlPoblacion = `https://opendata.aragon.es/sparql?default-graph-uri=&query=select+distinct+%3FrefArea+%3FnameRefArea+%3FrefPeriod+%28strafter%28str%28%3FrefPeriod%29%2C+%22http%3A%2F%2Freference.data.gov.uk%2Fid%2Fyear%2F%22%29+AS+%3FnameRefPeriod%29+sum+%28%3Fpoblac+%29+as+%3Fpoblac++++where+%7B%0D%0A+%3Fobs+qb%3AdataSet+%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fiaest%2Fdataset%2F03-030001TC%3E.%0D%0A+%3Fobs+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refPeriod%3E+%3FrefPeriod.%0D%0AFILTER+%28%3FrefPeriod+IN+%28%3Chttp%3A%2F%2Freference.data.gov.uk%2Fid%2Fyear%2F2017%3E%2C%3Chttp%3A%2F%2Freference.data.gov.uk%2Fid%2Fyear%2F2018%3E%2C%3Chttp%3A%2F%2Freference.data.gov.uk%2Fid%2Fyear%2F2019%3E%2C%3Chttp%3A%2F%2Freference.data.gov.uk%2Fid%2Fyear%2F2020%3E%2C%3Chttp%3A%2F%2Freference.data.gov.uk%2Fid%2Fyear%2F2021%3E%29%29.%0D%0A+%3Fobs+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refArea%3E+%3FrefArea.%0D%0A+%3FrefArea+rdfs%3Alabel+%3FnameRefArea.+FILTER+%28+lang%28%3FnameRefArea%29+%3D+%22es%22+%29.FILTER+%28%3FrefArea+IN+%28%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fterritorio%2FComarca%2F${this.lugarBuscadoParsed}%3E%29%29.%0D%0AOPTIONAL+%7B++%3Fobs+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fiaest%2Fmedida%23poblacion%3E+%3Fpoblac++%7D+.%0D%0A%7D+%0D%0A%0D%0ALIMIT+300&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`
-      } else {
-        this.queryUrlPoblacion = `https://opendata.aragon.es/sparql?default-graph-uri=&query=select+distinct+%3FrefArea+%3FnameRefArea+%3FrefPeriod+%28strafter%28str%28%3FrefPeriod%29%2C+%22http%3A%2F%2Freference.data.gov.uk%2Fid%2Fyear%2F%22%29+AS+%3FnameRefPeriod%29+sum+%28%3Fpoblac+%29+as+%3Fpoblac++++where+%7B%0D%0A+%3Fobs+qb%3AdataSet+%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fiaest%2Fdataset%2F03-030001TM%3E.%0D%0A+%3Fobs+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refPeriod%3E+%3FrefPeriod.%0D%0AFILTER+%28%3FrefPeriod+IN+%28%3Chttp%3A%2F%2Freference.data.gov.uk%2Fid%2Fyear%2F2017%3E%2C%3Chttp%3A%2F%2Freference.data.gov.uk%2Fid%2Fyear%2F2018%3E%2C%3Chttp%3A%2F%2Freference.data.gov.uk%2Fid%2Fyear%2F2019%3E%2C%3Chttp%3A%2F%2Freference.data.gov.uk%2Fid%2Fyear%2F2020%3E%2C%3Chttp%3A%2F%2Freference.data.gov.uk%2Fid%2Fyear%2F2021%3E%29%29.%0D%0A+%3Fobs+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refArea%3E+%3FrefArea.%0D%0A+%3FrefArea+rdfs%3Alabel+%3FnameRefArea.+FILTER+%28+lang%28%3FnameRefArea%29+%3D+%22es%22+%29.FILTER+%28%3FrefArea+IN+%28%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fterritorio%2FMunicipio%2F${this.lugarBuscadoParsed}%3E%29%29.%0D%0AOPTIONAL+%7B++%3Fobs+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fiaest%2Fmedida%23poblacion%3E+%3Fpoblac++%7D+.%0D%0A%7D+%0D%0A%0D%0ALIMIT+300&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`
-      }
+    this.resultSvc.getData(this.queryUrlTotalCreativeWork).subscribe(data => {
+      this.numberOfCreativeWork = data?.results.bindings.length;
+    })
 
-      this.queryUrlCreativeWork = `https://opendata.aragon.es/sparql?default-graph-uri=&query=PREFIX+schema%3A+%3Chttp%3A%2F%2Fschema.org%2F%3E%0D%0A%0D%0Aselect+%3Ftitle+%3Furl+%3Ftema+%3Fresumen%0D%0Awhere+%7B%0D%0A++%3Fs+a+schema%3ACreativeWork%3B%0D%0A+++++++schema%3Aabout+%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fterritorio%2F${this.capitalizeString(this.tipoLocalidadGlobal)}%2F${this.lugarBuscadoParsed}%3E%3B%0D%0A+++++++schema%3Atitle+%3Ftitle%3B%0D%0A+++++++schema%3Aurl+%3Furl%3B%0D%0A+++++++schema%3Aconcept+%3Ftema%3B%0D%0Aschema%3Aabstract+%3Fresumen.%0D%0A%7D%0D%0Alimit+10&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`;
+    this.resultSvc.getData(this.queryUrlCreativeWork).subscribe((data: any) => {
+      this.creativeWork = data?.results.bindings;
 
-      this.queryUrlTotalCreativeWork = `https://opendata.aragon.es/sparql?default-graph-uri=&query=PREFIX+schema%3A+%3Chttp%3A%2F%2Fschema.org%2F%3E%0D%0A%0D%0Aselect+%3Ftitle+%3Furl+%3Ftema+%3Fresumen%0D%0Awhere+%7B%0D%0A++%3Fs+a+schema%3ACreativeWork%3B%0D%0A+++++++schema%3Aabout+%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fterritorio%2F${this.capitalizeString(this.tipoLocalidadGlobal)}%2F${this.lugarBuscadoParsed}%3E%3B%0D%0A+++++++schema%3Atitle+%3Ftitle%3B%0D%0A+++++++schema%3Aurl+%3Furl%3B%0D%0A+++++++schema%3Aconcept+%3Ftema%3B%0D%0Aschema%3Aabstract+%3Fresumen.%0D%0A%7D&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`;
+      this.dataDownload[0].mencionesEnPublicaciones = this.numberOfCreativeWork;
 
-      this.queryUrlRatioSuelo = `https://opendata.aragon.es/sparql?default-graph-uri=&query=select+distinct+%3FrefArea+%3FnameRefArea+%28strafter%28str%28%3FrefPeriod%29%2C+%22http%3A%2F%2Freference.data.gov.uk%2Fid%2Fyear%2F%22%29+AS+%3FnameRefPeriod%29+xsd%3Aint%28%3Frust%29+as+%3Frustico+xsd%3Aint%28%3Furba%29+as+%3Furbano+where+%7B%0D%0A+++%3Fobs+qb%3AdataSet+%3Fdataset.%0D%0A+++FILTER%28%3Fdataset+IN+%28%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fiaest%2Fdataset%2F01-010019A%3E%2C%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fiaest%2Fdataset%2F01-010019TC%3E%2C%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fiaest%2Fdataset%2F01-010019TM%3E%29%29.%0D%0A+%3Fobs+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refPeriod%3E+%3FrefPeriod.%0D%0A+FILTER+%28%3FrefPeriod+IN+%28%3Chttp%3A%2F%2Freference.data.gov.uk%2Fid%2Fyear%2F2018%3E%2C%3Chttp%3A%2F%2Freference.data.gov.uk%2Fid%2Fyear%2F2019%3E%2C%3Chttp%3A%2F%2Freference.data.gov.uk%2Fid%2Fyear%2F2020%3E%2C%3Chttp%3A%2F%2Freference.data.gov.uk%2Fid%2Fyear%2F2021%3E%29%29.%0D%0A+%3Fobs+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refArea%3E+%3FrefArea.%0D%0A+%3FrefArea+rdfs%3Alabel+%3FnameRefArea.+%0D%0A+FILTER+%28+lang%28%3FnameRefArea%29+%3D+%22es%22+%29.%0D%0A+BIND+%28%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fterritorio%2F${this.capitalizeString(this.tipoLocalidadGlobal)}%2F${this.lugarBuscadoParsed}%3E+AS+%3Fmuni%29.%0D%0A+%3Fmuni+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2FAragopedia%23enComarca%3E+%3Fcomarca.%0D%0A+%3Fmuni+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2FAragopedia%23enComunidadAutonoma%3E+%3Fccaa.%0D%0A+FILTER+%28%3FrefArea+IN+%28%3Fmuni%2C+%3Fccaa%29%29.%0D%0A+OPTIONAL+%7B++%3Fobs+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fiaest%2Fmedida%23rustico-superficie%3E+%3Frust++%7D+.%0D%0A+OPTIONAL+%7B++%3Fobs+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fiaest%2Fmedida%23urbano-superficie%3E+%3Furba++%7D+.%0D%0A%7D%0D%0AORDER+BY+desc%28%3FrefPeriod%29%2C%3FrefArea%0D%0ALIMIT+2%0D%0A&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`;
-
-      this.queryUrlIncendios = `https://opendata.aragon.es/sparql?default-graph-uri=&query=select+distinct++%3FrefArea+%3FnameRefArea+sum+%28%3Fincendios+%29+as+%3Fincendios+++sum+%28xsd%3Adouble%28%3Fsuperficie_forestal_afectada%29+%29+as+%3Fsuperficie_forestal_afectada+++%0D%0A+where+%7B%0D%0A+++%3Fobs+qb%3AdataSet+%3Fdataset.%0D%0A+++FILTER%28%3Fdataset+IN+%28%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fiaest%2Fdataset%2F04-040017${this.sufijoCuboDatosGlobal}%3E%29%29.%0D%0A+%3Fobs+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refPeriod%3E+%3FrefPeriod.%0D%0AFILTER+%28%3FrefPeriod+IN+%28%3Chttp%3A%2F%2Freference.data.gov.uk%2Fid%2Fyear%2F2001%3E%2C%3Chttp%3A%2F%2Freference.data.gov.uk%2Fid%2Fyear%2F2002%3E%2C%3Chttp%3A%2F%2Freference.data.gov.uk%2Fid%2Fyear%2F2003%3E%2C%3Chttp%3A%2F%2Freference.data.gov.uk%2Fid%2Fyear%2F2004%3E%2C%3Chttp%3A%2F%2Freference.data.gov.uk%2Fid%2Fyear%2F2005%3E%2C%3Chttp%3A%2F%2Freference.data.gov.uk%2Fid%2Fyear%2F2006%3E%2C%3Chttp%3A%2F%2Freference.data.gov.uk%2Fid%2Fyear%2F2007%3E%2C%3Chttp%3A%2F%2Freference.data.gov.uk%2Fid%2Fyear%2F2008%3E%2C%3Chttp%3A%2F%2Freference.data.gov.uk%2Fid%2Fyear%2F2009%3E%2C%3Chttp%3A%2F%2Freference.data.gov.uk%2Fid%2Fyear%2F2010%3E%2C%3Chttp%3A%2F%2Freference.data.gov.uk%2Fid%2Fyear%2F2011%3E%2C%3Chttp%3A%2F%2Freference.data.gov.uk%2Fid%2Fyear%2F2012%3E%2C%3Chttp%3A%2F%2Freference.data.gov.uk%2Fid%2Fyear%2F2013%3E%2C%3Chttp%3A%2F%2Freference.data.gov.uk%2Fid%2Fyear%2F2014%3E%2C%3Chttp%3A%2F%2Freference.data.gov.uk%2Fid%2Fyear%2F2015%3E%2C%3Chttp%3A%2F%2Freference.data.gov.uk%2Fid%2Fyear%2F2016%3E%2C%3Chttp%3A%2F%2Freference.data.gov.uk%2Fid%2Fyear%2F2017%3E%2C%3Chttp%3A%2F%2Freference.data.gov.uk%2Fid%2Fyear%2F2018%3E%2C%3Chttp%3A%2F%2Freference.data.gov.uk%2Fid%2Fyear%2F2019%3E%2C%3Chttp%3A%2F%2Freference.data.gov.uk%2Fid%2Fyear%2F2020%3E%29%29.%0D%0A+%3Fobs+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refArea%3E+%3FrefArea.%0D%0A+%3FrefArea+rdfs%3Alabel+%3FnameRefArea.+%0D%0A+FILTER+%28+lang%28%3FnameRefArea%29+%3D+%22es%22+%29.%0D%0A+BIND+%28%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fterritorio%2F${this.capitalizeString(this.tipoLocalidadGlobal)}%2F${this.lugarBuscadoParsed}%3E+AS+%3Fmuni%29.%0D%0A+FILTER+%28%3FrefArea+IN+%28%3Fmuni%29%29.%0D%0AOPTIONAL+%7B++%3Fobs+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fiaest%2Fmedida%23incendios%3E+%3Fincendios++%7D+.%0D%0AOPTIONAL+%7B++%3Fobs+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fiaest%2Fmedida%23superficie-forestal-afectada%3E+%3Fsuperficie_forestal_afectada++%7D+.%0D%0A%7D%0D%0Agroup+by+++%3FrefArea+%3FnameRefArea%0D%0ALIMIT+20%0D%0A&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`;
-
-
-      this.queryUrlEsPoblado = `https://opendata.aragon.es/sparql?default-graph-uri=&query=select+%3Festa+where%0D%0A%7B%0D%0A++select+distinct+%3FrefArea+%3FrefArea%3D%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fterritorio%2F${this.capitalizeString(this.tipoLocalidadGlobal)}%2F${this.lugarBuscadoParsed}%3E+as+%3Festa++where+%7B%0D%0A+++%3Fobs+qb%3AdataSet+%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fiaest%2Fdataset%2F03-030001${this.sufijoCuboDatosGlobal}%3E.%0D%0A+++%3Fobs+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refPeriod%3E+%3FrefPeriod.%0D%0A++%7B+select+distinct+%3FrefPeriod+where+%7B%0D%0A+++++++++++++++++++++++++++++++++++++++++++++++++++%3Fobs+qb%3AdataSet+%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fiaest%2Fdataset%2F03-030001${this.sufijoCuboDatosGlobal}%3E.%0D%0A++++++++++++++++++++++++++++++++++++++++++++++++++++%3Fobs+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refPeriod%3E+%3FrefPeriod.%0D%0A+++++++++++++++++++++++++++++++++++++++++++++%7D%0D%0A+++++++++++++++++++++++++++++++++++++++++++++ORDER+BY+desc%28%3FrefPeriod%29%0D%0A+++++++++++++++++++++++++++++++++++++++++++++LIMIT+1++%7D%0D%0A%0D%0A+++%3Fobs+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refArea%3E+%3FrefArea.%0D%0A+++%3FrefArea+rdfs%3Alabel+%3FnameRefArea.+%0D%0A+++FILTER+%28+lang%28%3FnameRefArea%29+%3D+%22es%22+%29.%0D%0A+++%3Fmuni+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2FAragopedia%23enComunidadAutonoma%3E+%3Fccaa.%0D%0A+++FILTER+%28%3FrefArea+IN+%28%3Fmuni%29%29.%0D%0A+++OPTIONAL+%7B++%3Fobs+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fiaest%2Fmedida%23poblacion%3E+%3Fpoblacion++%7D+.%0D%0A%7D%0D%0AORDER+BY+desc%28%3FrefPeriod%29%2C+desc%28%3Fpoblacion%29%2C+%3FrefArea%0D%0ALIMIT+20%0D%0A%7D%0D%0Aorder+by+desc+%28%3Festa%29%0D%0Alimit+1&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`;
-
-      this.queryUrlEdadMedia = `https://opendata.aragon.es/sparql?default-graph-uri=&query=select+distinct+%3Fobs+%3FrefArea+%3FnameRefArea+%28strafter%28str%28%3FrefPeriod%29%2C+%22http%3A%2F%2Freference.data.gov.uk%2Fid%2Fyear%2F%22%29+AS+%3FnameRefPeriod%29+xsd%3Afloat%28%3Fvalor%29+as+%3Fval+%3Fsexo+where+%7B%0D%0A+++%3Fobs+qb%3AdataSet+%3Fdataset.%0D%0A+++%3Fobs+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refPeriod%3E+%3FrefPeriod.%0D%0A++%7B+select+distinct+%3FrefPeriod+where+%7B%0D%0A+++++++++++++++++++++++++++++++++++++++++++++++++++%3Fobs+qb%3AdataSet+%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fiaest%2Fdataset%2F03-030006${this.sufijoCuboDatosGlobal}%3E.%0D%0A++++++++++++++++++++++++++++++++++++++++++++++++++++%3Fobs+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refPeriod%3E+%3FrefPeriod.%0D%0A+++++++++++++++++++++++++++++++++++++++++++++%7D%0D%0A+++++++++++++++++++++++++++++++++++++++++++++ORDER+BY+desc%28%3FrefPeriod%29%0D%0A+++++++++++++++++++++++++++++++++++++++++++++LIMIT+1++%7D%0D%0A%0D%0A+++%3Fobs+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refArea%3E+%3FrefArea.%0D%0A+++%3FrefArea+rdfs%3Alabel+%3FnameRefArea.+%0D%0AVALUES+%3Fdataset+%7B+%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fiaest%2Fdataset%2F03-030006TM%3E+%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fiaest%2Fdataset%2F03-030006TC%3E++%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fiaest%2Fdataset%2F03-030006A%3E%7D%0D%0A+++FILTER+%28+lang%28%3FnameRefArea%29+%3D+%22es%22+%29.%0D%0A+++BIND+%28%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fterritorio%2F${this.capitalizeString(this.tipoLocalidadGlobal)}%2F${this.lugarBuscadoParsed}%3E+AS+%3Fmuni%29.%0D%0A+++%3Fmuni+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2FAragopedia%23enComarca%3E+%3Fcomarca.%0D%0A+++%3Fmuni2+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2FAragopedia%23enComarca%3E+%3Fcomarca.%0D%0A+++%3Fmuni+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2FAragopedia%23enComunidadAutonoma%3E+%3Fccaa.%0D%0A+++FILTER+%28%3FrefArea+IN+%28%3Fmuni%2C+%3Fcomarca%2C+%3Fccaa%29%29.%0D%0A%3Fobs+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fiaest%2Fdimension%23sexo%3E+%3Ffoo1.%0D%0A+%3Ffoo1+skos%3AprefLabel+%3Fsexo++.%0D%0A+++OPTIONAL+%7B++%3Fobs+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fiaest%2Fmedida%23edad-media-de-la-poblacion%3E+%3Fvalor++%7D+.%0D%0A%7D%0D%0AORDER+BY+desc%28%3FrefPeriod%29%2C+desc%28%3Fval%29%2C+%3FrefArea%2C+%3Fsexo%0D%0ALIMIT+100%0D%0A&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`;
-
-      this.queryUrlLocales = `https://opendata.aragon.es/sparql?default-graph-uri=&query=select+distinct%0D%0A%3FrefArea+%3FnameRefArea+%3FrefPeriod+str%28%3Fyear%29+AS+%3FnameRefPeriod%0D%0Axsd%3Aint%28%3Fnumero_de_edificios%29+where+%7B%0D%0A%3Fobs+qb%3AdataSet+%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fiaest%2Fdataset%2F01-010009${this.sufijoCuboDatosGlobal}%3E.%0D%0A%3Fobs+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refPeriod%3E+%3FrefPeriod.%0D%0A%3FrefPeriod+time%3AinXSDgYear+%3Fyear.%0D%0A%3Fobs+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refArea%3E+%3FrefArea.%0D%0A%3FrefArea+rdfs%3Alabel+%3FnameRefArea.+FILTER+%28+lang%28%3FnameRefArea%29+%3D+%22es%22+%29.FILTER+%28%3FrefArea+IN+%28%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fterritorio%2F${this.capitalizeString(this.tipoLocalidadGlobal)}%2F${this.lugarBuscadoParsed}%3E%29%29.%0D%0A%3Fobs+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fiaest%2Fdimension%23tipo-edificio-detalle%3E+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fkos%2Fiaest%2Ftipo-edificio-detalle%2Flocales%3E.%0D%0A%3Fobs+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fiaest%2Fmedida%23numero-de-edificios%3E+%3Fnumero_de_edificios+.%0D%0A%7D%0D%0Aorder+by+desc%28%3Fyear%29%0D%0ALIMIT+1%0D%0A&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`
-
-
-      //Obtención de datos NOMBRE MUNICIPIO
-
-      this.resultSvc.getData(this.queryUrlExtension).subscribe((data: any) => {
-        if (data?.results.bindings.length !== 0) {
-          this.sueloUrbano = data.results.bindings[1].urbano.value;
-          this.sueloRural = data.results.bindings[1].rustico.value;
-          this.dataDownload[0].sueloRural = this.sueloRural;
-          this.dataDownload[0].sueloUrbano = this.sueloUrbano;
-        }
-      });
-
-      this.resultSvc.getData(this.queryUrlDensidadPoblacion).subscribe((data: any) => {
-        this.densidadPoblacion = (Number(data?.results.bindings[0].densidad_de_poblacion_habkm2.value)).toFixed(1);
-        this.dataDownload[0].densidad = this.densidadPoblacion;
-      });
-
-      this.resultSvc.getData(this.queryUrlTotalCreativeWork).subscribe(data => {
-        this.numberOfCreativeWork = data?.results.bindings.length;
-      })
-
-      this.resultSvc.getData(this.queryUrlCreativeWork).subscribe((data: any) => {
-        this.creativeWork = data?.results.bindings;
-
-        this.dataDownload[0].mencionesEnPublicaciones = this.numberOfCreativeWork;
-
-        this.creativeWork?.forEach((element: any) => {
-          let publicaciones = `Titulo: ${element.title.value}; url: ${element.url.value}; Tema: ${element.tema.value}; Abstract: ${element.resumen.value}`;
-          this.dataDownload[0].creativeWorks += publicaciones;
-        });
-
-      });
-
-      this.resultSvc.getData(this.queryUrlPoblacion).subscribe((data: any) => {
-        if (this.tipoLocalidad === 'municipio') {
-          ;
-          this.poblacion = data?.results.bindings.find((lugar: any) => lugar.nameRefArea.value.toLowerCase() === this.lugarBuscado.replace('Zaragóza', 'Zaragoza').toLowerCase()).poblac.value;
-          this.dataDownload[0].habitantes = this.poblacion;
-          this.comunidadActual = data?.results.bindings[0].nameRefArea.value;
-
-          this.tablaPoblacion = data?.results.bindings;
-          for (let i = 0; i < 5; i++) {
-            this.yearsTablaPoblacion.push(data?.results.bindings[i].nameRefPeriod.value);
-          }
-          for (let i = 5; i < 10; i++) {
-            const element = this.tablaPoblacion[i].nameRefArea.value;
-            this.comunidad.push(element);
-          }
-          for (let i = 0; i < 5; i++) {
-            const element = this.tablaPoblacion[i].nameRefArea.value;
-            this.provincia.push(element);
-          }
-          for (let i = 10; i < 15; i++) {
-            const element = this.tablaPoblacion[i].nameRefArea.value;
-            this.municipio.push(element);
-          }
-        } else if (this.tipoLocalidad === 'comarca') {
-          this.poblacion = data.results.bindings[4].poblac.value;
-        } else {
-          this.poblacion = data.results.bindings[0].poblac.value;
-        }
-
-      });
-
-
-      this.resultSvc.getData(this.queryUrlRatioSuelo).subscribe((data: any) => {
-        if (data.results.bindings.length !== 0) {
-          let totalUrbano = data?.results.bindings[0].urbano.value;
-          let totalRural = data?.results.bindings[0].rustico.value;
-
-          this.porcentajeSueloRural = ((this.sueloRural / totalRural) * 100).toFixed(2);
-          this.porcentajeSueloUrbano = ((this.sueloUrbano / totalUrbano) * 100).toFixed(2);
-
-          this.dataDownload[0].porcentajeSueloRural = this.porcentajeSueloRural;
-          this.dataDownload[0].porcentajeSueloUrbano = this.porcentajeSueloUrbano;
-        }
-      });
-
-      this.resultSvc.getData(this.queryUrlIncendios).subscribe((data: any) => {
-        this.incendiosUltimosAnos = data?.results.bindings[0].incendios.value;
-        this.hectareasQuemadas = data?.results.bindings[0].superficie_forestal_afectada.value;
-        this.dataDownload[0].incendiosDesde2022 = this.incendiosUltimosAnos;
-        this.dataDownload[0].hectareasAfectadasPorIncendios = this.hectareasQuemadas;
-      });
-
-      this.resultSvc.getData(this.queryUrlEsPoblado).subscribe((data) => {
-        this.esPoblado = data?.results.bindings[0].esta.value;
-        this.dataDownload[0].esDeLosMasPoblados = this.esPoblado;
-
-      });
-
-      this.resultSvc.getData(this.queryUrlEdadMedia).subscribe((data) => {
-        if (data.results.bindings.length !== 0) {
-          this.edadMediaMujeres = Number(data?.results.bindings[0].val.value).toFixed(2);
-          this.edadMediaHombres = Number(data?.results.bindings[1].val.value).toFixed(2);
-          this.dataDownload[0].edadMediaHombres = this.edadMediaHombres;
-          this.dataDownload[0].edadMediaMujeres = this.edadMediaMujeres;
-        }
-      });
-
-      this.resultSvc.getData(this.queryUrlLocales).subscribe(data => {
-        ////////console.log(this.queryUrlLocales);
-
-        this.locales = data.results.bindings[0]['callret-4'].value;
+      this.creativeWork?.forEach((element: any) => {
+        let publicaciones = `Titulo: ${element.title.value}; url: ${element.url.value}; Tema: ${element.tema.value}; Abstract: ${element.resumen.value}`;
+        this.dataDownload[0].creativeWorks += publicaciones;
       });
 
     });
+
+    this.resultSvc.getData(this.queryUrlPoblacion).subscribe((data: any) => {
+      if (this.tipoLocalidad === 'municipio') {
+        ;
+        this.poblacion = data?.results.bindings.find((lugar: any) => lugar.nameRefArea.value.toLowerCase() === this.lugarBuscado.replace('Zaragóza', 'Zaragoza').toLowerCase()).poblac.value;
+        this.dataDownload[0].habitantes = this.poblacion;
+        this.comunidadActual = data?.results.bindings[0].nameRefArea.value;
+
+        this.tablaPoblacion = data?.results.bindings;
+        for (let i = 0; i < 5; i++) {
+          this.yearsTablaPoblacion.push(data?.results.bindings[i].nameRefPeriod.value);
+        }
+        for (let i = 5; i < 10; i++) {
+          const element = this.tablaPoblacion[i].nameRefArea.value;
+          this.comunidad.push(element);
+        }
+        for (let i = 0; i < 5; i++) {
+          const element = this.tablaPoblacion[i].nameRefArea.value;
+          this.provincia.push(element);
+        }
+        for (let i = 10; i < 15; i++) {
+          const element = this.tablaPoblacion[i].nameRefArea.value;
+          this.municipio.push(element);
+        }
+      } else if (this.tipoLocalidad === 'comarca') {
+        this.poblacion = data.results.bindings[4].poblac.value;
+      } else {
+        this.poblacion = data.results.bindings[0].poblac.value;
+      }
+
+    });
+
+
+    this.resultSvc.getData(this.queryUrlRatioSuelo).subscribe((data: any) => {
+      if (data.results.bindings.length !== 0) {
+        let totalUrbano = data?.results.bindings[0].urbano.value;
+        let totalRural = data?.results.bindings[0].rustico.value;
+
+        this.porcentajeSueloRural = ((this.sueloRural / totalRural) * 100).toFixed(2);
+        this.porcentajeSueloUrbano = ((this.sueloUrbano / totalUrbano) * 100).toFixed(2);
+
+        this.dataDownload[0].porcentajeSueloRural = this.porcentajeSueloRural;
+        this.dataDownload[0].porcentajeSueloUrbano = this.porcentajeSueloUrbano;
+      }
+    });
+
+    this.resultSvc.getData(this.queryUrlIncendios).subscribe((data: any) => {
+      this.incendiosUltimosAnos = data?.results.bindings[0].incendios.value;
+      this.hectareasQuemadas = data?.results.bindings[0].superficie_forestal_afectada.value;
+      this.dataDownload[0].incendiosDesde2022 = this.incendiosUltimosAnos;
+      this.dataDownload[0].hectareasAfectadasPorIncendios = this.hectareasQuemadas;
+    });
+
+    this.resultSvc.getData(this.queryUrlEsPoblado).subscribe((data) => {
+      this.esPoblado = data?.results.bindings[0].esta.value;
+      this.dataDownload[0].esDeLosMasPoblados = this.esPoblado;
+
+    });
+
+    this.resultSvc.getData(this.queryUrlEdadMedia).subscribe((data) => {
+      if (data.results.bindings.length !== 0) {
+        this.edadMediaMujeres = Number(data?.results.bindings[0].val.value).toFixed(2);
+        this.edadMediaHombres = Number(data?.results.bindings[1].val.value).toFixed(2);
+        this.dataDownload[0].edadMediaHombres = this.edadMediaHombres;
+        this.dataDownload[0].edadMediaMujeres = this.edadMediaMujeres;
+      }
+    });
+
+    this.resultSvc.getData(this.queryUrlLocales).subscribe(data => {
+      ////////console.log(this.queryUrlLocales);
+
+      this.locales = data.results.bindings[0]['callret-4'].value;
+    });
+
+  });
 
     // DATOS ARAGOPEDIA
 
     this.queryTemas = "https://opendata.aragon.es/solrWIKI/informesIAEST/select?q=*&rows=2000&omitHeader=true&wt=json"
 
-    this.resultSvc.getData(this.queryTemas).subscribe(data => {
-      this.temasAragopedia = data.response.docs;
-      let unique = [... new Set(data.response.docs.map((item: { Descripcion: any }) => item.Descripcion))];
-      this.temasAragopedia.forEach((tema: any) => {
-        if (tema.Tipo === 'A') {
-          this.temasComunidad.push(tema)
-        } else if (tema.Tipo === 'TP') {
-          this.temasProvincia.push(tema)
-        } else if (tema.Tipo === 'TC') {
-          this.temasComarca.push(tema)
-        } else if (tema.Tipo === 'TM') {
-          this.temasMunicipio.push(tema);
-        }
-      });
+this.resultSvc.getData(this.queryTemas).subscribe(data => {
+  this.temasAragopedia = data.response.docs;
+  let unique = [... new Set(data.response.docs.map((item: { Descripcion: any }) => item.Descripcion))];
+  this.temasAragopedia.forEach((tema: any) => {
+    if (tema.Tipo === 'A') {
+      this.temasComunidad.push(tema)
+    } else if (tema.Tipo === 'TP') {
+      this.temasProvincia.push(tema)
+    } else if (tema.Tipo === 'TC') {
+      this.temasComarca.push(tema)
+    } else if (tema.Tipo === 'TM') {
+      this.temasMunicipio.push(tema);
+    }
+  });
 
-      if (this.tipoLocalidad === 'comarca') {
-        this.showTemas = this.temasComarca;
-        this.filteredTemas = this.showTemas;
+  if (this.tipoLocalidad === 'comarca') {
+    this.showTemas = this.temasComarca;
+    this.filteredTemas = this.showTemas;
 
-      } else if (this.tipoLocalidad === 'municipio') {
-        this.showTemas = this.temasMunicipio;
-        this.filteredTemas = this.showTemas;
+  } else if (this.tipoLocalidad === 'municipio') {
+    this.showTemas = this////console.logio;
+    this.filteredTemas = this.showTemas;
 
-      } else if (this.tipoLocalidad === 'diputacion') {
-        this.showTemas = this.temasProvincia
-        this.filteredTemas = this.showTemas
+  } else if (this.tipoLocalidad === 'diputacion') {
+    this.showTemas = this.temasProvincia
+    this.filteredTemas = this.showTemas
+  }
+
+  this.showTemas.shift();
+  this.initForm();
+});
+
+  }
+
+//Métodos
+// capitalizeString(str: any): string {
+//   return str.replace(/\w\S*/g, function (txt: any) {
+//     for (let i = 0; i < txt.length; i++) {
+//       if (txt[i].toLowerCase() !== 'de'
+//         && txt[i].toLowerCase() !== 'del'
+//         && txt[i].toLowerCase() !== 'la'
+//         && txt[i].toLowerCase() !== 'las'
+//         && txt[i].toLowerCase() !== 'los') {
+//         return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+//       }
+//     }
+
+//   });
+// }
+
+capitalizeString(str: any): string {
+  return str.replace(/\w\S*/g, function (txt: any) {
+    for (let i = 0; i < txt.length; i++) {
+      if (txt.toLowerCase() === 'el'
+        || txt.toLowerCase() === 'y'
+        || txt.toLowerCase() === 'del'
+        || txt.toLowerCase() === 'de'
+        || txt.toLowerCase() === 'las'
+        || txt.toLowerCase() === 'los') {
+        return txt.toLowerCase();
       }
-
-      this.showTemas.shift();
-      this.initForm();
-    });
-
-  }
-
-  //Métodos
-  // capitalizeString(str: any): string {
-  //   return str.replace(/\w\S*/g, function (txt: any) {
-  //     for (let i = 0; i < txt.length; i++) {
-  //       if (txt[i].toLowerCase() !== 'de'
-  //         && txt[i].toLowerCase() !== 'del'
-  //         && txt[i].toLowerCase() !== 'la'
-  //         && txt[i].toLowerCase() !== 'las'
-  //         && txt[i].toLowerCase() !== 'los') {
-  //         return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-  //       }
-  //     }
-
-  //   });
-  // }
-
-  capitalizeString(str: any): string {
-    return str.replace(/\w\S*/g, function (txt: any) {
-      for (let i = 0; i < txt.length; i++) {
-        if (txt.toLowerCase() === 'el'
-          || txt.toLowerCase() === 'y'
-          || txt.toLowerCase() === 'del'
-          || txt.toLowerCase() === 'de'
-          || txt.toLowerCase() === 'las'
-          || txt.toLowerCase() === 'los') {
-          return txt.toLowerCase();
-        }
-        if (txt.toLowerCase() !== 'de'
-          || txt.toLowerCase() !== 'del'
-          || txt.toLowerCase() !== 'la'
-          || txt.toLowerCase() !== 'las'
-          || txt.toLowerCase() !== 'los') {
-          return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-        }
-        else {
-          return txt.toLowerCase()
-        }
+      if (txt.toLowerCase() !== 'de'
+        || txt.toLowerCase() !== 'del'
+        || txt.toLowerCase() !== 'la'
+        || txt.toLowerCase() !== 'las'
+        || txt.toLowerCase() !== 'los') {
+        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
       }
-
-    });
-  }
-
-  capitalAfterSlash(str: string): string {
-    const index = str.indexOf('/');
-    const replacement = str[index + 1].toUpperCase();
-    return str.replace(str[index + 1], replacement);
-  }
-
-  capitalAfterHyphen(str: string): string {
-    let newStr = str[0];
-    for (let i = 0; i < str.length - 1; i++) {
-
-      const char = str[i];
-      if (char === '-') {
-        newStr += str[i + 1].toUpperCase()
-      } else {
-        newStr += str[i + 1]
+      else {
+        return txt.toLowerCase()
       }
     }
 
-    // if (str.includes('-')) {
-    //   const index = str.indexOf('-');
-    //   const replacement = str[index + 1].toUpperCase();
-    //   return str
-    //     .replaceAll(str[index + 1], replacement)
-    //     .replace('ArcoS', 'Arcos')
-    //     .replace('MonfLorite', 'Monflorite')
-    //     .replace('AínSa', 'Aínsa')
+  });
+}
+
+capitalAfterSlash(str: string): string {
+  const index = str.indexOf('/');
+  const replacement = str[index + 1].toUpperCase();
+  return str.replace(str[index + 1], replacement);
+}
+
+capitalAfterHyphen(str: string): string {
+  let newStr = str[0];
+  for (let i = 0; i < str.length - 1; i++) {
+
+    const char = str[i];
+    if (char === '-') {
+      newStr += str[i + 1].toUpperCase()
+    } else {
+      newStr += str[i + 1]
+    }
+  }
+
+  // if (str.includes('-')) {
+  //   const index = str.indexOf('-');
+  //   const replacement = str[index + 1].toUpperCase();
+  //   return str
+  //     .replaceAll(str[index + 1], replacement)
+  //     .replace('ArcoS', 'Arcos')
+  //     .replace('MonfLorite', 'Monflorite')
+  //     .replace('AínSa', 'Aínsa')
+  // }
+  return newStr;
+}
+
+deleteSpace(str: any): string {
+  return str.split(' ').join('_');
+}
+
+reduceText(text: string): string {
+  const reducedText = text.substr(0, 120);
+  return (
+    this.leerMas ? text : reducedText
+  )
+}
+
+replaceWord(str: string): string {
+  return str
+    .replace('ARAGON', 'ARAGÓN')
+    .replace('ARAGO', 'ARAGÓ')
+    .replace('GALLEGO', 'GÁLLEGO')
+    .replace('MARTIN', 'MARTÍN')
+    .replace('GUDAR', 'GÚDAR')
+    .replace('ALBARRACIN', 'ALBARRACÍN')
+    .replace('VALDEJALON', 'VALDEJALÓN')
+    .replace('JACETANIA,_LA', 'LA_JACETANIA')
+    .replace('/', '-')
+}
+
+replaceCaspe(str: string): string {
+  return str
+    .replace('-baix', '/Baix')
+    .replace('-Baix', '/Baix')
+    .replace('-Plana', '/Plana')
+    .replace('Matarraña-', 'Matarraña/')
+}
+
+createNameForUrl(str: string): string {
+  const nameIndex = str.lastIndexOf('/') + 1;
+  return str.substring(nameIndex);
+}
+
+fileDownload() {
+  const options = {
+    fieldSeparator: ',',
+    quoteStrings: '"',
+    decimalseparator: '.',
+    showLabels: true,
+    showTitle: true,
+    title: `Ficha de ${this.lugarBuscado}`,
+    useBom: true,
+    noDownload: false,
+    headers: ["Nombre", "Email", "Teléfono", "Dirección", "Código Postal", "Habitantes", "Suelo Rural", "Suelo Urbano", "Densidad de población", "Polígonos Industriales", "Explotaciones Ganaderas", "Plazas Hoteleras", "Incendios desde 2002", "Hectáreas afectadas", "Menciones en publicaciones", "Alojamientos Turísticos", "Imagen de portada", "Porcentaje de suelo rural con respecto Aragón", "Porcentaje de suelo urbano con respecto Aragón", "Es uno de los 20 municipios más poblados", "Edad media de los hombres", "Edad media de las mujeres", "Creative Works", "Miembros del pleno", "Personas ilustres nacidas en el municipio", "Entidades singulares"],
+    eol: '\n'
+  };
+
+  new ngxCsv(this.dataDownload, `Datos de ${this.lugarBuscado}`, options);
+}
+
+
+temaSelected(tema: any) {
+  let query: string = 'select distinct ?refArea ?nameRefArea ?refPeriod (strafter(str(?refPeriod), "http://reference.data.gov.uk/id/year/") AS ?nameRefPeriod) '
+
+  let index = tema.Ruta.indexOf('/')
+
+  let rutaLimpia = '/' + tema.Ruta.substring(index + 1).replaceAll('/', '-')
+  let queryColumna: string = `https://opendata.aragon.es/sparql?default-graph-uri=&query=select+distinct+%3FcolUri+%3FtipoCol+str%28%3FnombreCol%29%0D%0A+where+%7B%0D%0A++%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fiaest%2Fdataset${rutaLimpia}%3E+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fcube%23structure%3E+%3Fdsd.%0D%0A++%3Fdsd+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fcube%23component%3E+%3Fcol.%0D%0A++%3Fcol+%3FtipoCol+%3FcolUri.%0D%0A++%3FcolUri+rdfs%3Alabel+%3FnombreCol.%0D%0A%7D%0D%0A%0D%0ALIMIT+500%0D%0A&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`
+
+  this.resultSvc.getData(queryColumna).subscribe(data => {
+    this.columnas = data.results.bindings;
+
+    this.columnas.forEach((element: any) => {
+      let nombreColumnaAux = element['callret-2'].value.replaceAll(' ', '_').toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[{(/,.)}]/g, '');
+      query += '?' + nombreColumnaAux + ' as ' + '?' + nombreColumnaAux + ' '
+    });
+
+    let queryPrefijo = "<http://reference.data.gov.uk/id/year/"
+
+    query += 'where { \n'
+    query += " ?obs qb:dataSet <http://opendata.aragon.es/recurso/iaest/dataset" + rutaLimpia + ">.\n";
+    query += " ?obs <http://purl.org/linked-data/sdmx/2009/dimension#refPeriod> ?refPeriod.\n";
+    //query += "FILTER (?refPeriod IN (";
+    //query += queryPrefijo = "<http://reference.data.gov.uk/id/year/" + '2010' + ">"; //Cambiar por minimo años
+    // for (var i = (2010); i <= 2020; i++) {
+    //   query += ',' + queryPrefijo + i + ">";
     // }
-    return newStr;
-  }
+    query += " ?obs <http://purl.org/linked-data/sdmx/2009/dimension#refArea> ?refArea.\n";
+    query += " ?refArea rdfs:label ?nameRefArea.";
+    query += ' FILTER ( lang(?nameRefArea) = "es" ).\n';
 
-  deleteSpace(str: any): string {
-    return str.split(' ').join('_');
-  }
+    if (rutaLimpia.charAt(rutaLimpia.length - 1) != "A") {
 
-  reduceText(text: string): string {
-    const reducedText = text.substr(0, 120);
-    return (
-      this.leerMas ? text : reducedText
-    )
-  }
+      this.showTemas
+      let tipoZona = "";
+      let nombreZona = "";
 
-  replaceWord(str: string): string {
-    return str
-      .replace('ARAGON', 'ARAGÓN')
-      .replace('ARAGO', 'ARAGÓ')
-      .replace('GALLEGO', 'GÁLLEGO')
-      .replace('MARTIN', 'MARTÍN')
-      .replace('GUDAR', 'GÚDAR')
-      .replace('ALBARRACIN', 'ALBARRACÍN')
-      .replace('VALDEJALON', 'VALDEJALÓN')
-      .replace('JACETANIA,_LA', 'LA_JACETANIA')
-      .replace('/', '-')
-  }
-
-  replaceCaspe(str: string): string {
-    return str
-      .replace('-baix', '/Baix')
-      .replace('-Baix', '/Baix')
-      .replace('-Plana', '/Plana')
-      .replace('Matarraña-', 'Matarraña/')
-  }
-
-  createNameForUrl(str: string): string {
-    const nameIndex = str.lastIndexOf('/') + 1;
-    return str.substring(nameIndex);
-  }
-
-  fileDownload() {
-    const options = {
-      fieldSeparator: ',',
-      quoteStrings: '"',
-      decimalseparator: '.',
-      showLabels: true,
-      showTitle: true,
-      title: `Ficha de ${this.lugarBuscado}`,
-      useBom: true,
-      noDownload: false,
-      headers: ["Nombre", "Email", "Teléfono", "Dirección", "Código Postal", "Habitantes", "Suelo Rural", "Suelo Urbano", "Densidad de población", "Polígonos Industriales", "Explotaciones Ganaderas", "Plazas Hoteleras", "Incendios desde 2002", "Hectáreas afectadas", "Menciones en publicaciones", "Alojamientos Turísticos", "Imagen de portada", "Porcentaje de suelo rural con respecto Aragón", "Porcentaje de suelo urbano con respecto Aragón", "Es uno de los 20 municipios más poblados", "Edad media de los hombres", "Edad media de las mujeres", "Creative Works", "Miembros del pleno", "Personas ilustres nacidas en el municipio", "Entidades singulares"],
-      eol: '\n'
-    };
-
-    new ngxCsv(this.dataDownload, `Datos de ${this.lugarBuscado}`, options);
-  }
-
-
-  temaSelected(tema: any) {
-    let query: string = 'select distinct ?refArea ?nameRefArea ?refPeriod (strafter(str(?refPeriod), "http://reference.data.gov.uk/id/year/") AS ?nameRefPeriod) '
-
-    let index = tema.Ruta.indexOf('/')
-
-    let rutaLimpia = '/' + tema.Ruta.substring(index + 1).replaceAll('/', '-')
-    let queryColumna: string = `https://opendata.aragon.es/sparql?default-graph-uri=&query=select+distinct+%3FcolUri+%3FtipoCol+str%28%3FnombreCol%29%0D%0A+where+%7B%0D%0A++%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fiaest%2Fdataset${rutaLimpia}%3E+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fcube%23structure%3E+%3Fdsd.%0D%0A++%3Fdsd+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fcube%23component%3E+%3Fcol.%0D%0A++%3Fcol+%3FtipoCol+%3FcolUri.%0D%0A++%3FcolUri+rdfs%3Alabel+%3FnombreCol.%0D%0A%7D%0D%0A%0D%0ALIMIT+500%0D%0A&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`
-
-    this.resultSvc.getData(queryColumna).subscribe(data => {
-      this.columnas = data.results.bindings;
-
-      this.columnas.forEach((element: any) => {
-        let nombreColumnaAux = element['callret-2'].value.replaceAll(' ', '_').toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[{(/,.)}]/g, '');
-        query += '?' + nombreColumnaAux + ' as ' + '?' + nombreColumnaAux + ' '
-      });
-
-      let queryPrefijo = "<http://reference.data.gov.uk/id/year/"
-
-      query += 'where { \n'
-      query += " ?obs qb:dataSet <http://opendata.aragon.es/recurso/iaest/dataset" + rutaLimpia + ">.\n";
-      query += " ?obs <http://purl.org/linked-data/sdmx/2009/dimension#refPeriod> ?refPeriod.\n";
-      //query += "FILTER (?refPeriod IN (";
-      //query += queryPrefijo = "<http://reference.data.gov.uk/id/year/" + '2010' + ">"; //Cambiar por minimo años
-      // for (var i = (2010); i <= 2020; i++) {
-      //   query += ',' + queryPrefijo + i + ">";
-      // }
-      query += " ?obs <http://purl.org/linked-data/sdmx/2009/dimension#refArea> ?refArea.\n";
-      query += " ?refArea rdfs:label ?nameRefArea.";
-      query += ' FILTER ( lang(?nameRefArea) = "es" ).\n';
-
-      if (rutaLimpia.charAt(rutaLimpia.length - 1) != "A") {
-
-        this.showTemas
-        let tipoZona = "";
-        let nombreZona = "";
-
-        if (this.tipoLocalidad === 'diputacion') {
-          tipoZona = "Provincia"
-          nombreZona = this.lugarBuscadoParsed
-        } else if (this.tipoLocalidad === 'comarca') {
-          tipoZona = "Comarca"
-          nombreZona = this.lugarBuscadoParsed
-        } else if (this.tipoLocalidad === 'municipio') {
-          tipoZona = "Municipio"
-          nombreZona = this.lugarBuscadoParsed
-        }
-
-        let uriPrefix = "<http://opendata.aragon.es/recurso/territorio/" + tipoZona + "/";
-        query += "FILTER (?refArea IN (";
-        query += uriPrefix + this.deleteSpace(nombreZona) + ">";
-        query += ")).\n";
+      if (this.tipoLocalidad === 'diputacion') {
+        tipoZona = "Provincia"
+        nombreZona = this.lugarBuscadoParsed
+      } else if (this.tipoLocalidad === 'comarca') {
+        tipoZona = "Comarca"
+        nombreZona = this.lugarBuscadoParsed
+      } else if (this.tipoLocalidad === 'municipio') {
+        tipoZona = "Municipio"
+        nombreZona = this.lugarBuscadoParsed
       }
 
-      this.columnas.forEach((element: any) => {
-        let nombreColumnaAux = element['callret-2'].value.replaceAll(' ', '_').toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[{(/,.)}]/g, '');
-        query += "OPTIONAL {  ?obs <" + element.colUri.value + "> ?" + nombreColumnaAux + " } .\n";
-        element
-      });
+      let uriPrefix = "<http://opendata.aragon.es/recurso/territorio/" + tipoZona + "/";
+      query += "FILTER (?refArea IN (";
+      query += uriPrefix + this.deleteSpace(nombreZona) + ">";
+      query += ")).\n";
+    }
 
-      query += "} \n";
-      query += "ORDER BY ASC(?refArea) ASC(?refPeriod)\n";
-      query += "LIMIT 200\n"
+    this.columnas.forEach((element: any) => {
+      let nombreColumnaAux = element['callret-2'].value.replaceAll(' ', '_').toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[{(/,.)}]/g, '');
+      query += "OPTIONAL {  ?obs <" + element.colUri.value + "> ?" + nombreColumnaAux + " } .\n";
+      element
+    });
 
-      ////////console.log(query);
-      ////////console.log(encodeURIComponent(query));
+    query += "} \n";
+    query += "ORDER BY ASC(?refArea) ASC(?refPeriod)\n";
+    query += "LIMIT 200\n"
 
-      this.sparql(query);
+    ////////console.log(query);
+    ////////console.log(encodeURIComponent(query));
 
-      this.queryTabla = 'https://opendata.aragon.es/sparql?default-graph-uri=&query=' + encodeURIComponent(query) + '&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on';
+    this.sparql(query);
 
-      this.aragopediaSvc.change(this.queryTabla);
-    })
+    this.queryTabla = 'https://opendata.aragon.es/sparql?default-graph-uri=&query=' + encodeURIComponent(query) + '&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on';
 
-  }
+    this.aragopediaSvc.change(this.queryTabla);
+  })
 
-  filterData(enteredData: any) {
-    this.filteredTemas = this.showTemas.filter((item: any) => {
+}
 
-      ////////console.log(item);
-      return item.DescripcionMejorada.toLowerCase().indexOf(enteredData.toLowerCase()) > -1
-    })
-    ////////console.log(this.showTemas);
-  }
+filterData(enteredData: any) {
+  this.filteredTemas = this.showTemas.filter((item: any) => {
 
-
-
-
-  initForm() {
-    this.formGroup = this.fb.group({
-      "tema": [this.selectedTema]
-    })
-
-    this.formGroup.get('tema')?.valueChanges.subscribe(response => {
-      ////////console.log(response);
-      this.selectedTema = response;
-      this.filterData(response)
-    })
+    ////////console.log(item);
+    return item.DescripcionMejorada.toLowerCase().indexOf(enteredData.toLowerCase()) > -1
+  })
+  ////////console.log(this.showTemas);
+}
 
 
-  }
-
-  sparql(query: any) {
-
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-      })
-    };
-
-    this.http.get('your-url', httpOptions);
-
-    let params = new URLSearchParams();
-    params.append("query", ("https://opendata.aragon.es/sparql" + query));
-    params.append("format", "json");
-
-    this.http.get(('https://opendata.aragon.es/sparql?default-graph-uri=&query=' + encodeURIComponent(query) + '&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on'), httpOptions).subscribe((data: any) => {
-      //////console.log(data);
-
-      this.displayTema = this.selectedTema;
-      this.selectedTema = ''
-
-      if (data.results.bindings.length === 0) {
-        this.errorTabla = true;
-      } else {
-        this.errorTabla = false;
-      }
 
 
-    })
+initForm() {
+  this.formGroup = this.fb.group({
+    "tema": [this.selectedTema]
+  })
 
-
-  }
+  this.formGroup.get('tema')?.valueChanges.subscribe(response => {
+    ////////console.log(response);
+    this.selectedTema = response;
+    this.filterData(response)
+  })
 
 
 }
+
+sparql(query: any) {
+
+  const httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+    })
+  };
+
+  this.http.get('your-url', httpOp////console.log  let params = new U////console.logs();
+    params.append("query", ("https://opendata.aragon.es/sparql" + query));
+  params.append("format", "json");
+
+  this.http.get(('https://opendata.aragon.es/sparql?default-graph-uri=&query=' + encodeURIComponent(query) + '&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on'), httpOptions).subscribe((data: any) => {
+    //////console.log(data);
+
+    this.displayTema = this.selectedTema;
+    t////console.logema = ''
+
+    if (data.results.bindings.length === 0) {
+      this.errorTabla = true;
+    } else {
+      ////console.logla = false;
+    }
+
+
+  })
+
+
+}
+
+
+}
+//console.log//console.log////console.log////console.log
