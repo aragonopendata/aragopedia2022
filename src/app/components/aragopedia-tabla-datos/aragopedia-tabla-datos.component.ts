@@ -36,7 +36,6 @@ export class AragopediaTablaDatosComponent {
   ngOnInit() {
     //console.log(this.aragopediaSvc.queryTemas)
 
-
     this.linkDescargaCSV = this.sanitizer.bypassSecurityTrustUrl(this.queryAragopediaCSV);
 
     this.aragopediaSvc.columnasTablaObserver.subscribe((dataColumnas: any) => {
@@ -72,6 +71,7 @@ export class AragopediaTablaDatosComponent {
         this.displayedColumns.splice((this.displayedColumns.indexOf('refPeriod')), 1);
 
         this.linkDescargaJSON = this.aragopediaSvc.queryTemas;
+
         //console.log(this.linkDescargaJSON)
         //console.log(datos);
 

@@ -499,6 +499,7 @@ export class ResultComponent {
       });
 
       this.resultSvc.getData(this.queryUrlLocales).subscribe(data => {
+
         //console.log(this.queryUrlLocales);
 
         this.locales = data.results.bindings[0]['callret-4'].value;
@@ -530,7 +531,9 @@ export class ResultComponent {
         this.filteredTemas = this.showTemas;
 
       } else if (this.tipoLocalidad === 'municipio') {
-        this.showTemas = this//console.logio;
+
+        this.showTemas = this.temasMunicipio;
+
         this.filteredTemas = this.showTemas;
 
       } else if (this.tipoLocalidad === 'diputacion') {
@@ -753,10 +756,8 @@ export class ResultComponent {
       return item.DescripcionMejorada.toLowerCase().indexOf(enteredData.toLowerCase()) > -1
     })
     //console.log(this.showTemas);
+
   }
-
-
-
 
   initForm() {
     this.formGroup = this.fb.group({
@@ -764,7 +765,9 @@ export class ResultComponent {
     })
 
     this.formGroup.get('tema')?.valueChanges.subscribe(response => {
+
       //console.log(response);
+
       this.selectedTema = response;
       this.filterData(response)
     })
@@ -780,7 +783,6 @@ export class ResultComponent {
       })
     };
 
-
     this.http.get('your-url', httpOptions);
 
     let params = new URLSearchParams();
@@ -788,6 +790,7 @@ export class ResultComponent {
     params.append("format", "json");
 
     this.http.get(('https://opendata.aragon.es/sparql?default-graph-uri=&query=' + encodeURIComponent(query) + '&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on'), httpOptions).subscribe((data: any) => {
+
       //console.log(data);
 
       this.displayTema = this.selectedTema;
@@ -796,7 +799,9 @@ export class ResultComponent {
       if (data.results.bindings.length === 0) {
         this.errorTabla = true;
       } else {
-        //console.logla = false;
+
+        this.errorTabla = false;
+
       }
 
 
@@ -807,4 +812,4 @@ export class ResultComponent {
 
 
 }
-//console.log//console.log//console.log//console.logconsole.logconsole.log//console.log//console.log
+
