@@ -89,7 +89,7 @@ export class AragopediaSelectorTemasComponent implements OnInit {
 
     this.aragopediaSvc.getData(this.queryTemas).subscribe((data: any) => {
       this.temas = data.response.docs;
-      // //console.log('temas init')
+      // ////console.log('temas init')
       this.unique = [...new Set(data.response.docs.map((item: { Descripcion: any; }) => item.Descripcion))];
 
       // Construcción temas por tipo de territorio
@@ -113,7 +113,7 @@ export class AragopediaSelectorTemasComponent implements OnInit {
       } else {
         this.rutaLimpia = ''
       }
-      //console.log(this.rutaLimpia);
+      ////console.log(this.rutaLimpia);
 
       this.URLparameters = params
 
@@ -123,8 +123,8 @@ export class AragopediaSelectorTemasComponent implements OnInit {
 
       this.selectedTema = '';
       this.firstLand = true;
-      ////console.log('trigger' + trigger)
-      //console.log(tipoZona)
+      //////console.log('trigger' + trigger)
+      ////console.log(tipoZona)
       this.submitFromChangeZona(tipoZona);
     });
 
@@ -134,22 +134,18 @@ export class AragopediaSelectorTemasComponent implements OnInit {
 
     if (this.selectedProvincia === undefined) { this.selectedProvincia = '' }
 
-    // //console.log('submit' + this.selectedProvincia);
-    // //console.log(this.selectedComarca);
-    // //console.log(this.selectedMunicipio);
-
     this.selectedProvincia = this.location.idProvincia;
     this.selectedComarca = this.location.idComarca;
     this.selectedMunicipio = this.location.idMunicipio;
 
 
-    //console.log('selected municipio' + this.location.idMunicipio);
+    ////console.log('selected municipio' + this.location.idMunicipio);
 
     this.selectedMunicipioNombre = this.location.municipioSelected;
     this.selectedProvinciaNombre = this.location.provinciaSelected;
     this.selectedComarcaNombre = this.location.comarcaSelected;
 
-    if (this.selectedProvincia !== '' || this.selectedProvincia !== undefined) {
+    if (this.selectedProvincia !== '' && this.selectedProvincia !== undefined) {
       this.showTemas = this.temasProvincia;
       this.temasActive = true;
 
@@ -167,7 +163,7 @@ export class AragopediaSelectorTemasComponent implements OnInit {
     if (this.selectedProvincia !== '' || this.selectedProvincia !== undefined) {
       this.tipoLocalidad = 'diputacion';
       this.rutaLimpia = this.rutaLimpia.replace('TC', 'TP').replace('TM', 'TP');
-      //console.log(this.rutaLimpia);
+      ////console.log(this.rutaLimpia);
 
       if (this.URLparameters.datos != this.URLparameters.datos || this.URLparameters.id != this.selectedProvincia) {
         this.router.navigate(['aragopedia'], { queryParams: { tipo: this.tipoLocalidad, id: this.selectedProvincia, datos: this.rutaLimpia } })
@@ -205,13 +201,10 @@ export class AragopediaSelectorTemasComponent implements OnInit {
     this.selectedProvinciaNombre = this.location.provinciaSelected;
     this.selectedComarcaNombre = this.location.comarcaSelected;
 
-
-    //console.log('submitfromchangezona')
-
     if (this.selectedProvincia !== '') {
       this.tipoLocalidad = 'diputacion';
       this.rutaLimpia = this.rutaLimpia.replace('TC', 'TP').replace('TM', 'TP');
-      //console.log(this.rutaLimpia);
+      ////console.log(this.rutaLimpia);
 
       this.displayZona = this.selectedProvinciaNombre;
 
@@ -234,12 +227,13 @@ export class AragopediaSelectorTemasComponent implements OnInit {
       this.displayZona = this.selectedMunicipioNombre;
 
       //if (this.URLparameters.datos != this.URLparameters.datos || this.URLparameters.id != this.selectedMunicipio) {
-      //console.log('pasa')
+      ////console.log('pasa')
       this.router.navigate(['aragopedia'], { queryParams: { tipo: this.tipoLocalidad, id: this.selectedMunicipio, datos: this.rutaLimpia } })
       //}
     }
 
     if (this.selectedProvincia !== '') {
+
       this.showTemas = this.temasProvincia;
       this.temasActive = true;
       if (!this.showTemas[0].Descripcion) {
@@ -253,7 +247,7 @@ export class AragopediaSelectorTemasComponent implements OnInit {
       if (!this.showTemas[0].Descripcion) {
         this.showTemas.shift()
       }
-      // //console.log('temas');
+      // ////console.log('temas');
 
 
     } else if (this.selectedMunicipio !== '') {
@@ -265,8 +259,7 @@ export class AragopediaSelectorTemasComponent implements OnInit {
     }
 
 
-    // //console.log('submit from cghangezona');
-
+    // ////console.log('submit from cghangezona');
 
     if (this.selectedProvincia !== '' && this.selectedProvincia !== undefined) {
 
@@ -275,15 +268,15 @@ export class AragopediaSelectorTemasComponent implements OnInit {
 
     } else if (this.selectedComarca !== '') {
 
-      // //console.log(this.rutaLimpia);
+      // ////console.log(this.rutaLimpia);
       this.tipoLocalidad = 'comarca';
       this.router.navigate(['aragopedia'], { queryParams: { tipo: this.tipoLocalidad, id: this.selectedComarca, datos: this.rutaLimpia } })
-      // //console.log('url');
+      // ////console.log('url');
 
 
     } else if (this.selectedMunicipio !== '') {
 
-      // //console.log(this.rutaLimpia);
+      // ////console.log(this.rutaLimpia);
       this.tipoLocalidad = 'municipio';
       this.router.navigate(['aragopedia'], { queryParams: { tipo: this.tipoLocalidad, id: this.selectedMunicipio, datos: this.rutaLimpia } })
 
@@ -293,7 +286,7 @@ export class AragopediaSelectorTemasComponent implements OnInit {
 
       if (this.rutaLimpia !== '') {
         // this.rutaLimpia = params['datos'];
-        if (this.selectedProvincia !== '') {
+        if (this.selectedProvincia !== '' || this.selectedProvincia !== undefined) {
           this.rutaLimpia = params['datos'].replace('TC', 'TP').replace('TM', 'TP');
         } else if (this.selectedComarca !== '') {
           this.rutaLimpia = params['datos'].replace('TP', 'TC').replace('TM', 'TC');
@@ -327,7 +320,7 @@ export class AragopediaSelectorTemasComponent implements OnInit {
     this.formGroup.get('tema')?.valueChanges.subscribe(response => {
       this.selectedTema = response;
       /* this.displayTema = response; */
-      // //console.log('DISPLAY TEMA: ', this.displayTema);
+      // ////console.log('DISPLAY TEMA: ', this.displayTema);
 
       this.filterData(response);
     })
@@ -337,9 +330,9 @@ export class AragopediaSelectorTemasComponent implements OnInit {
   temaSelected(tema: any) {
 
     /* this.displayTema = this.selectedTema; */
-    // //console.log('selectedtema ' + this.selectedTema);
+    // ////console.log('selectedtema ' + this.selectedTema);
 
-    //console.log('temaSelected')
+    ////console.log('temaSelected')
 
     let rutaUsable: string;
 
@@ -353,7 +346,7 @@ export class AragopediaSelectorTemasComponent implements OnInit {
 
     let index = rutaUsable.indexOf('/')
 
-    // //console.log(rutaUsable.substring(index + 1).replaceAll('/', '-'));
+    // ////console.log(rutaUsable.substring(index + 1).replaceAll('/', '-'));
 
     let rutaLimpia = '/' + rutaUsable.substring(index + 1).replaceAll('/', '-')
     this.rutaLimpia = rutaLimpia.substring(1);
@@ -391,9 +384,9 @@ export class AragopediaSelectorTemasComponent implements OnInit {
         let tipoZona = "";
         let nombreZona = "";
 
-        // //console.log(this.selectedProvinciaNombre != '');
-        // //console.log(this.selectedComarcaNombre != '');
-        // //console.log(this.selectedMunicipioNombre != '');
+        // ////console.log(this.selectedProvinciaNombre != '');
+        // ////console.log(this.selectedComarcaNombre != '');
+        // ////console.log(this.selectedMunicipioNombre != '');
 
 
         if (this.selectedProvincia != '') {
@@ -407,9 +400,9 @@ export class AragopediaSelectorTemasComponent implements OnInit {
           tipoZona = "Municipio"
           nombreZona = this.selectedMunicipioNombre
         }
-        // //console.log("nombre zona " + nombreZona);
+        // ////console.log("nombre zona " + nombreZona);
 
-        // //console.log(this.deleteSpace(nombreZona));
+        // ////console.log(this.deleteSpace(nombreZona));
 
         let uriPrefix = "<http://opendata.aragon.es/recurso/territorio/" + tipoZona + "/";
         query += "FILTER (?refArea IN (";
@@ -427,8 +420,8 @@ export class AragopediaSelectorTemasComponent implements OnInit {
       query += "ORDER BY ASC(?refArea) ASC(?refPeriod)\n";
       query += "LIMIT 200\n"
 
-      // //console.log(query);
-      // //console.log(encodeURIComponent(query));
+      // ////console.log(query);
+      // ////console.log(encodeURIComponent(query));
 
       this.sparql(query);
 
@@ -444,7 +437,7 @@ export class AragopediaSelectorTemasComponent implements OnInit {
       this.firstLand = false;
     })
 
-    // //console.log(rutaLimpia)
+    // ////console.log(rutaLimpia)
     if (rutaLimpia !== '' && rutaLimpia !== undefined && this.selectedProvincia != '') {
       this.router.navigate(['aragopedia'], { queryParams: { tipo: this.tipoLocalidad, id: this.selectedProvincia, datos: this.rutaLimpia } })
     } else if (rutaLimpia !== '' && rutaLimpia !== undefined && this.selectedComarca != '') {
@@ -457,12 +450,12 @@ export class AragopediaSelectorTemasComponent implements OnInit {
 
   temaSelectedAuto(tema: any) {
 
-    //console.log('temaSelectedAuto ' + tema)
+    ////console.log('temaSelectedAuto ' + tema)
 
     let nombreZona = "";
 
     /* this.displayTema = this.selectedTema; */
-    // //console.log('selectedtema ' + this.selectedTema);
+    // ////console.log('selectedtema ' + this.selectedTema);
 
     let rutaUsable: string;
 
@@ -475,7 +468,7 @@ export class AragopediaSelectorTemasComponent implements OnInit {
     this.showTemas.forEach((element: any) => {
       let rutaElement = element.Ruta.substring(element.Ruta.indexOf('/') + 1).replaceAll('/', '-');
       if (rutaElement === rutaUsable) {
-        //console.log('done')
+        ////console.log('done')
         this.firstLand = false;
         this.displayTema = element.Descripcion;
       }
@@ -487,7 +480,7 @@ export class AragopediaSelectorTemasComponent implements OnInit {
 
       let index = rutaUsable.indexOf('/')
 
-      // //console.log(rutaUsable.substring(index + 1).replaceAll('/', '-'));
+      // ////console.log(rutaUsable.substring(index + 1).replaceAll('/', '-'));
 
       let rutaLimpia = '/' + rutaUsable.substring(index + 1).replaceAll('/', '-')
       this.rutaLimpia = rutaLimpia.substring(1);
@@ -524,9 +517,9 @@ export class AragopediaSelectorTemasComponent implements OnInit {
           this.showTemas
           let tipoZona = "";
 
-          // //console.log(this.selectedProvinciaNombre != '');
-          // //console.log(this.selectedComarcaNombre != '');
-          // //console.log(this.selectedMunicipioNombre != '');
+          // ////console.log(this.selectedProvinciaNombre != '');
+          // ////console.log(this.selectedComarcaNombre != '');
+          // ////console.log(this.selectedMunicipioNombre != '');
 
 
           if (this.selectedProvincia != '') {
@@ -540,9 +533,9 @@ export class AragopediaSelectorTemasComponent implements OnInit {
             nombreZona = this.selectedMunicipioNombre
           }
 
-          // //console.log("nombre zona " + nombreZona);
+          // ////console.log("nombre zona " + nombreZona);
 
-          // //console.log(this.deleteSpace(nombreZona));
+          // ////console.log(this.deleteSpace(nombreZona));
 
           let uriPrefix = "<http://opendata.aragon.es/recurso/territorio/" + tipoZona + "/";
           query += "FILTER (?refArea IN (";
@@ -560,8 +553,8 @@ export class AragopediaSelectorTemasComponent implements OnInit {
         query += "ORDER BY ASC(?refArea) ASC(?refPeriod)\n";
         query += "LIMIT 200\n"
 
-        // //console.log(query);
-        // //console.log(encodeURIComponent(query));
+        // ////console.log(query);
+        // ////console.log(encodeURIComponent(query));
 
         this.sparql(query);
 
@@ -577,7 +570,7 @@ export class AragopediaSelectorTemasComponent implements OnInit {
         this.firstLand = false;
       })
 
-      // //console.log(rutaLimpia)
+      // ////console.log(rutaLimpia)
       if (rutaLimpia !== '' && rutaLimpia !== undefined && this.selectedProvincia != '') {
         this.router.navigate(['aragopedia'], { queryParams: { tipo: this.tipoLocalidad, id: this.selectedProvincia, datos: this.rutaLimpia } })
       } else if (rutaLimpia !== '' && rutaLimpia !== undefined && this.selectedComarca != '') {
@@ -607,7 +600,7 @@ export class AragopediaSelectorTemasComponent implements OnInit {
     this.http.get(('https://opendata.aragon.es/sparql?default-graph-uri=&query=' + encodeURIComponent(query) + '&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on'), httpOptions).pipe(
       catchError(this.handleError<string>())
     ).subscribe((data: any) => {
-      // //console.log(data);
+      // ////console.log(data);
 
       if (this.selectedTema != '') {
         this.displayTema = this.selectedTema;
@@ -637,7 +630,7 @@ export class AragopediaSelectorTemasComponent implements OnInit {
       console.error(error); // log to console instead
 
       // TODO: better job of transforming error for user consumption
-      //console.log(`${operation} failed: ${error.message}`);
+      ////console.log(`${operation} failed: ${error.message}`);
 
       // Let the app keep running by returning an empty result.
       return of(result as T);

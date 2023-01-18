@@ -47,7 +47,7 @@ export class SelectLocationComponent implements OnInit {
     this.idMunicipio = this.municipio.id;
     this.idComarca = this.comarca.selectedId;
     this.idProvincia = this.provincia.selectedId;
-    ////console.log(this.idMunicipio);
+    //////console.log(this.idMunicipio);
 
 
   }
@@ -71,7 +71,7 @@ export class SelectLocationComponent implements OnInit {
     } else {
       this.tipoLocalidad = 'municipio';
       this.router.navigate(['detalles'], { queryParams: { tipo: this.tipoLocalidad, id: this.idMunicipio } })
-      ////console.log(this.idMunicipio);
+      //////console.log(this.idMunicipio);
 
     }
 
