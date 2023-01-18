@@ -31,6 +31,8 @@ export class MunicipiosComponent implements OnInit {
   municipiosParsed = this.temp || [{ nombre: '', url: '', id: '', codigoIne: '' }];
   municipiosURL: string = 'https://opendata.aragon.es/sparql?default-graph-uri=&query=select+str%28%3Fnombre%29%0D%0Awhere++%7B%0D%0A++++++++++++%3Fs+%3Chttp%3A%2F%2Fwww.w3.org%2F1999%2F02%2F22-rdf-syntax-ns%23type%3E++%3Chttp%3A%2F%2Fdbpedia.org%2Fontology%2FGovernmentalAdministrativeRegion%3E+.+%0D%0A++++++++++++%3Fs+%3Chttp%3A%2F%2Fwww.w3.org%2F2000%2F01%2Frdf-schema%23label%3E+%3Fnombre.%0D%0A++++++++++++%3Fs+a+dbo%3AMunicipality.%0D%0A%7D%0D%0Aorder+by+asc%28%3Fs%29+&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on';
 
+  URLparameters: any = [];
+
   ngOnInit(): void {
     this.initForm();
     this.getNames();
@@ -54,16 +56,19 @@ export class MunicipiosComponent implements OnInit {
           }
         });
       });
+
       this._route.queryParams.subscribe(params => {  //DE AQUI LEES LOS PARAMETROS DE LA URL PARAMETROS URL
 
-        let tipoLocalidad = params['tipo'];
-
-        if (tipoLocalidad === 'municipio') {
-          let idMuni = params['id'];
-          this.selectMunicipioFromURL(idMuni);
-        }
-
+        this.URLparameters = params;
       });
+      let tipoLocalidad = this.URLparameters['tipo'];
+
+      if (tipoLocalidad === 'municipio' && this.URLparameters['id'] !== this.selectedId) {
+        let idMuni = this.URLparameters['id'];
+        this.selectMunicipioFromURL(idMuni);
+      }
+
+
     });
 
 
@@ -98,10 +103,12 @@ export class MunicipiosComponent implements OnInit {
 
     this.selectedMunicipio = municipioAux;
     this.selected = this.selectedMunicipio;
+
     this.municipiosParsed.forEach((municipio: any) => {
       if (municipio.nombre === this.selectedMunicipio) {
+        console.log('selected')
         this.selectedId = municipio.id;
-        if (this.locationService.comarcaNombre != '' || this.locationService.provincia != '') {
+        if (this.locationService.comarcaNombre != '' || this.locationService.provincia != '' || this.locationService.provincia != undefined) {
 
           this.locationService.changeComarca('', '');
           this.locationService.changeProvincia('');
@@ -112,6 +119,8 @@ export class MunicipiosComponent implements OnInit {
   }
 
   selectMunicipioFromURL(idMuni: any) {
+
+    console.log('selectMunicipiofromURL');
 
     this.municipiosParsed.forEach((municipio: any) => {
       if (municipio.id === idMuni) {
@@ -124,6 +133,9 @@ export class MunicipiosComponent implements OnInit {
           this.locationService.changeComarca('', '');
           this.locationService.changeProvincia('');
           this.locationService.changeMunicipio(this.selectedMunicipio, this.selectedId);
+          setTimeout(() => {
+            this.clearFilter();
+          }, 100);
         }
       }
     });
@@ -140,6 +152,10 @@ export class MunicipiosComponent implements OnInit {
       this.municipios = response.results.bindings;
       this.filteredMunicipios = response.results.bindings;
     })
+  }
+
+  clearFilter() {
+    this.filteredMunicipios = this.municipios
   }
 
 }

@@ -27,6 +27,7 @@ export class ComarcasComponent implements OnInit {
   temp = undefined;
   comarcasParsed = this.temp || [{ nombre: '', url: '', id: '', codigoIne: '' }];
   queryUrlComarcasId!: string;
+  URLparameters: any = [];
 
   ngOnInit(): void {
     this.queryIdWikiData = `https://opendata.aragon.es/sparql?default-graph-uri=&query=select+%3Fs+str%28%3Fnombre%29+%3Fid+%3Fclasif%0D%0Awhere++%7B%0D%0A++++++%3Fs+%3Chttp%3A%2F%2Fwww.w3.org%2Fns%2Forg%23classification%3E+%3Fclasif.+%0D%0A++++++%3Fs+dc%3Aidentifier+%3Fid.+%0D%0A+++++%3Fs+dc%3Atitle+%3Fnombre.%0D%0A+++++VALUES+%3Fclasif+%7B%3Chttps%3A%2F%2Fwww.geonames.org%2Fontology%23A.ADM2%3E+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fkos%2Fcomarca%3E+%3Chttps%3A%2F%2Fwww.geonames.org%2Fontology%23P.PPL%3E%7D%0D%0A%7D%0D%0Aorder+by+asc%28%3Fclasif%29+%3Fid+%0D%0A&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`;
@@ -58,15 +59,18 @@ export class ComarcasComponent implements OnInit {
         });
       });
       this._route.queryParams.subscribe(params => {  //DE AQUI LEES LOS PARAMETROS DE LA URL PARAMETROS URL
-
-        let tipoLocalidad = params['tipo'];
-
-        if (tipoLocalidad === 'comarca') {
-          let idComa = params['id'];
-          this.selectComarcaFromURL(idComa);
-        }
-
+        console.log('cambia la url');
+        this.URLparameters = params;
       });
+
+      let tipoLocalidad = this.URLparameters['tipo'];
+
+      if (tipoLocalidad === 'comarca' && this.URLparameters['id'] !== this.selectedId) {
+        console.log('nginit se vuelve a ejecutar')
+        let idComa = this.URLparameters['id'];
+        this.selectComarcaFromURL(idComa);
+      }
+
     });
 
   }
@@ -114,8 +118,8 @@ export class ComarcasComponent implements OnInit {
       if (comarca.nombre === this.selectedComarca) {
         comarca.id[0] === '0' ? this.selectedId = comarca.id.substring(1) : this.selectedId = comarca.id;
         ////console.log("if foreach comarca " + this.selectedComarca + " id " + this.selectedId)
-        if (this.locationService.municipioNombre != '' || this.locationService.provincia != '') {
-
+        if (this.locationService.municipioNombre != '' || this.locationService.provincia != '' || this.locationService.provincia != undefined) {
+          console.log('selector');
           this.locationService.changeMunicipio('', '');
           this.locationService.changeProvincia('');
           this.locationService.changeComarca(this.selectedComarca, this.selectedId);
@@ -133,13 +137,16 @@ export class ComarcasComponent implements OnInit {
         this.selectedId = comarca.id;
         this.selectedComarca = comarca.nombre;
 
-        if (this.locationService.municipioNombre != '' || this.locationService.provincia != '') {
+        if (this.locationService.municipioNombre != '' || this.locationService.provincia != '' || this.locationService.provincia != undefined) {
           this.locationService.changeMunicipio('', '');
           this.locationService.changeProvincia('');
         }
         this.locationService.changeComarca(this.selectedComarca, this.selectedId);
       }
     });
+    setTimeout(() => {
+      this.clearFilter();
+    }, 100);
   }
 
   getNames() {
@@ -178,5 +185,9 @@ export class ComarcasComponent implements OnInit {
     return str
       .replace('La Litera/La Llitera', 'litera/la llitera, la')
       .replace('JACETANIA, LA', 'la jacetania')
+  }
+
+  clearFilter() {
+    this.filteredComarcas = this.comarcas
   }
 }

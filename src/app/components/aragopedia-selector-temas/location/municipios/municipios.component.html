@@ -8,7 +8,8 @@
         <!-- <input [(ngModel)]="selected"  matInput [formControl]="myControlMunicipios" type="select"
         [matAutocomplete]="auto" />-->
         <mat-autocomplete #auto="matAutocomplete">
-            <mat-option *ngFor="let municipio of filteredMunicipios" [value]="municipio['callret-0'].value">
+            <mat-option *ngFor="let municipio of filteredMunicipios" [value]="municipio['callret-0'].value"
+                (click)="clearFilter()">
                 {{municipio['callret-0'].value}}
             </mat-option>
         </mat-autocomplete>
