@@ -119,6 +119,8 @@ export class ResultsComponent implements OnInit {
 
 
       this.temasSvc.getResults(this.queryUrlResultTemas).subscribe(data => {
+        console.log(this.queryUrlResultTemas);
+
         const results = data?.results.bindings;
         results.forEach((element: any, i: any) => {
           this.results[i] = { categoryURL: element.item.value, title: element['callret-3'].value, category: element.labelTema.value, resultURL: element.item.value, year: element.year.value, type: element.tipo.value }
@@ -132,6 +134,8 @@ export class ResultsComponent implements OnInit {
             this.totalSiua += 1;
           }
         });
+        console.log(this.results);
+
         this.items = this.results;
         this.numberOfResults = this.items.length;
 
@@ -195,6 +199,7 @@ export class ResultsComponent implements OnInit {
   onChangePage(pageOfItems: Array<any>) {
     // update current page of items
     this.pageOfItems = pageOfItems;
+
   }
 
   filterByCategory(event: any) {
