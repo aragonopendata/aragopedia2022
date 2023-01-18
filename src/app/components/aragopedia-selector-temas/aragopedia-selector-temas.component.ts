@@ -132,11 +132,11 @@ export class AragopediaSelectorTemasComponent implements OnInit {
 
   submit() {
 
-    if (this.selectedProvincia === undefined) { this.selectedProvincia = '' }
-
     // console.log('submit' + this.selectedProvincia);
     // console.log(this.selectedComarca);
     // console.log(this.selectedMunicipio);
+
+
 
     this.selectedProvincia = this.location.idProvincia;
     this.selectedComarca = this.location.idComarca;
@@ -149,7 +149,7 @@ export class AragopediaSelectorTemasComponent implements OnInit {
     this.selectedProvinciaNombre = this.location.provinciaSelected;
     this.selectedComarcaNombre = this.location.comarcaSelected;
 
-    if (this.selectedProvincia !== '' || this.selectedProvincia !== undefined) {
+    if (this.selectedProvincia !== '' && this.selectedProvincia !== undefined) {
       this.showTemas = this.temasProvincia;
       this.temasActive = true;
 
@@ -205,7 +205,6 @@ export class AragopediaSelectorTemasComponent implements OnInit {
     this.selectedProvinciaNombre = this.location.provinciaSelected;
     this.selectedComarcaNombre = this.location.comarcaSelected;
 
-
     console.log('submitfromchangezona')
 
     if (this.selectedProvincia !== '') {
@@ -240,6 +239,7 @@ export class AragopediaSelectorTemasComponent implements OnInit {
     }
 
     if (this.selectedProvincia !== '') {
+
       this.showTemas = this.temasProvincia;
       this.temasActive = true;
       if (!this.showTemas[0].Descripcion) {
@@ -267,7 +267,6 @@ export class AragopediaSelectorTemasComponent implements OnInit {
 
     // console.log('submit from cghangezona');
 
-
     if (this.selectedProvincia !== '' && this.selectedProvincia !== undefined) {
 
       this.tipoLocalidad = 'diputacion';
@@ -293,7 +292,7 @@ export class AragopediaSelectorTemasComponent implements OnInit {
 
       if (this.rutaLimpia !== '') {
         // this.rutaLimpia = params['datos'];
-        if (this.selectedProvincia !== '') {
+        if (this.selectedProvincia !== '' || this.selectedProvincia !== undefined) {
           this.rutaLimpia = params['datos'].replace('TC', 'TP').replace('TM', 'TP');
         } else if (this.selectedComarca !== '') {
           this.rutaLimpia = params['datos'].replace('TP', 'TC').replace('TM', 'TC');
