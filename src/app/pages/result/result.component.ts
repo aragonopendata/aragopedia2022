@@ -138,7 +138,7 @@ export class ResultComponent {
     // this.lugarBuscado = this.capitalizeString(this._route.snapshot.paramMap.get('municipio'));
     // this.lugarBuscadoParsed = this.deleteSpace(this._route.snapshot.paramMap.get('municipio'));
     // this.tipoLocalidad = this.deleteSpace(this._route.snapshot.paramMap.get('tipoLocalidad'));
-    // //console.log(this.tipoLocalidad);
+    // //////console.log(this.tipoLocalidad);
 
     // this.codigoIne = this._route.snapshot.paramMap.get('municipio');
     this._route.queryParams.subscribe(params => {  //DE AQUI LEES LOS PARAMETROS DE LA URL PARAMETROS URL
@@ -160,10 +160,10 @@ export class ResultComponent {
 
     this.resultSvc.getData(this.queryIdWikiData).subscribe((data: any) => {
       // const found = data?.results.bindings.find((element: any) => this.capitalizeString(element['callret-1'].value) == this.lugarBuscado);
-      // //console.log(data?.results.bindings.find((element: any) => {
+      // //////console.log(data?.results.bindings.find((element: any) => {
       //   element['callret-1'].value.toUpperCase() === this.lugarBuscado.toUpperCase();
       // }))
-      // //console.log(found);
+      // //////console.log(found);
 
       // this.codigoIne = found.id.value;
 
@@ -353,7 +353,7 @@ export class ResultComponent {
       }
 
 
-      ////console.log(this.lugarBuscadoParsed)
+      ////////console.log(this.lugarBuscadoParsed)
 
       // Queries con nombres
 
@@ -499,7 +499,7 @@ export class ResultComponent {
       });
 
       this.resultSvc.getData(this.queryUrlLocales).subscribe(data => {
-        ////console.log(this.queryUrlLocales);
+        ////////console.log(this.queryUrlLocales);
 
         this.locales = data.results.bindings[0]['callret-4'].value;
       });
@@ -734,8 +734,8 @@ export class ResultComponent {
       query += "ORDER BY ASC(?refArea) ASC(?refPeriod)\n";
       query += "LIMIT 200\n"
 
-      ////console.log(query);
-      ////console.log(encodeURIComponent(query));
+      ////////console.log(query);
+      ////////console.log(encodeURIComponent(query));
 
       this.sparql(query);
 
@@ -749,10 +749,10 @@ export class ResultComponent {
   filterData(enteredData: any) {
     this.filteredTemas = this.showTemas.filter((item: any) => {
 
-      ////console.log(item);
+      ////////console.log(item);
       return item.DescripcionMejorada.toLowerCase().indexOf(enteredData.toLowerCase()) > -1
     })
-    ////console.log(this.showTemas);
+    ////////console.log(this.showTemas);
   }
 
 
@@ -764,7 +764,7 @@ export class ResultComponent {
     })
 
     this.formGroup.get('tema')?.valueChanges.subscribe(response => {
-      ////console.log(response);
+      ////////console.log(response);
       this.selectedTema = response;
       this.filterData(response)
     })
@@ -787,7 +787,7 @@ export class ResultComponent {
     params.append("format", "json");
 
     this.http.get(('https://opendata.aragon.es/sparql?default-graph-uri=&query=' + encodeURIComponent(query) + '&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on'), httpOptions).subscribe((data: any) => {
-      //console.log(data);
+      //////console.log(data);
 
       this.displayTema = this.selectedTema;
       this.selectedTema = ''
