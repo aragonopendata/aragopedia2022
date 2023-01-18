@@ -67,7 +67,7 @@ export class LocationComponent implements OnInit {
       this.selectComarca(this.locationService.comarcaNombre, this.locationService.comarcaId)
 
     })
-
+    
     this.locationService.municipioObserver.subscribe((municipio: any) => {
 
       this.selectMunicipio(this.locationService.municipioNombre, this.locationService.municipioId)
@@ -150,9 +150,8 @@ export class LocationComponent implements OnInit {
     this.provinciaSelected = '';
     this.idProvincia = '';
 
-    ////console.log(this.aragopediaService.lastZona)
-
     if (this.municipioSelected != '') {
+
       this.aragopediaService.lastZona = this.municipioSelected;
       this.updateTemas('municipio')
     }
