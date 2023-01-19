@@ -59,12 +59,14 @@ export class ComarcasComponent implements OnInit {
         });
       });
       this._route.queryParams.subscribe(params => {  //DE AQUI LEES LOS PARAMETROS DE LA URL PARAMETROS URL
+        ////console.log('cambia la url');
         this.URLparameters = params;
       });
 
       let tipoLocalidad = this.URLparameters['tipo'];
 
       if (tipoLocalidad === 'comarca' && this.URLparameters['id'] !== this.selectedId) {
+        ////console.log('nginit se vuelve a ejecutar')
         let idComa = this.URLparameters['id'];
         this.selectComarcaFromURL(idComa);
       }
@@ -79,8 +81,10 @@ export class ComarcasComponent implements OnInit {
       'municipio': [this.selectedComarca]
     })
 
+    //////console.log('initform fuera');
     this.formGroup.get('municipio')?.valueChanges.subscribe(response => {
 
+      //////console.log('initform ' + response);
       this.selected = this.selectedComarca;
       this.selectedComarca = response;
 
@@ -100,6 +104,7 @@ export class ComarcasComponent implements OnInit {
   }
 
   filterData(enteredData: any) {
+    //////console.log('???' + enteredData);
     this.filteredComarcas = this.comarcas.filter((item: any) => {
       return item['callret-0'].value.toLowerCase().indexOf(enteredData.toLowerCase()) > -1
     });
@@ -112,8 +117,9 @@ export class ComarcasComponent implements OnInit {
     this.comarcasParsed.forEach((comarca: any) => {
       if (comarca.nombre === this.selectedComarca) {
         comarca.id[0] === '0' ? this.selectedId = comarca.id.substring(1) : this.selectedId = comarca.id;
-         if (this.locationService.municipioNombre != '' || this.locationService.provincia != '' || this.locationService.provincia != undefined) {
-
+        ////////console.log("if foreach comarca " + this.selectedComarca + " id " + this.selectedId)
+        if (this.locationService.municipioNombre != '' || this.locationService.provincia != '' || this.locationService.provincia != undefined) {
+          ////console.log('selector');
           this.locationService.changeMunicipio('', '');
           this.locationService.changeProvincia('');
           this.locationService.changeComarca(this.selectedComarca, this.selectedId);

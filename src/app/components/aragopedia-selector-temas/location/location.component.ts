@@ -40,6 +40,8 @@ export class LocationComponent implements OnInit {
 
   ngOnInit(): void {
 
+    ////console.log(this._route.queryParams);
+
     this._route.queryParams.subscribe(params => {
       if (!this.URLcalled) {
         if (params['tipo'] == 'diputacion') {
@@ -117,7 +119,7 @@ export class LocationComponent implements OnInit {
     this.municipioSelected = '';
     this.idMunicipio = '';
     if (this.provinciaSelected !== '' && this.provinciaSelected !== undefined) {
-    
+      // ////console.log(this.provinciaSelected)
       this.updateTemas('provincia')
 
     }
@@ -133,7 +135,7 @@ export class LocationComponent implements OnInit {
     this.municipioSelected = '';
     this.idMunicipio = '';
     if (this.comarcaSelected != '') {
-
+      // ////console.log(this.comarcaSelected)
       this.updateTemas('comarca')
     }
   }
@@ -147,6 +149,8 @@ export class LocationComponent implements OnInit {
 
     this.provinciaSelected = '';
     this.idProvincia = '';
+
+    ////console.log(this.aragopediaService.lastZona)
 
     if (this.municipioSelected != '') {
       this.aragopediaService.lastZona = this.municipioSelected;

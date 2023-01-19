@@ -36,17 +36,18 @@ export class AragopediaService {
 
     change(query: string) {
         this.queryTemas = query;
+        ////////console.log(this.queryTemas)
         this.queryTemasObserver.next(this.queryTemas);
     }
 
     changeColumnas(columnas: any) {
         this.columnasTabla = columnas;
-
+        ////////console.log(this.columnasTabla)
         this.columnasTablaObserver.next(this.columnasTabla);
     }
 
     changeTriggerSubmitObserver(tipoZona: string) {
-
+        // ////console.log(tipoZona)
         this.triggerSubmitObserver.next(tipoZona)
     }
 
