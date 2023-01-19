@@ -132,7 +132,7 @@ export class ResultsComponent implements OnInit {
           this.results[i] = { categoryURL: element.item.value, title: element['callret-3'].value, category: element.labelTema.value, resultURL: element.item.value, year: element.year.value, type: element.tipo.value }
         });
 
-        let i = this.results.length - 1;
+        let i = this.results.length;
 
         this.resultsSinFecha.forEach((item: any) => {
           this.results[i] = { categoryURL: item.item.value, title: item['callret-3'].value, category: item.labelTema.value, resultURL: item.item.value, year: item.year.value, type: item.tipo.value };
