@@ -127,19 +127,23 @@ export class ResultsComponent implements OnInit {
       });
 
       this.temasSvc.getResults(this.queryUrlResultTemas).subscribe(data => {
-        const results = data?.results.bindings;
+        const results = data.results.bindings;
         results.forEach((element: any, i: any) => {
           this.results[i] = { categoryURL: element.item.value, title: element['callret-3'].value, category: element.labelTema.value, resultURL: element.item.value, year: element.year.value, type: element.tipo.value }
         });
 
-        let i = this.results.length;
+        let i: number = this.results.length;
 
         this.resultsSinFecha.forEach((item: any) => {
           this.results[i] = { categoryURL: item.item.value, title: item['callret-3'].value, category: item.labelTema.value, resultURL: item.item.value, year: item.year.value, type: item.tipo.value };
           i++;
         });
 
-        this.results.forEach((element: any) => {
+        if (this.results[0].title === '') {
+          this.results.shift();
+        }
+
+        this.results.forEach((element: any, i: number) => {
           if (element.type === 'dataset_ckan') {
             this.totalDatasets += 1;
           } else if (element.type === 'cubo_estadistico') {
@@ -149,7 +153,7 @@ export class ResultsComponent implements OnInit {
           } else if (element.type === 'archivoSIUa') {
             this.totalSiua += 1;
           }
-        })
+        });
 
         this.items = this.results;
         this.numberOfResults = this.items.length;
