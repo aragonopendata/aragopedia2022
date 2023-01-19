@@ -40,8 +40,6 @@ export class LocationComponent implements OnInit {
 
   ngOnInit(): void {
 
-    //console.log(this._route.queryParams);
-
     this._route.queryParams.subscribe(params => {
       if (!this.URLcalled) {
         if (params['tipo'] == 'diputacion') {
@@ -80,7 +78,7 @@ export class LocationComponent implements OnInit {
             if (this.tipoLocalidad === 'diputacion') {
               this.provincia.selectedProvincia = params['id'];
               this.provincia.selectedId = params['id'];
-              //console.log(this.provincia)
+              //////console.log(this.provincia)
               this.selectProvincia();
             } else if (this.tipoLocalidad === 'comarca') {
               this.comarca.selectedComarca = params['id'];
@@ -90,9 +88,9 @@ export class LocationComponent implements OnInit {
               this.selectMunicipio();
             } 
       
-            //console.log(this.provinciaSelected);
-            //console.log(this.comarcaSelected);
-            //console.log(this.municipioSelected);
+            //////console.log(this.provinciaSelected);
+            //////console.log(this.comarcaSelected);
+            //////console.log(this.municipioSelected);
       */
     });
   }
@@ -105,7 +103,7 @@ export class LocationComponent implements OnInit {
   //   this.idMunicipio = this.municipio.id;
   //   this.idComarca = this.comarca.selectedId;
   //   this.idProvincia = this.provincia.selectedId;
-  //   //console.log('Provincia: ', this.provinciaSelected, 'Comarca: ', this.comarcaSelected, 'Municipio: ', this.municipioSelected, this.selected);
+  //   //////console.log('Provincia: ', this.provinciaSelected, 'Comarca: ', this.comarcaSelected, 'Municipio: ', this.municipioSelected, this.selected);
   // }
 
   selectProvincia() {
@@ -119,7 +117,7 @@ export class LocationComponent implements OnInit {
     this.municipioSelected = '';
     this.idMunicipio = '';
     if (this.provinciaSelected !== '' && this.provinciaSelected !== undefined) {
-      //console.log(this.provinciaSelected)
+    
       this.updateTemas('provincia')
 
     }
@@ -135,7 +133,7 @@ export class LocationComponent implements OnInit {
     this.municipioSelected = '';
     this.idMunicipio = '';
     if (this.comarcaSelected != '') {
-      //console.log(this.comarcaSelected)
+
       this.updateTemas('comarca')
     }
   }
@@ -150,10 +148,7 @@ export class LocationComponent implements OnInit {
     this.provinciaSelected = '';
     this.idProvincia = '';
 
-    //console.log(this.aragopediaService.lastZona)
-
-    if (this.municipioSelected != this.aragopediaService.lastZona) {
-
+    if (this.municipioSelected != '') {
       this.aragopediaService.lastZona = this.municipioSelected;
       this.updateTemas('municipio')
     }

@@ -107,8 +107,6 @@ export class MunicipiosComponent implements OnInit {
     this.municipiosParsed.forEach((municipio: any) => {
       if (municipio.nombre === this.selectedMunicipio) {
 
-        //console.log('selected')
-
         this.selectedId = municipio.id;
         if (this.locationService.comarcaNombre != '' || this.locationService.provincia != '' || this.locationService.provincia != undefined) {
 
@@ -121,8 +119,6 @@ export class MunicipiosComponent implements OnInit {
   }
 
   selectMunicipioFromURL(idMuni: any) {
-
-    //console.log('selectMunicipiofromURL');
 
     this.municipiosParsed.forEach((municipio: any) => {
       if (municipio.id === idMuni) {

@@ -109,10 +109,8 @@ export class ProvinciasComponent implements OnInit {
     this.formGroup = this.fb.group({
       'municipio': [this.selectedProvincia]
     })
-
-    //console.log(prov)
+    
     this.provinciasParsed.forEach((provincia: any) => {
-      //console.log("foreach: " + prov.nombre)
 
       if (prov.nombre && provincia.nombre.toLowerCase() === prov.nombre.toLowerCase()) {
         this.selectedProvincia = provincia.nombre;
@@ -122,8 +120,6 @@ export class ProvinciasComponent implements OnInit {
           this.locationService.changeMunicipio('', '');
           this.locationService.changeProvincia(provincia);
         }
-
-        //console.log("foreach dentro: " + prov)
 
       }
     });
