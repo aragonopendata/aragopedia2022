@@ -8,6 +8,10 @@
         </div>
         <div class="right-side">
             <div class="header__europe">
+                <div class="zoom">
+                    <a class="zoom-in" (click)="changeFont('+')">A<sup>+</sup></a>
+                    <a class="zoom-out" (click)="changeFont('-')">A<sup>-</sup></a>
+                </div>
                 <img src="assets/flag_europe.svg" alt="Unión Europea" width="75" height="55">
             </div>
             <div class="header__menu">
@@ -141,19 +145,3 @@
 
 </div>
 <div *ngIf="bodyOverlay" class="overlay"></div>
-
-<!-- <div class="zoom">
-    <button (click)="changeFont('+')">Zoom +</button>
-    <button (click)="changeFont('-')">Zoom -</button>
-</div> -->
-
-<!-- <ul>
-    <li><a [routerLink]="['/']" routerLinkActive="active-link">Home</a>
-    </li>
-    <li><a [routerLink]="['/persona']" routerLinkActive="active-link">Persona</a></li>
-    <li><a [routerLink]="['/eventos']" routerLinkActive="active-link">Eventos</a></li>
-    <li><a [routerLink]="['/general']" routerLinkActive="active-link">General</a></li>
-    <li><a [routerLink]="['/results']" routerLinkActive="active-link">Resultados</a></li>
-    <li><a [routerLink]="['/result']" routerLinkActive="active-link">Ficha resultado</a>
-    </li>
-</ul> -->

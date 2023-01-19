@@ -15,6 +15,7 @@ export class HeaderComponent implements OnInit {
 
   linkSubmenu: any = document.getElementsByClassName('link-submenu');
   submenu: any = document.getElementsByClassName('submenu');
+  body: any = document.getElementsByTagName('body');
 
   fontSize: number = 16;
 
@@ -72,8 +73,7 @@ export class HeaderComponent implements OnInit {
   }
 
   changeFont(operator: string) {
-    operator === '+' ? this.fontSize++ : this.fontSize--;
-    document.getElementsByTagName('body')[0].style.fontSize = `${this.fontSize}px`;
+    operator === '+' ? document.getElementsByTagName('body')[0].classList.add('zoomed') : document.getElementsByTagName('body')[0].classList.remove('zoomed');
   }
 
 }

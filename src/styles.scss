@@ -25,6 +25,13 @@ body {
     font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
+// ZOOM IN - OUT
+body.zoomed {
+    zoom: 1.5;
+    -moz-transform: scale(3);
+    -moz-transform-origin: 0 0;
+}
+
 /* You can add global styles to this file, and also import other style files */
 
 @import url('https://fonts.googleapis.com/css2?family=Signika:wght@400;700&display=swap');
