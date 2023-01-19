@@ -6,12 +6,11 @@
 
 .return {
     width: fit-content;
-    position: fixed;
-    bottom: 30px;
-    right: 0;
-    left: 0;
+    position: absolute;
+    top: 120px;
+    right: 30px;
     margin: auto;
-    z-index: 999;
+
 
     .return__btn {
         margin: auto;

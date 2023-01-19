@@ -7,9 +7,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AragopediaComponent implements OnInit {
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit(): void {
+
   }
+
 
 }

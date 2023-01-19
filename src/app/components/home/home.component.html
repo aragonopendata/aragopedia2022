@@ -9,7 +9,7 @@
 <div class="container home__temas">
     <h2>Búsqueda por años y temas
     </h2>
-    <p style="font-size: 16px">Selecciona al menos 3 años y un máximo de 4 temas. Para seleccionar el rango de años
+    <p style="font-size: 16px">Selecciona al menos 3 años y un máximo de 5 temas. Para seleccionar el rango de años
         que desea consultar desplaza las barras situadas en los extremos.</p>
     <app-timeline [yearsSelected]="selectedYears"></app-timeline>
     <!-- Temas -->
@@ -19,7 +19,7 @@
     <!-- Submit button -->
 
     <div class="container submit">
-        <p *ngIf="error" class="error">Debes seleccionar entre 1 y 4 temas y un mínimo de 3 años</p>
+        <p *ngIf="error" class="error">Debes seleccionar entre 1 y 5 temas y un mínimo de 3 años</p>
         <button (click)="submit()" class="btn submit__btn">Realizar
             búsqueda</button>
     </div>

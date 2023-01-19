@@ -340,7 +340,7 @@
                 </ul>
             </div>
             <div class="inicio__contact">
-                <h2 *ngIf="this.direccion !== ''">Contacto</h2>
+                <h2 *ngIf="this.direccion">Contacto</h2>
                 <ul>
                     <li *ngIf="this.direccion"><b>Dirección</b> {{this.capitalizeString(this.direccion)}}</li>
                     <li *ngIf="this.codPostal"><b>Código postal</b> {{this.codPostal}}</li>
