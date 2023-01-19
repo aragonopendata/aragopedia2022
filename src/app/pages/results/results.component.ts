@@ -149,7 +149,7 @@ export class ResultsComponent implements OnInit {
           } else if (element.type === 'archivoSIUa') {
             this.totalSiua += 1;
           }
-        })
+        });
 
         this.items = this.results;
         this.numberOfResults = this.items.length;
