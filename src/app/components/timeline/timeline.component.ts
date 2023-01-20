@@ -47,10 +47,8 @@ export class TimeLineComponent implements OnInit {
       years.shift();
 
       const firstYear = years.find((element: any) => element?.year.value == '1978');
-
       const lastYear = years.find((element: any) => element?.year.value == this.currentYear);
-
-      const filteredData = years.slice(years.indexOf(firstYear), years.indexOf(lastYear + 1));
+      const filteredData = years.slice(years.indexOf(firstYear));
 
       filteredData.forEach((element: any, index: any) => {
         this.dataSource[index] = { date: element.year.value, dataQuantity: Number(element['callret-0'].value) }
