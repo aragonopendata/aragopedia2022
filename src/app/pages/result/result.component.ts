@@ -324,10 +324,11 @@ export class ResultComponent {
 
       const lastPosition = data.results.bindings.length - 1
       let nombreMunicipio = this.replaceWord(data?.results.bindings[lastPosition].nombre.value);
-      this.tituloFicha = this.capitalizeString(nombreMunicipio).replace('Zaragóza', 'Zaragoza').replace('Diputacion', 'Diputación');
+      this.tituloFicha = this.capitalizeString(nombreMunicipio).replace('Zaragóza', 'Zaragoza').replace('Diputacion', 'Diputación').replace('Bajo Aragón-caspe-baix Aragó-casp', 'Bajo Aragón-Caspe / Baix Aragó-Casp');
 
       if (this.tipoLocalidad === 'diputacion') {
-        nombreMunicipio = data?.results.bindings[lastPosition].nombre.value.replace('ZARAGÓZA', 'ZARAGOZA')
+        nombreMunicipio = data?.results.bindings[lastPosition].nombre.value.replace('ZARAGÓZA', 'ZARAGOZA');
+
         this.lugarBuscado = nombreMunicipio;
         this.lugarBuscadoParsed = this.capitalizeString(nombreMunicipio.slice(25, nombreMunicipio.length)).replace('Zaragóza', 'Zaragoza');
       } else {
@@ -411,6 +412,8 @@ export class ResultComponent {
       });
 
       this.resultSvc.getData(this.queryUrlDensidadPoblacion).subscribe((data: any) => {
+        console.log(this.queryUrlDensidadPoblacion);
+
         this.densidadPoblacion = (Number(data?.results.bindings[0].densidad_de_poblacion_habkm2.value)).toFixed(1);
         this.dataDownload[0].densidad = this.densidadPoblacion;
       });

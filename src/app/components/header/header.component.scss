@@ -108,6 +108,13 @@ header {
             z-index: 99;
             background-color: #4a4a4a;
 
+            ul.menu__links li {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+
+            }
+
             ul.menu__links li span {
                 font-size: 18px;
                 cursor: pointer;
@@ -132,6 +139,8 @@ header {
                 }
 
                 li.submenu__links-item {
+                    margin: 10px 0;
+
                     a {
                         font-size: 16px !important;
                     }
@@ -167,7 +176,10 @@ header {
                 list-style: none;
 
                 li {
-                    margin: 1em;
+                    // margin: 1em;
+                    height: 100%;
+                    display: flex;
+                    align-items: center;
 
                     a {
                         font-size: 24px;
@@ -221,6 +233,20 @@ header {
     header {
         .container {
             max-width: 990px;
+        }
+
+        .header__menu {
+            height: 100%;
+        }
+
+        .right-side {
+            height: 100%;
+        }
+
+        span.link-submenu.active {
+            animation: APARECER 0.3s;
+            background-color: #ffffff;
+            color: var(--text-color) !important;
         }
 
         .header {
@@ -277,8 +303,10 @@ header {
                     width: 100%;
                     flex-direction: row;
                     justify-content: space-around;
+                    align-items: center;
                     color: #fff;
                     list-style: none;
+                    margin: 0;
 
                     li span,
                     li a {
@@ -287,6 +315,11 @@ header {
                         color: #fff;
                         text-decoration: none;
                         cursor: pointer;
+                        height: 100%;
+                    }
+
+                    li span {
+                        padding: 0 15px;
                     }
                 }
             }
@@ -298,7 +331,7 @@ header {
 
         .submenu {
             position: absolute;
-            top: 100%;
+            top: 78%;
             color: #333;
             background-color: #fff;
             box-shadow: var(--shadow-hover);
@@ -390,6 +423,25 @@ header {
 // Desktop 992 version
 
 @media screen and (min-width: 992px) {
+
+    header {
+
+        .header__menu {
+            height: 100%;
+        }
+
+        .right-side {
+            height: 100%;
+        }
+
+        ul.menu__links {
+            margin: 0;
+        }
+
+        .container {
+            max-width: 1300px;
+        }
+    }
 
     .submenu {
         .submenu__left {

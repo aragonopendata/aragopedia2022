@@ -732,6 +732,9 @@ export class AragopediaSelectorTemasComponent implements OnInit {
   }
 
   deleteSpace(str: any): string {
+    if (str == 'Bajo Aragón-Caspe/ Baix Aragó-Casp') {
+      return 'Bajo_Aragón-Caspe/Baix_Aragó-Casp'
+    }
     return str.split(' ').join('_');
   }
 
