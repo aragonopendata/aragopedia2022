@@ -29,12 +29,13 @@
                     <li *ngIf="this.explotacionesGanaderas"><span
                             class="big-number">{{this.explotacionesGanaderas}}</span>Explotaciones ganaderas</li>
                     <li *ngIf="this.incendiosUltimosAnos"><span
-                            class="big-number">{{this.incendiosUltimosAnos}}</span>Incendios desde 2002</li>
+                            class="big-number">{{this.incendiosUltimosAnos}}</span>Incendios desde 2001</li>
                     <li *ngIf="this.hectareasQuemadas"><span
                             class="big-number">{{this.hectareasQuemadas}}</span>Hectáreas afectadas por
                         incendios</li>
-                    <li *ngIf="this.numberOfCreativeWork"><span
-                            class="big-number">{{this.numberOfCreativeWork}}</span>Menciones en publicaciones
+                    <li *ngIf="this.numberOfCreativeWork"><span class="big-number"><span
+                                *ngIf="this.numberOfCreativeWork >= 1000">+</span>{{this.numberOfCreativeWork}}</span>Menciones
+                        en publicaciones
                         <!-- <a class="inicio__data-link">Ver
                                 publicaciones</a>-->
                     </li>
@@ -180,7 +181,8 @@
             <div *ngIf="this.numberOfCreativeWork !== 0" class="graphics__item" fragment="creative-works">
                 <div class="graphics__item-cw">
                     <h2>Enlaces de interés</h2>
-                    <p *ngIf="numberOfCreativeWork >= 10" class="big-number"><b>{{this.numberOfCreativeWork}}
+                    <p *ngIf="numberOfCreativeWork >= 10" class="big-number"><b><span
+                                *ngIf="this.numberOfCreativeWork >= 1000">+</span>{{this.numberOfCreativeWork}}
                         </b>Menciones en publicaciones (Mostrando las
                         últimas 10 publicaciones)</p>
                 </div>
@@ -326,12 +328,13 @@
                     <li *ngIf="this.explotacionesGanaderas"><span
                             class="big-number">{{this.explotacionesGanaderas}}</span>Explotaciones ganaderas</li>
                     <li *ngIf="this.incendiosUltimosAnos"><span
-                            class="big-number">{{this.incendiosUltimosAnos}}</span>Incendios desde 2002</li>
+                            class="big-number">{{this.incendiosUltimosAnos}}</span>Incendios desde 2001</li>
                     <li *ngIf="this.hectareasQuemadas"><span
                             class="big-number">{{this.hectareasQuemadas}}</span>Hectáreas afectadas por
                         incendios</li>
-                    <li *ngIf="this.numberOfCreativeWork"><span
-                            class="big-number">{{this.numberOfCreativeWork}}</span>Menciones en publicaciones
+                    <li *ngIf="this.numberOfCreativeWork"><span class="big-number"><span
+                                *ngIf="this.numberOfCreativeWork >= 1000">+</span>{{this.numberOfCreativeWork}}</span>Menciones
+                        en publicaciones
                     </li>
                     <li *ngIf="this.plazasHoteleras"><span
                             class="big-number">{{this.plazasHoteleras}}</span>Alojamientos hoteleros</li>
@@ -379,7 +382,9 @@
             <div *ngIf="this.numberOfCreativeWork !== 0" class="graphics__item" fragment="creative-works">
                 <div class="graphics__item-cw">
                     <h2>Enlaces de interés</h2>
-                    <p class="big-number"><b>{{this.numberOfCreativeWork}} </b>Menciones en publicaciones</p>
+                    <p class="big-number"><b><span
+                                *ngIf="this.numberOfCreativeWork >= 1000">+</span>{{this.numberOfCreativeWork}}
+                        </b>Menciones en publicaciones</p>
                 </div>
                 <div class="slides">
                     <mat-tab-group mat-align-tabs="start">

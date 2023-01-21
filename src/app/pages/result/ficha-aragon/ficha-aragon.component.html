@@ -28,7 +28,7 @@
                     <li *ngIf="this.explotacionesGanaderas"><span
                             class="big-number">{{this.explotacionesGanaderas}}</span>Explotaciones ganaderas</li>
                     <li *ngIf="this.incendiosUltimosAnos"><span
-                            class="big-number">{{this.incendiosUltimosAnos}}</span>Incendios desde 2002</li>
+                            class="big-number">{{this.incendiosUltimosAnos}}</span>Incendios desde 2001</li>
                     <li *ngIf="this.hectareasQuemadas"><span
                             class="big-number">{{this.hectareasQuemadas}}</span>Hectáreas afectadas por
                         incendios</li>
@@ -113,7 +113,9 @@
             <div class="graphics__item" fragment="creative-works">
                 <div class="graphics__item-cw">
                     <h2>Enlaces de interés</h2>
-                    <p class="big-number"><b>{{this.numberOfCreativeWork}} </b>Menciones en publicaciones (Mostrando las
+                    <p class="big-number"><b><span
+                                *ngIf="this.numberOfCreativeWork >= 1000">+</span>{{this.numberOfCreativeWork}}
+                        </b>Menciones en publicaciones (Mostrando las
                         últimas 10 publicaciones)</p>
                 </div>
                 <div class="slides">
