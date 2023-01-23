@@ -34,6 +34,7 @@ export class ResultsComponent implements OnInit {
 
   yearAsc: boolean = true;
   yearDesc: boolean = false;
+  currentYear: string = (new Date().getFullYear()).toString();
 
   totalDatasets: number = 0;
   totalCubes: number = 0;
@@ -129,15 +130,19 @@ export class ResultsComponent implements OnInit {
       this.temasSvc.getResults(this.queryUrlResultTemas).subscribe(data => {
         const results = data.results.bindings;
         results.forEach((element: any, i: any) => {
-          this.results[i] = { categoryURL: element.item.value, title: element['callret-3'].value, category: element.labelTema.value, resultURL: element.item.value, year: element.year.value, type: element.tipo.value }
+          if (element.tipo.value === 'cubo_estadistico') {
+            this.results[i] = { categoryURL: element.item.value, title: element['callret-3'].value, category: element.labelTema.value, resultURL: `https://opendata.aragon.es/describe/?url=${element.item.value}`, year: element.year.value, type: element.tipo.value }
+          } else { this.results[i] = { categoryURL: element.item.value, title: element['callret-3'].value, category: element.labelTema.value, resultURL: element.item.value, year: element.year.value, type: element.tipo.value } }
         });
 
         let i: number = this.results.length;
 
-        this.resultsSinFecha.forEach((item: any) => {
-          this.results[i] = { categoryURL: item.item.value, title: item['callret-3'].value, category: item.labelTema.value, resultURL: item.item.value, year: item.year.value, type: item.tipo.value };
-          i++;
-        });
+        if (this.firstYear === '1978' && this.lastYear === this.currentYear) {
+          this.resultsSinFecha.forEach((item: any) => {
+            this.results[i] = { categoryURL: item.item.value, title: item['callret-3'].value, category: item.labelTema.value, resultURL: item.item.value, year: item.year.value, type: item.tipo.value };
+            i++;
+          });
+        }
 
         if (this.results[0].title === '') {
           this.results.shift();

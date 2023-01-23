@@ -19,7 +19,7 @@
                     <li *ngIf="this.sueloRural"><span class="big-number">{{this.sueloRural}}</span>Hectáreas de suelo
                         rural</li>
                     <li *ngIf="this.oficinasComarcales"><span
-                            class="big-number">{{this.oficinasComarcales}}</span>Oficinas comarcales</li>
+                            class="big-number">{{this.oficinasComarcales}}</span>Edificios destinados a locales</li>
                     <li *ngIf="this.poblacion"><span class="big-number">{{this.poblacion}}</span>Habitantes</li>
                     <li *ngIf="this.densidadPoblacion"><span
                             class="big-number">{{this.densidadPoblacion}}</span>Habitantes por KM2</li>
@@ -86,7 +86,6 @@
 
         <section class="container template__graphics">
             <div class="graphics__item" style="width: 100%;">
-                <h2>Pirámide de población (Datos de 2011)</h2>
                 <app-piramide-poblacion></app-piramide-poblacion>
             </div>
         </section>
@@ -113,8 +112,7 @@
             <div class="graphics__item" fragment="creative-works">
                 <div class="graphics__item-cw">
                     <h2>Enlaces de interés</h2>
-                    <p class="big-number"><b><span
-                                *ngIf="this.numberOfCreativeWork >= 1000">+</span>{{this.numberOfCreativeWork}}
+                    <p class="big-number"><b>{{this.numberOfCreativeWork}}
                         </b>Menciones en publicaciones (Mostrando las
                         últimas 10 publicaciones)</p>
                 </div>

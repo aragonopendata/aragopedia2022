@@ -33,8 +33,8 @@
                     <li *ngIf="this.hectareasQuemadas"><span
                             class="big-number">{{this.hectareasQuemadas}}</span>Hectáreas afectadas por
                         incendios</li>
-                    <li *ngIf="this.numberOfCreativeWork"><span class="big-number"><span
-                                *ngIf="this.numberOfCreativeWork >= 1000">+</span>{{this.numberOfCreativeWork}}</span>Menciones
+                    <li *ngIf="this.numberOfCreativeWork"><span
+                            class="big-number">{{this.numberOfCreativeWork}}</span>Menciones
                         en publicaciones
                         <!-- <a class="inicio__data-link">Ver
                                 publicaciones</a>-->
@@ -137,7 +137,6 @@
 
         <section class="container template__graphics">
             <div class="graphics__item" style="width: 100%;">
-                <h2>Pirámide de población (Datos de 2011)</h2>
                 <app-piramide-poblacion></app-piramide-poblacion>
             </div>
         </section>
@@ -145,44 +144,44 @@
             <div class="graphics__item" style="width: 100%;">
                 <h2>Últimos datos de Población</h2>
 
-                <table class="tabla-poblacion">
-                    <tr>
-                        <th>Año</th>
-                        <td *ngFor="let year of yearsTablaPoblacion"><span>{{year}}</span></td>
-                    </tr>
-                    <tr>
-                        <th>{{this.comunidad[0]}}</th>
-                        <td *ngFor="let element of tablaPoblacion">
-                            <span *ngIf="element.nameRefArea.value == this.comunidad[0]">
-                                {{element.poblac.value}}
-                            </span>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <th>{{this.provincia[0]}}</th>
-                        <td *ngFor="let element of tablaPoblacion">
-                            <span *ngIf="element.nameRefArea.value == this.provincia[0]">
-                                {{element.poblac.value}}
-                            </span>
-                        </td>
-                    </tr>
-                    <tr *ngIf="this.municipio[0]">
-                        <th>{{this.municipio[0]}}</th>
-                        <td *ngFor="let element of tablaPoblacion">
-                            <span *ngIf="element.nameRefArea.value == this.municipio[0]">
-                                {{element.poblac.value}}
-                            </span>
-                        </td>
-                    </tr>
-                </table>
+                <div class="tabla-container">
+                    <table class="tabla-poblacion">
+                        <tr>
+                            <th>Año</th>
+                            <td *ngFor="let year of yearsTablaPoblacion"><span>{{year}}</span></td>
+                        </tr>
+                        <tr>
+                            <th>{{this.comunidad[0]}}</th>
+                            <td *ngFor="let element of tablaPoblacion">
+                                <span *ngIf="element.nameRefArea.value == this.comunidad[0]">
+                                    {{element.poblac.value}}
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>{{this.provincia[0]}}</th>
+                            <td *ngFor="let element of tablaPoblacion">
+                                <span *ngIf="element.nameRefArea.value == this.provincia[0]">
+                                    {{element.poblac.value}}
+                                </span>
+                            </td>
+                        </tr>
+                        <tr *ngIf="this.municipio[0]">
+                            <th>{{this.municipio[0]}}</th>
+                            <td *ngFor="let element of tablaPoblacion">
+                                <span *ngIf="element.nameRefArea.value == this.municipio[0]">
+                                    {{element.poblac.value}}
+                                </span>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
             </div>
 
             <div *ngIf="this.numberOfCreativeWork !== 0" class="graphics__item" fragment="creative-works">
                 <div class="graphics__item-cw">
                     <h2>Enlaces de interés</h2>
-                    <p *ngIf="numberOfCreativeWork >= 10" class="big-number"><b><span
-                                *ngIf="this.numberOfCreativeWork >= 1000">+</span>{{this.numberOfCreativeWork}}
+                    <p *ngIf="numberOfCreativeWork >= 10" class="big-number"><b>{{this.numberOfCreativeWork}}
                         </b>Menciones en publicaciones (Mostrando las
                         últimas 10 publicaciones)</p>
                 </div>
@@ -332,8 +331,8 @@
                     <li *ngIf="this.hectareasQuemadas"><span
                             class="big-number">{{this.hectareasQuemadas}}</span>Hectáreas afectadas por
                         incendios</li>
-                    <li *ngIf="this.numberOfCreativeWork"><span class="big-number"><span
-                                *ngIf="this.numberOfCreativeWork >= 1000">+</span>{{this.numberOfCreativeWork}}</span>Menciones
+                    <li *ngIf="this.numberOfCreativeWork"><span
+                            class="big-number">{{this.numberOfCreativeWork}}</span>Menciones
                         en publicaciones
                     </li>
                     <li *ngIf="this.plazasHoteleras"><span
@@ -373,7 +372,6 @@
 
         <section class="container template__graphics">
             <div class="graphics__item" style="width: 100%;">
-                <h2>Pirámide de población (Datos de 2011)</h2>
                 <app-piramide-poblacion></app-piramide-poblacion>
             </div>
         </section>
@@ -382,8 +380,7 @@
             <div *ngIf="this.numberOfCreativeWork !== 0" class="graphics__item" fragment="creative-works">
                 <div class="graphics__item-cw">
                     <h2>Enlaces de interés</h2>
-                    <p class="big-number"><b><span
-                                *ngIf="this.numberOfCreativeWork >= 1000">+</span>{{this.numberOfCreativeWork}}
+                    <p class="big-number"><b>{{this.numberOfCreativeWork}}
                         </b>Menciones en publicaciones</p>
                 </div>
                 <div class="slides">

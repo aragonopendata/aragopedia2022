@@ -80,8 +80,25 @@ export class SelectComarcaComponent implements OnInit {
 
   filterData(enteredData: any) {
     this.filteredComarcas = this.comarcas.filter((item: any) => {
-      return item.toLowerCase().indexOf(enteredData.toLowerCase()) > -1
-    })
+      if (item.toLowerCase().includes(', la')) {
+        let stringOrdenado = 'La ';
+        stringOrdenado += item.toLowerCase().substring(0, item.toLowerCase().indexOf(', la'));
+        item = stringOrdenado;
+      } else if (item.toLowerCase().includes(', el')) {
+        let stringOrdenado = 'El ';
+        stringOrdenado += item.toLowerCase().substring(0, item.toLowerCase().indexOf(', el'));
+        item = stringOrdenado;
+      } else if (item.toLowerCase().includes(', los')) {
+        let stringOrdenado = 'Los ';
+        stringOrdenado += item.toLowerCase().substring(0, item.toLowerCase().indexOf(', los'));
+        item = stringOrdenado;
+      } else if (item.toLowerCase().includes(', las')) {
+        let stringOrdenado = 'Las ';
+        stringOrdenado += item.toLowerCase().substring(0, item.toLowerCase().indexOf(', las'));
+        item = stringOrdenado;
+      }
+      return this.removeAccents(item.toLowerCase()).indexOf(enteredData.toLowerCase()) > -1
+    });
   }
 
   getNames() {

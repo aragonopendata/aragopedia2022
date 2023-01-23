@@ -79,7 +79,24 @@ export class SelectMunicipioComponent implements OnInit {
 
   filterData(enteredData: any) {
     this.filteredMunicipios = this.municipios.filter((item: any) => {
-      return item.toLowerCase().indexOf(enteredData.toLowerCase()) > -1
+      if (item.toLowerCase().includes('(la)')) {
+        let stringOrdenado = 'La ';
+        stringOrdenado += item.toLowerCase().substring(0, item.toLowerCase().indexOf('(la)'));
+        item = stringOrdenado;
+      } else if (item.toLowerCase().includes('(el)')) {
+        let stringOrdenado = 'El ';
+        stringOrdenado += item.toLowerCase().substring(0, item.toLowerCase().indexOf('(el)'));
+        item = stringOrdenado;
+      } else if (item.toLowerCase().includes('(los)')) {
+        let stringOrdenado = 'Los ';
+        stringOrdenado += item.toLowerCase().substring(0, item.toLowerCase().indexOf('(los)'));
+        item = stringOrdenado;
+      } else if (item.toLowerCase().includes('(las)')) {
+        let stringOrdenado = 'Las ';
+        stringOrdenado += item.toLowerCase().substring(0, item.toLowerCase().indexOf('(las)'));
+        item = stringOrdenado;
+      }
+      return this.removeAccents(item.toLowerCase()).indexOf(enteredData.toLowerCase()) > -1
     });
   }
 
@@ -87,7 +104,12 @@ export class SelectMunicipioComponent implements OnInit {
     this.locationSvc.getMunicipios().subscribe(response => {
       this.municipios = response;
       this.filteredMunicipios = response;
-    })
+    });
+  }
+  removeAccents(str: any): any {
+    // return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    const acentos: any = { 'á': 'a', 'é': 'e', 'í': 'i', 'ó': 'o', 'ú': 'u' };
+    return str.split('').map((letra: any) => acentos[letra] || letra).join('').toString();
   }
 
 }

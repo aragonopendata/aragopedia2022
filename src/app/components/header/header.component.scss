@@ -227,6 +227,62 @@ header {
 
 }
 
+.opendata-header {
+    background-image: url(../../../assets/opendata-background-header.jpg);
+    background-color: #f2f2f2;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    height: 169px;
+    justify-content: center;
+    align-items: center;
+}
+
+.app-title {
+    background-color: #333;
+    color: #fff;
+    margin: 0;
+    max-width: 100%;
+    padding: 2.5rem 0;
+    position: relative;
+    width: 100%;
+
+    &::before {
+        background-image: url(../../../assets/icon-flag-pixel.svg);
+        background-position: -10rem center;
+        background-repeat: no-repeat;
+        content: "";
+        height: 10rem;
+        opacity: .1;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 100%;
+    }
+
+    &::after {
+        content: "";
+        height: 0.5rem;
+        position: absolute;
+        top: 0;
+        width: 100%;
+        background: #5ea2ba;
+    }
+
+    h2 {
+        background-color: #333;
+        color: #fff;
+        margin: 0;
+        max-width: 100%;
+        position: relative;
+        font-size: 28px;
+        padding: 0;
+        margin: 0;
+    }
+}
+
+
 // Desktop version
 
 @media screen and (min-width:680px) {

@@ -143,6 +143,7 @@ section.container {
 
             li {
                 display: flex;
+                flex-wrap: wrap;
                 justify-content: space-between;
                 margin-bottom: 10px;
                 font-size: 16px;
@@ -305,9 +306,14 @@ section.container {
     }
 }
 
+.tabla-container {
+    overflow-x: scroll;
+    width: 100%;
+}
+
 .tabla-poblacion {
     display: flex;
-    flex-direction: column;
+    // flex-direction: column;
     justify-content: center;
     align-items: center;
     empty-cells: hide;
@@ -319,7 +325,6 @@ section.container {
     width: fit-content;
     height: fit-content;
     margin-bottom: 2em;
-    width: 100%;
 
     tr {
         display: flex;
