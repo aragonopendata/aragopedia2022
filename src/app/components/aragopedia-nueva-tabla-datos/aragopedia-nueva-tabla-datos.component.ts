@@ -1,46 +1,40 @@
 import { Component, NgModule, OnInit, Sanitizer, ViewChild, AfterViewInit } from '@angular/core';
-import { AragopediaService } from './aragopediaService';
+import { AragopediaService } from '../aragopedia-tabla-datos/aragopediaService';
 import { DomSanitizer } from '@angular/platform-browser';
 import { AragopediaSelectorTemasComponent } from '../aragopedia-selector-temas/aragopedia-selector-temas.component';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort, Sort } from '@angular/material/sort';
 // import * as $ from 'jquery';
 declare var $: any;
 interface DatosTabla {
   [key: string]: string;
 }
-interface Columna {
-  nombre: string;
-  matColumnDef: string;
-}
 
 @Component({
-  selector: 'app-aragopedia-tabla-datos',
-  templateUrl: './aragopedia-tabla-datos.component.html',
-  styleUrls: ['./aragopedia-tabla-datos.component.scss'],
-
+  selector: 'app-aragopedia-nueva-tabla-datos',
+  templateUrl: './aragopedia-nueva-tabla-datos.component.html',
+  styleUrls: ['./aragopedia-nueva-tabla-datos.component.scss']
 })
-export class AragopediaTablaDatosComponent {
+export class AragopediaNuevaTablaDatosComponent {
 
   constructor(public aragopediaSvc: AragopediaService, private sanitizer: DomSanitizer) { }
 
+  rows = [
+    { name: 'Austin', genderEmployee: 'Male', company: 'Swimlane' },
+    { name: 'Dany', genderEmployee: 'Male', company: 'KFC' },
+    { name: 'Molly', genderEmployee: 'Female', company: 'Burger King' }
+  ];
+  columns = [{ prop: 'name' }, { name: 'Gender employee' }, { name: 'Company' }];
+
   ocultarPeriod: boolean = false;
   displayedColumns!: string[];
-  columnasTabla: Array<Columna> = [{ nombre: 'Localidad', matColumnDef: 'nameRefArea' }, { nombre: 'Fecha subida', matColumnDef: 'nameRefPeriod' }];
   queryAragopedia: string = "";
   queryAragopediaCSV!: string;
   linkDescargaJSON!: any;
   linkDescargaCSV!: any;
-  tablaConsulta!: MatTableDataSource<any>;
+  tablaConsulta!: Array<any>;
   tablaDibujable!: any;
   stringelementonameref!: any;
   isJqueryWorking!: string;
   nombresColumnas!: any;
-  dataSrc!: MatTableDataSource<any>;
-
-  @ViewChild('paginator') paginator!: MatPaginator;
-  @ViewChild('empTbSort') empTbSort = new MatSort();
 
 
   @ViewChild(AragopediaSelectorTemasComponent) selectorTemas!: AragopediaSelectorTemasComponent;
@@ -51,33 +45,20 @@ export class AragopediaTablaDatosComponent {
 
     this.aragopediaSvc.columnasTablaObserver.subscribe((dataColumnas: any) => {
       this.nombresColumnas = dataColumnas;
+      console.log(this.nombresColumnas);
     });
 
     this.aragopediaSvc.queryTemasObserver.subscribe((data: any) => {
       this.aragopediaSvc.getData(data).subscribe((response: any) => {
-
         var dato = response.results.bindings[0]
         let datos = response.results.bindings;
 
         if (dato !== undefined) {
           this.displayedColumns = Object.keys(dato);
-          let auxColumnas = [{ nombre: 'Localidad', matColumnDef: 'nameRefArea' }, { nombre: 'Fecha subida', matColumnDef: 'nameRefPeriod' }]
 
-          this.nombresColumnas.forEach((element: any) => {
-            console.log(this.normalizeColumnName(element['callret-2'].value))
-            if (this.displayedColumns.includes(this.normalizeColumnName(element['callret-2'].value))) {
-              let columnaAux: Columna = { nombre: element['callret-2'].value, matColumnDef: this.normalizeColumnName(element['callret-2'].value) }
-              auxColumnas.push(columnaAux);
-            }
-          });
-          console.log(this.displayedColumns)
-          console.log(this.nombresColumnas)
-          console.log(auxColumnas)
-          console.log(this.columnasTabla)
-          this.columnasTabla = auxColumnas;
           let nameRefPeriod = false;
           let mes_y_ano = false;
-          this.displayedColumns.forEach((titulo: any) => { //Cambiar al tratamiento por objetos
+          this.displayedColumns.forEach((titulo: any) => {
             if (titulo === 'nameRefPeriod') {
               nameRefPeriod = true;
             } else if (titulo === 'mes_y_ano') {
@@ -110,12 +91,10 @@ export class AragopediaTablaDatosComponent {
           }
         });
 
-        this.dataSrc = new MatTableDataSource(response.results.bindings);
-        console.log(this.paginator)
-        this.dataSrc.paginator = this.paginator;
+        this.tablaConsulta = response.results.bindings;
 
       })
-
+      console.log(this.tablaConsulta)
     });
 
   }
@@ -129,8 +108,7 @@ export class AragopediaTablaDatosComponent {
     return "columna" + columna;
   }
 
-  normalizeColumnName(columnName: string) {
-    return columnName.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replaceAll(" ", "_").toLowerCase().replace(/[^\w\s]/gi, '')
+  clearHiphens() {
 
   }
 
