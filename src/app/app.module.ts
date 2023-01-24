@@ -39,6 +39,8 @@ import { ProvinciasComponent } from './components/aragopedia-selector-temas/loca
 import { ComarcasComponent } from './components/aragopedia-selector-temas/location/comarcas/comarcas.component';
 import { MunicipiosComponent } from './components/aragopedia-selector-temas/location/municipios/municipios.component';
 import { LocationComponent } from './components/aragopedia-selector-temas/location/location.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
 
 @NgModule({
   declarations: [
@@ -84,6 +86,8 @@ import { LocationComponent } from './components/aragopedia-selector-temas/locati
     JwPaginationModule,
     PersonaModule,
     MatCheckboxModule,
+    MatPaginatorModule,
+    MatSortModule
   ],
   providers: [ResultService],
   bootstrap: [AppComponent]
