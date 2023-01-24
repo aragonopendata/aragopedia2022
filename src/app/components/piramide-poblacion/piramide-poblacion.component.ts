@@ -124,8 +124,6 @@ export class PiramidePoblacionComponent implements OnInit {
       this.piramidePoblacionSvc.getPiramidePoblacion(this.queryPiramidePoblacion).subscribe((data: any) => {
         if (data.results.bindings.length !== 0) {
           this.piramidePoblacion = data.results.bindings;
-          console.log(this.piramidePoblacion);
-
           this.piramidePoblacion.forEach((element: any) => {
             let auxDatoPiramide: ItemPiramide = { sexo: "", personas: 0, grupo: "" };
 

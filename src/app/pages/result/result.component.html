@@ -1,7 +1,9 @@
 <ng-container *ngIf="this.tipoLocalidad === 'municipio' || this.tipoLocalidad === 'diputacion'">
     <div class="container template">
         <section class="container breadcrumbs">
-            <p><a [routerLink]="['/']">Inicio</a> > {{this.tipoLocalidad}} >
+            <p *ngIf="this.tipoLocalidad === 'municipio'"><a [routerLink]="['/']">Inicio</a> > Municipio >
+                {{this.tituloFicha}}</p>
+            <p *ngIf="this.tipoLocalidad === 'diputacion'"><a [routerLink]="['/']">Inicio</a> > Diputación >
                 {{this.tituloFicha}}</p>
         </section>
         <section class="container container template__inicio">
@@ -43,6 +45,8 @@
                             class="big-number">{{this.plazasHoteleras}}</span>Alojamientos hoteleros</li>
                     <li *ngIf="this.alojamientosTuristicos"><span
                             class="big-number">{{this.alojamientosTuristicos}}</span>Alojamientos de turismo rural</li>
+                    <li *ngIf="this.municipiosEnTerritorio > 0"><span
+                            class="big-number">{{this.municipiosEnTerritorio}}</span>Municipios en el territorio</li>
                 </ul>
             </div>
             <div class="inicio__contact">
@@ -153,12 +157,13 @@
                         <tr>
                             <th>{{this.comunidad[0]}}</th>
                             <td *ngFor="let element of tablaPoblacion">
-                                <span *ngIf="element.nameRefArea.value == this.comunidad[0]">
+                                <span
+                                    *ngIf="element.nameRefArea.value == this.comunidad[0] && element.nameRefPeriod.value !== '2014'">
                                     {{element.poblac.value}}
                                 </span>
                             </td>
                         </tr>
-                        <tr>
+                        <tr *ngIf="this.codigoIne !== '50297'">
                             <th>{{this.provincia[0]}}</th>
                             <td *ngFor="let element of tablaPoblacion">
                                 <span *ngIf="element.nameRefArea.value == this.provincia[0]">
@@ -304,7 +309,7 @@
         </section>
         <section class="container container template__inicio">
             <div class="inicio__img">
-                <h1 class="inicio__name">Comarca de {{this.tituloFicha}}</h1>
+                <h1 class="inicio__name">{{this.tituloFicha}}</h1>
                 <a href={{this.urlMap}} target="_blank">
                     <mat-spinner [ngClass]="{'spinnerHide':this.map}"></mat-spinner>
                     <img src={{this.map}} alt="Mapa">
@@ -339,9 +344,11 @@
                             class="big-number">{{this.plazasHoteleras}}</span>Alojamientos hoteleros</li>
                     <li *ngIf="this.alojamientosTuristicos"><span
                             class="big-number">{{this.alojamientosTuristicos}}</span>Alojamientos de turismo rural</li>
+                    <li *ngIf="this.municipiosEnTerritorio > 0"><span
+                            class="big-number">{{this.municipiosEnTerritorio}}</span>Municipios en el territorio</li>
                 </ul>
             </div>
-            <div class="inicio__contact">
+            <div *ngIf="this.direccion || this.imageWikiDataUrl" class="inicio__contact">
                 <h2 *ngIf="this.direccion">Contacto</h2>
                 <ul>
                     <li *ngIf="this.direccion"><b>Dirección</b> {{this.capitalizeString(this.direccion)}}</li>

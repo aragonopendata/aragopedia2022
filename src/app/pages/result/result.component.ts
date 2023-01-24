@@ -73,6 +73,7 @@ export class ResultComponent {
   sufijoCuboDatosGlobal!: string;
   locales!: string;
   tieneOficinaComarcal!: number;
+  municipiosEnTerritorio: any;
 
   @ViewChild(AragopediaSelectorTemasComponent) aragopediaMunicipio: any;
 
@@ -101,6 +102,7 @@ export class ResultComponent {
   queryNombresIne!: string;
   queryUrlLocales!: string;
   queryUrlOficinaComarcal!: string;
+  queryUrlMunicipiosEnTerritorio!: string;
 
   // ARAGOPEDIA
   queryTemas!: string;
@@ -202,7 +204,7 @@ export class ResultComponent {
           this.queryUrlContacto = `https://opendata.aragon.es/sparql?default-graph-uri=&query=PREFIX+rdf%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F1999%2F02%2F22-rdf-syntax-ns%23%3E%0D%0APREFIX+ns%3A+%3Chttp%3A%2F%2Fwww.w3.org%2Fns%2Fprov%23%3E%0D%0APREFIX+vcard%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2006%2Fvcard%2Fns%23%3E%0D%0A%0D%0ASELECT+%3Femail+%3Ftel+%3Ffax+%3Fdireccion+%3FcodPostal+%0D%0AFROM+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fei2av2%3E%0D%0AWHERE+%7B%0D%0A++%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fsector-publico%2Forganizacion%2F${this.tipoLocalidad}%2F${this.codigoIne}%3E+%3Chttp%3A%2F%2Fwww.w3.org%2Fns%2Forg%23hasSite%3E+%3FsiteAddress%3B%0D%0A+++++dc%3Asource+%3Chttps%3A%2F%2Fopendata.aragon.es%2Fdataset%2F02a7f1c1-4b4a-4ef6-b35d-bec17e495476%2Fresource%2F5012cd09-edec-4c01-af43-818508c808d9%3E.%0D%0A%0D%0A++%3FsiteAddress+%3Chttp%3A%2F%2Fwww.w3.org%2Fns%2Forg%23siteAddress%3E+%3Faddress2.%0D%0A%0D%0A++OPTIONAL+%7B%3Faddress2+vcard%3Aemail+%3Femail+%7D.%0D%0A++OPTIONAL+%7B%3Faddress2+vcard%3Atel+%3Ftel+%7D.%0D%0A++OPTIONAL+%7B%3Faddress2+vcard%3Afax+%3Ffax+%7D.%0D%0A++OPTIONAL+%7B%3Faddress2+vcard%3Astreet-address%3Fdireccion+%7D.%0D%0A+++OPTIONAL+%7B%3Faddress2+vcard%3Apostal-code+%3FcodPostal+%7D.%0D%0A%7D&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on
 `;
         } else if (this.tipoLocalidad === 'comarca') {
-          this.queryUrlContacto = `https://opendata.aragon.es/sparql?default-graph-uri=&query=PREFIX+rdf%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F1999%2F02%2F22-rdf-syntax-ns%23%3E%0D%0APREFIX+ns%3A+%3Chttp%3A%2F%2Fwww.w3.org%2Fns%2Fprov%23%3E%0D%0APREFIX+vcard%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2006%2Fvcard%2Fns%23%3E%0D%0A%0D%0ASELECT+%3Femail+%3Ftel+%3Ffax+%3Fdireccion+%3FcodPostal+%0D%0AFROM+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fei2av2%3E%0D%0AWHERE+%7B%0D%0A++%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fsector-publico%2Forganizacion%2Fcomarca%2FF${this.codigoIne}%3E+%3Chttp%3A%2F%2Fwww.w3.org%2Fns%2Forg%23hasSite%3E+%3FsiteAddress%3B%0D%0A+++++dc%3Asource+%3Chttps%3A%2F%2Fopendata.aragon.es%2Fdataset%2F02a7f1c1-4b4a-4ef6-b35d-bec17e495476%2Fresource%2F5012cd09-edec-4c01-af43-818508c808d9%3E.%0D%0A%0D%0A++%3FsiteAddress+%3Chttp%3A%2F%2Fwww.w3.org%2Fns%2Forg%23siteAddress%3E+%3Faddress2.%0D%0A%0D%0A++OPTIONAL+%7B%3Faddress2+vcard%3Aemail+%3Femail+%7D.%0D%0A++OPTIONAL+%7B%3Faddress2+vcard%3Atel+%3Ftel+%7D.%0D%0A++OPTIONAL+%7B%3Faddress2+vcard%3Afax+%3Ffax+%7D.%0D%0A++OPTIONAL+%7B%3Faddress2+vcard%3Astreet-address%3Fdireccion+%7D.%0D%0A+++OPTIONAL+%7B%3Faddress2+vcard%3Apostal-code+%3FcodPostal+%7D.%0D%0A%7D&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`
+          this.queryUrlContacto = `https://opendata.aragon.es/sparql?default-graph-uri=&query=PREFIX+rdf%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F1999%2F02%2F22-rdf-syntax-ns%23%3E%0D%0APREFIX+ns%3A+%3Chttp%3A%2F%2Fwww.w3.org%2Fns%2Fprov%23%3E%0D%0APREFIX+vcard%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2006%2Fvcard%2Fns%23%3E%0D%0A%0D%0ASELECT+%3Femail+%3Ftel+%3Ffax+%3Fdireccion+%3FcodPostal+%0D%0AFROM+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fei2av2%3E%0D%0AWHERE+%7B%0D%0A++%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fsector-publico%2Forganizacion%2Fcomarca%2F${this.codigoIne}%3E+%3Chttp%3A%2F%2Fwww.w3.org%2Fns%2Forg%23hasSite%3E+%3FsiteAddress%3B%0D%0A+++++dc%3Asource+%3Chttps%3A%2F%2Fopendata.aragon.es%2Fdataset%2F02a7f1c1-4b4a-4ef6-b35d-bec17e495476%2Fresource%2F5012cd09-edec-4c01-af43-818508c808d9%3E.%0D%0A%0D%0A++%3FsiteAddress+%3Chttp%3A%2F%2Fwww.w3.org%2Fns%2Forg%23siteAddress%3E+%3Faddress2.%0D%0A%0D%0A++OPTIONAL+%7B%3Faddress2+vcard%3Aemail+%3Femail+%7D.%0D%0A++OPTIONAL+%7B%3Faddress2+vcard%3Atel+%3Ftel+%7D.%0D%0A++OPTIONAL+%7B%3Faddress2+vcard%3Afax+%3Ffax+%7D.%0D%0A++OPTIONAL+%7B%3Faddress2+vcard%3Astreet-address%3Fdireccion+%7D.%0D%0A+++OPTIONAL+%7B%3Faddress2+vcard%3Apostal-code+%3FcodPostal+%7D.%0D%0A%7D&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`
         } else {
           this.queryUrlContacto = `https://opendata.aragon.es/sparql?default-graph-uri=&query=PREFIX+rdf%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F1999%2F02%2F22-rdf-syntax-ns%23%3E%0D%0APREFIX+ns%3A+%3Chttp%3A%2F%2Fwww.w3.org%2Fns%2Fprov%23%3E%0D%0APREFIX+vcard%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2006%2Fvcard%2Fns%23%3E%0D%0A%0D%0ASELECT+%3Femail+%3Ftel+%3Ffax+%3Fdireccion+%3FcodPostal+%0D%0AFROM+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fei2av2%3E%0D%0AWHERE+%7B%0D%0A++%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fsector-publico%2Forganizacion%2Fdiputacion%2FF${this.codigoIne}%3E+%3Chttp%3A%2F%2Fwww.w3.org%2Fns%2Forg%23hasSite%3E+%3FsiteAddress%3B%0D%0A+++++dc%3Asource+%3Chttps%3A%2F%2Fopendata.aragon.es%2Fdataset%2F02a7f1c1-4b4a-4ef6-b35d-bec17e495476%2Fresource%2F5012cd09-edec-4c01-af43-818508c808d9%3E.%0D%0A%0D%0A++%3FsiteAddress+%3Chttp%3A%2F%2Fwww.w3.org%2Fns%2Forg%23siteAddress%3E+%3Faddress2.%0D%0A%0D%0A++OPTIONAL+%7B%3Faddress2+vcard%3Aemail+%3Femail+%7D.%0D%0A++OPTIONAL+%7B%3Faddress2+vcard%3Atel+%3Ftel+%7D.%0D%0A++OPTIONAL+%7B%3Faddress2+vcard%3Afax+%3Ffax+%7D.%0D%0A++OPTIONAL+%7B%3Faddress2+vcard%3Astreet-address%3Fdireccion+%7D.%0D%0A+++OPTIONAL+%7B%3Faddress2+vcard%3Apostal-code+%3FcodPostal+%7D.%0D%0A%7D&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`
         }
@@ -225,7 +227,9 @@ export class ResultComponent {
 
         this.queryUrlEntidadesSingulares = `https://opendata.aragon.es/sparql?default-graph-uri=&query=select++distinct+%3Fs+%3FnombreEntidad+from+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fei2av2%3E+where+%7B%0D%0A%3Fs+dc%3Atitle+%3FnombreEntidad%3B%0D%0A++++%3Chttp%3A%2F%2Fwww.w3.org%2Fns%2Forg%23linkedTo%3E+%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fsector-publico%2Forganizacion%2F${this.tipoLocalidad}%2F${this.codigoIne}%3E%3B%0D%0A+++++dc%3Asource+%3Chttps%3A%2F%2Fopendata.aragon.es%2Fdataset%2F331c4c50-e0df-4741-9975-5d5552d8875b%2Fresource%2F4b4e2b16-0327-4196-8636-9de97b9d5961%3E.%0D%0A%7D%0D%0Aorder+by+%3Fs%0D%0Alimit+100&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`;
 
-        this.queryUrlOficinaComarcal = `https://opendata.aragon.es/sparql?default-graph-uri=&query=select++count%28distinct+%3Fs%29+from+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fei2av2%3E+where+%7B%0D%0A%3Fs+%3Fp+%3Fo%3B%0D%0A++++%3Chttp%3A%2F%2Fwww.w3.org%2Fns%2Forg%23linkedTo%3E+%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fsector-publico%2Forganizacion%2F${this.tipoLocalidad}%2F${this.codigoIne}%3E%3B%0D%0A++++dc%3Asource+%3Chttps%3A%2F%2Fopendata.aragon.es%2Fdataset%2Fb0faccd6-aa4f-4ab3-b81e-6c9408448127%2Fresource%2F118a6803-7bb1-4191-885d-c2329a9c0a9b%3E.%0D%0A%0D%0A%7D%0D%0A&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`
+        this.queryUrlOficinaComarcal = `https://opendata.aragon.es/sparql?default-graph-uri=&query=select++count%28distinct+%3Fs%29+from+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fei2av2%3E+where+%7B%0D%0A%3Fs+%3Fp+%3Fo%3B%0D%0A++++%3Chttp%3A%2F%2Fwww.w3.org%2Fns%2Forg%23linkedTo%3E+%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fsector-publico%2Forganizacion%2F${this.tipoLocalidad}%2F${this.codigoIne}%3E%3B%0D%0A++++dc%3Asource+%3Chttps%3A%2F%2Fopendata.aragon.es%2Fdataset%2Fb0faccd6-aa4f-4ab3-b81e-6c9408448127%2Fresource%2F118a6803-7bb1-4191-885d-c2329a9c0a9b%3E.%0D%0A%0D%0A%7D%0D%0A&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`;
+
+        this.queryUrlMunicipiosEnTerritorio = `https://opendata.aragon.es/sparql?default-graph-uri=&query=select+count%28distinct+%3Fs%29+from+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fei2av2%3E+where+%7B%0D%0A%3Fs+%3Chttp%3A%2F%2Fwww.w3.org%2Fns%2Forg%23subOrganizationOf%3E+%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fsector-publico%2Forganizacion%2F${this.tipoLocalidad}%2F${this.codigoIne}%3E.+%7D%0D%0A&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`
 
         //Obtención de datos por ID
 
@@ -235,7 +239,6 @@ export class ResultComponent {
         });
 
         this.resultSvc.getData(this.queryUrlContacto).subscribe((data: any) => {
-
           this.email = data.results.bindings[0].email?.value;
 
           this.telefono = data.results.bindings[0].tel?.value;
@@ -299,7 +302,7 @@ export class ResultComponent {
           this.queryUrlPersonasIlustres = `https://query.wikidata.org/sparql?query=SELECT%20%3Fitem%20%3FitemLabel%20%3Fabout%20(count(%3Fx)%20as%20%3Fcont)%0AWHERE%20%0A%7B%0A%20%20%3Fitem%20wdt%3AP19%20wd%3A${this.idLocalidad}.%0A%20%20%3Fitem%20%3Fx%20%20%3Fo.%0A%20%20%3Fabout%20schema%3Aabout%20%3Fitem.%0A%20%20%3Fabout%20schema%3AinLanguage%20%22es%22.%0A%20%20%3Fabout%20schema%3AisPartOf%20%3Chttps%3A%2F%2Fes.wikipedia.org%2F%3E.%0A%20%20SERVICE%20wikibase%3Alabel%20%7B%20bd%3AserviceParam%20wikibase%3Alanguage%20%22es%2Cen%22.%20%7D%0A%7D%0Agroup%20by%20%3Fitem%20%3FitemLabel%20%3Fabout%0Aorder%20by%20desc(%3Fcont)%20limit%2020`;
 
           this.resultSvc.getData(this.queryImageWikiData).subscribe((data: any) => {
-            this.imageWikiDataUrl = data?.results.bindings[0].img.value;
+            this.imageWikiDataUrl = data.results.bindings[0].img.value;
             this.dataDownload[0].urlImagen = this.imageWikiDataUrl;
           });
 
@@ -320,6 +323,9 @@ export class ResultComponent {
         })
       }
 
+      this.resultSvc.getData(this.queryUrlMunicipiosEnTerritorio).subscribe(data => {
+        this.municipiosEnTerritorio = data.results.bindings[0]['callret-0'].value;
+      });
     });
 
 
@@ -336,7 +342,12 @@ export class ResultComponent {
 
         this.lugarBuscado = nombreMunicipio;
         this.lugarBuscadoParsed = this.capitalizeString(nombreMunicipio.slice(25, nombreMunicipio.length)).replace('Zaragóza', 'Zaragoza');
-      } else {
+      } else if (this.tipoLocalidad === 'comarca') {
+        this.lugarBuscado = this.capitalizeString(nombreMunicipio.toLowerCase());
+        this.dataDownload[0].nombre = this.lugarBuscado;
+        this.lugarBuscadoParsed = this.fixNames(this.replaceCaspe(this.capitalAfterHyphen(this.capitalAfterSlash(this.deleteSpace(this.lugarBuscado)))));
+      }
+      else {
         this.lugarBuscado = this.capitalizeString(nombreMunicipio.toLowerCase());
         this.dataDownload[0].nombre = this.lugarBuscado;
         this.lugarBuscadoParsed = this.replaceCaspe(this.capitalAfterHyphen(this.capitalAfterSlash(this.deleteSpace(this.lugarBuscado))));
@@ -437,8 +448,8 @@ export class ResultComponent {
       });
 
       this.resultSvc.getData(this.queryUrlPoblacion).subscribe((data: any) => {
-        if (this.tipoLocalidad === 'municipio') {
-          ;
+
+        if (this.tipoLocalidad === 'municipio' && this.lugarBuscadoParsed !== 'Zaragoza') {
           this.poblacion = data?.results.bindings.find((lugar: any) => lugar.nameRefArea.value.toLowerCase() === this.lugarBuscado.replace('Zaragóza', 'Zaragoza').toLowerCase()).poblac.value;
           this.dataDownload[0].habitantes = this.poblacion;
           this.comunidadActual = data?.results.bindings[0].nameRefArea.value;
@@ -449,19 +460,46 @@ export class ResultComponent {
           }
           for (let i = 5; i < 10; i++) {
             const element = this.tablaPoblacion[i].nameRefArea.value;
+
             this.comunidad.push(element);
           }
           for (let i = 0; i < 5; i++) {
             const element = this.tablaPoblacion[i].nameRefArea.value;
+
             this.provincia.push(element);
           }
           for (let i = 10; i < 15; i++) {
             const element = this.tablaPoblacion[i].nameRefArea.value;
+
             this.municipio.push(element);
           }
         } else if (this.tipoLocalidad === 'comarca') {
           this.poblacion = data.results.bindings[4].poblac.value;
-        } else {
+
+        } else if (this.lugarBuscadoParsed === 'Zaragoza') {
+
+          this.poblacion = data?.results.bindings.find((lugar: any) => lugar.nameRefArea.value.toLowerCase() === this.lugarBuscado.replace('Zaragóza', 'Zaragoza').toLowerCase()).poblac.value;
+
+          this.dataDownload[0].habitantes = this.poblacion;
+          this.comunidadActual = data?.results.bindings[0].nameRefArea.value;
+
+          this.tablaPoblacion = data?.results.bindings;
+
+          for (let i = 0; i < 7; i++) {
+            this.yearsTablaPoblacion.push(data?.results.bindings[i].nameRefPeriod.value);
+          }
+          for (let i = 5; i < 7; i++) {
+            const element = this.tablaPoblacion[i].nameRefArea.value;
+            this.comunidad.push(element);
+          }
+
+          for (let i = 10; i < 15; i++) {
+            const element = this.tablaPoblacion[i].nameRefArea.value;
+
+            this.municipio.push(element);
+          }
+        }
+        else {
           this.poblacion = data.results.bindings[0].poblac.value;
         }
 
@@ -651,6 +689,17 @@ export class ResultComponent {
       .replace('-Baix', '/Baix')
       .replace('-Plana', '/Plana')
       .replace('Matarraña-', 'Matarraña/')
+  }
+
+  fixNames(str: string): string {
+    return str
+      .replace('Bajo_Aragón_–_Caspe_-_Baix_Aragó_–_Casp', 'Bajo_Aragón-Caspe/Baix_Aragó-Casp')
+      .replace('Andorra_–_Sierra_de_Arcos', 'Andorra-Sierra_de_Arcos')
+      .replace('Bajo_Cinca_-_Baix_Cinca', 'Bajo_Cinca/Baix_Cinca')
+      .replace('Matarraña_-_Matarranya', 'Matarraña/Matarranya')
+      .replace('La_Litera_-_La_Llitera', 'La_Litera/La_Llitera')
+      .replace('Gúdar_–_Javalambre', 'Gúdar-Javalambre')
+      .replace('Hoya_de_Huesca_-_Plana_de_Uesca', 'Hoya_de_Huesca/Plana_de_Uesca')
   }
 
   createNameForUrl(str: string): string {

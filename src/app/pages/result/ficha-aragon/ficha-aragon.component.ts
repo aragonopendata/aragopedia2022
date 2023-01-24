@@ -66,6 +66,7 @@ export class FichaAragonComponent implements OnInit {
   codPostal!: string;
   email!: string;
   telefono!: string;
+  municipiosEnTerritorio!: string;
 
 
   //Queries variables
@@ -89,6 +90,7 @@ export class FichaAragonComponent implements OnInit {
   queryUrlOficinasComarcales!: string;
   queryUrlMiembrosPleno!: string;
   queryUrlContacto!: string;
+  queryUrlMunicipiosEnTerritorio!: string;
 
   // ARAGOPEDIA
   queryTemas!: string;
@@ -123,6 +125,8 @@ export class FichaAragonComponent implements OnInit {
     //Sacamos el nombre del municipio a través del codigo INE
     this.codigoIne = '2';
     this.queryNombresIne = `https://opendata.aragon.es/sparql?default-graph-uri=&query=prefix+dbpedia%3A+%3Chttp%3A%2F%2Fdbpedia.org%2Fontology%2F%3E+%0D%0Aprefix+org%3A+%3Chttp%3A%2F%2Fwww.w3.org%2Fns%2Forg%23%3E%0D%0Aprefix+aragopedia%3A+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2FAragopedia%23%3E%0D%0A%0D%0Aselect+%3Fnombre+from+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fei2av2%3E++where+%7B%0D%0A++%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fsector-publico%2Forganizacion%2Fcomunidad%2F${this.codigoIne}%3E+dc%3Atitle+%3Fnombre%0D%0A%7D&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`;
+
+    this.queryUrlMunicipiosEnTerritorio = `https://opendata.aragon.es/sparql?default-graph-uri=&query=select+count%28distinct+%3Fs%29+from+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fei2av2%3E+where+%7B%0D%0A%3Fs+%3Chttp%3A%2F%2Fwww.w3.org%2Fns%2Forg%23subOrganizationOf%3E+%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fsector-publico%2Forganizacion%2Fcomunidad%2F2%3E.+%7D%0D%0A&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`;
 
     //Obtenemos id y tipo de localidad antes de nada
 
@@ -331,6 +335,10 @@ export class FichaAragonComponent implements OnInit {
         this.telefono = data.results.bindings[0].tel.value;
 
       })
+
+      this.resultSvc.getData(this.queryUrlMunicipiosEnTerritorio).subscribe(data => {
+        this.municipiosEnTerritorio = data.results.bindings[0]['callret-0'].value;
+      });
 
     });
 
