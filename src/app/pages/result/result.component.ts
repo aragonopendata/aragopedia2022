@@ -433,12 +433,12 @@ export class ResultComponent {
 
       this.resultSvc.getData(this.queryUrlTotalCreativeWork).subscribe(data => {
         this.numberOfCreativeWork = data?.results.bindings.length;
+        this.dataDownload[0].mencionesEnPublicaciones = this.numberOfCreativeWork;
       })
 
       this.resultSvc.getData(this.queryUrlCreativeWork).subscribe((data: any) => {
         this.creativeWork = data?.results.bindings;
 
-        this.dataDownload[0].mencionesEnPublicaciones = this.numberOfCreativeWork;
 
         this.creativeWork?.forEach((element: any) => {
           let publicaciones = `Titulo: ${element.title.value}; url: ${element.url.value}; Tema: ${element.tema.value}; Abstract: ${element.resumen.value}`;
@@ -709,7 +709,7 @@ export class ResultComponent {
 
   fileDownload() {
     const options = {
-      fieldSeparator: ',',
+      fieldSeparator: ';',
       quoteStrings: '"',
       decimalseparator: '.',
       showLabels: true,
@@ -717,7 +717,7 @@ export class ResultComponent {
       title: `Ficha de ${this.lugarBuscado}`,
       useBom: true,
       noDownload: false,
-      headers: ["Nombre", "Email", "Teléfono", "Dirección", "Código Postal", "Habitantes", "Suelo Rural", "Suelo Urbano", "Densidad de población", "Polígonos Industriales", "Explotaciones Ganaderas", "Plazas Hoteleras", "Incendios desde 2002", "Hectáreas afectadas", "Menciones en publicaciones", "Alojamientos Turísticos", "Imagen de portada", "Porcentaje de suelo rural con respecto Aragón", "Porcentaje de suelo urbano con respecto Aragón", "Es uno de los 20 municipios más poblados", "Edad media de los hombres", "Edad media de las mujeres", "Creative Works", "Miembros del pleno", "Personas ilustres nacidas en el municipio", "Entidades singulares"],
+      headers: ["Nombre", "Email", "Teléfono", "Dirección", "Código Postal", "Habitantes", "Suelo Rural", "Suelo Urbano", "Densidad de población", "Polígonos Industriales", "Explotaciones Ganaderas", "Alojamientos hoteleros", "Incendios desde 2001", "Hectáreas afectadas", "Menciones en publicaciones", "Alojamientos de turismo rural", "Imagen de portada", "Porcentaje de suelo rural con respecto Aragón", "Porcentaje de suelo urbano con respecto Aragón", "Es uno de los 20 municipios más poblados", "Edad media de los hombres", "Edad media de las mujeres", "Creative Works", "Miembros del pleno territorial", "Personas ilustres nacidas en el territorio", "Entidades singulares"],
       eol: '\n'
     };
 

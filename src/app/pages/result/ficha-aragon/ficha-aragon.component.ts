@@ -113,7 +113,7 @@ export class FichaAragonComponent implements OnInit {
 
   // Download data
 
-  dataDownload = this.temp || [{ nombre: '', email: '', telefono: '', direccion: '', codigoPostal: '', habitantes: '', sueloRural: '', sueloUrbano: '', densidad: '', poligonosIndustriales: '', explotacionesGanaderas: '', plazasHoteleras: '', incendiosDesde2022: '', hectareasAfectadasPorIncendios: '', mencionesEnPublicaciones: '', alojamientosTuristicos: '', urlImagen: '', porcentajeSueloRural: '', porcentajeSueloUrbano: '', esDeLosMasPoblados: '', edadMediaHombres: '', edadMediaMujeres: '', creativeWorks: '', miembrosPleno: '', personasIlustres: '', entidadesSingulares: '' }];
+  dataDownload = this.temp || [{ nombre: '', email: '', telefono: '', direccion: '', codigoPostal: '', habitantes: '', sueloRural: '', sueloUrbano: '', poligonosIndustriales: '', plazasHoteleras: '', incendiosDesde2022: '', hectareasAfectadasPorIncendios: '', mencionesEnPublicaciones: '', alojamientosTuristicos: '', edadMediaHombres: '', edadMediaMujeres: '', creativeWorks: '', miembrosPleno: '', municipiosDelTerritorio: '' }];
 
 
 
@@ -160,6 +160,7 @@ export class FichaAragonComponent implements OnInit {
         this.resultSvc.getData(this.queryUrlPoligonos).subscribe((data: any) => {
           this.poligonos = data.results.bindings[0]['callret-0'].value;
           this.dataDownload[0].poligonosIndustriales = this.poligonos;
+
         });
 
         this.resultSvc.getData(this.queryUrlAlojamientosTuristicos).subscribe((data: any) => {
@@ -175,7 +176,6 @@ export class FichaAragonComponent implements OnInit {
               total = total + parseInt(element['callret-0'].value);
             });
             this.explotacionesGanaderas = total.toString();
-            this.dataDownload[0].explotacionesGanaderas = this.explotacionesGanaderas;
           }
         });
 
@@ -194,7 +194,6 @@ export class FichaAragonComponent implements OnInit {
 
           this.resultSvc.getData(this.queryImageWikiData).subscribe((data: any) => {
             this.imageWikiDataUrl = data.results.bindings[0].img.value;
-            this.dataDownload[0].urlImagen = this.imageWikiDataUrl;
           });
 
           this.resultSvc.getData(this.queryUrlPersonasIlustres).subscribe((data) => {
@@ -203,7 +202,6 @@ export class FichaAragonComponent implements OnInit {
 
             this.personasIlustres.forEach((element: any) => {
               let persona = `Nombre: ${element.itemLabel.value}; URL Wikipedia: ${element.about.value}`;
-              this.dataDownload[0].personasIlustres += persona;
             });
           })
 
@@ -258,16 +256,16 @@ export class FichaAragonComponent implements OnInit {
 
       this.resultSvc.getData(this.queryUrlDensidadPoblacion).subscribe((data: any) => {
         this.densidadPoblacion = (Number(data.results.bindings[0].densidad_de_poblacion_habkm2.value)).toFixed(1);
-        this.dataDownload[0].densidad = this.densidadPoblacion;
       });
 
       this.resultSvc.getData(this.queryUrlTotalCreativeWork).subscribe(data => {
-        this.numberOfCreativeWork = data.results.bindings.length;
+
+        this.numberOfCreativeWork = data?.results.bindings.length;
+        this.dataDownload[0].mencionesEnPublicaciones = this.numberOfCreativeWork.toString();
       })
 
       this.resultSvc.getData(this.queryUrlCreativeWork).subscribe((data: any) => {
         this.creativeWork = data.results.bindings;
-        this.dataDownload[0].mencionesEnPublicaciones = this.numberOfCreativeWork;
 
         this.creativeWork.forEach((element: any) => {
           let publicaciones = `Titulo: ${element.title.value}; url: ${element.url.value}; Tema: ${element.tema.value}; Abstract: ${element.resumen.value}`;
@@ -300,8 +298,6 @@ export class FichaAragonComponent implements OnInit {
         this.porcentajeSueloRural = ((this.sueloRural / totalRural) * 100).toFixed(2);
         this.porcentajeSueloUrbano = ((this.sueloUrbano / totalUrbano) * 100).toFixed(2);
 
-        this.dataDownload[0].porcentajeSueloRural = this.porcentajeSueloRural;
-        this.dataDownload[0].porcentajeSueloUrbano = this.porcentajeSueloUrbano;
       });
 
       this.resultSvc.getData(this.queryUrlIncendios).subscribe((data: any) => {
@@ -312,8 +308,13 @@ export class FichaAragonComponent implements OnInit {
       });
 
       this.resultSvc.getData(this.queryUrlEdadMedia).subscribe((data) => {
-        this.edadMediaMujeres = Number(data.results.bindings[0].val.value).toFixed(2);
-        this.edadMediaHombres = Number(data.results.bindings[1].val.value).toFixed(2);
+        const total = data.results.bindings;
+        const mujeres = Number(total.find((item: any) => item.nameRefArea.value === 'Aragón' && item.sexo.value === 'Mujeres').val.value).toFixed(2);
+        const hombres = Number(total.find((item: any) => item.nameRefArea.value === 'Aragón' && item.sexo.value === 'Hombres').val.value).toFixed(2);
+
+        this.edadMediaMujeres = mujeres
+        this.edadMediaHombres = hombres
+
         this.dataDownload[0].edadMediaHombres = this.edadMediaHombres;
         this.dataDownload[0].edadMediaMujeres = this.edadMediaMujeres;
       });
@@ -334,10 +335,16 @@ export class FichaAragonComponent implements OnInit {
         this.email = data.results.bindings[0].email.value;
         this.telefono = data.results.bindings[0].tel.value;
 
+        this.dataDownload[0].email = this.email;
+        this.dataDownload[0].telefono = this.telefono;
+        this.dataDownload[0].direccion = this.direccion;
+        this.dataDownload[0].codigoPostal = this.codPostal;
+
       })
 
       this.resultSvc.getData(this.queryUrlMunicipiosEnTerritorio).subscribe(data => {
         this.municipiosEnTerritorio = data.results.bindings[0]['callret-0'].value;
+        this.dataDownload[0].municipiosDelTerritorio = this.municipiosEnTerritorio;
       });
 
     });
@@ -436,7 +443,7 @@ export class FichaAragonComponent implements OnInit {
       title: `Ficha de ${this.lugarBuscado}`,
       useBom: true,
       noDownload: false,
-      headers: ["Nombre", "Email", "Teléfono", "Dirección", "Código Postal", "Habitantes", "Suelo Rural", "Suelo Urbano", "Densidad de población", "Polígonos Industriales", "Explotaciones Ganaderas", "Plazas Hoteleras", "Incendios desde 2002", "Hectáreas afectadas", "Menciones en publicaciones", "Alojamientos Turísticos", "Imagen de portada", "Porcentaje de suelo rural con respecto Aragón", "Porcentaje de suelo urbano con respecto Aragón", "Es uno de los 20 municipios más poblados", "Edad media de los hombres", "Edad media de las mujeres", "Creative Works", "Miembros del pleno", "Personas ilustres nacidas en el municipio", "Entidades singulares"],
+      headers: ["Nombre", "Email", "Teléfono", "Dirección", "Código Postal", "Habitantes", "Suelo Rural", "Suelo Urbano", "Polígonos Industriales", "Alojamientos Hoteleros", "Incendios desde 2001", "Hectáreas afectadas", "Menciones en publicaciones", "Alojamientos de turismo rural", "Edad media de los hombres", "Edad media de las mujeres", "Creative Works", "Miembros del pleno", "Municipios en el territorio"],
       eol: '\n'
     };
 
