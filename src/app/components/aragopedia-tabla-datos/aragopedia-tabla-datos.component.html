@@ -3,17 +3,17 @@
         <!-- <a [href]="linkDescargaCSV" bypassSecurityTrustUrl id="descargarCSV" download="aragopediaFile.csv"
                 class="btn btn-descarga">CSV</a>
             -->
-        <p>*NameRefPeriod hace referencia a la fecha de subida de los datos</p>
         <a [href]="linkDescargaJSON" bypassSecurityTrustUrl id="descargarJSON" class="btn btn-descarga"
             target="_blank">JSON</a>
     </div>
     <div class="table-container">
 
 
-        <mat-table mat-tablev [dataSource]="dataSrc" class="mat-elevation-z8" matSort #empTbSort="matSort">
+        <mat-table mat-tablev [dataSource]="dataSrc" class="mat-elevation-z8">
             <ng-container *ngFor="let columna of columnasTabla;" matColumnDef="{{columna.matColumnDef}}"
                 id="setColumnName(columna)">
-                <th mat-header-cell *matHeaderCellDef style="width: 1000px;" mat-sort-header>{{columna.nombre}}</th>
+                <th mat-header-cell *matHeaderCellDef style="width: 1000px;">
+                    {{columna.nombre}}</th>
                 <td mat-cell *matCellDef="let element; let i = index">{{ getKeys(element, columna.matColumnDef) }}
                 </td>
             </ng-container>
