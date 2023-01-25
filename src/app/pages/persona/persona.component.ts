@@ -80,8 +80,6 @@ export class PersonaComponent implements OnInit {
       this.creativeWorks = data.results.bindings;
 
       this.numberOfCreativeWorks = this.creativeWorks.length;
-      //////console.log(this.numberOfCreativeWorks);
-
       this.items = this.creativeWorks;
     })
   }

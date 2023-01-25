@@ -94,7 +94,8 @@ export class SelectComarcaComponent implements OnInit {
         if (comarca.nombre === this.selectedComarca) {
           comarca.id[0] === '0' ? this.selectedId = comarca.id.substring(1) : this.selectedId = comarca.id;
         }
-      })
+      });
+
       if (this.selectedId !== '') {
         this.router.navigate(['detalles'], { queryParams: { tipo: 'comarca', id: this.selectedId } })
       }
