@@ -6,6 +6,12 @@
     width: 100%;
 }
 
+.data-link {
+    display: block;
+    font-size: 16px;
+    margin-bottom: 1em;
+}
+
 // Parte final Aragopedia 
 
 .hidden {
@@ -120,6 +126,9 @@ section.container {
                     transition: all .3s;
                     text-decoration: none;
                     position: relative;
+                    display: block;
+                    max-width: 250px;
+                    margin: auto;
 
                     mat-icon {
                         font-size: 16px;
@@ -235,17 +244,34 @@ section.container {
             display: grid;
             grid-template-columns: auto;
 
-            .caracteristica__item {
-                text-align: center;
-                padding: 1em;
-                border-radius: 6px;
-                box-shadow: var(--shadow);
-                max-width: 250px;
-                margin: 20px auto;
+            a {
+                text-decoration: none;
+                color: var(--text-color);
+                transition: all .1s;
 
-                .mat-icon {
-                    display: block;
-                    margin: 15px auto;
+                .caracteristica__item {
+                    text-align: center;
+                    padding: 1em;
+                    border-radius: 6px;
+                    box-shadow: var(--shadow);
+                    max-width: 250px;
+                    margin: 20px auto;
+                    transition: all .3s;
+
+                    .mat-icon {
+                        display: block;
+                        margin: 15px auto;
+                    }
+                }
+
+            }
+
+            a:hover {
+                color: var(--accent-color);
+
+                .caracteristica__item {
+                    box-shadow: 0 8px 12px rgb(0 0 0 / 15%);
+                    transform: translateY(-3px);
                 }
             }
         }

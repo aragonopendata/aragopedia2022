@@ -45,7 +45,6 @@ export class SelectComarcaComponent implements OnInit {
 
         this.comarcas.forEach((comarca: any) => {
           listId.forEach((element: any) => {
-            // if (this.removeSpace(this.removeAccents(comarca['callret-0'].value.toLowerCase())) == this.replaceSlash(this.removeAccents(element['callret-1'].value.toLowerCase()))) {
             if (this.fixNames(comarca.nombre.value) == element['callret-1'].value) {
               this.comarcasParsed[index] = {
                 nombre: comarca.nombre.value,
@@ -57,27 +56,9 @@ export class SelectComarcaComponent implements OnInit {
             }
           });
         });
-
-        // this.comarcas.forEach((comarca: string) => {
-        //   listId.forEach((element: any) => {
-        //     if (this.removeSpace(this.removeAccents(comarca.toLowerCase())) == this.replaceSlash(this.removeAccents(element['callret-1'].value.toLowerCase()))) {
-        //       this.comarcasParsed[index] = {
-        //         nombre: comarca,
-        //         url: element.s.value,
-        //         id: element.id.value,
-        //         codigoIne: ''
-        //       }
-        //       index++;
-        //     }
-        //   });
-        // });
-
-
-
       });
       this.show = true;
-    }, 3000);
-
+    }, 500);
 
   }
 
@@ -131,11 +112,6 @@ export class SelectComarcaComponent implements OnInit {
     this.locationSvc.getData(this.queryUrlComarcasId).subscribe(response => {
       this.comarcas = response.results.bindings;
       this.filteredComarcas = this.comarcas;
-
-      // this.comarcas[this.comarcas.indexOf('La Litera/La Llitera')] = 'litera/la llitera, la';
-      // this.comarcas[this.comarcas.indexOf('La Jacetania')] = 'jacetania, la';
-      // this.comarcas[this.comarcas.indexOf('La Ribagorza')] = 'ribagorza, la';
-      // this.comarcas[this.comarcas.indexOf('Los Monegros')] = 'monegros, los';
     })
   }
 

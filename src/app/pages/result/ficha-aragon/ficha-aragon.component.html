@@ -94,14 +94,18 @@
         <section class="container template__caracteristicas">
             <h2>Características de la Comunidad de Aragón</h2>
             <div class="caracteristicas__list">
-                <div class="caracteristica__item">
-                    <mat-icon>person</mat-icon> La edad media de los <b>hombres</b> es de {{this.edadMediaHombres}}
-                    años
-                </div>
-                <div class="caracteristica__item">
-                    <mat-icon>person</mat-icon> La edad media de las <b>mujeres</b> es de {{this.edadMediaMujeres}}
-                    años
-                </div>
+                <a href="{{dataSource.edadMedia}}" target="_blank">
+                    <div class="caracteristica__item">
+                        <mat-icon>person</mat-icon> La edad media de los <b>hombres</b> es de {{this.edadMediaHombres}}
+                        años
+                    </div>
+                </a>
+                <a href="{{dataSource.edadMedia}}" target="_blank">
+                    <div class="caracteristica__item">
+                        <mat-icon>person</mat-icon> La edad media de las <b>mujeres</b> es de {{this.edadMediaMujeres}}
+                        años
+                    </div>
+                </a>
             </div>
         </section>
 
@@ -114,20 +118,23 @@
             <div class="graphics__item" style="width: 100%;">
                 <h2>Últimos datos de Población</h2>
 
-                <table class="tabla-poblacion">
-                    <tr>
-                        <th>Año</th>
-                        <td *ngFor="let year of yearsTablaPoblacion"><span>{{year}}</span></td>
-                    </tr>
-                    <tr>
-                        <th>{{this.comunidad[0]}}</th>
-                        <td *ngFor="let element of tablaPoblacion">
-                            <span *ngIf="element.nameRefArea.value == this.comunidad[0]">
-                                {{element.poblac.value}}
-                            </span>
-                        </td>
-                    </tr>
-                </table>
+                <div class="tabla-container">
+                    <table class="tabla-poblacion">
+                        <tr>
+                            <th>Año</th>
+                            <td *ngFor="let year of yearsTablaPoblacion"><span>{{year}}</span></td>
+                        </tr>
+                        <tr>
+                            <th>{{this.comunidad[0]}}</th>
+                            <td *ngFor="let element of tablaPoblacion">
+                                <span *ngIf="element.nameRefArea.value == this.comunidad[0]">
+                                    {{element.poblac.value}}
+                                </span>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <a class="data-link" href="{{dataSource.tablaPoblacion}}" target="_blank">Ver origen de los datos</a>
             </div>
 
             <div class="graphics__item" fragment="creative-works">
@@ -188,6 +195,7 @@
 
             <div class="graphics__item miembros" *ngIf="this.cantidadMiembrosPleno !== 0">
                 <h2>Miembros del Gobierno de Aragón</h2>
+                <a class="data-link" href="{{dataSource.miembrosPleno}}" target="_blank">Ver origen de los datos</a>
                 <ul>
                     <li *ngFor="let miembro of this.miembrosPleno"><b>{{miembro.orgTitle.value}}: </b>
                         <a

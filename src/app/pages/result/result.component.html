@@ -119,43 +119,65 @@
         <section class="container template__caracteristicas">
             <h2>Características del territorio</h2>
             <div class="caracteristicas__list">
-                <div *ngIf="this.porcentajeSueloRural !== undefined && this.porcentajeSueloRural !== 'NaN'"
-                    class="caracteristica__item">
-                    <mat-icon> local_florist</mat-icon> Ocupa un {{this.porcentajeSueloRural}}% del <b>suelo rural</b>
-                    de Aragón
-                </div>
-                <div class="caracteristica__item"
-                    *ngIf="this.porcentajeSueloUrbano !== undefined && this.porcentajeSueloUrbano !== 'NaN'">
-                    <mat-icon>zoom_out_map</mat-icon> Ocupa un {{this.porcentajeSueloUrbano}}% del <b>suelo urbano</b>
-                    de
-                    Aragón
-                </div>
-                <div class="caracteristica__item" *ngIf="esPoblado == '1'; else noPoblado">
-                    <mat-icon>insert_chart_outlined</mat-icon> {{this.tituloFicha}} está entre uno de <b>los 20
-                        territorios más
-                        poblados</b> de Aragón
-                </div>
-                <ng-template #noPoblado>
+                <a *ngIf="this.porcentajeSueloRural !== undefined && this.porcentajeSueloRural !== 'NaN'"
+                    href="{{dataSource.porcentajeSueloRural}}" target="blank">
                     <div class="caracteristica__item">
-                        <mat-icon>insert_chart_outlined</mat-icon> {{this.tituloFicha}} no está entre uno de <b>los 20
+                        <mat-icon> local_florist</mat-icon> Ocupa un {{this.porcentajeSueloRural}}% del <b>suelo
+                            rural</b>
+                        de Aragón
+                    </div>
+                </a>
+                <a *ngIf="this.porcentajeSueloUrbano !== undefined && this.porcentajeSueloUrbano !== 'NaN'"
+                    href="{{dataSource.porcentajeSueloUrbano}}" target="_blank">
+                    <div class="caracteristica__item">
+                        <mat-icon>zoom_out_map</mat-icon> Ocupa un {{this.porcentajeSueloUrbano}}% del <b>suelo
+                            urbano</b>
+                        de
+                        Aragón
+                    </div>
+                </a>
+                <a *ngIf="esPoblado == '1'; else noPoblado" href="{{dataSource.esPoblado}}" target="_blank">
+                    <div class="caracteristica__item">
+                        <mat-icon>insert_chart_outlined</mat-icon> {{this.tituloFicha}} está entre uno de <b>los 20
                             territorios más
                             poblados</b> de Aragón
                     </div>
+                </a>
+                <ng-template #noPoblado>
+                    <a href="{{dataSource.esPoblado}}" target="_blank">
+                        <div class="caracteristica__item">
+                            <mat-icon>insert_chart_outlined</mat-icon> {{this.tituloFicha}} no está entre uno de <b>los
+                                20
+                                territorios más
+                                poblados</b> de Aragón
+                        </div>
+                    </a>
                 </ng-template>
-                <div *ngIf="this.edadMediaHombres" class="caracteristica__item">
-                    <mat-icon>person</mat-icon> La edad media de los <b>hombres</b> es de {{this.edadMediaHombres}} años
-                </div>
-                <div *ngIf="this.edadMediaMujeres" class="caracteristica__item">
-                    <mat-icon>person</mat-icon> La edad media de las <b>mujeres</b> es de {{this.edadMediaMujeres}} años
-                </div>
-
-                <div class="caracteristica__item" *ngIf="tieneOficinaComarcal === 0; else noLocales">
-                    <mat-icon>business</mat-icon> {{this.tituloFicha}} no cuenta con <b>oficina comarcal</b>
-                </div>
-                <ng-template #noLocales>
+                <a *ngIf="this.edadMediaHombres" href="{{dataSource.edadMedia}}" target="_blank">
                     <div class="caracteristica__item">
-                        <mat-icon>business</mat-icon> {{this.tituloFicha}} cuenta con <b>oficina comarcal</b>
+                        <mat-icon>person</mat-icon> La edad media de los <b>hombres</b> es de {{this.edadMediaHombres}}
+                        años
                     </div>
+                </a>
+                <a *ngIf="this.edadMediaMujeres" href="{{dataSource.edadMedia}}" target="_blank">
+                    <div class="caracteristica__item">
+                        <mat-icon>person</mat-icon> La edad media de las <b>mujeres</b> es de {{this.edadMediaMujeres}}
+                        años
+                    </div>
+                </a>
+
+                <a *ngIf="tieneOficinaComarcal === 0; else noLocales" href="{{dataSource.tieneOficinaComarcal}}"
+                    target="_blank">
+                    <div class="caracteristica__item">
+                        <mat-icon>business</mat-icon> {{this.tituloFicha}} no cuenta con <b>oficina comarcal</b>
+                    </div>
+                </a>
+                <ng-template #noLocales>
+                    <a href="{{dataSource.tieneOficinaComarcal}}" target="_blank">
+                        <div class="caracteristica__item">
+                            <mat-icon>business</mat-icon> {{this.tituloFicha}} cuenta con <b>oficina comarcal</b>
+                        </div>
+                    </a>
                 </ng-template>
             </div>
         </section>
@@ -168,7 +190,6 @@
         <section *ngIf="this.tipoLocalidad === 'municipio'" class="container template__graphics">
             <div class="graphics__item" style="width: 100%;">
                 <h2>Últimos datos de Población</h2>
-
                 <div class="tabla-container">
                     <table class="tabla-poblacion">
                         <tr>
@@ -202,6 +223,7 @@
                         </tr>
                     </table>
                 </div>
+                <a class="data-link" href="{{dataSource.tablaPoblacion}}" target="_blank">Ver origen de los datos</a>
             </div>
 
             <div *ngIf="this.numberOfCreativeWork !== 0" class="graphics__item" fragment="creative-works">
@@ -263,6 +285,7 @@
 
             <div class="graphics__item miembros" *ngIf="this.cantidadMiembrosPleno !== 0">
                 <h2>Miembros del pleno territorial</h2>
+                <a class="data-link" href="{{dataSource.miembrosPleno}}" target="_blank">Ver origen de los datos</a>
                 <ul>
                     <li *ngFor="let miembro of miembrosPleno"><b>{{miembro.cargo.value}}: </b>
                         <a
