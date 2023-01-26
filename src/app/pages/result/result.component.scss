@@ -6,7 +6,7 @@
     width: 100%;
 }
 
-// Parte final Aragopedia
+// Parte final Aragopedia 
 
 .hidden {
     display: none;
@@ -98,11 +98,12 @@ section.container {
             list-style: none;
 
             li {
-                padding: 15px;
+                padding: 7px;
                 text-align: center;
                 font-size: 16px;
                 color: var(--accent-color);
                 font-family: 'Signika', sans-serif;
+
 
                 .big-number {
                     display: block;
@@ -110,6 +111,38 @@ section.container {
                     font-weight: bold;
                     color: #D6EAF0;
                     margin-bottom: 15px;
+                    transition: all .3s;
+                    position: relative;
+
+                }
+
+                a {
+                    transition: all .3s;
+                    text-decoration: none;
+                    position: relative;
+
+                    mat-icon {
+                        font-size: 16px;
+                        transform: translateY(-10px);
+                        transition: all 0.3s;
+                        color: #D6EAF0;
+                        display: block;
+                        width: 100%;
+                        text-align: right;
+                    }
+
+                    &:hover {
+
+                        .big-number {
+                            color: var(--accent-color);
+                        }
+
+                        mat-icon {
+                            transform: translateY(-14px);
+                            color: var(--accent-color);
+                        }
+                    }
+
                 }
 
                 .inicio__data-link {
