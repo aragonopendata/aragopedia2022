@@ -184,7 +184,6 @@ export class PiramidePoblacionComponent implements OnInit {
         if (data.results.bindings.length !== 0) {
           this.piramidePoblacion = data.results.bindings;
           this.yearPiramide = this.piramidePoblacion[0].year.value;
-          console.log(this.yearPiramide);
 
           this.piramidePoblacion.forEach((element: any) => {
             let auxDatoPiramide: ItemPiramide = { sexo: "", personas: 0, grupo: "" };
