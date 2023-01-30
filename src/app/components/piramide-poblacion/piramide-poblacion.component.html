@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="piramide-poblacion.component.scss">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/charts.css/dist/charts.min.css">
 <div class="piramidePob" *ngIf="this.piramidePoblacion">
-    <h2>Pirámide de población (Datos de 2011)</h2>
+    <h2>Pirámide de población</h2>
     <div class="femenino" style="width: calc(50% + 40px);">
         <table id="table-fem"
             class="charts-css bar show-heading reverse show-primary-axis show-labels reverse-datasets show-data-on-hover">
@@ -34,6 +34,8 @@
         </table>
 
     </div>
-
+    <div class="data-year">
+        <p>(Datos de {{yearPiramide}})</p>
+    </div>
 </div>
 <a class="data-link" href="{{linkToQuery}}" target="_blank">Ver origen de los datos</a>

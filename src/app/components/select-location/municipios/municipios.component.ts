@@ -103,6 +103,7 @@ export class SelectMunicipioComponent implements OnInit {
       this.filteredMunicipios = response;
     });
   }
+
   removeAccents(str: any): any {
     // return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
     const acentos: any = { 'á': 'a', 'é': 'e', 'í': 'i', 'ó': 'o', 'ú': 'u' };
