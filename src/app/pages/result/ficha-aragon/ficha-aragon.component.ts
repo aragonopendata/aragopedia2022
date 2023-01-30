@@ -69,6 +69,7 @@ export class FichaAragonComponent implements OnInit {
   hectareasQuemadas!: string;
   edadMediaHombres!: string;
   edadMediaMujeres!: string;
+  yearEdadMedia!: string;
   explotacionesGanaderas!: string;
   plazasHoteleras!: string;
   codigoIne: any;
@@ -184,7 +185,7 @@ export class FichaAragonComponent implements OnInit {
         this.queryUrlAlojamientosTuristicos = `https://opendata.aragon.es/sparql?default-graph-uri=&query=select+count%28+distinct+%3Fs%29+from+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fei2av2%3E+where+%7B+%0D%0A%0D%0A%3Fs+a+%3Chttp%3A%2F%2Fwww.w3.org%2Fns%2Forg%23Organization%3E%3B+%0D%0A%0D%0A++++dc%3Asource+%3Chttps%3A%2F%2Fopendata.aragon.es%2Fdataset%2Fb58bc283-573f-4fa5-9c0c-ff9136eab2c1%2Fresource%2F993c5ebf-5ced-478a-8791-159b2e87e789%3E.+%0D%0A%0D%0A%7D+&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`;
         this.dataSource.alojamientosRurales = this.exportHtmlQuery(this.queryUrlAlojamientosTuristicos)
 
-        this.queryUrlExplotacionesGanaderas = `https://opendata.aragon.es/sparql?default-graph-uri=&query=select+count%28distinct%28%3Fs%29%29+%3Fx+from+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fei2av2%3E+where+%7B%0D%0A%3Fs+%3Fx+%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fsector-publico%2Forganizacion%2Fcomunidad%2F${this.codigoIne}%3E%3B%0D%0A++++dc%3Asource+%3Fvista.%0D%0A++FILTER%28%3Fvista+IN+%28%0D%0A++++%3Chttps%3A%2F%2Fopendata.aragon.es%2Fdataset%2F309b8aaa-406e-455c-ad51-05b9de5498b6%2Fresource%2F599f3eec-b111-4741-8674-9ce324b22334%3E%2C%0D%0A++++%3Chttps%3A%2F%2Fopendata.aragon.es%2Fdataset%2F309b8aaa-406e-455c-ad51-05b9de5498b6%2Fresource%2F54f8e0f1-19f5-4f4e-b826-c9b959156756%3E%2C%0D%0A++++%3Chttps%3A%2F%2Fopendata.aragon.es%2Fdataset%2F309b8aaa-406e-455c-ad51-05b9de5498b6%2Fresource%2F8db7f751-e48d-4130-8731-2b6691c2ce9b%3E%2C%0D%0A++++%3Chttps%3A%2F%2Fopendata.aragon.es%2Fdataset%2F309b8aaa-406e-455c-ad51-05b9de5498b6%2Fresource%2F4fe1b669-1a7f-42f0-a822-79cebe673c46%3E%2C%0D%0A++++%3Chttps%3A%2F%2Fopendata.aragon.es%2Fdataset%2F309b8aaa-406e-455c-ad51-05b9de5498b6%2Fresource%2Fbabeae5d-b9c9-4dce-9be8-346f49be565a%3E%2C%0D%0A++++%3Chttps%3A%2F%2Fopendata.aragon.es%2Fdataset%2F309b8aaa-406e-455c-ad51-05b9de5498b6%2Fresource%2Fb4db038f-7d96-4135-87ac-022074cd8f6a%3E%2C%0D%0A++++%3Chttps%3A%2F%2Fopendata.aragon.es%2Fdataset%2F309b8aaa-406e-455c-ad51-05b9de5498b6%2Fresource%2F8bb11abe-8093-4b9b-82b2-3a0faaf852d4%3E%2C%0D%0A++++%3Chttps%3A%2F%2Fopendata.aragon.es%2Fdataset%2F309b8aaa-406e-455c-ad51-05b9de5498b6%2Fresource%2Fb4339e4d-4f9a-453f-bf6a-3cf9f2d08287%3E%2C%0D%0A++++%3Chttps%3A%2F%2Fopendata.aragon.es%2Fdataset%2F309b8aaa-406e-455c-ad51-05b9de5498b6%2Fresource%2Fdb9a2d5e-f2af-4af3-90eb-e708604b9688%3E%2C%0D%0A++++%3Chttps%3A%2F%2Fopendata.aragon.es%2Fdataset%2F309b8aaa-406e-455c-ad51-05b9de5498b6%2Fresource%2Fd3e080be-e55a-4e92-8605-031e752550db%3E%0D%0A++%29%29.%0D%0A+FILTER+%28%3Fx++IN+%28%0D%0A++++%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fdimensionproperty%2Fexplotaciones-ganaderas-apicola-dimension%2F5%3E%2C%0D%0A++++%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fdimensionproperty%2Fexplotaciones-ganaderas-ovino-dimension%2F5%3E%2C%0D%0A++++%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fdimensionproperty%2Fexplotaciones-ganaderas-porcino-dimension%2F5%3E%2C%0D%0A++++%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fdimensionproperty%2Fexplotaciones-ganaderas-cunicola-dimension%2F5%3E%2C%0D%0A++++%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fdimensionproperty%2Fexplotaciones-ganaderas-bovino-dimension%2F5%3E%2C%0D%0A++++%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fdimensionproperty%2Fexplotaciones-ganaderas-avicola-dimension%2F5%3E%2C%0D%0A++++%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fdimensionproperty%2Fexplotaciones-ganaderas-otras-dimension%2F5%3E%2C%0D%0A++++%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fdimensionproperty%2Fexplotaciones-ganaderas-nucleos-zoologicos-dimension%2F5%3E%2C%0D%0A++++%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fdimensionproperty%2Fexplotaciones-ganaderas-equido-dimension%2F5%3E%0D%0A%29%29.%0D%0A%7D%0D%0Alimit+100&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`;
+        this.queryUrlExplotacionesGanaderas = `https://opendata.aragon.es/sparql?default-graph-uri=&query=select+count%28distinct%28%3Fs%29%29++from+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fei2av2%3E+where+%7B%0D%0A%3Fs+%3Fx+%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fsector-publico%2Forganizacion%2Fcomunidad%2F${this.codigoIne}%3E+.+++%0D%0AFILTER+%28%28REGEX%28STR%28%3Fx%29%2C+%22%5Ehttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fdimensionproperty%2Fexplotaciones-ganaderas*%22%29%29%29.%0D%0A%7D%0D%0A&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`;
 
         this.queryUrlPlazasHoteleras = `https://opendata.aragon.es/sparql?default-graph-uri=http%3A%2F%2Fopendata.aragon.es%2Fdef%2Fei2av2&query=select+count%28+distinct+%3Fs%29+from+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fei2av2%3E+where+%7B%0D%0A%3Fs+a+%3Chttp%3A%2F%2Fwww.w3.org%2Fns%2Forg%23Organization%3E%3B%0D%0A++++dc%3Asource+%3Chttps%3A%2F%2Fopendata.aragon.es%2Fdataset%2F87b07cd4-c1b0-41c4-b071-c18db7c0cf58%2Fresource%2F8303127d-90c6-4e94-9617-e6e602a0140a%3E.%0D%0A%7D%0D%0A&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`;
 
@@ -279,7 +280,7 @@ export class FichaAragonComponent implements OnInit {
       this.dataSource.incendios = this.exportHtmlQuery(this.queryUrlIncendios);
       this.dataSource.hectareasAfectadas = this.exportHtmlQuery(this.queryUrlIncendios);
 
-      this.queryUrlEdadMedia = `https://opendata.aragon.es/sparql?default-graph-uri=&query=select+distinct+%3Fobs+%3FrefArea+%3FnameRefArea+%28strafter%28str%28%3FrefPeriod%29%2C+%22http%3A%2F%2Freference.data.gov.uk%2Fid%2Fyear%2F%22%29+AS+%3FnameRefPeriod%29+xsd%3Afloat%28%3Fvalor%29+as+%3Fval+%3Fsexo+where+%7B%0D%0A+++%3Fobs+qb%3AdataSet+%3Fdataset.%0D%0A+++%3Fobs+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refPeriod%3E+%3FrefPeriod.%0D%0A++%7B+select+distinct+%3FrefPeriod+where+%7B%0D%0A+++++++++++++++++++++++++++++++++++++++++++++++++++%3Fobs+qb%3AdataSet+%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fiaest%2Fdataset%2F03-030006A%3E.%0D%0A++++++++++++++++++++++++++++++++++++++++++++++++++++%3Fobs+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refPeriod%3E+%3FrefPeriod.%0D%0A+++++++++++++++++++++++++++++++++++++++++++++%7D%0D%0A+++++++++++++++++++++++++++++++++++++++++++++ORDER+BY+desc%28%3FrefPeriod%29%0D%0A+++++++++++++++++++++++++++++++++++++++++++++LIMIT+1++%7D%0D%0A%0D%0A+++%3Fobs+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refArea%3E+%3FrefArea.%0D%0A+++%3FrefArea+rdfs%3Alabel+%3FnameRefArea.+%0D%0AVALUES+%3Fdataset+%7B+%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fiaest%2Fdataset%2F03-030006A%3E+%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fiaest%2Fdataset%2F03-030006TC%3E++%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fiaest%2Fdataset%2F03-030006A%3E%7D%0D%0A+++FILTER+%28+lang%28%3FnameRefArea%29+%3D+%22es%22+%29.%0D%0A%0D%0A+++%3Fmuni+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2FAragopedia%23enComarca%3E+%3Fcomarca.%0D%0A+++%3Fmuni2+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2FAragopedia%23enComarca%3E+%3Fcomarca.%0D%0A+++%3Fmuni+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2FAragopedia%23enComunidadAutonoma%3E+%3Fccaa.%0D%0A+++FILTER+%28%3FrefArea+IN+%28%3Fmuni%2C+%3Fcomarca%2C+%3Fccaa%29%29.%0D%0A%3Fobs+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fiaest%2Fdimension%23sexo%3E+%3Ffoo1.%0D%0A+%3Ffoo1+skos%3AprefLabel+%3Fsexo++.%0D%0A+++OPTIONAL+%7B++%3Fobs+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fiaest%2Fmedida%23edad-media-de-la-poblacion%3E+%3Fvalor++%7D+.%0D%0A%7D%0D%0AORDER+BY+desc%28%3FrefPeriod%29%2C+desc%28%3Fval%29%2C+%3FrefArea%2C+%3Fsexo%0D%0ALIMIT+100%0D%0A&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`;
+      this.queryUrlEdadMedia = `https://opendata.aragon.es/sparql?default-graph-uri=&query=select+distinct+%3Fyear+xsd%3Afloat%28%3Fvalor%29+as+%3Fval+%3Fsexo+where+%7B%0D%0A+++%3Fobs+qb%3AdataSet+%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fiaest%2Fdataset%2F03-030006A%3E%3B%0D%0A++++++++++++%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refArea%3E+%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fterritorio%2FComunidadAutonoma%2FArag%C3%B3n%3E%3B%0D%0A+++++++++++%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refPeriod%3E+%3FrefPeriod.%0D%0A++%7B+select+distinct+%3FrefPeriod+where+%7B%0D%0A+++++++++++++++++++++++++++++++++++++++++++++++++++%3Fobs+qb%3AdataSet+%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fiaest%2Fdataset%2F03-030006TM%3E.%0D%0A++++++++++++++++++++++++++++++++++++++++++++++++++++%3Fobs+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refPeriod%3E+%3FrefPeriod.%0D%0A+++++++++++++++++++++++++++++++++++++++++++++%7D%0D%0A+++++++++++++++++++++++++++++++++++++++++++++ORDER+BY+desc%28%3FrefPeriod%29%0D%0A+++++++++++++++++++++++++++++++++++++++++++++LIMIT+1++%7D%0D%0A%0D%0A%0D%0A++++%3FrefPeriod+time%3AinXSDgYear+%3Fyear.%0D%0A%0D%0A++++%3Fobs+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fiaest%2Fdimension%23sexo%3E+%3Ffoo1.%0D%0A++++%3Ffoo1+skos%3AprefLabel+%3Fsexo++.%0D%0A+++OPTIONAL+%7B++%3Fobs+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fiaest%2Fmedida%23edad-media-de-la-poblacion%3E+%3Fvalor++%7D+.%0D%0A%7D%0D%0AORDER+BY+desc%28%3Fyear%29%2C+desc%28%3Fval%29%2C+%3Fsexo%0D%0ALIMIT+100%0D%0A&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`;
       this.dataSource.edadMedia = this.exportHtmlQuery(this.queryUrlEdadMedia);
 
       this.queryUrlOficinasComarcales = `https://opendata.aragon.es/sparql?default-graph-uri=&query=select+distinct+%0D%0A%3FrefArea+%3FnameRefArea+%3FrefPeriod+%28strafter%28str%28%3FrefPeriod%29%2C+%22http%3A%2F%2Freference.data.gov.uk%2Fid%2Fyear%2F%22%29+AS+%3FnameRefPeriod%29+%0D%0Axsd%3Aint%28%3Fnumero_de_edificios%29+++where+%7B%0D%0A+%3Fobs+qb%3AdataSet+%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fiaest%2Fdataset%2F01-010009A%3E.%0D%0A+%3Fobs+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refPeriod%3E+%3FrefPeriod.%0D%0AFILTER+%28%3FrefPeriod+IN+%28%3Chttp%3A%2F%2Freference.data.gov.uk%2Fid%2Fyear%2F2011%3E%29%29.%0D%0A+%3Fobs+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refArea%3E+%3FrefArea.%0D%0A+%3FrefArea+rdfs%3Alabel+%3FnameRefArea.+FILTER+%28+lang%28%3FnameRefArea%29+%3D+%22es%22+%29.FILTER+%28%3FrefArea+IN+%28%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fterritorio%2FComunidadAutonoma%2FAragón%3E%29%29.%0D%0A+%3Fobs+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fiaest%2Fdimension%23tipo-edificio-detalle%3E+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fkos%2Fiaest%2Ftipo-edificio-detalle%2Flocales%3E.%0D%0A+%3Fobs+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fiaest%2Fmedida%23numero-de-edificios%3E+%3Fnumero_de_edificios+.%0D%0A%7D+%0D%0Aorder+by+desc%28%3FrefPeriod%29%0D%0ALIMIT+1%0D%0A&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`
@@ -301,7 +302,7 @@ export class FichaAragonComponent implements OnInit {
       });
 
       this.resultSvc.getData(this.queryUrlDensidadPoblacion).subscribe((data: any) => {
-        this.densidadPoblacion = (Number(data.results.bindings[0].densidad_de_poblacion_habkm2.value)).toFixed(1);
+        this.densidadPoblacion = (Number(data.results.bindings[0].densidad_de_poblacion_habkm2.value)).toFixed(1).replace('.', ',');
       });
 
       this.resultSvc.getData(this.queryUrlTotalCreativeWork).subscribe(data => {
@@ -340,8 +341,8 @@ export class FichaAragonComponent implements OnInit {
         let totalUrbano = data.results.bindings[0].urbano.value;
         let totalRural = data.results.bindings[0].rustico.value;
 
-        this.porcentajeSueloRural = ((this.sueloRural / totalRural) * 100).toFixed(2);
-        this.porcentajeSueloUrbano = ((this.sueloUrbano / totalUrbano) * 100).toFixed(2);
+        this.porcentajeSueloRural = ((this.sueloRural / totalRural) * 100).toFixed(2).replace('.', ',');
+        this.porcentajeSueloUrbano = ((this.sueloUrbano / totalUrbano) * 100).toFixed(2).replace('.', ',');
 
       });
 
@@ -353,9 +354,10 @@ export class FichaAragonComponent implements OnInit {
       });
 
       this.resultSvc.getData(this.queryUrlEdadMedia).subscribe((data) => {
+        this.yearEdadMedia = data.results.bindings[0].year.value;
         const total = data.results.bindings;
-        const mujeres = Number(total.find((item: any) => item.nameRefArea.value === 'Aragón' && item.sexo.value === 'Mujeres').val.value).toFixed(2);
-        const hombres = Number(total.find((item: any) => item.nameRefArea.value === 'Aragón' && item.sexo.value === 'Hombres').val.value).toFixed(2);
+        const mujeres = Number(total.find((item: any) => item.nameRefArea.value === 'Aragón' && item.sexo.value === 'Mujeres').val.value).toFixed(2).replace('.', ',');
+        const hombres = Number(total.find((item: any) => item.nameRefArea.value === 'Aragón' && item.sexo.value === 'Hombres').val.value).toFixed(2).replace('.', ',');
 
         this.edadMediaMujeres = mujeres
         this.edadMediaHombres = hombres
@@ -469,6 +471,22 @@ export class FichaAragonComponent implements OnInit {
 
   deleteSpace(str: any): string {
     return str.split(' ').join('_');
+  }
+
+  format(number: any) {
+    if (typeof number === 'number') {
+      let partesNumero = number.toString().split('.');
+      partesNumero[0] = partesNumero[0].replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+
+      return partesNumero.join('.');
+
+    } else {
+
+      let partesNumero = number.split('.');
+      partesNumero[0] = partesNumero[0].replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+
+      return partesNumero.join('.');
+    }
   }
 
   reduceText(text: string): string {

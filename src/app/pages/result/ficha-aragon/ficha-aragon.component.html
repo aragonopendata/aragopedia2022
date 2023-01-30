@@ -16,23 +16,23 @@
                 <ul>
                     <li *ngIf="this.sueloUrbano"><a href="{{dataSource.sueloUrbano}}" target="_blank">
                             <mat-icon>open_in_new</mat-icon><span
-                                class="big-number">{{this.sueloUrbano}}</span>Hectáreas de suelo
+                                class="big-number">{{format(this.sueloUrbano)}}</span>Hectáreas de suelo
                             urbano</a></li>
                     <li *ngIf="this.sueloRural"><a href="{{dataSource.sueloRural}}"
                             target="_blank"><mat-icon>open_in_new</mat-icon><span
-                                class="big-number">{{this.sueloRural}}</span>Hectáreas de suelo
+                                class="big-number">{{format(this.sueloRural)}}</span>Hectáreas de suelo
                             rural</a></li>
                     <li *ngIf="this.oficinasComarcales"><a href="{{dataSource.edificiosDestinadosLocales}}"
                             target="_blank"><mat-icon>open_in_new</mat-icon><span
-                                class="big-number">{{this.oficinasComarcales}}</span>Edificios destinados a
-                            locales</a></li>
+                                class="big-number">{{format(this.oficinasComarcales)}}</span>Edificios destinados a
+                            locales (2011)</a></li>
                     <li *ngIf="this.poblacion"><a href="{{dataSource.habitantes}}"
                             target="_blank"><mat-icon>open_in_new</mat-icon><span
-                                class="big-number">{{this.poblacion}}</span>Habitantes</a></li>
+                                class="big-number">{{format(this.poblacion)}}</span>Habitantes</a></li>
 
                     <li *ngIf="this.poligonos"><a href="{{dataSource.poligonos}}"
                             target="_blank"><mat-icon>open_in_new</mat-icon><span
-                                class="big-number">{{this.poligonos}}</span></a>Polígonos industriales
+                                class="big-number">{{format(this.poligonos)}}</span></a>Polígonos industriales
                     </li>
 
                     <li *ngIf="this.incendiosUltimosAnos"><a href="{{dataSource.incendios}}"
@@ -40,20 +40,20 @@
                                 class="big-number">{{this.incendiosUltimosAnos}}</span>Incendios desde 2001</a></li>
                     <li *ngIf="this.hectareasQuemadas"><a href="{{dataSource.hectareasAfectadas}}"
                             target="_blank"><mat-icon>open_in_new</mat-icon><span
-                                class="big-number">{{this.hectareasQuemadas}}</span>Hectáreas afectadas por
-                            incendios</a></li>
+                                class="big-number">{{format(this.hectareasQuemadas)}}</span>Hectáreas afectadas por
+                            incendios desde 2001</a></li>
                     <li *ngIf="this.plazasHoteleras"><a href="{{dataSource.alojamientosHoteleros}}"
                             target="_blank"><mat-icon>open_in_new</mat-icon><span
-                                class="big-number">{{this.plazasHoteleras}}</span>Alojamientos
+                                class="big-number">{{format(this.plazasHoteleras)}}</span>Alojamientos
                             hoteleros</a></li>
                     <li *ngIf="this.alojamientosTuristicos"><a href="{{dataSource.alojamientosRurales}}"
                             target="_blank"><mat-icon>open_in_new</mat-icon><span
-                                class="big-number">{{this.alojamientosTuristicos}}</span>Alojamientos
+                                class="big-number">{{format(this.alojamientosTuristicos)}}</span>Alojamientos
                             de turismo rural</a>
                     </li>
                     <li *ngIf="this.municipiosEnTerritorio > 0"><a href="{{dataSource.municipios}}"
                             target="_blank"><mat-icon>open_in_new</mat-icon><span
-                                class="big-number">{{this.municipiosEnTerritorio}}</span>Municipios en
+                                class="big-number">{{format(this.municipiosEnTerritorio)}}</span>Municipios en
                             el territorio</a>
                     </li>
                 </ul>
@@ -97,13 +97,13 @@
                 <a href="{{dataSource.edadMedia}}" target="_blank">
                     <div class="caracteristica__item">
                         <mat-icon>person</mat-icon> La edad media de los <b>hombres</b> es de {{this.edadMediaHombres}}
-                        años
+                        años (dato de {{yearEdadMedia}})
                     </div>
                 </a>
                 <a href="{{dataSource.edadMedia}}" target="_blank">
                     <div class="caracteristica__item">
                         <mat-icon>person</mat-icon> La edad media de las <b>mujeres</b> es de {{this.edadMediaMujeres}}
-                        años
+                        años (dato de {{yearEdadMedia}})
                     </div>
                 </a>
             </div>
@@ -128,7 +128,7 @@
                             <th>{{this.comunidad[0]}}</th>
                             <td *ngFor="let element of tablaPoblacion">
                                 <span *ngIf="element.nameRefArea.value == this.comunidad[0]">
-                                    {{element.poblac.value}}
+                                    {{format(element.poblac.value)}}
                                 </span>
                             </td>
                         </tr>
