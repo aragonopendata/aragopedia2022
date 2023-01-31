@@ -104,7 +104,7 @@ export class SelectComarcaComponent implements OnInit {
         stringOrdenado += item.nombre.value.toLowerCase().substring(0, item.nombre.value.toLowerCase().indexOf(', las'));
         item.nombre.value = stringOrdenado;
       }
-      return this.removeAccents(item.nombre.value.toLowerCase()).indexOf(enteredData.toLowerCase()) > -1
+      return this.removeAccents(item.nombre.value.toLowerCase()).indexOf(this.removeAccents(enteredData.toLowerCase())) > -1;
     });
   }
 

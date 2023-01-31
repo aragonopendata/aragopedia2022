@@ -93,7 +93,7 @@ export class SelectMunicipioComponent implements OnInit {
         stringOrdenado += item.toLowerCase().substring(0, item.toLowerCase().indexOf('(las)'));
         item = stringOrdenado;
       }
-      return this.removeAccents(item.toLowerCase()).indexOf(enteredData.toLowerCase()) > -1
+      return this.removeAccents(item.toLowerCase()).indexOf(this.removeAccents(enteredData.toLowerCase())) > -1
     });
   }
 
