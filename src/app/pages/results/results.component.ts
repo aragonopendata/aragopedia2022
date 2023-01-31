@@ -131,8 +131,15 @@ export class ResultsComponent implements OnInit {
         const results = data.results.bindings;
         results.forEach((element: any, i: any) => {
           if (element.tipo.value === 'cubo_estadistico') {
-            this.results[i] = { categoryURL: element.item.value, title: element['callret-3'].value, category: element.labelTema.value, resultURL: `https://opendata.aragon.es/describe/?url=${element.item.value}`, year: element.year.value, type: element.tipo.value }
-          } else { this.results[i] = { categoryURL: element.item.value, title: element['callret-3'].value, category: element.labelTema.value, resultURL: element.item.value, year: element.year.value, type: element.tipo.value } }
+            this.results[i] = { categoryURL: element.item.value, title: element['callret-3'].value, category: element.labelTema.value, resultURL: element.item.value, year: element.year.value, type: 'Cubo estadístico' }
+          } else if (element.tipo.value === 'dataset_ckan') {
+            this.results[i] = {
+              categoryURL: element.item.value, title: element['callret-3'].value, category: element.labelTema.value, resultURL: element.item.value, year: element.year.value, type: 'Dataset'
+            }
+          } else if (element.tipo.value === 'eli') {
+            this.results[i] = { categoryURL: element.item.value, title: element['callret-3'].value, category: element.labelTema.value, resultURL: element.item.value, year: element.year.value, type: 'ELI' }
+          }
+          else { this.results[i] = { categoryURL: element.item.value, title: element['callret-3'].value, category: element.labelTema.value, resultURL: element.item.value, year: element.year.value, type: 'SIUa' } }
         });
 
         let i: number = this.results.length;
@@ -149,13 +156,13 @@ export class ResultsComponent implements OnInit {
         }
 
         this.results.forEach((element: any, i: number) => {
-          if (element.type === 'dataset_ckan') {
+          if (element.type === 'Dataset') {
             this.totalDatasets += 1;
-          } else if (element.type === 'cubo_estadistico') {
+          } else if (element.type === 'Cubo estadístico') {
             this.totalCubes += 1;
-          } else if (element.type === 'eli') {
+          } else if (element.type === 'ELI') {
             this.totalEli += 1;
-          } else if (element.type === 'archivoSIUa') {
+          } else if (element.type === 'SIUa') {
             this.totalSiua += 1;
           }
         });
@@ -273,7 +280,7 @@ export class ResultsComponent implements OnInit {
   filterByDataset() {
     const datasetResults = [{}];
     this.results.forEach((element: any) => {
-      if (element.type === 'dataset_ckan') {
+      if (element.type === 'Dataset') {
         datasetResults.push(element);
       }
     });
@@ -290,7 +297,7 @@ export class ResultsComponent implements OnInit {
   filterByCube() {
     const cubeResults = [{}];
     this.results.forEach((element: any) => {
-      if (element.type === 'cubo_estadistico') {
+      if (element.type === 'Cubo estadístico') {
         cubeResults.push(element);
       }
     });
@@ -306,7 +313,7 @@ export class ResultsComponent implements OnInit {
   filterByEli() {
     const eliResults = [{}];
     this.results.forEach((element: any) => {
-      if (element.type === 'eli') {
+      if (element.type === 'ELI') {
         eliResults.push(element);
       }
     });
@@ -322,7 +329,7 @@ export class ResultsComponent implements OnInit {
   filterBySiua() {
     const siuaResults = [{}];
     this.results.forEach((element: any) => {
-      if (element.type === 'archivoSIUa') {
+      if (element.type === 'SIUa') {
         siuaResults.push(element);
       }
     });
