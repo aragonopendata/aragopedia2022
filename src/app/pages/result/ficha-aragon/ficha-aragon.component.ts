@@ -541,8 +541,12 @@ export class FichaAragonComponent implements OnInit {
   exportHtmlQuery(query: string) {
     const jsonFormat = 'application%2Fsparql-results%2Bjson';
     const htmlFormat = 'text%2Fhtml';
-    const htmlQuery = query?.replace(jsonFormat, htmlFormat);
 
+    const count = '+count+';
+    const countDistinct = '+count%28distinct%28%3Fs%29%29++';
+    const distinct = '+distinct%28%3Fs%29++';
+
+    const htmlQuery = query?.replace(jsonFormat, htmlFormat).replace(count, '+').replace(countDistinct, distinct).replace('+count%28distinct+%3Fs%29+', '+distinct+%3Fs+').replace('+count%28+distinct+%3Fs%29+', '+distinct+%3Fs+');
     return htmlQuery;
   }
 
