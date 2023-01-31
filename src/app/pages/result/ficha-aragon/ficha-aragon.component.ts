@@ -1,9 +1,11 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ngxCsv } from 'ngx-csv';
 import { AragopediaService } from 'src/app/components/aragopedia-tabla-datos/aragopediaService';
 import { ResultService } from '../result.service';
+import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
+import { BaseChartDirective } from 'ng2-charts';
 
 interface Persona {
   nombre: { type: string, value: string },
@@ -36,6 +38,31 @@ interface DataLinks {
 })
 
 export class FichaAragonComponent implements OnInit {
+  // Configuración gráfica
+  @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
+
+  public barChartOptions: ChartConfiguration['options'] = {
+    responsive: true,
+    // We use these empty structures as placeholders for dynamic theming.
+    scales: {
+      x: {},
+      y: {
+        min: 10
+      }
+    },
+    plugins: {
+      legend: {
+        display: true,
+      },
+    }
+  };
+  public barChartType: ChartType = 'bar';
+  public barChartData: ChartData<'bar'> = {
+    labels: ['2017', '2018', '2019', '2020', '2021'],
+    datasets: [
+      { data: [], label: '' },
+    ]
+  };
 
   constructor(public resultSvc: ResultService, private fb: FormBuilder, private http: HttpClient, public aragopediaSvc: AragopediaService) { }
 
@@ -337,6 +364,13 @@ export class FichaAragonComponent implements OnInit {
           const element = this.tablaPoblacion[i].nameRefArea.value;
           this.comunidad.push(element);
         }
+
+        const datos = data.results.bindings;
+        for (let i = 4; i >= 0; i--) {
+          this.barChartData.datasets[0].label = datos[0].nameRefArea.value;
+          this.barChartData.datasets[0].data.push(Number(datos[i].poblac.value));
+        }
+        this.chart?.update();
       });
 
 

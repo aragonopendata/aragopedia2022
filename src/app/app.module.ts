@@ -41,6 +41,7 @@ import { MunicipiosComponent } from './components/aragopedia-selector-temas/loca
 import { LocationComponent } from './components/aragopedia-selector-temas/location/location.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
+import { NgChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [
@@ -87,7 +88,8 @@ import { MatSortModule } from '@angular/material/sort';
     PersonaModule,
     MatCheckboxModule,
     MatPaginatorModule,
-    MatSortModule
+    MatSortModule,
+    NgChartsModule
   ],
   providers: [ResultService],
   bootstrap: [AppComponent]
