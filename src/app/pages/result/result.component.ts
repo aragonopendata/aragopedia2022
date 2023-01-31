@@ -6,6 +6,8 @@ import { AragopediaSelectorTemasComponent } from 'src/app/components/aragopedia-
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AragopediaService } from 'src/app/components/aragopedia-tabla-datos/aragopediaService';
+import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
+import { BaseChartDirective } from 'ng2-charts';
 
 interface DataLinks {
   sueloUrbano: string,
@@ -37,6 +39,32 @@ interface DataLinks {
 })
 
 export class ResultComponent {
+
+  // Configuración gráfica
+  @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
+
+  public barChartOptions: ChartConfiguration['options'] = {
+    responsive: true,
+    // We use these empty structures as placeholders for dynamic theming.
+    scales: {
+      x: {},
+      y: {
+        min: 10
+      }
+    },
+    plugins: {
+      legend: {
+        display: true,
+      },
+    }
+  };
+  public barChartType: ChartType = 'bar';
+  public barChartData: ChartData<'bar'> = {
+    labels: ['2017', '2018', '2019', '2020', '2021'],
+    datasets: [
+      { data: [], label: '' },
+    ]
+  };
 
   constructor(public resultSvc: ResultService, private fb: FormBuilder, private _route: ActivatedRoute, private http: HttpClient, public aragopediaSvc: AragopediaService) { }
 
@@ -548,25 +576,39 @@ export class ResultComponent {
           }
           for (let i = 5; i < 10; i++) {
             const element = this.tablaPoblacion[i].nameRefArea.value;
-
             this.comunidad.push(element);
           }
           for (let i = 0; i < 5; i++) {
             const element = this.tablaPoblacion[i].nameRefArea.value;
-
             this.provincia.push(element);
           }
           for (let i = 10; i < 15; i++) {
             const element = this.tablaPoblacion[i].nameRefArea.value;
-
             this.municipio.push(element);
           }
+          for (let i = 14; i >= 10; i--) {
+            this.barChartData.datasets[0].label = this.tablaPoblacion[11].nameRefArea.value;
+            this.barChartData.datasets[0].data.push(Number(this.tablaPoblacion[i].poblac.value));
+          }
+          this.chart?.update();
+
         } else if (this.tipoLocalidad === 'comarca') {
+          console.log(data);
+
           this.poblacion = data.results.bindings[4].poblac.value;
+
+          for (let i = 0; i < this.poblacion.length; i++) {
+            this.barChartData.datasets[0].label = data.results.bindings[i].nameRefArea.value;
+            this.barChartData.datasets[0].data.push(Number(data.results.bindings[i].poblac.value));
+          }
+          this.chart?.update();
+
 
         } else if (this.lugarBuscadoParsed === 'Zaragoza') {
 
           this.poblacion = data?.results.bindings.find((lugar: any) => lugar.nameRefArea.value.toLowerCase() === this.lugarBuscado.replace('Zaragóza', 'Zaragoza').toLowerCase()).poblac.value;
+          console.log(data.results.bindings);
+
 
           this.dataDownload[0].habitantes = this.poblacion;
           this.comunidadActual = data?.results.bindings[0].nameRefArea.value;
@@ -576,21 +618,26 @@ export class ResultComponent {
           for (let i = 0; i < 7; i++) {
             this.yearsTablaPoblacion.push(data?.results.bindings[i].nameRefPeriod.value);
           }
-          for (let i = 5; i < 7; i++) {
+          for (let i = 4; i >= 0; i--) {
             const element = this.tablaPoblacion[i].nameRefArea.value;
             this.comunidad.push(element);
           }
 
           for (let i = 10; i < 15; i++) {
             const element = this.tablaPoblacion[i].nameRefArea.value;
-
             this.municipio.push(element);
           }
+          for (let i = 12; i >= 8; i--) {
+            this.barChartData.datasets[0].label = this.tablaPoblacion[11].nameRefArea.value;
+            this.barChartData.datasets[0].data.push(Number(this.tablaPoblacion[i].poblac.value));
+          }
+          this.chart?.update();
         }
         else {
           this.poblacion = data.results.bindings[0].poblac.value;
-        }
 
+        }
+        this.chart?.update();
       });
 
 
@@ -800,8 +847,12 @@ export class ResultComponent {
   exportHtmlQuery(query: string) {
     const jsonFormat = 'application%2Fsparql-results%2Bjson';
     const htmlFormat = 'text%2Fhtml';
-    const htmlQuery = query?.replace(jsonFormat, htmlFormat);
 
+    const count = '+count+';
+    const countDistinct = '+count%28distinct%28%3Fs%29%29++';
+    const distinct = '+distinct%28%3Fs%29++';
+
+    const htmlQuery = query?.replace(jsonFormat, htmlFormat).replace(count, '+').replace(countDistinct, distinct).replace('+count%28distinct+%3Fs%29+', '+distinct+%3Fs+').replace('+count%28+distinct+%3Fs%29+', '+distinct+%3Fs+');
     return htmlQuery;
   }
 

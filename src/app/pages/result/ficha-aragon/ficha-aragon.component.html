@@ -146,6 +146,12 @@
                         </tr>
                     </table>
                 </div>
+                <div class="grafica-poblacion">
+                    <h2>Gráfica de los últimos 5 años</h2>
+                    <canvas baseChart class="chart" [data]="barChartData" [options]="barChartOptions"
+                        [type]="barChartType">
+                    </canvas>
+                </div>
                 <a class="data-link" href="{{dataSource.tablaPoblacion}}" target="_blank">Ver origen de los datos</a>
             </div>
 

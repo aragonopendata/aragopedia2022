@@ -210,11 +210,11 @@
             </div>
         </section>
 
-        <section class="container template__graphics">
+        <!-- <section class="container template__graphics">
             <div class="graphics__item" style="width: 100%;">
                 <app-piramide-poblacion></app-piramide-poblacion>
             </div>
-        </section>
+        </section> -->
         <section *ngIf="this.tipoLocalidad === 'municipio'" class="container template__graphics">
             <div class="graphics__item" style="width: 100%;">
                 <h2>Últimos datos de Población</h2>
@@ -250,6 +250,12 @@
                             </td>
                         </tr>
                     </table>
+                </div>
+                <div class="grafica-poblacion">
+                    <h2>Gráfica de los últimos 5 años</h2>
+                    <canvas baseChart class="chart" [data]="barChartData" [options]="barChartOptions"
+                        [type]="barChartType">
+                    </canvas>
                 </div>
                 <a class="data-link" href="{{dataSource.tablaPoblacion}}" target="_blank">Ver origen de los datos</a>
             </div>
@@ -501,11 +507,19 @@
             </div>
         </section>
 
-        <section class="container template__graphics">
+        <!-- <section class="container template__graphics">
             <div class="graphics__item" style="width: 100%;">
                 <app-piramide-poblacion></app-piramide-poblacion>
+
             </div>
-        </section>
+        </section> -->
+        <!-- <div class="grafica-poblacion">
+            <h2>Gráfica de los últimos 5 años</h2>
+            <canvas baseChart class="chart" [data]="barChartData" [options]="barChartOptions" [type]="barChartType">
+            </canvas>
+        </div> -->
+
+
 
         <section class="container template__graphics">
             <div *ngIf="this.numberOfCreativeWork" class="graphics__item" fragment="creative-works">
