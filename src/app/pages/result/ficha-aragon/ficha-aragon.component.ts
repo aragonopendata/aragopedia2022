@@ -17,6 +17,7 @@ interface DataLinks {
   sueloRural: string,
   edificiosDestinadosLocales: string,
   habitantes: string,
+  densidad: string,
   poligonos: string,
   incendios: string,
   hectareasAfectadas: string,
@@ -90,6 +91,7 @@ export class FichaAragonComponent implements OnInit {
     sueloRural: '',
     edificiosDestinadosLocales: '',
     habitantes: '',
+    densidad: '',
     poligonos: '',
     incendios: '',
     hectareasAfectadas: '',
@@ -260,8 +262,8 @@ export class FichaAragonComponent implements OnInit {
 
       // Queries con nombres
 
-      this.queryUrlDensidadPoblacion = `https://opendata.aragon.es/sparql?default-graph-uri=&query=select+distinct+%3FrefArea+%3FnameRefArea+%28strafter%28str%28%3FrefPeriod%29%2C+%22http%3A%2F%2Freference.data.gov.uk%2Fid%2Fyear%2F%22%29+AS+%3FnameRefPeriod%29++%3Fdensidad_de_poblacion_habkm2+where+%7B%0D%0A+++%3Fobs+qb%3AdataSet+%3Fdataset.%0D%0A+++FILTER%28%3Fdataset+IN+%28%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fiaest%2Fdataset%2F02-020001A%3E%29%29.%0D%0A+%3Fobs+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refPeriod%3E+%3FrefPeriod.%0D%0A+FILTER+%28%3FrefPeriod+IN+%28%3Chttp%3A%2F%2Freference.data.gov.uk%2Fid%2Fyear%2F2016%3E%2C%3Chttp%3A%2F%2Freference.data.gov.uk%2Fid%2Fyear%2F2017%3E%2C%3Chttp%3A%2F%2Freference.data.gov.uk%2Fid%2Fyear%2F2018%3E%2C%3Chttp%3A%2F%2Freference.data.gov.uk%2Fid%2Fyear%2F2019%3E%2C%3Chttp%3A%2F%2Freference.data.gov.uk%2Fid%2Fyear%2F2020%3E%2C%3Chttp%3A%2F%2Freference.data.gov.uk%2Fid%2Fyear%2F2021%3E%29%29.%0D%0A+%3Fobs+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refArea%3E+%3FrefArea.%0D%0A+%3FrefArea+rdfs%3Alabel+%3FnameRefArea.+%0D%0A+FILTER+%28+lang%28%3FnameRefArea%29+%3D+%22es%22+%29.%0D%0A+BIND+%28%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fterritorio%2FComunidad%2FAragón%3E+AS+%3Fmuni%29.%0D%0A+FILTER+%28%3FrefArea+IN+%28%3Fmuni%29%29.%0D%0AOPTIONAL+%7B++%3Fobs+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fiaest%2Fmedida%23densidad-de-poblacion-habkm2%3E+%3Fdensidad_de_poblacion_habkm2++%7D+.%0D%0A%7D%0D%0Aorder+by++desc%28%3FrefPeriod%29%0D%0ALIMIT+1%0D%0A&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`;
-	      // NUEVA QUERY PARA OBTENER LA DENSIDAD hab/Km2:  https://opendata.aragon.es/sparql?default-graph-uri=&query=select+distinct++%3Fyear++xsd%3Aint%28%3Fpoblacion%29%2F%3Fsuperficie_km2+as+%3Fdensidad+where+%7B%0D%0A%3FobsPob+qb%3AdataSet+%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fiaest%2Fdataset%2F03-030001A%3E.%0D%0A%3FobsKm++qb%3AdataSet+%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fiaest%2Fdataset%2F02-020006A%3E.%0D%0A%3FobsPob+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refPeriod%3E+%3FrefPeriod.%0D%0A%3FobsKm+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refPeriod%3E+%3FrefPeriod.%0D%0A%0D%0A%3FrefPeriod+time%3AinXSDgYear+%3Fyear.%0D%0A%3FobsPob+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refArea%3E+%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fterritorio%2FComunidadAutonoma%2FArag%C3%B3n%3E.%0D%0A%3FobsKm+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refArea%3E+%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fterritorio%2FComunidadAutonoma%2FArag%C3%B3n%3E.%0D%0A%0D%0A+%3FobsPob+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fiaest%2Fmedida%23poblacion%3E+%3Fpoblacion+.%0D%0A++%3FobsKm+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fiaest%2Fdimension%23superficie-km2%3E+%3Fsuperficie_km2++.%0D%0A%7D%0D%0AORDER+BY+desc%28%3Fyear%29&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on
+      this.queryUrlDensidadPoblacion = `https://opendata.aragon.es/sparql?default-graph-uri=&query=select+distinct++%3Fyear++xsd%3Aint%28%3Fpoblacion%29%2F%3Fsuperficie_km2+as+%3Fdensidad+where+%7B%0D%0A%3FobsPob+qb%3AdataSet+%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fiaest%2Fdataset%2F03-030001A%3E.%0D%0A%3FobsKm++qb%3AdataSet+%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fiaest%2Fdataset%2F02-020006A%3E.%0D%0A%3FobsPob+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refPeriod%3E+%3FrefPeriod.%0D%0A%3FobsKm+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refPeriod%3E+%3FrefPeriod.%0D%0A%0D%0A%3FrefPeriod+time%3AinXSDgYear+%3Fyear.%0D%0A%3FobsPob+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refArea%3E+%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fterritorio%2FComunidadAutonoma%2FArag%C3%B3n%3E.%0D%0A%3FobsKm+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refArea%3E+%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fterritorio%2FComunidadAutonoma%2FArag%C3%B3n%3E.%0D%0A%0D%0A+%3FobsPob+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fiaest%2Fmedida%23poblacion%3E+%3Fpoblacion+.%0D%0A++%3FobsKm+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fiaest%2Fdimension%23superficie-km2%3E+%3Fsuperficie_km2++.%0D%0A%7D%0D%0AORDER+BY+desc%28%3Fyear%29&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`;
+      this.dataSource.densidad = this.exportHtmlQuery(this.queryUrlDensidadPoblacion);
 
       this.queryUrlExtension = `https://opendata.aragon.es/sparql?default-graph-uri=&query=select+distinct+%3FrefArea+%3FnameRefArea++str%28%3Fyear%29+AS+%3FnameRefPeriod+%0D%0A%0D%0A+xsd%3Aint%28%3Frust%29+as+%3Frustico+xsd%3Aint%28%3Furba%29+as+%3Furbano+where+%7B+%0D%0A%0D%0A+++%3Fobs+qb%3AdataSet+%3Fdataset.+%0D%0A%0D%0A+++FILTER%28%3Fdataset+IN+%28%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fiaest%2Fdataset%2F01-010019A%3E%29%29.+%0D%0A%0D%0A%3Fobs+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refPeriod%3E+%3FrefPeriod.+%0D%0A%0D%0A%3FrefPeriod+time%3AinXSDgYear+%3Fyear.+%0D%0A%0D%0A%3Fobs+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refArea%3E+%3FrefArea.+%0D%0A%0D%0A%3FrefArea+rdfs%3Alabel+%3FnameRefArea.++%0D%0A%0D%0AFILTER+%28+lang%28%3FnameRefArea%29+%3D+%22es%22+%29.+%0D%0A%0D%0A%3Fmuni+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2FAragopedia%23enComunidadAutonoma%3E+%3Fccaa.+%0D%0A%0D%0AOPTIONAL+%7B++%3Fobs+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fiaest%2Fmedida%23rustico-superficie%3E+%3Frust++%7D+.+%0D%0A%0D%0AOPTIONAL+%7B++%3Fobs+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fiaest%2Fmedida%23urbano-superficie%3E+%3Furba++%7D+.+%0D%0A%0D%0A%7D+%0D%0A%0D%0AORDER+BY+desc%28%3Fyear%29%2C%3FrefArea+%0D%0A%0D%0ALIMIT+2+&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`;
 
@@ -303,7 +305,7 @@ export class FichaAragonComponent implements OnInit {
       });
 
       this.resultSvc.getData(this.queryUrlDensidadPoblacion).subscribe((data: any) => {
-        this.densidadPoblacion = (Number(data.results.bindings[0].densidad_de_poblacion_habkm2.value)).toFixed(1).replace('.', ',');
+        this.densidadPoblacion = (Number(data.results.bindings[0].densidad.value)).toFixed(1).replace('.', ',');
       });
 
       this.resultSvc.getData(this.queryUrlTotalCreativeWork).subscribe(data => {
@@ -357,8 +359,8 @@ export class FichaAragonComponent implements OnInit {
       this.resultSvc.getData(this.queryUrlEdadMedia).subscribe((data) => {
         this.yearEdadMedia = data.results.bindings[0].year.value;
         const total = data.results.bindings;
-        const mujeres = Number(total.find((item: any) => item.nameRefArea.value === 'Aragón' && item.sexo.value === 'Mujeres').val.value).toFixed(2).replace('.', ',');
-        const hombres = Number(total.find((item: any) => item.nameRefArea.value === 'Aragón' && item.sexo.value === 'Hombres').val.value).toFixed(2).replace('.', ',');
+        const mujeres = Number(total.find((item: any) => item.sexo.value === 'Mujeres').val.value).toFixed(2).replace('.', ',');
+        const hombres = Number(total.find((item: any) => item.sexo.value === 'Hombres').val.value).toFixed(2).replace('.', ',');
 
         this.edadMediaMujeres = mujeres
         this.edadMediaHombres = hombres

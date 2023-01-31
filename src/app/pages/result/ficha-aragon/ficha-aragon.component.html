@@ -28,7 +28,13 @@
                             locales (2011)</a></li>
                     <li *ngIf="this.poblacion"><a href="{{dataSource.habitantes}}"
                             target="_blank"><mat-icon>open_in_new</mat-icon><span
-                                class="big-number">{{format(this.poblacion)}}</span>Habitantes</a></li>
+                                class="big-number">{{format(this.poblacion)}}</span>Habitantes</a>
+                    </li>
+                    <li *ngIf="this.densidadPoblacion"><a href="{{dataSource.densidad}}"
+                            target="_blank"><mat-icon>open_in_new</mat-icon><span
+                                class="big-number">{{format(this.densidadPoblacion)}}</span>Habitantes por
+                            KM<sup>2</sup></a>
+                    </li>
 
                     <li *ngIf="this.poligonos"><a href="{{dataSource.poligonos}}"
                             target="_blank"><mat-icon>open_in_new</mat-icon><span

@@ -25,16 +25,18 @@
                             target="_blank"><mat-icon>open_in_new</mat-icon><span
                                 class="big-number">{{format(this.sueloRural)}}</span>Hectáreas de suelo
                             rural</a></li>
-                    <li *ngIf="this.locales"><a href="{{dataSource.edificiosDestinadosLocales}}"
-                            target="_blank"><mat-icon>open_in_new</mat-icon><span
-                                class="big-number">{{format(this.locales)}}</span>Edificios destinados a
+                    <li><a href="{{dataSource.edificiosDestinadosLocales}}"
+                            target="_blank"><mat-icon>open_in_new</mat-icon><span class="big-number"><span
+                                    *ngIf="this.locales">{{format(this.locales)}}</span><span
+                                    *ngIf="!this.locales">0</span></span>Edificios destinados a
                             locales (2011)</a></li>
                     <li *ngIf="this.poblacion"><a href="{{dataSource.habitantes}}"
                             target="_blank"><mat-icon>open_in_new</mat-icon><span
                                 class="big-number">{{format(this.poblacion)}}</span>Habitantes</a></li>
                     <li *ngIf="this.densidadPoblacion"><a href="{{dataSource.densidad}}"
                             target="_blank"><mat-icon>open_in_new</mat-icon><span
-                                class="big-number">{{format(this.densidadPoblacion)}}</span>Habitantes por KM2</a></li>
+                                class="big-number">{{format(this.densidadPoblacion)}}</span>Habitantes por
+                            KM<sup>2</sup></a></li>
                     <li *ngIf="this.poligonos"><a href="{{dataSource.poligonos}}"
                             target="_blank"><mat-icon>open_in_new</mat-icon><span
                                 class="big-number">{{format(this.poligonos)}}</span></a>Polígonos industriales
@@ -185,6 +187,12 @@
             </div>
 
             <div class="caracteristicas__list" *ngIf="this.tipoLocalidad === 'diputacion'">
+                <a *ngIf="this.densidadPoblacion" href="{{dataSource.densidad}}" target="_blank">
+                    <div class="caracteristica__item">
+                        <mat-icon>people</mat-icon> La densidad de población de <b>La {{this.tituloFicha}}</b> es de
+                        {{this.densidadPoblacion}} habitantes por km<sup>2</sup>
+                    </div>
+                </a>
                 <a *ngIf="this.edadMediaHombres" href="{{dataSource.edadMedia}}" target="_blank">
                     <div class="caracteristica__item">
                         <mat-icon>person</mat-icon> La edad media de los <b>hombres</b> es de
@@ -399,7 +407,8 @@
                                 class="big-number">{{format(this.poblacion)}}</span>Habitantes</a></li>
                     <li *ngIf="this.densidadPoblacion"><a href="{{dataSource.densidad}}"
                             target="_blank"><mat-icon>open_in_new</mat-icon><span
-                                class="big-number">{{format(this.densidadPoblacion)}}</span>Habitantes por KM2</a></li>
+                                class="big-number">{{format(this.densidadPoblacion)}}</span>Habitantes por
+                            KM<sup>2</sup></a></li>
                     <li *ngIf="this.poligonos"><a href="{{dataSource.poligonos}}"
                             target="_blank"><mat-icon>open_in_new</mat-icon><span
                                 class="big-number">{{format(this.poligonos)}}</span></a>Polígonos industriales
@@ -469,6 +478,12 @@
         <section class="container template__caracteristicas">
             <h2>Características del territorio</h2>
             <div class="caracteristicas__list">
+                <a *ngIf="this.densidadPoblacion" href="{{dataSource.densidad}}" target="_blank">
+                    <div class="caracteristica__item">
+                        <mat-icon>people</mat-icon> La densidad de población de <b>{{this.tituloFicha}}</b> es de
+                        {{this.densidadPoblacion}} habitantes por km<sup>2</sup>
+                    </div>
+                </a>
                 <a *ngIf="this.edadMediaHombres" href="{{dataSource.edadMedia}}" target="_blank">
                     <div class="caracteristica__item">
                         <mat-icon>person</mat-icon> La edad media de los <b>hombres</b> es de
