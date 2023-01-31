@@ -100,6 +100,12 @@
         <section class="container template__caracteristicas">
             <h2>Características de la Comunidad de Aragón</h2>
             <div class="caracteristicas__list">
+                <a href="{{dataSource.densidad}}" target="_blank">
+                    <div class="caracteristica__item">
+                        <mat-icon>people</mat-icon> La densidad de población de <b>La Comunidad de Aragón</b> es de
+                        {{this.densidadPoblacion}} habitantes por km<sup>2</sup>
+                    </div>
+                </a>
                 <a href="{{dataSource.edadMedia}}" target="_blank">
                     <div class="caracteristica__item">
                         <mat-icon>person</mat-icon> La edad media de los <b>hombres</b> es de {{this.edadMediaHombres}}
