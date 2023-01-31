@@ -895,11 +895,16 @@ export class ResultComponent {
   }
 
   filterData(enteredData: any) {
+
     this.filteredTemas = this.showTemas.filter((item: any) => {
-
-      return item.DescripcionMejorada.toLowerCase().indexOf(enteredData.toLowerCase()) > -1
+      return this.removeAccents(item.DescripcionMejorada.toLowerCase()).indexOf(enteredData.toLowerCase()) > -1
     })
+  }
 
+  removeAccents(str: any): any {
+    // return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    const acentos: any = { 'á': 'a', 'é': 'e', 'í': 'i', 'ó': 'o', 'ú': 'u', 'Á': 'A', 'É': 'E', 'Í': 'I', 'Ó': 'O', 'Ú': 'U' };
+    return str.split('').map((letra: any) => acentos[letra] || letra).join('').toString();
   }
 
   format(number: any) {
