@@ -49,7 +49,7 @@ export class FichaAragonComponent implements OnInit {
     datasets: [
       {
         data: [],
-        label: '',
+        label: 'Habitantes',
         backgroundColor: 'rgba(214,234,240,0.4)',
         borderColor: '#00475C',
         pointBackgroundColor: 'rgba(148,159,177,1)',
@@ -68,19 +68,8 @@ export class FichaAragonComponent implements OnInit {
       }
     },
     scales: {
-      // We use this empty structure as a placeholder for dynamic theming.
-      y:
-      {
-        position: 'left',
-      },
-      y1: {
-        position: 'right',
-        grid: {
-          color: 'rgba(214,234,240,0.4)',
-        },
-        ticks: {
-          color: '#00475C'
-        }
+      y: {
+        stacked: true
       }
     }
   }
@@ -400,7 +389,6 @@ export class FichaAragonComponent implements OnInit {
         const datos = data.results.bindings;
         for (let i = 4; i >= 0; i--) {
           this.lineChartData.labels?.push(data.results.bindings[i].nameRefPeriod.value)
-          this.lineChartData.datasets[0].label = datos[0].nameRefArea.value;
           this.lineChartData.datasets[0].data.push(Number(datos[i].poblac.value))
         }
         this.chart?.update();
