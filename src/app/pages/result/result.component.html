@@ -20,11 +20,11 @@
                     <li *ngIf="this.sueloUrbano"><a href="{{dataSource.sueloUrbano}}" target="_blank">
                             <mat-icon>open_in_new</mat-icon><span
                                 class="big-number">{{format(this.sueloUrbano)}}</span>Hectáreas de suelo
-                            urbano</a></li>
+                            urbano ({{dataYearExtension}})</a></li>
                     <li *ngIf="this.sueloRural"><a href="{{dataSource.sueloRural}}"
                             target="_blank"><mat-icon>open_in_new</mat-icon><span
                                 class="big-number">{{format(this.sueloRural)}}</span>Hectáreas de suelo
-                            rural</a></li>
+                            rural ({{dataYearExtension}})</a></li>
                     <li><a href="{{dataSource.edificiosDestinadosLocales}}"
                             target="_blank"><mat-icon>open_in_new</mat-icon><span class="big-number"><span
                                     *ngIf="this.locales">{{format(this.locales)}}</span><span
@@ -33,8 +33,8 @@
                     <li *ngIf="this.poblacion"><a href="{{dataSource.habitantes}}"
                             target="_blank"><mat-icon>open_in_new</mat-icon><span
                                 class="big-number">{{format(this.poblacion)}}</span>Habitantes</a></li>
-                    <li *ngIf="this.densidadPoblacion"><a href="{{dataSource.densidad}}"
-                            target="_blank"><mat-icon>open_in_new</mat-icon><span
+                    <li *ngIf="this.densidadPoblacion && this.tipoLocalidad === 'municipio'"><a
+                            href="{{dataSource.densidad}}" target="_blank"><mat-icon>open_in_new</mat-icon><span
                                 class="big-number">{{format(this.densidadPoblacion)}}</span>Habitantes por
                             KM<sup>2</sup></a></li>
                     <li *ngIf="this.poligonos"><a href="{{dataSource.poligonos}}"
@@ -83,6 +83,7 @@
                         </li>
                         <li *ngIf="this.email"><b>email</b> <a href="mailto:{{this.email}}">{{this.email}}</a></li>
                     </ul>
+                    <a class="data-link" href="{{dataSource.datosContacto}}" target="_blank">Ver origen de los datos</a>
                 </div>
 
                 <div *ngIf="this.numeroEntidadesSingulares !== 0">
@@ -93,6 +94,8 @@
                                 target="_blank">{{this.capitalizeString(entidad.nombreEntidad.value)}}</a>
                         </li>
                     </ul>
+                    <a class="data-link" href="{{dataSource.entidadesSingulares}}" target="_blank">Ver origen de los
+                        datos</a>
                 </div>
                 <div class="template__img-municipio" *ngIf="this.imageWikiDataUrl">
                     <div class="loading" *ngIf="!this.imageWikiDataUrl">
@@ -215,47 +218,43 @@
                 <app-piramide-poblacion></app-piramide-poblacion>
             </div>
         </section> -->
-        <section *ngIf="this.tipoLocalidad === 'municipio'" class="container template__graphics">
+        <section class="container template__graphics">
             <div class="graphics__item" style="width: 100%;">
                 <h2>Últimos datos de Población</h2>
                 <div class="tabla-container">
-                    <table class="tabla-poblacion">
+                    <table class="tabla-poblacion" *ngIf="this.tipoLocalidad === 'municipio'">
                         <tr>
                             <th>Año</th>
                             <td *ngFor="let year of yearsTablaPoblacion"><span>{{year}}</span></td>
                         </tr>
                         <tr>
-                            <th>{{this.comunidad[0]}}</th>
-                            <td *ngFor="let element of tablaPoblacion">
-                                <span
-                                    *ngIf="element.nameRefArea.value == this.comunidad[0] && element.nameRefPeriod.value !== '2014'">
-                                    {{format(element.poblac.value)}}
-                                </span>
-                            </td>
-                        </tr>
-                        <tr *ngIf="this.codigoIne !== '50297'">
-                            <th>{{this.provincia[0]}}</th>
-                            <td *ngFor="let element of tablaPoblacion">
-                                <span *ngIf="element.nameRefArea.value == this.provincia[0]">
-                                    {{format(element.poblac.value)}}
-                                </span>
-                            </td>
-                        </tr>
-                        <tr *ngIf="this.municipio[0]">
-                            <th>{{this.municipio[0]}}</th>
-                            <td *ngFor="let element of tablaPoblacion">
-                                <span *ngIf="element.nameRefArea.value == this.municipio[0]">
-                                    {{format(element.poblac.value)}}
+                            <th>{{this.lugarBuscado}}</th>
+                            <td *ngFor="let element of datosDePoblacion">
+                                <span>
+                                    {{format(element)}}
                                 </span>
                             </td>
                         </tr>
                     </table>
                 </div>
+                <table class="tabla-poblacion" *ngIf="this.tipoLocalidad === 'diputacion'">
+                    <tr>
+                        <th>Año</th>
+                        <td *ngFor="let year of yearsTablaPoblacion"><span>{{year}}</span></td>
+                    </tr>
+                    <tr *ngIf="this.municipio[0]">
+                        <th>{{this.municipio[0]}}</th>
+                        <td *ngFor="let element of tablaPoblacion.slice().reverse()">
+                            <span *ngIf="element.nameRefArea.value == this.municipio[0]">
+                                {{format(element.poblac.value)}}
+                            </span>
+                        </td>
+                    </tr>
+                </table>
                 <div class="grafica-poblacion">
                     <h2>Gráfica de los últimos 5 años</h2>
-                    <canvas baseChart class="chart" [data]="barChartData" [options]="barChartOptions"
-                        [type]="barChartType">
-                    </canvas>
+                    <canvas baseChart class="chart" [data]="lineChartData" [options]="lineChartOptions"
+                        [type]="lineChartType"></canvas>
                 </div>
                 <a class="data-link" href="{{dataSource.tablaPoblacion}}" target="_blank">Ver origen de los datos</a>
             </div>
@@ -263,9 +262,11 @@
             <div *ngIf="this.numberOfCreativeWork !== 0" class="graphics__item" fragment="creative-works">
                 <div class="graphics__item-cw">
                     <h2>Enlaces de interés</h2>
-                    <p *ngIf="numberOfCreativeWork >= 10" class="big-number"><b>{{format(this.numberOfCreativeWork)}}
-                        </b>Menciones en publicaciones (Mostrando las
-                        últimas 10 publicaciones)</p>
+                    <p class="big-number"><b>Menciones en publicaciones:</b> {{format(this.numberOfCreativeWork)}} <span
+                            *ngIf="numberOfCreativeWork >= 10">
+                            (Mostrando las
+                            últimas 10 publicaciones)
+                        </span></p>
                 </div>
                 <div class="slides">
                     <mat-tab-group mat-align-tabs="start">
@@ -399,11 +400,11 @@
                     <li *ngIf="this.sueloUrbano"><a href="{{dataSource.sueloUrbano}}" target="_blank">
                             <mat-icon>open_in_new</mat-icon><span
                                 class="big-number">{{format(this.sueloUrbano)}}</span>Hectáreas de suelo
-                            urbano</a></li>
+                            urbano ({{dataYearExtension}})</a></li>
                     <li *ngIf="this.sueloRural"><a href="{{dataSource.sueloRural}}"
                             target="_blank"><mat-icon>open_in_new</mat-icon><span
                                 class="big-number">{{format(this.sueloRural)}}</span>Hectáreas de suelo
-                            rural</a></li>
+                            rural ({{dataYearExtension}})</a></li>
                     <li *ngIf="this.locales"><a href="{{dataSource.edificiosDestinadosLocales}}"
                             target="_blank"><mat-icon>open_in_new</mat-icon><span
                                 class="big-number">{{format(this.locales)}}</span>Edificios destinados a
@@ -411,10 +412,10 @@
                     <li *ngIf="this.poblacion"><a href="{{dataSource.habitantes}}"
                             target="_blank"><mat-icon>open_in_new</mat-icon><span
                                 class="big-number">{{format(this.poblacion)}}</span>Habitantes</a></li>
-                    <li *ngIf="this.densidadPoblacion"><a href="{{dataSource.densidad}}"
+                    <!-- <li *ngIf="this.densidadPoblacion"><a href="{{dataSource.densidad}}"
                             target="_blank"><mat-icon>open_in_new</mat-icon><span
                                 class="big-number">{{format(this.densidadPoblacion)}}</span>Habitantes por
-                            KM<sup>2</sup></a></li>
+                            KM<sup>2</sup></a></li> -->
                     <li *ngIf="this.poligonos"><a href="{{dataSource.poligonos}}"
                             target="_blank"><mat-icon>open_in_new</mat-icon><span
                                 class="big-number">{{format(this.poligonos)}}</span></a>Polígonos industriales
@@ -460,6 +461,7 @@
                     <li *ngIf="this.telefono"><b>Teléfono</b> <a href="tel:{{this.telefono}}">{{this.telefono}}</a></li>
                     <li *ngIf="this.email"><b>email</b> <a href="mailto:{{this.email}}">{{this.email}}</a></li>
                 </ul>
+                <a class="data-link" href="{{dataSource.datosContacto}}" target="_blank">Ver origen de los datos</a>
                 <div class="template__img-municipio" *ngIf="this.imageWikiDataUrl">
                     <div class="loading" *ngIf="!this.imageWikiDataUrl">
                         <mat-spinner [diameter]="50"></mat-spinner>
@@ -477,6 +479,9 @@
                             </a>
                         </figcaption>
                     </figure>
+                </div>
+                <div class="download">
+                    <button class="btn btn-download" type="button" (click)="fileDownload()">DESCARGAR FICHA</button>
                 </div>
             </div>
         </section>
@@ -507,17 +512,33 @@
             </div>
         </section>
 
-        <!-- <section class="container template__graphics">
+        <section class="container template__graphics">
             <div class="graphics__item" style="width: 100%;">
-                <app-piramide-poblacion></app-piramide-poblacion>
-
+                <h2>Últimos datos de Población</h2>
+                <div class="tabla-container">
+                    <table class="tabla-poblacion">
+                        <tr>
+                            <th>Año</th>
+                            <td *ngFor="let year of yearsTablaPoblacion"><span>{{year}}</span></td>
+                        </tr>
+                        <tr *ngIf="this.municipio[0]">
+                            <th>{{this.municipio[0]}}</th>
+                            <td *ngFor="let element of tablaPoblacion.slice().reverse()">
+                                <span *ngIf="element.nameRefArea.value == this.municipio[0]">
+                                    {{format(element.poblac.value)}}
+                                </span>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="grafica-poblacion">
+                    <h2>Gráfica de los últimos 5 años</h2>
+                    <canvas baseChart class="chart" [data]="lineChartData" [options]="lineChartOptions"
+                        [type]="lineChartType"></canvas>
+                </div>
+                <a class="data-link" href="{{dataSource.tablaPoblacion}}" target="_blank">Ver origen de los datos</a>
             </div>
-        </section> -->
-        <!-- <div class="grafica-poblacion">
-            <h2>Gráfica de los últimos 5 años</h2>
-            <canvas baseChart class="chart" [data]="barChartData" [options]="barChartOptions" [type]="barChartType">
-            </canvas>
-        </div> -->
+        </section>
 
 
 
@@ -525,8 +546,9 @@
             <div *ngIf="this.numberOfCreativeWork" class="graphics__item" fragment="creative-works">
                 <div class="graphics__item-cw">
                     <h2>Enlaces de interés</h2>
-                    <p class="big-number"><b>{{format(this.numberOfCreativeWork)}}
-                        </b>Menciones en publicaciones</p>
+                    <p class="big-number"><b>
+                        </b><b>Menciones en publicaciones:</b> {{format(this.numberOfCreativeWork)}} <span
+                            *ngIf="this.numberOfCreativeWork >= 10"> (Mostrando las 10 últimas publicaciones)</span></p>
                 </div>
                 <div class="slides">
                     <mat-tab-group mat-align-tabs="start">

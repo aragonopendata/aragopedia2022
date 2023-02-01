@@ -6,6 +6,8 @@ import { AragopediaService } from 'src/app/components/aragopedia-tabla-datos/ara
 import { ResultService } from '../result.service';
 import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
+import { Chart, ChartEvent } from 'chart.js';
+
 
 interface Persona {
   nombre: { type: string, value: string },
@@ -28,7 +30,8 @@ interface DataLinks {
   municipios: string,
   edadMedia: string,
   tablaPoblacion: string,
-  miembrosPleno: string
+  miembrosPleno: string,
+  datosContacto: string,
 }
 
 @Component({
@@ -40,29 +43,46 @@ interface DataLinks {
 export class FichaAragonComponent implements OnInit {
   // Configuración gráfica
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
+  public lineChartType: ChartType = 'line';
+  public lineChartData: ChartConfiguration['data'] = {
+    datasets: [
+      {
+        data: [],
+        label: '',
+        backgroundColor: 'rgba(214,234,240,0.4)',
+        borderColor: '#00475C',
+        pointBackgroundColor: 'rgba(148,159,177,1)',
+        pointBorderColor: '#fff',
+        pointHoverBackgroundColor: '#fff',
+        pointHoverBorderColor: 'rgba(214,234,240,0.4)',
+        fill: 'origin',
+      },],
+    labels: []
+  }
 
-  public barChartOptions: ChartConfiguration['options'] = {
-    responsive: true,
-    // We use these empty structures as placeholders for dynamic theming.
-    scales: {
-      x: {},
-      y: {
-        min: 10
+  public lineChartOptions: ChartConfiguration['options'] = {
+    elements: {
+      line: {
+        tension: 0.5
       }
     },
-    plugins: {
-      legend: {
-        display: true,
+    scales: {
+      // We use this empty structure as a placeholder for dynamic theming.
+      y:
+      {
+        position: 'left',
       },
+      y1: {
+        position: 'right',
+        grid: {
+          color: 'rgba(214,234,240,0.4)',
+        },
+        ticks: {
+          color: '#00475C'
+        }
+      }
     }
-  };
-  public barChartType: ChartType = 'bar';
-  public barChartData: ChartData<'bar'> = {
-    labels: ['2017', '2018', '2019', '2020', '2021'],
-    datasets: [
-      { data: [], label: '' },
-    ]
-  };
+  }
 
   constructor(public resultSvc: ResultService, private fb: FormBuilder, private http: HttpClient, public aragopediaSvc: AragopediaService) { }
 
@@ -112,6 +132,7 @@ export class FichaAragonComponent implements OnInit {
   email!: string;
   telefono!: string;
   municipiosEnTerritorio: any;
+  dataYearExtension: any;
 
   dataSource: DataLinks = {
     sueloUrbano: '',
@@ -127,7 +148,8 @@ export class FichaAragonComponent implements OnInit {
     municipios: '',
     edadMedia: '',
     tablaPoblacion: '',
-    miembrosPleno: ''
+    miembrosPleno: '',
+    datosContacto: ''
   };
 
 
@@ -220,7 +242,7 @@ export class FichaAragonComponent implements OnInit {
 
         this.dataSource.alojamientosHoteleros = this.exportHtmlQuery(this.queryUrlPlazasHoteleras);
 
-        this.queryUrlGetCodigoIne = `https://opendata.aragon.es/sparql?default-graph-uri=&query=select+%3Fwikidata+%3Faragopedia+from+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fei2av2%3E+where+%7B%0D%0A++%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fsector-publico%2Forganizacion%2Fcomunidad%2F${this.codigoIne}%3E+skos%3AexactMatch+%3Fwikidata%3B%0D%0A+++owl%3AsameAs+%3Faragopedia.%0D%0A++FILTER%28regex%28%3Fwikidata%2C+%22http%3A%2F%2Fwww.wikidata.org%2F%22%29%29.%0D%0A++FILTER%28regex%28%3Faragopedia%2C+%22http%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fterritorio%2FComunidadAutonoma%2F%22%29%29.%0D%0A%7D&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`;
+        this.queryUrlGetCodigoIne = `https://opendata.aragon.es/sparql?default-graph-uri=&query=select+%3Fwikidata+%3Faragopedia+from+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fei2av2%3E+where+%7B%0D%0A++%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fsector-publico%2Forganizacion%2Fcomunidad%2F2%3E+skos%3AexactMatch+%3Fwikidata%3B%0D%0A++skos%3AexactMatch+%3Faragopedia.%0D%0A++FILTER%28regex%28%3Fwikidata%2C+%22http%3A%2F%2Fwww.wikidata.org%2F%22%29%29.%0D%0A++FILTER%28regex%28%3Faragopedia%2C+%22http%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fterritorio%2FComunidadAutonoma%2F%22%29%29.%0D%0A%7D&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`;
 
         //Obtención de datos por ID
 
@@ -260,10 +282,12 @@ export class FichaAragonComponent implements OnInit {
           this.queryUrlPersonasIlustres = `https://query.wikidata.org/sparql?query=SELECT%20%3Fitem%20%3FitemLabel%20%3Fabout%20(count(%3Fx)%20as%20%3Fcont)%0AWHERE%20%0A%7B%0A%20%20%3Fitem%20wdt%3AP19%20wd%3A${this.idLocalidad}.%0A%20%20%3Fitem%20%3Fx%20%20%3Fo.%0A%20%20%3Fabout%20schema%3Aabout%20%3Fitem.%0A%20%20%3Fabout%20schema%3AinLanguage%20%22es%22.%0A%20%20%3Fabout%20schema%3AisPartOf%20%3Chttps%3A%2F%2Fes.wikipedia.org%2F%3E.%0A%20%20SERVICE%20wikibase%3Alabel%20%7B%20bd%3AserviceParam%20wikibase%3Alanguage%20%22es%2Cen%22.%20%7D%0A%7D%0Agroup%20by%20%3Fitem%20%3FitemLabel%20%3Fabout%0Aorder%20by%20desc(%3Fcont)`;
 
           this.resultSvc.getData(this.queryImageWikiData).subscribe((data: any) => {
+
             this.imageWikiDataUrl = data.results.bindings[0].img.value;
           });
 
           this.resultSvc.getData(this.queryUrlPersonasIlustres).subscribe((data) => {
+
             this.personasIlustres = data.results.bindings;
             this.cantidadPersonasIlustres = this.personasIlustres.length;
 
@@ -292,7 +316,9 @@ export class FichaAragonComponent implements OnInit {
       this.queryUrlDensidadPoblacion = `https://opendata.aragon.es/sparql?default-graph-uri=&query=select+distinct++%3Fyear++xsd%3Aint%28%3Fpoblacion%29%2F%3Fsuperficie_km2+as+%3Fdensidad+where+%7B%0D%0A%3FobsPob+qb%3AdataSet+%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fiaest%2Fdataset%2F03-030001A%3E.%0D%0A%3FobsKm++qb%3AdataSet+%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fiaest%2Fdataset%2F02-020006A%3E.%0D%0A%3FobsPob+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refPeriod%3E+%3FrefPeriod.%0D%0A%3FobsKm+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refPeriod%3E+%3FrefPeriod.%0D%0A%0D%0A%3FrefPeriod+time%3AinXSDgYear+%3Fyear.%0D%0A%3FobsPob+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refArea%3E+%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fterritorio%2FComunidadAutonoma%2FArag%C3%B3n%3E.%0D%0A%3FobsKm+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refArea%3E+%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fterritorio%2FComunidadAutonoma%2FArag%C3%B3n%3E.%0D%0A%0D%0A+%3FobsPob+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fiaest%2Fmedida%23poblacion%3E+%3Fpoblacion+.%0D%0A++%3FobsKm+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fiaest%2Fdimension%23superficie-km2%3E+%3Fsuperficie_km2++.%0D%0A%7D%0D%0AORDER+BY+desc%28%3Fyear%29&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`;
       this.dataSource.densidad = this.exportHtmlQuery(this.queryUrlDensidadPoblacion);
 
-      this.queryUrlExtension = `https://opendata.aragon.es/sparql?default-graph-uri=&query=select+distinct+%3FrefArea+%3FnameRefArea++str%28%3Fyear%29+AS+%3FnameRefPeriod+%0D%0A%0D%0A+xsd%3Aint%28%3Frust%29+as+%3Frustico+xsd%3Aint%28%3Furba%29+as+%3Furbano+where+%7B+%0D%0A%0D%0A+++%3Fobs+qb%3AdataSet+%3Fdataset.+%0D%0A%0D%0A+++FILTER%28%3Fdataset+IN+%28%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fiaest%2Fdataset%2F01-010019A%3E%29%29.+%0D%0A%0D%0A%3Fobs+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refPeriod%3E+%3FrefPeriod.+%0D%0A%0D%0A%3FrefPeriod+time%3AinXSDgYear+%3Fyear.+%0D%0A%0D%0A%3Fobs+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refArea%3E+%3FrefArea.+%0D%0A%0D%0A%3FrefArea+rdfs%3Alabel+%3FnameRefArea.++%0D%0A%0D%0AFILTER+%28+lang%28%3FnameRefArea%29+%3D+%22es%22+%29.+%0D%0A%0D%0A%3Fmuni+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2FAragopedia%23enComunidadAutonoma%3E+%3Fccaa.+%0D%0A%0D%0AOPTIONAL+%7B++%3Fobs+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fiaest%2Fmedida%23rustico-superficie%3E+%3Frust++%7D+.+%0D%0A%0D%0AOPTIONAL+%7B++%3Fobs+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fiaest%2Fmedida%23urbano-superficie%3E+%3Furba++%7D+.+%0D%0A%0D%0A%7D+%0D%0A%0D%0AORDER+BY+desc%28%3Fyear%29%2C%3FrefArea+%0D%0A%0D%0ALIMIT+2+&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`;
+      this.queryUrlExtension = `https://opendata.aragon.es/sparql?default-graph-uri=&query=select+distinct++str%28%3Fyear%29+AS+%3FnameRefPeriod++sum%28xsd%3Aint%28%3Frust%29%29+as+%3Frustico+sum%28xsd%3Aint%28%3Furba%29%29+as+%3Furbano+where+%7B+%0D%0A+++%3Fobs+qb%3AdataSet+%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fiaest%2Fdataset%2F01-010019A%3E%3B%0D%0A++++++++%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refArea%3E+%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fterritorio%2FComunidadAutonoma%2FAragón%3E%3B%0D%0A++++++++%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refPeriod%3E+%3FrefPeriod.+%0D%0A%0D%0A++%3FrefPeriod+time%3AinXSDgYear+%3Fyear.+%0D%0A%0D%0A++%3Fobs+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fiaest%2Fmedida%23rustico-superficie%3E+%3Frust.+%0D%0A++%3Fobs+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fiaest%2Fmedida%23urbano-superficie%3E+%3Furba.+%0D%0A%7D+%0D%0AORDER+BY+desc%28%3Fyear%29%0D%0ALIMIT+1%0D%0A&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`;
+      this.dataSource.sueloRural = this.exportHtmlQuery(this.queryUrlExtension);
+      this.dataSource.sueloUrbano = this.exportHtmlQuery(this.queryUrlExtension);
 
       this.queryUrlPoblacion = `https://opendata.aragon.es/sparql?default-graph-uri=&query=select+distinct+%3FrefArea+%3FnameRefArea+%3FnameRefPeriod+%3Fpoblac+where+%7B%0D%0A%0D%0Aselect+distinct+%3FrefArea+%3FnameRefArea+str%28%3Fyear%29+AS+%3FnameRefPeriod+xsd%3Aint%28%3Fpoblacion%29+as+%3Fpoblac+where+%7B%0D%0A%3Fobs+qb%3AdataSet+%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fiaest%2Fdataset%2F03-030001A%3E.%0D%0A%3Fobs+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refPeriod%3E+%3FrefPeriod.%0D%0A%3FrefPeriod+time%3AinXSDgYear+%3Fyear.%0D%0A%3Fobs+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refArea%3E+%3FrefArea.%0D%0A%3FrefArea+rdfs%3Alabel+%3FnameRefArea.%0D%0AFILTER+%28%3FrefArea+IN+%28%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fterritorio%2FComunidadAutonoma%2FArag%C3%B3n%3E%29%29.%0D%0AOPTIONAL+%7B+%3Fobs+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fiaest%2Fmedida%23poblacion%3E+%3Fpoblacion+%7D+.%0D%0A%7D%0D%0AORDER+BY+desc%28%3Fyear%29%2C+%3FrefArea%0D%0ALIMIT+5%0D%0A%7D%0D%0Aorder+by+%3FrefArea%0D%0A&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`;
       this.dataSource.habitantes = this.exportHtmlQuery(this.queryUrlPoblacion);
@@ -320,13 +346,16 @@ export class FichaAragonComponent implements OnInit {
       this.dataSource.miembrosPleno = this.exportHtmlQuery(this.queryUrlMiembrosPleno);
 
       this.queryUrlContacto = `https://opendata.aragon.es/sparql?default-graph-uri=&query=PREFIX+rdf%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F1999%2F02%2F22-rdf-syntax-ns%23%3E%0D%0APREFIX+ns%3A+%3Chttp%3A%2F%2Fwww.w3.org%2Fns%2Fprov%23%3E%0D%0APREFIX+vcard%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2006%2Fvcard%2Fns%23%3E%0D%0A%0D%0ASELECT+%3Femail+%3Ftel+%3Ffax+%3Fdireccion+%3FcodPostal+%0D%0AFROM+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fei2av2%3E%0D%0AWHERE+%7B%0D%0A++%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fsector-publico%2Forganizacion%2Funidad-organizativa%2F3036%3E+%3Chttp%3A%2F%2Fwww.w3.org%2Fns%2Forg%23hasSite%3E+%3FsiteAddress.%0D%0A%0D%0A++%3FsiteAddress+%3Chttp%3A%2F%2Fwww.w3.org%2Fns%2Forg%23siteAddress%3E+%3Faddress2.%0D%0A%0D%0A++OPTIONAL+%7B%3Faddress2+vcard%3Aemail+%3Femail+%7D.%0D%0A++OPTIONAL+%7B%3Faddress2+vcard%3Atel+%3Ftel+%7D.%0D%0A++OPTIONAL+%7B%3Faddress2+vcard%3Afax+%3Ffax+%7D.%0D%0A++OPTIONAL+%7B%3Faddress2+vcard%3Astreet-address%3Fdireccion+%7D.%0D%0A+++OPTIONAL+%7B%3Faddress2+vcard%3Apostal-code+%3FcodPostal+%7D.%0D%0A%7D&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`;
+      this.dataSource.datosContacto = this.exportHtmlQuery(this.queryUrlContacto);
 
 
       //Obtención de datos NOMBRE MUNICIPIO
 
       this.resultSvc.getData(this.queryUrlExtension).subscribe((data: any) => {
+
         this.sueloUrbano = data.results.bindings[0].urbano.value;
         this.sueloRural = data.results.bindings[0].rustico.value;
+        this.dataYearExtension = data.results.bindings[0].nameRefPeriod.value;
         this.dataDownload[0].sueloRural = this.sueloRural;
         this.dataDownload[0].sueloUrbano = this.sueloUrbano;
       });
@@ -367,8 +396,9 @@ export class FichaAragonComponent implements OnInit {
 
         const datos = data.results.bindings;
         for (let i = 4; i >= 0; i--) {
-          this.barChartData.datasets[0].label = datos[0].nameRefArea.value;
-          this.barChartData.datasets[0].data.push(Number(datos[i].poblac.value));
+          this.lineChartData.labels?.push(data.results.bindings[i].nameRefPeriod.value)
+          this.lineChartData.datasets[0].label = datos[0].nameRefArea.value;
+          this.lineChartData.datasets[0].data.push(Number(datos[i].poblac.value))
         }
         this.chart?.update();
       });
@@ -552,11 +582,11 @@ export class FichaAragonComponent implements OnInit {
 
   fileDownload() {
     const options = {
-      fieldSeparator: ',',
+      fieldSeparator: ';',
       quoteStrings: '"',
       decimalseparator: '.',
       showLabels: true,
-      showTitle: true,
+      showTitle: false,
       title: `Ficha de ${this.lugarBuscado}`,
       useBom: true,
       noDownload: false,
@@ -564,7 +594,7 @@ export class FichaAragonComponent implements OnInit {
       eol: '\n'
     };
 
-    new ngxCsv(this.dataDownload, `Datos de ${this.lugarBuscado}`, options);
+    new ngxCsv(this.dataDownload, `Datos de La Comunidad de ${this.lugarBuscado}`, options);
   }
 
   temaSelected(tema: any) {

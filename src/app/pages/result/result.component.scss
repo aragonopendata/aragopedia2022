@@ -205,6 +205,11 @@ section.container {
             display: block;
         }
 
+        .entidades {
+            max-height: 200px;
+            overflow: scroll;
+        }
+
     }
 
     .template__img-municipio {

@@ -17,11 +17,11 @@
                     <li *ngIf="this.sueloUrbano"><a href="{{dataSource.sueloUrbano}}" target="_blank">
                             <mat-icon>open_in_new</mat-icon><span
                                 class="big-number">{{format(this.sueloUrbano)}}</span>Hectáreas de suelo
-                            urbano</a></li>
+                            urbano ({{dataYearExtension}})</a></li>
                     <li *ngIf="this.sueloRural"><a href="{{dataSource.sueloRural}}"
                             target="_blank"><mat-icon>open_in_new</mat-icon><span
                                 class="big-number">{{format(this.sueloRural)}}</span>Hectáreas de suelo
-                            rural</a></li>
+                            rural ({{dataYearExtension}})</a></li>
                     <li *ngIf="this.oficinasComarcales"><a href="{{dataSource.edificiosDestinadosLocales}}"
                             target="_blank"><mat-icon>open_in_new</mat-icon><span
                                 class="big-number">{{format(this.oficinasComarcales)}}</span>Edificios destinados a
@@ -29,11 +29,6 @@
                     <li *ngIf="this.poblacion"><a href="{{dataSource.habitantes}}"
                             target="_blank"><mat-icon>open_in_new</mat-icon><span
                                 class="big-number">{{format(this.poblacion)}}</span>Habitantes</a>
-                    </li>
-                    <li *ngIf="this.densidadPoblacion"><a href="{{dataSource.densidad}}"
-                            target="_blank"><mat-icon>open_in_new</mat-icon><span
-                                class="big-number">{{format(this.densidadPoblacion)}}</span>Habitantes por
-                            KM<sup>2</sup></a>
                     </li>
 
                     <li *ngIf="this.poligonos"><a href="{{dataSource.poligonos}}"
@@ -73,6 +68,7 @@
                     <li *ngIf="this.telefono"><b>Teléfono</b> <a href="tel:{{this.telefono}}">{{this.telefono}}</a></li>
                     <li *ngIf="this.email"><b>email</b> <a href="mailto:{{this.email}}">{{this.email}}</a></li>
                 </ul>
+                <a class="data-link" href="{{dataSource.datosContacto}}" target="_blank">Ver origen de los datos</a>
                 <div class="template__img-municipio" *ngIf="this.imageWikiDataUrl">
                     <div class="loading" *ngIf="!this.imageWikiDataUrl">
                         <mat-spinner [diameter]="50"></mat-spinner>
@@ -148,9 +144,10 @@
                 </div>
                 <div class="grafica-poblacion">
                     <h2>Gráfica de los últimos 5 años</h2>
-                    <canvas baseChart class="chart" [data]="barChartData" [options]="barChartOptions"
-                        [type]="barChartType">
-                    </canvas>
+
+                    <canvas baseChart class="chart" [data]="lineChartData" [options]="lineChartOptions"
+                        [type]="lineChartType"></canvas>
+
                 </div>
                 <a class="data-link" href="{{dataSource.tablaPoblacion}}" target="_blank">Ver origen de los datos</a>
             </div>
@@ -158,8 +155,8 @@
             <div class="graphics__item" fragment="creative-works">
                 <div class="graphics__item-cw">
                     <h2>Enlaces de interés</h2>
-                    <p class="big-number"><b>{{this.numberOfCreativeWork}}
-                        </b>Menciones en publicaciones (Mostrando las
+                    <p class="big-number"><b>
+                            Menciones en publicaciones:</b> {{this.numberOfCreativeWork}} (Mostrando las
                         últimas 10 publicaciones)</p>
                 </div>
                 <div class="slides">
