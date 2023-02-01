@@ -32,6 +32,8 @@ interface DataLinks {
   miembrosPleno: string,
   datosContacto: string,
   entidadesSingulares: string,
+  personasIlustres: string,
+  image: string
 }
 
 @Component({
@@ -76,17 +78,6 @@ export class ResultComponent {
       }
     }
   }
-
-
-  /*y1: {
-        position: 'right',
-        grid: {
-          color: 'rgba(214,234,240,0.4)',
-        },
-        ticks: {
-          color: '#00475C'
-        }
-      } */
 
   constructor(public resultSvc: ResultService, private fb: FormBuilder, private _route: ActivatedRoute, private http: HttpClient, public aragopediaSvc: AragopediaService) { }
 
@@ -202,7 +193,9 @@ export class ResultComponent {
     tablaPoblacion: '',
     miembrosPleno: '',
     datosContacto: '',
-    entidadesSingulares: ''
+    entidadesSingulares: '',
+    personasIlustres: '',
+    image: ''
   };
 
   // ARAGOPEDIA
@@ -416,8 +409,10 @@ export class ResultComponent {
           this.idLocalidad = urlAnalizada.split('/')[4];
 
           this.queryImageWikiData = `https://query.wikidata.org/sparql?query=%0Aselect%20%3Fimg%20where%20%7B%20wd%3A${this.idLocalidad}%20wdt%3AP18%20%3Fimg%20%7D`;
+          this.dataSource.image = this.exportHtmlQuery(this.queryImageWikiData);
 
           this.queryUrlPersonasIlustres = `https://query.wikidata.org/sparql?query=SELECT%20%3Fitem%20%3FitemLabel%20%3Fabout%20(count(%3Fx)%20as%20%3Fcont)%0AWHERE%20%0A%7B%0A%20%20%3Fitem%20wdt%3AP19%20wd%3A${this.idLocalidad}.%0A%20%20%3Fitem%20%3Fx%20%20%3Fo.%0A%20%20%3Fabout%20schema%3Aabout%20%3Fitem.%0A%20%20%3Fabout%20schema%3AinLanguage%20%22es%22.%0A%20%20%3Fabout%20schema%3AisPartOf%20%3Chttps%3A%2F%2Fes.wikipedia.org%2F%3E.%0A%20%20SERVICE%20wikibase%3Alabel%20%7B%20bd%3AserviceParam%20wikibase%3Alanguage%20%22es%2Cen%22.%20%7D%0A%7D%0Agroup%20by%20%3Fitem%20%3FitemLabel%20%3Fabout%0Aorder%20by%20desc(%3Fcont)%20limit%2020`;
+          this.dataSource.personasIlustres = this.exportHtmlQuery(this.queryUrlPersonasIlustres);
 
           this.resultSvc.getData(this.queryImageWikiData).subscribe((data: any) => {
             this.imageWikiDataUrl = data.results.bindings[0].img.value;
@@ -538,7 +533,7 @@ export class ResultComponent {
       this.dataSource.porcentajeSueloRural = this.exportHtmlQuery(this.queryUrlRatioSuelo);
       this.dataSource.porcentajeSueloUrbano = this.exportHtmlQuery(this.queryUrlRatioSuelo);
 
-      this.queryUrlIncendios = `https://opendata.aragon.es/sparql?default-graph-uri=&query=select+distinct++%3FrefArea+%3FnameRefArea+sum+%28%3Fincendios+%29+as+%3Fincendios+++sum+%28xsd%3Adouble%28%3Fsuperficie_forestal_afectada%29+%29+as+%3Fsuperficie_forestal_afectada++++%0D%0A%0D%0Awhere+%7B+%0D%0A%0D%0A+++%3Fobs+qb%3AdataSet+%3Fdataset.+%0D%0A%0D%0A+++FILTER%28%3Fdataset+IN+%28%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fiaest%2Fdataset%2F04-040017${this.sufijoCuboDatosGlobal}%3E%29%29.+%0D%0A%0D%0A%3Fobs+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refPeriod%3E+%3FrefPeriod.+%0D%0A%0D%0A%3FrefPeriod+time%3AinXSDgYear+%3Fyear.+%0D%0A%0D%0A+%0D%0A%0D%0AFILTER+%28%3Fyear+%3E%3D2001++%0D%0A%0D%0A%29.+%0D%0A%0D%0A%3Fobs+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refArea%3E+%3FrefArea.+%0D%0A%0D%0A%3FrefArea+rdfs%3Alabel+%3FnameRefArea.++%0D%0A%0D%0AFILTER+%28+lang%28%3FnameRefArea%29+%3D+%22es%22+%29.+%0D%0A%0D%0ABIND+%28%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fterritorio%2F${this.capitalizeString(this.tipoLocalidad)}%2F${this.lugarBuscadoParsed}%3E+AS+%3Fmuni%29.+%0D%0A%0D%0AFILTER+%28%3FrefArea+IN+%28%3Fmuni%29%29.+%0D%0A%0D%0AOPTIONAL+%7B++%3Fobs+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fiaest%2Fmedida%23incendios%3E+%3Fincendios++%7D+.+%0D%0A%0D%0AOPTIONAL+%7B++%3Fobs+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fiaest%2Fmedida%23superficie-forestal-afectada%3E+%3Fsuperficie_forestal_afectada++%7D+.+%0D%0A%0D%0A%7D+%0D%0A%0D%0Agroup+by+++%3FrefArea+%3FnameRefArea+%0D%0A%0D%0ALIMIT+20+&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`;
+      this.queryUrlIncendios = `https://opendata.aragon.es/sparql?default-graph-uri=&query=select+distinct++%3FrefArea+%3FnameRefArea+sum+%28%3Fincendios+%29+as+%3Fincendios+++sum+%28xsd%3Adouble%28%3Fsuperficie_forestal_afectada%29+%29+as+%3Fsuperficie_forestal_afectada++++%0D%0A%0D%0Awhere+%7B+%0D%0A%0D%0A+++%3Fobs+qb%3AdataSet+%3Fdataset.+%0D%0A%0D%0A+++FILTER%28%3Fdataset+IN+%28%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fiaest%2Fdataset%2F04-040017${this.sufijoCuboDatosGlobal}%3E%29%29.+%0D%0A%0D%0A%3Fobs+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refPeriod%3E+%3FrefPeriod.+%0D%0A%0D%0A%3FrefPeriod+time%3AinXSDgYear+%3Fyear.+%0D%0A%0D%0A+%0D%0A%0D%0AFILTER+%28%3Fyear+%3E%3D2001++%0D%0A%0D%0A%29.+%0D%0A%0D%0A%3Fobs+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refArea%3E+%3FrefArea.+%0D%0A%0D%0A%3FrefArea+rdfs%3Alabel+%3FnameRefArea.++%0D%0A%0D%0AFILTER+%28+lang%28%3FnameRefArea%29+%3D+%22es%22+%29.+%0D%0A%0D%0ABIND+%28%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fterritorio%2F${this.capitalizeString(this.tipoLocalidadGlobal)}%2F${this.lugarBuscadoParsed}%3E+AS+%3Fmuni%29.+%0D%0A%0D%0AFILTER+%28%3FrefArea+IN+%28%3Fmuni%29%29.+%0D%0A%0D%0AOPTIONAL+%7B++%3Fobs+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fiaest%2Fmedida%23incendios%3E+%3Fincendios++%7D+.+%0D%0A%0D%0AOPTIONAL+%7B++%3Fobs+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fiaest%2Fmedida%23superficie-forestal-afectada%3E+%3Fsuperficie_forestal_afectada++%7D+.+%0D%0A%0D%0A%7D+%0D%0A%0D%0Agroup+by+++%3FrefArea+%3FnameRefArea+%0D%0A%0D%0ALIMIT+20+&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`;
       this.dataSource.incendios = this.exportHtmlQuery(this.queryUrlIncendios);
       this.dataSource.hectareasAfectadas = this.exportHtmlQuery(this.queryUrlIncendios);
 
@@ -910,7 +905,7 @@ export class ResultComponent {
     const countDistinct = '+count%28distinct%28%3Fs%29%29++';
     const distinct = '+distinct%28%3Fs%29++';
 
-    const htmlQuery = query?.replace(jsonFormat, htmlFormat).replace(count, '+').replace(countDistinct, distinct).replace('+count%28distinct+%3Fs%29+', '+distinct+%3Fs+').replace('+count%28+distinct+%3Fs%29+', '+distinct+%3Fs+');
+    const htmlQuery = query?.replace(jsonFormat, htmlFormat).replace(count, '+').replace(countDistinct, distinct).replace('+count%28distinct+%3Fs%29+', '+distinct+%3Fs+').replace('+count%28+distinct+%3Fs%29+', '+distinct+%3Fs+').replace('https://query.wikidata.org/sparql?query=', 'https://query.wikidata.org/#');
     return htmlQuery;
   }
 

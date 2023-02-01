@@ -16,7 +16,7 @@
                 <a href={{this.urlMap}} target="_blank" class="btn map_btn">Ver en el mapa</a>
             </div>
             <div class="inicio__data">
-                <ul>
+                <ul [ngClass]="{'grid-provincias' : this.tipoLocalidad === 'diputacion'}">
                     <li *ngIf="this.sueloUrbano"><a href="{{dataSource.sueloUrbano}}" target="_blank">
                             <mat-icon>open_in_new</mat-icon><span
                                 class="big-number">{{format(this.sueloUrbano)}}</span>Hectáreas de suelo
@@ -336,6 +336,8 @@
                             target="_blank">{{persona.itemLabel.value}}</a></li>
                 </ul>
             </div>
+            <a class="data-link" href="{{dataSource.personasIlustres}}" target="_blank">Ver origen de los datos</a>
+
         </section>
 
         <section class="container template__statistics">

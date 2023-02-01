@@ -463,6 +463,11 @@ section.container {
                 grid-template-columns: repeat(3, 1fr);
                 grid-gap: 10px;
             }
+
+            ul.grid-provincias {
+                grid-template-columns: repeat(2, 1fr);
+                grid-gap: 10px;
+            }
         }
 
         .inicio__data-aragon {
