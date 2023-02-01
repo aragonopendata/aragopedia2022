@@ -85,6 +85,7 @@ export class FichaAragonComponent implements OnInit {
   tipoLocalidad!: string;
   comunidadActual: any;
   poblacion: any;
+  yearPoblacion: any;
   tablaPoblacion: any;
   yearsTablaPoblacion: number[] = [];
   density: any;
@@ -251,8 +252,6 @@ export class FichaAragonComponent implements OnInit {
         });
 
         this.resultSvc.getData(this.queryUrlExplotacionesGanaderas).subscribe((data) => {
-          console.log(this.queryUrlExplotacionesGanaderas);
-
           if (data.results.bindings.length !== 0) {
             let explotacionesGanaderas = data.results.bindings;
             let total: number = 0;
@@ -363,8 +362,6 @@ export class FichaAragonComponent implements OnInit {
 
       this.resultSvc.getData(this.queryUrlTotalCreativeWork).subscribe(data => {
         this.numberOfCreativeWork = data?.results.bindings[0]['callret-0'].value;
-        console.log(this.numberOfCreativeWork);
-
         this.dataDownload[0].mencionesEnPublicaciones = this.numberOfCreativeWork.toString();
       })
 
@@ -379,6 +376,7 @@ export class FichaAragonComponent implements OnInit {
       });
 
       this.resultSvc.getData(this.queryUrlPoblacion).subscribe((data: any) => {
+        this.yearPoblacion = data.results.bindings[0].nameRefPeriod.value;
         this.poblacion = data.results.bindings.find((lugar: any) => lugar.nameRefArea.value === this.lugarBuscado).poblac.value;
         this.dataDownload[0].habitantes = this.poblacion;
 

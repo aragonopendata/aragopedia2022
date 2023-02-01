@@ -93,6 +93,7 @@ export class ResultComponent {
   idForComarca!: string;
   comunidadActual: any;
   poblacion: any;
+  yearPoblacion: any;
   tablaPoblacion: any;
   yearsTablaPoblacion: number[] = [];
   density: any;
@@ -344,6 +345,7 @@ export class ResultComponent {
         //Obtención de datos por ID
 
         this.resultSvc.getData(this.queryUrlPoligonos).subscribe((data: any) => {
+
           this.poligonos = data?.results.bindings[0]['callret-0'].value;
           this.dataDownload[0].poligonosIndustriales = this.poligonos;
         });
@@ -481,6 +483,8 @@ export class ResultComponent {
           this.lugarBuscadoParsed = 'Zaragoza';
         } else if (this.lugarBuscadoParsed === 'Villarroya_de_La_Sierra') {
           this.lugarBuscadoParsed = 'Villarroya_de_la_Sierra';
+        } else if (this.lugarBuscadoParsed === 'Villanueva_del_Rebollar_de_La_Sierra') {
+          this.lugarBuscadoParsed = 'Villanueva_del_Rebollar_de_la_Sierra';
         }
       }
 
@@ -556,14 +560,11 @@ export class ResultComponent {
       //Obtención de datos NOMBRE MUNICIPIO
 
       this.resultSvc.getData(this.queryUrlExtension).subscribe((data: any) => {
-
-        // if (data?.results.bindings.length !== 0) {
         this.sueloUrbano = data.results.bindings[0].urbano.value;
         this.sueloRural = data.results.bindings[0].rustico.value;
         this.dataYearExtension = data.results.bindings[0].nameRefPeriod.value;
         this.dataDownload[0].sueloRural = this.sueloRural;
         this.dataDownload[0].sueloUrbano = this.sueloUrbano;
-        // }
       });
 
       this.resultSvc.getData(this.queryUrlDensidadPoblacion).subscribe((data: any) => {
@@ -590,15 +591,21 @@ export class ResultComponent {
       });
 
       this.resultSvc.getData(this.queryUrlPoblacion).subscribe((data: any) => {
+        this.yearPoblacion = data.results.bindings[0].nameRefPeriod.value;
+
         if (this.tipoLocalidad === 'municipio') {
+
           this.poblacion = data?.results.bindings.find((lugar: any) => lugar.nameRefArea.value.toLowerCase() === this.lugarBuscado.replace('Zaragóza', 'Zaragoza').toLowerCase()).poblac.value;
+
           this.dataDownload[0].habitantes = this.poblacion;
 
           const datos = data.results.bindings;
           const poblacion: any = [];
           const dataChart: any = [];
+
           datos.forEach((element: any) => {
-            if (element.nameRefArea.value === this.lugarBuscado) {
+            if (element.nameRefArea.value.toLowerCase() === this.lugarBuscado.toLowerCase()) {
+
               dataChart.push(element);
               this.yearsTablaPoblacion.push(element.nameRefPeriod.value);
               poblacion.push(element.poblac.value);
