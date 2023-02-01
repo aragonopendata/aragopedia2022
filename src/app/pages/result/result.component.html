@@ -262,7 +262,7 @@
             <div *ngIf="this.numberOfCreativeWork !== 0" class="graphics__item" fragment="creative-works">
                 <div class="graphics__item-cw">
                     <h2>Enlaces de interés</h2>
-                    <p class="big-number"><b>Menciones en publicaciones:</b> {{format(this.numberOfCreativeWork)}} <span
+                    <p class="big-number"><b>Menciones en publicaciones:</b> {{this.numberOfCreativeWork}} <span
                             *ngIf="numberOfCreativeWork >= 10">
                             (Mostrando las
                             últimas 10 publicaciones)
@@ -597,6 +597,16 @@
                         </mat-tab>
                     </mat-tab-group>
                 </div>
+            </div>
+            <div class="graphics__item miembros" *ngIf="this.cantidadMiembrosPleno !== 0">
+                <h2>Miembros del pleno territorial</h2>
+                <a class="data-link" href="{{dataSource.miembrosPleno}}" target="_blank">Ver origen de los datos</a>
+                <ul>
+                    <li *ngFor="let miembro of miembrosPleno"><b>{{miembro.cargo.value}}: </b>
+                        <a
+                            [routerLink]="['/persona/', this.createNameForUrl(miembro.persona.value)]">{{miembro.nombrePersona.value}}</a>
+                    </li>
+                </ul>
             </div>
 
         </section>
