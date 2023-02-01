@@ -590,7 +590,7 @@ export class ResultComponent {
       });
 
       this.resultSvc.getData(this.queryUrlPoblacion).subscribe((data: any) => {
-        if (this.tipoLocalidad === 'municipio' && this.lugarBuscadoParsed !== 'Zaragoza') {
+        if (this.tipoLocalidad === 'municipio') {
           this.poblacion = data?.results.bindings.find((lugar: any) => lugar.nameRefArea.value.toLowerCase() === this.lugarBuscado.replace('Zaragóza', 'Zaragoza').toLowerCase()).poblac.value;
           this.dataDownload[0].habitantes = this.poblacion;
 
@@ -657,36 +657,45 @@ export class ResultComponent {
           this.chart?.update();
 
 
-        } else if (this.lugarBuscadoParsed === 'Zaragoza') {
+        }
+        //else if (this.lugarBuscadoParsed === 'Zaragoza') {
 
-          this.poblacion = data?.results.bindings.find((lugar: any) => lugar.nameRefArea.value.toLowerCase() === this.lugarBuscado.replace('Zaragóza', 'Zaragoza').toLowerCase()).poblac.value;
+        //   this.poblacion = data?.results.bindings.find((lugar: any) => lugar.nameRefArea.value.toLowerCase() === this.lugarBuscado.replace('Zaragóza', 'Zaragoza').toLowerCase()).poblac.value;
 
 
-          this.dataDownload[0].habitantes = this.poblacion;
-          this.comunidadActual = data?.results.bindings[0].nameRefArea.value;
+        //   this.dataDownload[0].habitantes = this.poblacion;
+        //   this.comunidadActual = data?.results.bindings[0].nameRefArea.value;
 
-          this.tablaPoblacion = data?.results.bindings;
+        //   this.tablaPoblacion = data?.results.bindings;
+        //   const datos = data.results.bindings;
+        //   for (let i = datos.length - 1; i >= 0; i--) {
+        //     this.municipio[0] = datos[0].nameRefArea.value;
+        //     this.lineChartData.labels?.push(datos[i].nameRefPeriod.value);
+        //     this.yearsTablaPoblacion.push(datos[i].nameRefPeriod.value);
+        //     this.lineChartData.datasets[0].data.push(Number(data.results.bindings[i].poblac.value));
+        //   }
 
-          for (let i = 0; i < 7; i++) {
-            this.yearsTablaPoblacion.push(data?.results.bindings[i].nameRefPeriod.value);
-          }
-          for (let i = 4; i >= 0; i--) {
-            this.lineChartData.labels?.push(data.results.bindings[i].nameRefPeriod.value);
-          }
-          for (let i = 4; i >= 0; i--) {
-            const element = this.tablaPoblacion[i].nameRefArea.value;
-            this.comunidad.push(element);
-          }
+        //   // for (let i = 0; i < 7; i++) {
+        //   //   this.yearsTablaPoblacion.push(data?.results.bindings[i].nameRefPeriod.value);
+        //   // }
+        //   // for (let i = 4; i >= 0; i--) {
+        //   //   this.lineChartData.labels?.push(data.results.bindings[i].nameRefPeriod.value);
+        //   // }
+        //   // for (let i = 4; i >= 0; i--) {
+        //   //   const element = this.tablaPoblacion[i].nameRefArea.value;
+        //   //   this.comunidad.push(element);
+        //   // }
 
-          for (let i = 10; i < 15; i++) {
-            const element = this.tablaPoblacion[i].nameRefArea.value;
-            this.municipio.push(element);
-          }
-          for (let i = 12; i >= 8; i--) {
-            this.lineChartData.datasets[0].data.push(Number(this.tablaPoblacion[i].poblac.value));
-          }
-          this.chart?.update();
-        } else {
+        //   // for (let i = 10; i < 15; i++) {
+        //   //   const element = this.tablaPoblacion[i].nameRefArea.value;
+        //   //   this.municipio.push(element);
+        //   // }
+        //   // for (let i = 12; i >= 8; i--) {
+        //   //   this.lineChartData.datasets[0].data.push(Number(this.tablaPoblacion[i].poblac.value));
+        //   // }
+        //   this.chart?.update();
+        // } 
+        else {
           this.poblacion = data.results.bindings[0].poblac.value;
         }
         this.chart?.update();

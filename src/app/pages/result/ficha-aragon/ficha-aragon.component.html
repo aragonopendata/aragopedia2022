@@ -76,13 +76,14 @@
                     <figure>
                         <a href="{{this.imageWikiDataUrl}}" target="_blank" rel="nofollow noopener"><img
                                 src="{{this.imageWikiDataUrl}}" alt="Imagen principal de {{this.lugarBuscado}}"></a>
-                        <figcaption>Este archivo está disponible bajo la licencia <a
+                        <figcaption>Imagen <a href="{{dataSource.image}}" target="_blank">obtenida de WikiData</a>. Este
+                            archivo está disponible bajo la licencia <a
                                 href="https://en.wikipedia.org/wiki/es:Creative_Commons" target="_blank"
                                 rel="nofollow noopener">Creative Commons</a> <a
                                 href="https://creativecommons.org/licenses/by/4.0/deed.es" target="_blank"
                                 rel="nofollow noopener">
                                 Atribución 4.0
-                                Internaciona
+                                Internacional
                             </a>
                         </figcaption>
                     </figure>
@@ -210,13 +211,13 @@
 
             <div class="graphics__item miembros" *ngIf="this.cantidadMiembrosPleno !== 0">
                 <h2>Miembros del Gobierno de Aragón</h2>
-                <a class="data-link" href="{{dataSource.miembrosPleno}}" target="_blank">Ver origen de los datos</a>
                 <ul>
                     <li *ngFor="let miembro of this.miembrosPleno"><b>{{miembro.orgTitle.value}}: </b>
                         <a
                             [routerLink]="['/persona/', this.createNameForUrl(miembro.persona.value)]">{{miembro.nombre.value}}</a>
                     </li>
                 </ul>
+                <a class="data-link" href="{{dataSource.miembrosPleno}}" target="_blank">Ver origen de los datos</a>
             </div>
 
             <!--<div class="graphics__item personas-ilustres" *ngIf="this.cantidadPersonasIlustres !== 0">

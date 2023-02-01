@@ -105,7 +105,8 @@
                         <a href="{{this.imageWikiDataUrl}}" target="_blank" rel="nofollow noopener"><img
                                 src="{{this.imageWikiDataUrl}}" alt="Imagen principal de {{this.lugarBuscado}}"
                                 width="220" height="160"></a>
-                        <figcaption>Imagen obtenida de WikiData. Este archivo está disponible bajo la licencia <a
+                        <figcaption>Imagen <a href="{{dataSource.image}}" target="_blank">obtenida de WikiData</a>. Este
+                            archivo está disponible bajo la licencia <a
                                 href="https://en.wikipedia.org/wiki/es:Creative_Commons" target="_blank"
                                 rel="nofollow noopener">Creative Commons</a> <a
                                 href="https://creativecommons.org/licenses/by/4.0/deed.es" target="_blank"
@@ -263,7 +264,7 @@
                 <div class="graphics__item-cw">
                     <h2>Enlaces de interés</h2>
                     <p class="big-number"><b>Menciones en publicaciones:</b> {{this.numberOfCreativeWork}} <span
-                            *ngIf="numberOfCreativeWork >= 10">
+                            *ngIf="numberOfCreativeWork >= 10 || this.tipoLocalidad === 'diputacion'">
                             (Mostrando las
                             últimas 10 publicaciones)
                         </span></p>
@@ -320,24 +321,23 @@
 
             <div class="graphics__item miembros" *ngIf="this.cantidadMiembrosPleno !== 0">
                 <h2>Miembros del pleno territorial</h2>
-                <a class="data-link" href="{{dataSource.miembrosPleno}}" target="_blank">Ver origen de los datos</a>
                 <ul>
                     <li *ngFor="let miembro of miembrosPleno"><b>{{miembro.cargo.value}}: </b>
                         <a
                             [routerLink]="['/persona/', this.createNameForUrl(miembro.persona.value)]">{{miembro.nombrePersona.value}}</a>
                     </li>
                 </ul>
+                <a class="data-link" href="{{dataSource.miembrosPleno}}" target="_blank">Ver origen de los datos</a>
             </div>
             <div class="graphics__item personas-ilustres" *ngIf="this.cantidadPersonasIlustres !== 0">
-                <h2>Personas Ilustres nacidas en {{this.tituloFicha}} (Obtenido de WikiData bajo licencia CC 4.0.0)
+                <h2>Personas Ilustres nacidas en {{this.tituloFicha}} (<a href="{{dataSource.personasIlustres}}"
+                        target="_blank">Obtenido de WikiData</a> bajo licencia CC 4.0.0)
                 </h2>
                 <ul>
                     <li *ngFor="let persona of personasIlustres"><a href="{{persona.about.value}}"
                             target="_blank">{{persona.itemLabel.value}}</a></li>
                 </ul>
             </div>
-            <a class="data-link" href="{{dataSource.personasIlustres}}" target="_blank">Ver origen de los datos</a>
-
         </section>
 
         <section class="container template__statistics">
@@ -471,7 +471,8 @@
                     <figure>
                         <a href="{{this.imageWikiDataUrl}}" target="_blank" rel="nofollow noopener"><img
                                 src="{{this.imageWikiDataUrl}}" alt="Imagen principal de {{this.lugarBuscado}}"></a>
-                        <figcaption>Imagen obtenida de WikiData. Este archivo está disponible bajo la licencia <a
+                        <figcaption><a href="{{dataSource.image}}" target="_blank">Imagen obtenida de WikiData</a>. Este
+                            archivo está disponible bajo la licencia <a
                                 href="https://en.wikipedia.org/wiki/es:Creative_Commons" target="_blank"
                                 rel="nofollow noopener">Creative Commons</a> <a
                                 href="https://creativecommons.org/licenses/by/4.0/deed.es" target="_blank"
@@ -602,13 +603,13 @@
             </div>
             <div class="graphics__item miembros" *ngIf="this.cantidadMiembrosPleno !== 0">
                 <h2>Miembros del pleno territorial</h2>
-                <a class="data-link" href="{{dataSource.miembrosPleno}}" target="_blank">Ver origen de los datos</a>
                 <ul>
                     <li *ngFor="let miembro of miembrosPleno"><b>{{miembro.cargo.value}}: </b>
                         <a
                             [routerLink]="['/persona/', this.createNameForUrl(miembro.persona.value)]">{{miembro.nombrePersona.value}}</a>
                     </li>
                 </ul>
+                <a class="data-link" href="{{dataSource.miembrosPleno}}" target="_blank">Ver origen de los datos</a>
             </div>
 
         </section>
