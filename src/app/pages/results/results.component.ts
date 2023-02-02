@@ -145,8 +145,17 @@ export class ResultsComponent implements OnInit {
         let i: number = this.results.length;
 
         if (this.firstYear === '1978' && this.lastYear === this.currentYear) {
-          this.resultsSinFecha.forEach((item: any) => {
-            this.results[i] = { categoryURL: item.item.value, title: item['callret-3'].value, category: item.labelTema.value, resultURL: item.item.value, year: item.year.value, type: item.tipo.value };
+          this.resultsSinFecha.forEach((element: any) => {
+            if (element.tipo.value === 'cubo_estadistico') {
+              this.results[i] = { categoryURL: element.item.value, title: element['callret-3'].value, category: element.labelTema.value, resultURL: element.item.value, year: element.year.value, type: 'Cubo estadístico' }
+            } else if (element.tipo.value === 'dataset_ckan') {
+              this.results[i] = {
+                categoryURL: element.item.value, title: element['callret-3'].value, category: element.labelTema.value, resultURL: element.item.value, year: element.year.value, type: 'Dataset'
+              }
+            } else if (element.tipo.value === 'eli') {
+              this.results[i] = { categoryURL: element.item.value, title: element['callret-3'].value, category: element.labelTema.value, resultURL: element.item.value, year: element.year.value, type: 'ELI' }
+            }
+            else { this.results[i] = { categoryURL: element.item.value, title: element['callret-3'].value, category: element.labelTema.value, resultURL: element.item.value, year: element.year.value, type: 'SIUa' } }
             i++;
           });
         }
