@@ -132,7 +132,7 @@
                     <div class="caracteristica__item">
                         <mat-icon> local_florist</mat-icon> Ocupa un {{this.porcentajeSueloRural}}% del <b>suelo
                             rural</b>
-                        de Aragón (dato de {{yearRatioSuelo}})
+                        de Aragón ({{yearRatioSuelo}})
                     </div>
                 </a>
                 <a *ngIf="this.porcentajeSueloUrbano !== undefined && this.porcentajeSueloUrbano !== 'NaN'"
@@ -141,7 +141,7 @@
                         <mat-icon>zoom_out_map</mat-icon> Ocupa un {{this.porcentajeSueloUrbano}}% del <b>suelo
                             urbano</b>
                         de
-                        Aragón (dato de {{yearRatioSuelo}})
+                        Aragón ({{yearRatioSuelo}})
                     </div>
                 </a>
                 <a *ngIf="esPoblado == '1'; else noPoblado" href="{{dataSource.esPoblado}}" target="_blank">
@@ -165,14 +165,14 @@
                     <div class="caracteristica__item">
                         <mat-icon>person</mat-icon> La edad media de los <b>hombres</b> es de
                         {{this.edadMediaHombres}}
-                        años (dato de {{yearEdadMedia}})
+                        años ({{yearEdadMedia}})
                     </div>
                 </a>
                 <a *ngIf="this.edadMediaMujeres" href="{{dataSource.edadMedia}}" target="_blank">
                     <div class="caracteristica__item">
                         <mat-icon>person</mat-icon> La edad media de las <b>mujeres</b> es de
                         {{this.edadMediaMujeres}}
-                        años (dato de {{yearEdadMedia}})
+                        años ({{yearEdadMedia}})
                     </div>
                 </a>
 
@@ -202,14 +202,14 @@
                     <div class="caracteristica__item">
                         <mat-icon>person</mat-icon> La edad media de los <b>hombres</b> es de
                         {{this.edadMediaHombres}}
-                        años (dato de {{yearEdadMedia}})
+                        años ({{yearEdadMedia}})
                     </div>
                 </a>
                 <a *ngIf="this.edadMediaMujeres" href="{{dataSource.edadMedia}}" target="_blank">
                     <div class="caracteristica__item">
                         <mat-icon>person</mat-icon> La edad media de las <b>mujeres</b> es de
                         {{this.edadMediaMujeres}}
-                        años (dato de {{yearEdadMedia}})
+                        años ({{yearEdadMedia}})
                     </div>
                 </a>
             </div>
@@ -504,14 +504,14 @@
                     <div class="caracteristica__item">
                         <mat-icon>person</mat-icon> La edad media de los <b>hombres</b> es de
                         {{this.edadMediaHombres}}
-                        años (dato de {{yearEdadMedia}})
+                        años ({{yearEdadMedia}})
                     </div>
                 </a>
                 <a *ngIf="this.edadMediaMujeres" href="{{dataSource.edadMedia}}" target="_blank">
                     <div class="caracteristica__item">
                         <mat-icon>person</mat-icon> La edad media de las <b>mujeres</b> es de
                         {{this.edadMediaMujeres}}
-                        años (dato de {{yearEdadMedia}})
+                        años ({{yearEdadMedia}})
                     </div>
                 </a>
             </div>
