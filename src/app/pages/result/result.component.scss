@@ -1,3 +1,7 @@
+.grafica-poblacion {
+    max-width: 500px;
+}
+
 .errorTabla {
     display: none;
 }
@@ -6,7 +10,13 @@
     width: 100%;
 }
 
-// Parte final Aragopedia
+.data-link {
+    display: block;
+    font-size: 16px;
+    margin-bottom: 1em;
+}
+
+// Parte final Aragopedia 
 
 .hidden {
     display: none;
@@ -98,18 +108,54 @@ section.container {
             list-style: none;
 
             li {
-                padding: 15px;
+                padding: 7px;
                 text-align: center;
                 font-size: 16px;
                 color: var(--accent-color);
                 font-family: 'Signika', sans-serif;
+
 
                 .big-number {
                     display: block;
                     font-size: 64px;
                     font-weight: bold;
                     color: #D6EAF0;
-                    margin-bottom: 15px;
+                    margin-bottom: 20px;
+                    transition: all .3s;
+                    position: relative;
+
+                }
+
+                a {
+                    transition: all .3s;
+                    text-decoration: none;
+                    position: relative;
+                    display: block;
+                    max-width: 250px;
+                    margin: auto;
+
+                    mat-icon {
+                        font-size: 16px;
+                        transform: translateY(-10px);
+                        transition: all 0.3s;
+                        color: #D6EAF0;
+                        display: block;
+                        width: 100%;
+                        text-align: right;
+                    }
+
+                    &:hover {
+
+                        .big-number {
+                            color: var(--accent-color);
+                        }
+
+                        mat-icon {
+                            transform: translateY(-14px);
+                            color: var(--accent-color);
+                        }
+                    }
+
                 }
 
                 .inicio__data-link {
@@ -159,6 +205,11 @@ section.container {
             display: block;
         }
 
+        .entidades {
+            max-height: 200px;
+            overflow: scroll;
+        }
+
     }
 
     .template__img-municipio {
@@ -202,17 +253,34 @@ section.container {
             display: grid;
             grid-template-columns: auto;
 
-            .caracteristica__item {
-                text-align: center;
-                padding: 1em;
-                border-radius: 6px;
-                box-shadow: var(--shadow);
-                max-width: 250px;
-                margin: 20px auto;
+            a {
+                text-decoration: none;
+                color: var(--text-color);
+                transition: all .1s;
 
-                .mat-icon {
-                    display: block;
-                    margin: 15px auto;
+                .caracteristica__item {
+                    text-align: center;
+                    padding: 1em;
+                    border-radius: 6px;
+                    box-shadow: var(--shadow);
+                    max-width: 250px;
+                    margin: 20px auto;
+                    transition: all .3s;
+
+                    .mat-icon {
+                        display: block;
+                        margin: 15px auto;
+                    }
+                }
+
+            }
+
+            a:hover {
+                color: var(--accent-color);
+
+                .caracteristica__item {
+                    box-shadow: 0 8px 12px rgb(0 0 0 / 15%);
+                    transform: translateY(-3px);
                 }
             }
         }
@@ -395,6 +463,18 @@ section.container {
                 grid-template-columns: repeat(3, 1fr);
                 grid-gap: 10px;
             }
+
+            ul.grid-provincias {
+                grid-template-columns: repeat(2, 1fr);
+                grid-gap: 10px;
+            }
+        }
+
+        .inicio__data.central-datos {
+            ul {
+                grid-template-columns: repeat(2, 1fr);
+                grid-gap: 10px;
+            }
         }
 
         .inicio__data-aragon {
@@ -407,6 +487,16 @@ section.container {
 
         .inicio__contact {
             flex: 0 0 20%;
+
+            ul {
+                li {
+                    a {
+                        display: block;
+                        max-width: 300px;
+                        overflow: overlay;
+                    }
+                }
+            }
         }
 
         .template__caracteristicas {

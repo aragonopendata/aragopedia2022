@@ -113,7 +113,24 @@ export class ComarcasComponent implements OnInit {
 
   filterData(enteredData: any) {
     this.filteredComarcas = this.comarcas.filter((item: any) => {
-      return item['callret-0'].value.toLowerCase().indexOf(enteredData.toLowerCase()) > -1
+      if (item['callret-0'].value.toLowerCase().includes(', la')) {
+        let stringOrdenado = 'La ';
+        stringOrdenado += item['callret-0'].value.toLowerCase().substring(0, item['callret-0'].value.toLowerCase().indexOf(', la'));
+        item['callret-0'].value = stringOrdenado;
+      } else if (item['callret-0'].value.toLowerCase().includes(', el')) {
+        let stringOrdenado = 'El ';
+        stringOrdenado += item['callret-0'].value.toLowerCase().substring(0, item['callret-0'].value.toLowerCase().indexOf(', el'));
+        item['callret-0'].value = stringOrdenado;
+      } else if (item['callret-0'].value.toLowerCase().includes(', los')) {
+        let stringOrdenado = 'Los ';
+        stringOrdenado += item['callret-0'].value.toLowerCase().substring(0, item['callret-0'].value.toLowerCase().indexOf(', los'));
+        item['callret-0'].value = stringOrdenado;
+      } else if (item['callret-0'].value.toLowerCase().includes(', las')) {
+        let stringOrdenado = 'Las ';
+        stringOrdenado += item['callret-0'].value.toLowerCase().substring(0, item['callret-0'].value.toLowerCase().indexOf(', las'));
+        item['callret-0'].value = stringOrdenado;
+      }
+      return this.removeAccents(item['callret-0'].value.toLowerCase()).indexOf(this.removeAccents(enteredData.toLowerCase())) > -1;
     });
   }
 

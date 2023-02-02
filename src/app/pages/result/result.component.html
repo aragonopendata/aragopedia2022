@@ -16,37 +16,62 @@
                 <a href={{this.urlMap}} target="_blank" class="btn map_btn">Ver en el mapa</a>
             </div>
             <div class="inicio__data">
-                <ul>
-                    <li *ngIf="this.sueloUrbano"><span class="big-number">{{this.sueloUrbano}}</span>Hectáreas de suelo
-                        urbano</li>
-                    <li *ngIf="this.sueloRural"><span class="big-number">{{this.sueloRural}}</span>Hectáreas de suelo
-                        rural</li>
-                    <li *ngIf="this.locales"><span class="big-number">{{this.locales}}</span>Edificios destinados a
-                        locales</li>
-                    <li *ngIf="this.poblacion"><span class="big-number">{{this.poblacion}}</span>Habitantes</li>
-                    <li *ngIf="this.densidadPoblacion"><span
-                            class="big-number">{{this.densidadPoblacion}}</span>Habitantes por KM2</li>
-                    <li *ngIf="this.poligonos"><span class="big-number">{{this.poligonos}}</span>Polígonos industriales
+                <ul [ngClass]="{'grid-provincias' : this.tipoLocalidad === 'diputacion'}">
+                    <li *ngIf="this.sueloUrbano"><a href="{{dataSource.sueloUrbano}}" target="_blank">
+                            <mat-icon>open_in_new</mat-icon><span
+                                class="big-number">{{format(this.sueloUrbano)}}</span>Hectáreas de suelo
+                            urbano ({{dataYearExtension}})</a></li>
+                    <li *ngIf="this.sueloRural"><a href="{{dataSource.sueloRural}}"
+                            target="_blank"><mat-icon>open_in_new</mat-icon><span
+                                class="big-number">{{format(this.sueloRural)}}</span>Hectáreas de suelo
+                            rural ({{dataYearExtension}})</a></li>
+                    <li><a href="{{dataSource.edificiosDestinadosLocales}}"
+                            target="_blank"><mat-icon>open_in_new</mat-icon><span class="big-number"><span
+                                    *ngIf="this.locales">{{format(this.locales)}}</span><span
+                                    *ngIf="!this.locales">0</span></span>Edificios destinados a
+                            locales (2011)</a></li>
+                    <li *ngIf="this.poblacion"><a href="{{dataSource.habitantes}}"
+                            target="_blank"><mat-icon>open_in_new</mat-icon><span
+                                class="big-number">{{format(this.poblacion)}}</span>Habitantes ({{yearPoblacion}})</a>
                     </li>
-                    <li *ngIf="this.explotacionesGanaderas"><span
-                            class="big-number">{{this.explotacionesGanaderas}}</span>Explotaciones ganaderas</li>
-                    <li *ngIf="this.incendiosUltimosAnos"><span
-                            class="big-number">{{this.incendiosUltimosAnos}}</span>Incendios desde 2001</li>
-                    <li *ngIf="this.hectareasQuemadas"><span
-                            class="big-number">{{this.hectareasQuemadas}}</span>Hectáreas afectadas por
-                        incendios</li>
-                    <li *ngIf="this.numberOfCreativeWork"><span
-                            class="big-number">{{this.numberOfCreativeWork}}</span>Menciones
-                        en publicaciones
-                        <!-- <a class="inicio__data-link">Ver
-                                publicaciones</a>-->
+                    <li *ngIf="this.densidadPoblacion && this.tipoLocalidad === 'municipio'"><a
+                            href="{{dataSource.densidad}}" target="_blank"><mat-icon>open_in_new</mat-icon><span
+                                class="big-number">{{format(this.densidadPoblacion)}}</span>Habitantes por
+                            KM<sup>2</sup></a></li>
+                    <li *ngIf="this.poligonos"><a href="{{dataSource.poligonos}}"
+                            target="_blank"><mat-icon>open_in_new</mat-icon><span
+                                class="big-number">{{format(this.poligonos)}}</span></a>Polígonos industriales
                     </li>
-                    <li *ngIf="this.plazasHoteleras"><span
-                            class="big-number">{{this.plazasHoteleras}}</span>Alojamientos hoteleros</li>
-                    <li *ngIf="this.alojamientosTuristicos"><span
-                            class="big-number">{{this.alojamientosTuristicos}}</span>Alojamientos de turismo rural</li>
-                    <li *ngIf="this.municipiosEnTerritorio > 0"><span
-                            class="big-number">{{this.municipiosEnTerritorio}}</span>Municipios en el territorio</li>
+                    <li *ngIf="this.explotacionesGanaderas"><a href="{{dataSource.explotacionesGanaderas}}"
+                            target="_blank"><mat-icon>open_in_new</mat-icon><span
+                                class="big-number">{{format(this.explotacionesGanaderas)}}</span>Explotaciones
+                            ganaderas</a></li>
+                    <li *ngIf="this.incendiosUltimosAnos"><a href="{{dataSource.incendios}}"
+                            target="_blank"><mat-icon>open_in_new</mat-icon><span
+                                class="big-number">{{format(this.incendiosUltimosAnos)}}</span>Incendios desde 2001</a>
+                    </li>
+                    <li *ngIf="this.hectareasQuemadas"><a href="{{dataSource.hectareasAfectadas}}"
+                            target="_blank"><mat-icon>open_in_new</mat-icon><span
+                                class="big-number">{{format(this.hectareasQuemadas)}}</span>Hectáreas afectadas por
+                            incendios desde 2001</a></li>
+                    <li *ngIf="this.numberOfCreativeWork"><a href="{{dataSource.publicaciones}}"
+                            target="_blank"><mat-icon>open_in_new</mat-icon><span
+                                class="big-number">{{format(this.numberOfCreativeWork)}}</span>Menciones
+                            en publicaciones</a></li>
+                    <li *ngIf="this.plazasHoteleras"><a href="{{dataSource.alojamientosHoteleros}}"
+                            target="_blank"><mat-icon>open_in_new</mat-icon><span
+                                class="big-number">{{format(this.plazasHoteleras)}}</span>Alojamientos
+                            hoteleros</a></li>
+                    <li *ngIf="this.alojamientosTuristicos"><a href="{{dataSource.alojamientosRurales}}"
+                            target="_blank"><mat-icon>open_in_new</mat-icon><span
+                                class="big-number">{{format(this.alojamientosTuristicos)}}</span>Alojamientos
+                            de turismo rural</a>
+                    </li>
+                    <li *ngIf="this.municipiosEnTerritorio > 0"><a href="{{dataSource.municipios}}"
+                            target="_blank"><mat-icon>open_in_new</mat-icon><span
+                                class="big-number">{{format(this.municipiosEnTerritorio)}}</span>Municipios en
+                            el territorio</a>
+                    </li>
                 </ul>
             </div>
             <div class="inicio__contact">
@@ -59,6 +84,7 @@
                         </li>
                         <li *ngIf="this.email"><b>email</b> <a href="mailto:{{this.email}}">{{this.email}}</a></li>
                     </ul>
+                    <a class="data-link" href="{{dataSource.datosContacto}}" target="_blank">Ver origen de los datos</a>
                 </div>
 
                 <div *ngIf="this.numeroEntidadesSingulares !== 0">
@@ -69,6 +95,8 @@
                                 target="_blank">{{this.capitalizeString(entidad.nombreEntidad.value)}}</a>
                         </li>
                     </ul>
+                    <a class="data-link" href="{{dataSource.entidadesSingulares}}" target="_blank">Ver origen de los
+                        datos</a>
                 </div>
                 <div class="template__img-municipio" *ngIf="this.imageWikiDataUrl">
                     <div class="loading" *ngIf="!this.imageWikiDataUrl">
@@ -78,7 +106,8 @@
                         <a href="{{this.imageWikiDataUrl}}" target="_blank" rel="nofollow noopener"><img
                                 src="{{this.imageWikiDataUrl}}" alt="Imagen principal de {{this.lugarBuscado}}"
                                 width="220" height="160"></a>
-                        <figcaption>Imagen obtenida de WikiData. Este archivo está disponible bajo la licencia <a
+                        <figcaption>Imagen <a href="{{dataSource.image}}" target="_blank">obtenida de WikiData</a>. Este
+                            archivo está disponible bajo la licencia <a
                                 href="https://en.wikipedia.org/wiki/es:Creative_Commons" target="_blank"
                                 rel="nofollow noopener">Creative Commons</a> <a
                                 href="https://creativecommons.org/licenses/by/4.0/deed.es" target="_blank"
@@ -97,98 +126,149 @@
 
         <section class="container template__caracteristicas">
             <h2>Características del territorio</h2>
-            <div class="caracteristicas__list">
-                <div *ngIf="this.porcentajeSueloRural !== undefined && this.porcentajeSueloRural !== 'NaN'"
-                    class="caracteristica__item">
-                    <mat-icon> local_florist</mat-icon> Ocupa un {{this.porcentajeSueloRural}}% del <b>suelo rural</b>
-                    de Aragón
-                </div>
-                <div class="caracteristica__item"
-                    *ngIf="this.porcentajeSueloUrbano !== undefined && this.porcentajeSueloUrbano !== 'NaN'">
-                    <mat-icon>zoom_out_map</mat-icon> Ocupa un {{this.porcentajeSueloUrbano}}% del <b>suelo urbano</b>
-                    de
-                    Aragón
-                </div>
-                <div class="caracteristica__item" *ngIf="esPoblado == '1'; else noPoblado">
-                    <mat-icon>insert_chart_outlined</mat-icon> {{this.tituloFicha}} está entre uno de <b>los 20
-                        territorios más
-                        poblados</b> de Aragón
-                </div>
-                <ng-template #noPoblado>
+            <div class="caracteristicas__list" *ngIf="this.tipoLocalidad === 'municipio'">
+                <a *ngIf="this.porcentajeSueloRural !== undefined && this.porcentajeSueloRural !== 'NaN'"
+                    href="{{dataSource.porcentajeSueloRural}}" target="blank">
                     <div class="caracteristica__item">
-                        <mat-icon>insert_chart_outlined</mat-icon> {{this.tituloFicha}} no está entre uno de <b>los 20
+                        <mat-icon> local_florist</mat-icon> Ocupa un {{this.porcentajeSueloRural}}% del <b>suelo
+                            rural</b>
+                        de Aragón ({{yearRatioSuelo}})
+                    </div>
+                </a>
+                <a *ngIf="this.porcentajeSueloUrbano !== undefined && this.porcentajeSueloUrbano !== 'NaN'"
+                    href="{{dataSource.porcentajeSueloUrbano}}" target="_blank">
+                    <div class="caracteristica__item">
+                        <mat-icon>zoom_out_map</mat-icon> Ocupa un {{this.porcentajeSueloUrbano}}% del <b>suelo
+                            urbano</b>
+                        de
+                        Aragón ({{yearRatioSuelo}})
+                    </div>
+                </a>
+                <a *ngIf="esPoblado == '1'; else noPoblado" href="{{dataSource.esPoblado}}" target="_blank">
+                    <div class="caracteristica__item">
+                        <mat-icon>insert_chart_outlined</mat-icon> {{this.tituloFicha}} está entre uno de <b>los 20
                             territorios más
                             poblados</b> de Aragón
                     </div>
+                </a>
+                <ng-template #noPoblado>
+                    <a href="{{dataSource.esPoblado}}" target="_blank">
+                        <div class="caracteristica__item">
+                            <mat-icon>insert_chart_outlined</mat-icon> {{this.tituloFicha}} no está entre uno de <b>los
+                                20
+                                territorios más
+                                poblados</b> de Aragón
+                        </div>
+                    </a>
                 </ng-template>
-                <div *ngIf="this.edadMediaHombres" class="caracteristica__item">
-                    <mat-icon>person</mat-icon> La edad media de los <b>hombres</b> es de {{this.edadMediaHombres}} años
-                </div>
-                <div *ngIf="this.edadMediaMujeres" class="caracteristica__item">
-                    <mat-icon>person</mat-icon> La edad media de las <b>mujeres</b> es de {{this.edadMediaMujeres}} años
-                </div>
-
-                <div class="caracteristica__item" *ngIf="tieneOficinaComarcal === 0; else noLocales">
-                    <mat-icon>business</mat-icon> {{this.tituloFicha}} no cuenta con <b>oficina comarcal</b>
-                </div>
-                <ng-template #noLocales>
+                <a *ngIf="this.edadMediaHombres" href="{{dataSource.edadMedia}}" target="_blank">
                     <div class="caracteristica__item">
-                        <mat-icon>business</mat-icon> {{this.tituloFicha}} cuenta con <b>oficina comarcal</b>
+                        <mat-icon>person</mat-icon> La edad media de los <b>hombres</b> es de
+                        {{this.edadMediaHombres}}
+                        años ({{yearEdadMedia}})
                     </div>
+                </a>
+                <a *ngIf="this.edadMediaMujeres" href="{{dataSource.edadMedia}}" target="_blank">
+                    <div class="caracteristica__item">
+                        <mat-icon>person</mat-icon> La edad media de las <b>mujeres</b> es de
+                        {{this.edadMediaMujeres}}
+                        años ({{yearEdadMedia}})
+                    </div>
+                </a>
+
+                <a *ngIf="tieneOficinaComarcal === 0; else noLocales" href="{{dataSource.tieneOficinaComarcal}}"
+                    target="_blank">
+                    <div class="caracteristica__item">
+                        <mat-icon>business</mat-icon> {{this.tituloFicha}} no cuenta con <b>oficina comarcal</b>
+                    </div>
+                </a>
+                <ng-template #noLocales>
+                    <a href="{{dataSource.tieneOficinaComarcal}}" target="_blank">
+                        <div class="caracteristica__item">
+                            <mat-icon>business</mat-icon> {{this.tituloFicha}} cuenta con <b>oficina comarcal</b>
+                        </div>
+                    </a>
                 </ng-template>
+            </div>
+
+            <div class="caracteristicas__list" *ngIf="this.tipoLocalidad === 'diputacion'">
+                <a *ngIf="this.densidadPoblacion" href="{{dataSource.densidad}}" target="_blank">
+                    <div class="caracteristica__item">
+                        <mat-icon>people</mat-icon> La densidad de población de <b>La {{this.tituloFicha}}</b> es de
+                        {{this.densidadPoblacion}} habitantes por km<sup>2</sup>
+                    </div>
+                </a>
+                <a *ngIf="this.edadMediaHombres" href="{{dataSource.edadMedia}}" target="_blank">
+                    <div class="caracteristica__item">
+                        <mat-icon>person</mat-icon> La edad media de los <b>hombres</b> es de
+                        {{this.edadMediaHombres}}
+                        años ({{yearEdadMedia}})
+                    </div>
+                </a>
+                <a *ngIf="this.edadMediaMujeres" href="{{dataSource.edadMedia}}" target="_blank">
+                    <div class="caracteristica__item">
+                        <mat-icon>person</mat-icon> La edad media de las <b>mujeres</b> es de
+                        {{this.edadMediaMujeres}}
+                        años ({{yearEdadMedia}})
+                    </div>
+                </a>
             </div>
         </section>
 
-        <section class="container template__graphics">
+        <!-- <section class="container template__graphics">
             <div class="graphics__item" style="width: 100%;">
                 <app-piramide-poblacion></app-piramide-poblacion>
             </div>
-        </section>
-        <section *ngIf="this.tipoLocalidad === 'municipio'" class="container template__graphics">
+        </section> -->
+        <section class="container template__graphics">
             <div class="graphics__item" style="width: 100%;">
                 <h2>Últimos datos de Población</h2>
-
                 <div class="tabla-container">
-                    <table class="tabla-poblacion">
+                    <table class="tabla-poblacion" *ngIf="this.tipoLocalidad === 'municipio'">
                         <tr>
                             <th>Año</th>
                             <td *ngFor="let year of yearsTablaPoblacion"><span>{{year}}</span></td>
                         </tr>
                         <tr>
-                            <th>{{this.comunidad[0]}}</th>
-                            <td *ngFor="let element of tablaPoblacion">
-                                <span
-                                    *ngIf="element.nameRefArea.value == this.comunidad[0] && element.nameRefPeriod.value !== '2014'">
-                                    {{element.poblac.value}}
-                                </span>
-                            </td>
-                        </tr>
-                        <tr *ngIf="this.codigoIne !== '50297'">
-                            <th>{{this.provincia[0]}}</th>
-                            <td *ngFor="let element of tablaPoblacion">
-                                <span *ngIf="element.nameRefArea.value == this.provincia[0]">
-                                    {{element.poblac.value}}
-                                </span>
-                            </td>
-                        </tr>
-                        <tr *ngIf="this.municipio[0]">
-                            <th>{{this.municipio[0]}}</th>
-                            <td *ngFor="let element of tablaPoblacion">
-                                <span *ngIf="element.nameRefArea.value == this.municipio[0]">
-                                    {{element.poblac.value}}
+                            <th>{{this.lugarBuscado}}</th>
+                            <td *ngFor="let element of datosDePoblacion">
+                                <span>
+                                    {{format(element)}}
                                 </span>
                             </td>
                         </tr>
                     </table>
                 </div>
+                <table class="tabla-poblacion" *ngIf="this.tipoLocalidad === 'diputacion'">
+                    <tr>
+                        <th>Año</th>
+                        <td *ngFor="let year of yearsTablaPoblacion"><span>{{year}}</span></td>
+                    </tr>
+                    <tr *ngIf="this.municipio[0]">
+                        <th>{{this.municipio[0]}}</th>
+                        <td *ngFor="let element of tablaPoblacion.slice().reverse()">
+                            <span *ngIf="element.nameRefArea.value == this.municipio[0]">
+                                {{format(element.poblac.value)}}
+                            </span>
+                        </td>
+                    </tr>
+                </table>
+                <div class="grafica-poblacion">
+                    <h2>Gráfica de los últimos 5 años</h2>
+                    <canvas baseChart class="chart" [data]="lineChartData" [options]="lineChartOptions"
+                        [type]="lineChartType"></canvas>
+                </div>
+                <a class="data-link" href="{{dataSource.tablaPoblacion}}" target="_blank">Ver origen de los datos</a>
             </div>
 
             <div *ngIf="this.numberOfCreativeWork !== 0" class="graphics__item" fragment="creative-works">
                 <div class="graphics__item-cw">
                     <h2>Enlaces de interés</h2>
-                    <p *ngIf="numberOfCreativeWork >= 10" class="big-number"><b>{{this.numberOfCreativeWork}}
-                        </b>Menciones en publicaciones (Mostrando las
-                        últimas 10 publicaciones)</p>
+                    <p class="big-number"><b>Menciones en publicaciones:</b> {{this.numberOfCreativeWork}} <span
+                            *ngIf="numberOfCreativeWork >= 10 || this.tipoLocalidad === 'diputacion'">
+                            (Mostrando las
+                            últimas 10 publicaciones)
+                        </span></p>
                 </div>
                 <div class="slides">
                     <mat-tab-group mat-align-tabs="start">
@@ -248,9 +328,11 @@
                             [routerLink]="['/persona/', this.createNameForUrl(miembro.persona.value)]">{{miembro.nombrePersona.value}}</a>
                     </li>
                 </ul>
+                <a class="data-link" href="{{dataSource.miembrosPleno}}" target="_blank">Ver origen de los datos</a>
             </div>
             <div class="graphics__item personas-ilustres" *ngIf="this.cantidadPersonasIlustres !== 0">
-                <h2>Personas Ilustres nacidas en {{this.tituloFicha}} (Obtenido de WikiData bajo licencia CC 4.0.0)
+                <h2>Personas Ilustres nacidas en {{this.tituloFicha}} (<a href="{{dataSource.personasIlustres}}"
+                        target="_blank">Obtenido de WikiData</a> bajo licencia CC 4.0.0)
                 </h2>
                 <ul>
                     <li *ngFor="let persona of personasIlustres"><a href="{{persona.about.value}}"
@@ -316,37 +398,64 @@
                 </a>
                 <a href={{this.urlMap}} target="_blank" class="btn map_btn">Ver en el mapa</a>
             </div>
-            <div class="inicio__data">
+            <div class="inicio__data" [ngClass]="{'central-datos': this.tituloFicha === 'Central'}">
                 <ul>
-                    <li *ngIf="this.sueloUrbano"><span class="big-number">{{this.sueloUrbano}}</span>Hectáreas de suelo
-                        urbano</li>
-                    <li *ngIf="this.sueloRural"><span class="big-number">{{this.sueloRural}}</span>Hectáreas de suelo
-                        rural</li>
-                    <li *ngIf="this.locales"><span class="big-number">{{this.locales}}</span>Edificios destinados a
-                        locales</li>
-                    <li *ngIf="this.poblacion"><span class="big-number">{{this.poblacion}}</span>Habitantes</li>
-                    <li *ngIf="this.densidadPoblacion"><span
-                            class="big-number">{{this.densidadPoblacion}}</span>Habitantes por KM2</li>
-                    <li *ngIf="this.poligonos"><span class="big-number">{{this.poligonos}}</span>Polígonos industriales
+                    <li *ngIf="this.sueloUrbano"><a href="{{dataSource.sueloUrbano}}" target="_blank">
+                            <mat-icon>open_in_new</mat-icon><span
+                                class="big-number">{{format(this.sueloUrbano)}}</span>Hectáreas de suelo
+                            urbano ({{dataYearExtension}})</a></li>
+                    <li *ngIf="this.sueloRural"><a href="{{dataSource.sueloRural}}"
+                            target="_blank"><mat-icon>open_in_new</mat-icon><span
+                                class="big-number">{{format(this.sueloRural)}}</span>Hectáreas de suelo
+                            rural ({{dataYearExtension}})</a></li>
+                    <li *ngIf="this.locales"><a href="{{dataSource.edificiosDestinadosLocales}}"
+                            target="_blank"><mat-icon>open_in_new</mat-icon><span
+                                class="big-number">{{format(this.locales)}}</span>Edificios destinados a
+                            locales (2011)</a></li>
+                    <li *ngIf="this.poblacion"><a href="{{dataSource.habitantes}}"
+                            target="_blank"><mat-icon>open_in_new</mat-icon><span
+                                class="big-number">{{format(this.poblacion)}}</span>Habitantes ({{yearPoblacion}})</a>
                     </li>
-                    <li *ngIf="this.explotacionesGanaderas"><span
-                            class="big-number">{{this.explotacionesGanaderas}}</span>Explotaciones ganaderas</li>
-                    <li *ngIf="this.incendiosUltimosAnos"><span
-                            class="big-number">{{this.incendiosUltimosAnos}}</span>Incendios desde 2001</li>
-                    <li *ngIf="this.hectareasQuemadas"><span
-                            class="big-number">{{this.hectareasQuemadas}}</span>Hectáreas afectadas por
-                        incendios</li>
-                    <li *ngIf="this.numberOfCreativeWork"><span
-                            class="big-number">{{this.numberOfCreativeWork}}</span>Menciones
-                        en publicaciones
+                    <!-- <li *ngIf="this.densidadPoblacion"><a href="{{dataSource.densidad}}"
+                            target="_blank"><mat-icon>open_in_new</mat-icon><span
+                                class="big-number">{{format(this.densidadPoblacion)}}</span>Habitantes por
+                            KM<sup>2</sup></a></li> -->
+                    <li *ngIf="this.poligonos"><a href="{{dataSource.poligonos}}"
+                            target="_blank"><mat-icon>open_in_new</mat-icon><span
+                                class="big-number">{{format(this.poligonos)}}</span></a>Polígonos industriales
                     </li>
-                    <li *ngIf="this.plazasHoteleras"><span
-                            class="big-number">{{this.plazasHoteleras}}</span>Alojamientos hoteleros</li>
-                    <li *ngIf="this.alojamientosTuristicos"><span
-                            class="big-number">{{this.alojamientosTuristicos}}</span>Alojamientos de turismo rural</li>
-                    <li *ngIf="this.municipiosEnTerritorio > 0"><span
-                            class="big-number">{{this.municipiosEnTerritorio}}</span>Municipios en el territorio</li>
+                    <li *ngIf="this.explotacionesGanaderas"><a href="{{dataSource.explotacionesGanaderas}}"
+                            target="_blank"><mat-icon>open_in_new</mat-icon><span
+                                class="big-number">{{format(this.explotacionesGanaderas)}}</span>Explotaciones
+                            ganaderas</a></li>
+                    <li *ngIf="this.incendiosUltimosAnos"><a href="{{dataSource.incendios}}"
+                            target="_blank"><mat-icon>open_in_new</mat-icon><span
+                                class="big-number">{{format(this.incendiosUltimosAnos)}}</span>Incendios desde 2001</a>
+                    </li>
+                    <li *ngIf="this.hectareasQuemadas"><a href="{{dataSource.hectareasAfectadas}}"
+                            target="_blank"><mat-icon>open_in_new</mat-icon><span
+                                class="big-number">{{format(this.hectareasQuemadas)}}</span>Hectáreas afectadas por
+                            incendios desde 2001</a></li>
+                    <li *ngIf="this.numberOfCreativeWork"><a href="{{dataSource.publicaciones}}"
+                            target="_blank"><mat-icon>open_in_new</mat-icon><span
+                                class="big-number">{{format(this.numberOfCreativeWork)}}</span>Menciones
+                            en publicaciones</a></li>
+                    <li *ngIf="this.plazasHoteleras"><a href="{{dataSource.alojamientosHoteleros}}"
+                            target="_blank"><mat-icon>open_in_new</mat-icon><span
+                                class="big-number">{{format(this.plazasHoteleras)}}</span>Alojamientos
+                            hoteleros</a></li>
+                    <li *ngIf="this.alojamientosTuristicos"><a href="{{dataSource.alojamientosRurales}}"
+                            target="_blank"><mat-icon>open_in_new</mat-icon><span
+                                class="big-number">{{format(this.alojamientosTuristicos)}}</span>Alojamientos
+                            de turismo rural</a>
+                    </li>
+                    <li *ngIf="this.municipiosEnTerritorio > 0"><a href="{{dataSource.municipios}}"
+                            target="_blank"><mat-icon>open_in_new</mat-icon><span
+                                class="big-number">{{format(this.municipiosEnTerritorio)}}</span>Municipios en
+                            el territorio</a>
+                    </li>
                 </ul>
+
             </div>
             <div *ngIf="this.direccion || this.imageWikiDataUrl" class="inicio__contact">
                 <h2 *ngIf="this.direccion">Contacto</h2>
@@ -356,6 +465,7 @@
                     <li *ngIf="this.telefono"><b>Teléfono</b> <a href="tel:{{this.telefono}}">{{this.telefono}}</a></li>
                     <li *ngIf="this.email"><b>email</b> <a href="mailto:{{this.email}}">{{this.email}}</a></li>
                 </ul>
+                <a class="data-link" href="{{dataSource.datosContacto}}" target="_blank">Ver origen de los datos</a>
                 <div class="template__img-municipio" *ngIf="this.imageWikiDataUrl">
                     <div class="loading" *ngIf="!this.imageWikiDataUrl">
                         <mat-spinner [diameter]="50"></mat-spinner>
@@ -363,7 +473,8 @@
                     <figure>
                         <a href="{{this.imageWikiDataUrl}}" target="_blank" rel="nofollow noopener"><img
                                 src="{{this.imageWikiDataUrl}}" alt="Imagen principal de {{this.lugarBuscado}}"></a>
-                        <figcaption>Imagen obtenida de WikiData. Este archivo está disponible bajo la licencia <a
+                        <figcaption><a href="{{dataSource.image}}" target="_blank">Imagen obtenida de WikiData</a>. Este
+                            archivo está disponible bajo la licencia <a
                                 href="https://en.wikipedia.org/wiki/es:Creative_Commons" target="_blank"
                                 rel="nofollow noopener">Creative Commons</a> <a
                                 href="https://creativecommons.org/licenses/by/4.0/deed.es" target="_blank"
@@ -374,21 +485,75 @@
                         </figcaption>
                     </figure>
                 </div>
+                <div class="download">
+                    <button class="btn btn-download" type="button" (click)="fileDownload()">DESCARGAR FICHA</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="container template__caracteristicas">
+            <h2>Características del territorio</h2>
+            <div class="caracteristicas__list">
+                <a *ngIf="this.densidadPoblacion" href="{{dataSource.densidad}}" target="_blank">
+                    <div class="caracteristica__item">
+                        <mat-icon>people</mat-icon> La densidad de población de <b>{{this.tituloFicha}}</b> es de
+                        {{this.densidadPoblacion}} habitantes por km<sup>2</sup>
+                    </div>
+                </a>
+                <a *ngIf="this.edadMediaHombres" href="{{dataSource.edadMedia}}" target="_blank">
+                    <div class="caracteristica__item">
+                        <mat-icon>person</mat-icon> La edad media de los <b>hombres</b> es de
+                        {{this.edadMediaHombres}}
+                        años ({{yearEdadMedia}})
+                    </div>
+                </a>
+                <a *ngIf="this.edadMediaMujeres" href="{{dataSource.edadMedia}}" target="_blank">
+                    <div class="caracteristica__item">
+                        <mat-icon>person</mat-icon> La edad media de las <b>mujeres</b> es de
+                        {{this.edadMediaMujeres}}
+                        años ({{yearEdadMedia}})
+                    </div>
+                </a>
             </div>
         </section>
 
         <section class="container template__graphics">
             <div class="graphics__item" style="width: 100%;">
-                <app-piramide-poblacion></app-piramide-poblacion>
+                <h2>Últimos datos de Población</h2>
+                <div class="tabla-container">
+                    <table class="tabla-poblacion">
+                        <tr>
+                            <th>Año</th>
+                            <td *ngFor="let year of yearsTablaPoblacion"><span>{{year}}</span></td>
+                        </tr>
+                        <tr *ngIf="this.municipio[0]">
+                            <th>{{this.municipio[0]}}</th>
+                            <td *ngFor="let element of tablaPoblacion.slice().reverse()">
+                                <span *ngIf="element.nameRefArea.value == this.municipio[0]">
+                                    {{format(element.poblac.value)}}
+                                </span>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="grafica-poblacion">
+                    <h2>Gráfica de los últimos 5 años</h2>
+                    <canvas baseChart class="chart" [data]="lineChartData" [options]="lineChartOptions"
+                        [type]="lineChartType"></canvas>
+                </div>
+                <a class="data-link" href="{{dataSource.tablaPoblacion}}" target="_blank">Ver origen de los datos</a>
             </div>
         </section>
 
+
+
         <section class="container template__graphics">
-            <div *ngIf="this.numberOfCreativeWork !== 0" class="graphics__item" fragment="creative-works">
+            <div *ngIf="this.numberOfCreativeWork" class="graphics__item" fragment="creative-works">
                 <div class="graphics__item-cw">
                     <h2>Enlaces de interés</h2>
-                    <p class="big-number"><b>{{this.numberOfCreativeWork}}
-                        </b>Menciones en publicaciones</p>
+                    <p class="big-number"><b>
+                        </b><b>Menciones en publicaciones:</b> {{format(this.numberOfCreativeWork)}} <span
+                            *ngIf="this.numberOfCreativeWork >= 10"> (Mostrando las 10 últimas publicaciones)</span></p>
                 </div>
                 <div class="slides">
                     <mat-tab-group mat-align-tabs="start">
@@ -437,6 +602,16 @@
                         </mat-tab>
                     </mat-tab-group>
                 </div>
+            </div>
+            <div class="graphics__item miembros" *ngIf="this.cantidadMiembrosPleno !== 0">
+                <h2>Miembros del pleno territorial</h2>
+                <ul>
+                    <li *ngFor="let miembro of miembrosPleno"><b>{{miembro.cargo.value}}: </b>
+                        <a
+                            [routerLink]="['/persona/', this.createNameForUrl(miembro.persona.value)]">{{miembro.nombrePersona.value}}</a>
+                    </li>
+                </ul>
+                <a class="data-link" href="{{dataSource.miembrosPleno}}" target="_blank">Ver origen de los datos</a>
             </div>
 
         </section>
