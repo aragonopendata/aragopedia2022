@@ -6,14 +6,21 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class FilterPipe implements PipeTransform {
 
   transform(value: any, arg: any): any {
-    if (arg === '' || arg.length < 3) return value;
+    if (this.removeAccents(arg) === '' || arg.length < 3) return value;
     const results = [];
     for (const result of value) {
-      if (result.title.toLowerCase().indexOf(arg.toLowerCase()) > -1) {
+      if (this.removeAccents(result.title.toLowerCase()).indexOf(this.removeAccents(arg.toLowerCase())) > -1) {
         results.push(result);
       }
     }
     return results;
   }
 
+  removeAccents(str: any): any {
+    // return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    const acentos: any = { 'á': 'a', 'é': 'e', 'í': 'i', 'ó': 'o', 'ú': 'u', 'Á': 'A', 'É': 'É', 'Í': 'I', 'Ó': 'O', 'Ú': 'U' };
+    return str.split('').map((letra: any) => acentos[letra] || letra).join('').toString();
+  }
+
 }
+

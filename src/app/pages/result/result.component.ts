@@ -116,6 +116,7 @@ export class ResultComponent {
   municipio: string[] = [];
   porcentajeSueloUrbano: any;
   porcentajeSueloRural: any;
+  yearRatioSuelo: any;
   densidadPoblacion: any
   imageWikiDataUrl!: string;
   map!: string;
@@ -710,6 +711,7 @@ export class ResultComponent {
 
 
       this.resultSvc.getData(this.queryUrlRatioSuelo).subscribe((data: any) => {
+        this.yearRatioSuelo = data.results.bindings[0].nameRefPeriod.value;
 
         if (data.results.bindings.length !== 0) {
           let totalUrbano = data?.results.bindings[0].urbano.value;

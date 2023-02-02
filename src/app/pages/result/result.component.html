@@ -132,7 +132,7 @@
                     <div class="caracteristica__item">
                         <mat-icon> local_florist</mat-icon> Ocupa un {{this.porcentajeSueloRural}}% del <b>suelo
                             rural</b>
-                        de Aragón
+                        de Aragón (dato de {{yearRatioSuelo}})
                     </div>
                 </a>
                 <a *ngIf="this.porcentajeSueloUrbano !== undefined && this.porcentajeSueloUrbano !== 'NaN'"
@@ -141,7 +141,7 @@
                         <mat-icon>zoom_out_map</mat-icon> Ocupa un {{this.porcentajeSueloUrbano}}% del <b>suelo
                             urbano</b>
                         de
-                        Aragón
+                        Aragón (dato de {{yearRatioSuelo}})
                     </div>
                 </a>
                 <a *ngIf="esPoblado == '1'; else noPoblado" href="{{dataSource.esPoblado}}" target="_blank">
