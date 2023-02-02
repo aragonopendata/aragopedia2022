@@ -58,6 +58,8 @@ export class AragopediaTablaDatosComponent {
         var dato = response.results.bindings[0]
         let datos = response.results.bindings;
 
+        console.log(dato)
+
         if (dato !== undefined) {
 
           this.displayedColumns = Object.keys(dato);
