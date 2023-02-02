@@ -44,7 +44,7 @@ export class LocationComponent implements OnInit {
 
     this._route.queryParams.subscribe(params => {
       if (!this.URLcalled) {
-        if (params['tipo'] == 'diputacion') {
+        if (params['tipo'] == 'provincia') {
           this.locationService.changeProvincia(this.locationService.provincia)
         } else if (params['tipo'] == 'comarca') {
 
@@ -57,8 +57,8 @@ export class LocationComponent implements OnInit {
     })
     this.locationService.provinciaObserver.subscribe((provincia: any) => {
 
-      this.provincia = provincia;
-      this.selectProvincia();
+      //this.provincia = provincia;
+      this.selectProvincia(provincia);
 
     });
 
@@ -77,7 +77,7 @@ export class LocationComponent implements OnInit {
       /*
             this.tipoLocalidad = params['tipo'];
       
-            if (this.tipoLocalidad === 'diputacion') {
+            if (this.tipoLocalidad === 'provincia') {
               this.provincia.selectedProvincia = params['id'];
               this.provincia.selectedId = params['id'];
               //////console.log(this.provincia)
@@ -108,7 +108,8 @@ export class LocationComponent implements OnInit {
   //   //////console.log('Provincia: ', this.provinciaSelected, 'Comarca: ', this.comarcaSelected, 'Municipio: ', this.municipioSelected, this.selected);
   // }
 
-  selectProvincia() {
+  selectProvincia(provincia: any) {
+    this.provincia = provincia
     this.provinciaSelected = this.provincia.nombre;
     this.idProvincia = this.provincia.id;
     this.selected = this.provinciaSelected;
@@ -120,7 +121,7 @@ export class LocationComponent implements OnInit {
     this.idMunicipio = '';
     if (this.provinciaSelected !== '' && this.provinciaSelected !== undefined) {
       // ////console.log(this.provinciaSelected)
-      this.updateTemas('provincia')
+      this.updateTemas('Provincia')
 
     }
   }
@@ -136,7 +137,7 @@ export class LocationComponent implements OnInit {
     this.idMunicipio = '';
     if (this.comarcaSelected != '') {
       // ////console.log(this.comarcaSelected)
-      this.updateTemas('comarca')
+      this.updateTemas('Comarca')
     }
   }
   selectMunicipio(newMunicipioName: any, newMunicipioId: any) {
@@ -154,7 +155,7 @@ export class LocationComponent implements OnInit {
 
     if (this.municipioSelected != '') {
       this.aragopediaService.lastZona = this.municipioSelected;
-      this.updateTemas('municipio')
+      this.updateTemas('Municipio')
     }
   }
 

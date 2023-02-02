@@ -49,7 +49,7 @@ export class ComarcasComponent implements OnInit {
       this.comarcas.forEach((comarca: any) => {
         listId.forEach((element: any) => {
 
-          if (this.removeSpace(this.removeAccents(comarca['callret-0'].value.toLowerCase())) == this.replaceSlash(this.removeAccents(element['callret-1'].value.toLowerCase()))) {
+          if (this.fixNames(comarca['callret-0'].value) == element['callret-1'].value) {
             this.comarcasParsed[index] = {
               nombre: comarca['callret-0'].value,
               url: element.s.value,
@@ -60,15 +60,13 @@ export class ComarcasComponent implements OnInit {
           }
         });
       });
-      this._route.queryParams.subscribe(params => {  //DE AQUI LEES LOS PARAMETROS DE LA URL PARAMETROS URL
-        ////console.log('cambia la url');
+      this._route.queryParams.subscribe(params => {
         this.URLparameters = params;
       });
 
       let tipoLocalidad = this.URLparameters['tipo'];
 
       if (tipoLocalidad === 'comarca' && this.URLparameters['id'] !== this.selectedId) {
-        ////console.log('nginit se vuelve a ejecutar')
         let idComa = this.URLparameters['id'];
         this.selectComarcaFromURL(idComa);
       }
@@ -77,16 +75,25 @@ export class ComarcasComponent implements OnInit {
 
   }
 
+  fixNames(str: string): string {
+    return str
+      .replace('Bajo Aragón-Caspe/ Baix Aragó-Casp', 'Bajo Aragón – Caspe / Baix Aragó – Casp')
+      .replace('Andorra-Sierra de Arcos', 'Andorra – Sierra de Arcos')
+      .replace('Bajo Cinca/Baix Cinca', 'Bajo Cinca / Baix Cinca')
+      .replace('Matarraña/Matarranya', 'Matarraña / Matarranya')
+      .replace('La Litera/La Llitera', 'La Litera / La Llitera')
+      .replace('Gúdar-Javalambre', 'Gúdar – Javalambre')
+      .replace('Hoya de Huesca/Plana de Uesca', 'Hoya de Huesca / Plana de Uesca')
+  }
+
   initForm() {
 
     this.formGroup = this.fb.group({
       'municipio': [this.selectedComarca]
     })
 
-    //////console.log('initform fuera');
     this.formGroup.get('municipio')?.valueChanges.subscribe(response => {
 
-      //////console.log('initform ' + response);
       this.selected = this.selectedComarca;
       this.selectedComarca = response;
 
@@ -105,22 +112,20 @@ export class ComarcasComponent implements OnInit {
   }
 
   filterData(enteredData: any) {
-    //////console.log('???' + enteredData);
     this.filteredComarcas = this.comarcas.filter((item: any) => {
       return item['callret-0'].value.toLowerCase().indexOf(enteredData.toLowerCase()) > -1
     });
   }
 
   selectComarca(comarcaAux: any) {
-
+    console.log(this.selectedComarca)
     this.selected = this.selectedComarca;
     this.selectedComarca = comarcaAux;
     this.comarcasParsed.forEach((comarca: any) => {
+      console.log(comarca.nombre);
       if (comarca.nombre === this.selectedComarca) {
         comarca.id[0] === '0' ? this.selectedId = comarca.id.substring(1) : this.selectedId = comarca.id;
-        ////////console.log("if foreach comarca " + this.selectedComarca + " id " + this.selectedId)
         if (this.locationService.municipioNombre != '' || this.locationService.provincia != '' || this.locationService.provincia != undefined) {
-          ////console.log('selector');
           this.locationService.changeMunicipio('', '');
           this.locationService.changeProvincia('');
           this.locationService.changeComarca(this.selectedComarca, this.selectedId);
@@ -178,12 +183,6 @@ export class ComarcasComponent implements OnInit {
       .replace('ANDORRA/', 'ANDORRA-')
       .replace('andorra/', 'andorra-')
       .replace('Andorra/', 'Andorra-')
-      .replace('La Litera/La Llitera', 'litera/la llitera, la')
-      .replace('JACETANIA, LA', 'la jacetania')
-  }
-
-  fixNames(str: string): string {
-    return str
       .replace('La Litera/La Llitera', 'litera/la llitera, la')
       .replace('JACETANIA, LA', 'la jacetania')
   }

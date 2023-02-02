@@ -63,7 +63,7 @@ export class SelectLocationComponent implements OnInit {
     if (this.provinciaSelected === '' && this.comarcaSelected === '' && this.municipioSelected === '') {
       this.error = true;
     } else if (this.provinciaSelected !== '' && this.comarcaSelected === '' && this.municipioSelected === '') {
-      this.tipoLocalidad = 'diputacion';
+      this.tipoLocalidad = 'provincia';
       this.router.navigate(['detalles'], { queryParams: { tipo: this.tipoLocalidad, id: this.idProvincia } })
     } else if (this.comarcaSelected !== '' && this.municipioSelected === '') {
       this.tipoLocalidad = 'comarca';
