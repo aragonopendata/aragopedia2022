@@ -6,7 +6,7 @@ import { AragopediaSelectorTemasComponent } from 'src/app/components/aragopedia-
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AragopediaService } from 'src/app/components/aragopedia-tabla-datos/aragopediaService';
-import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
+import { ChartConfiguration, ChartType } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 
 interface DataLinks {
@@ -465,8 +465,12 @@ export class ResultComponent {
       }
       else {
         this.lugarBuscado = this.capitalizeString(nombreMunicipio.toLowerCase());
+        if (this.lugarBuscado === 'Sabiñán') {
+          this.lugarBuscado = 'Saviñán'
+        }
+
         this.dataDownload[0].nombre = this.lugarBuscado;
-        this.lugarBuscadoParsed = this.replaceCaspe(this.capitalAfterHyphen(this.capitalAfterSlash(this.deleteSpace(this.lugarBuscado))));
+        this.lugarBuscadoParsed = this.replaceCaspe(this.capitalAfterHyphen(this.capitalAfterSlash(this.deleteSpace(this.lugarBuscado)))).replace('de_La', 'de_la').replace('de_Las', 'de_las');
 
         if (this.lugarBuscadoParsed === 'Litera-La_LLitera,_La') {
           this.lugarBuscadoParsed = 'La_Litera/La_Llitera';
@@ -486,8 +490,16 @@ export class ResultComponent {
           this.lugarBuscadoParsed = 'Villarroya_de_la_Sierra';
         } else if (this.lugarBuscadoParsed === 'Villanueva_del_Rebollar_de_La_Sierra') {
           this.lugarBuscadoParsed = 'Villanueva_del_Rebollar_de_la_Sierra';
+        } else if (this.lugarBuscadoParsed === 'Torla-Ordesa') {
+          this.lugarBuscado = 'Torla'
+          this.lugarBuscadoParsed = 'Torla';
+        } else if (this.lugarBuscadoParsed === 'Torre_La_Ribera') {
+          this.lugarBuscadoParsed = 'Torre_la_Ribera'
+        } else if (this.lugarBuscadoParsed === 'Beranuy') {
+          this.lugarBuscadoParsed = 'Veracruz';
         }
       }
+
 
       // Queries con nombres
 
@@ -795,22 +807,6 @@ export class ResultComponent {
 
   }
 
-  //Métodos
-  // capitalizeString(str: any): string {
-  //   return str.replace(/\w\S*/g, function (txt: any) {
-  //     for (let i = 0; i < txt.length; i++) {
-  //       if (txt[i].toLowerCase() !== 'de'
-  //         && txt[i].toLowerCase() !== 'del'
-  //         && txt[i].toLowerCase() !== 'la'
-  //         && txt[i].toLowerCase() !== 'las'
-  //         && txt[i].toLowerCase() !== 'los') {
-  //         return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-  //       }
-  //     }
-
-  //   });
-  // }
-
   capitalizeString(str: any): string {
     return str.replace(/\w\S*/g, function (txt: any) {
       for (let i = 0; i < txt.length; i++) {
@@ -819,6 +815,7 @@ export class ResultComponent {
           || txt.toLowerCase() === 'del'
           || txt.toLowerCase() === 'de'
           || txt.toLowerCase() === 'las'
+          || txt.toLowerCase() === 'de la'
           || txt.toLowerCase() === 'los') {
           return txt.toLowerCase();
         }
@@ -826,6 +823,7 @@ export class ResultComponent {
           || txt.toLowerCase() !== 'del'
           || txt.toLowerCase() !== 'la'
           || txt.toLowerCase() !== 'las'
+          || txt.toLowerCase() !== 'de la'
           || txt.toLowerCase() !== 'los') {
           return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
         }
@@ -908,6 +906,7 @@ export class ResultComponent {
       .replace('La_Litera_-_La_Llitera', 'La_Litera/La_Llitera')
       .replace('Gúdar_–_Javalambre', 'Gúdar-Javalambre')
       .replace('Hoya_de_Huesca_-_Plana_de_Uesca', 'Hoya_de_Huesca/Plana_de_Uesca')
+      .replace('de_La', 'de_la');
   }
 
   createNameForUrl(str: string): string {
