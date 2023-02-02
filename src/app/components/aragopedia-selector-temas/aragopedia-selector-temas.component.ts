@@ -133,15 +133,8 @@ export class AragopediaSelectorTemasComponent implements OnInit {
 
       this.showTemas = this.temas
       this.filteredTemas = this.temas
-      console.log(this.filteredTemas);
-
-      this.showTemas.forEach((element: any) => {
-        element.nombre.value = element.nombre.value.replace('Estructura de los cubos de datos que se corresponden con los informes ', '')
-      });
 
       this.temasActive = true;
-
-      //this.initForm();
 
     });
 
