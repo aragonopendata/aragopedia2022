@@ -71,7 +71,7 @@ export class ProvinciasComponent implements OnInit {
 
         let tipoLocalidad = params['tipo'];
 
-        if (tipoLocalidad === 'diputacion') {
+        if (tipoLocalidad === 'provincia') {
           let idDipu = params['id'];
           this.selectProvinciasFromURL(idDipu);
         }
