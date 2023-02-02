@@ -470,6 +470,13 @@ section.container {
             }
         }
 
+        .inicio__data.central-datos {
+            ul {
+                grid-template-columns: repeat(2, 1fr);
+                grid-gap: 10px;
+            }
+        }
+
         .inicio__data-aragon {
             ul {
                 grid-template-columns: repeat(2, 1fr);
@@ -480,6 +487,16 @@ section.container {
 
         .inicio__contact {
             flex: 0 0 20%;
+
+            ul {
+                li {
+                    a {
+                        display: block;
+                        max-width: 300px;
+                        overflow: overlay;
+                    }
+                }
+            }
         }
 
         .template__caracteristicas {

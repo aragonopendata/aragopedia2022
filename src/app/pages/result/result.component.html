@@ -398,7 +398,7 @@
                 </a>
                 <a href={{this.urlMap}} target="_blank" class="btn map_btn">Ver en el mapa</a>
             </div>
-            <div class="inicio__data">
+            <div class="inicio__data" [ngClass]="{'central-datos': this.tituloFicha === 'Central'}">
                 <ul>
                     <li *ngIf="this.sueloUrbano"><a href="{{dataSource.sueloUrbano}}" target="_blank">
                             <mat-icon>open_in_new</mat-icon><span

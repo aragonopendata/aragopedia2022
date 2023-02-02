@@ -376,6 +376,7 @@ export class ResultComponent {
         });
 
         this.resultSvc.getData(this.queryUrlAlojamientosTuristicos).subscribe((data: any) => {
+
           this.alojamientosTuristicos = data?.results.bindings[0]['callret-0'].value;
           this.dataDownload[0].alojamientosTuristicos = this.alojamientosTuristicos;
         });
@@ -393,6 +394,7 @@ export class ResultComponent {
         });
 
         this.resultSvc.getData(this.queryUrlPlazasHoteleras).subscribe((data) => {
+
           this.plazasHoteleras = data?.results.bindings[0]['callret-0'].value;
           this.dataDownload[0].plazasHoteleras = this.plazasHoteleras;
         });
@@ -451,7 +453,7 @@ export class ResultComponent {
 
       const lastPosition = data.results.bindings.length - 1
       let nombreMunicipio = this.replaceWord(data?.results.bindings[lastPosition].nombre.value);
-      this.tituloFicha = this.capitalizeString(nombreMunicipio).replace('Zaragóza', 'Zaragoza').replace('Diputacion', 'Diputación').replace('Bajo Aragón-caspe-baix Aragó-casp', 'Bajo Aragón-Caspe / Baix Aragó-Casp');
+      this.tituloFicha = this.capitalizeString(nombreMunicipio).replace('Zaragóza', 'Zaragoza').replace('Diputacion', 'Diputación').replace('Bajo Aragón-caspe-baix Aragó-casp', 'Bajo Aragón-Caspe / Baix Aragó-Casp').replace('Aisa', 'Aínsa-Sobrarbe').replace('ÉPila', 'Épila').replace('Sabiñán', 'Saviñán');
 
       if (this.tipoLocalidad === 'diputacion') {
         nombreMunicipio = data?.results.bindings[lastPosition].nombre.value.replace('ZARAGÓZA', 'ZARAGOZA');
@@ -496,7 +498,25 @@ export class ResultComponent {
         } else if (this.lugarBuscadoParsed === 'Torre_La_Ribera') {
           this.lugarBuscadoParsed = 'Torre_la_Ribera'
         } else if (this.lugarBuscadoParsed === 'Beranuy') {
+          this.lugarBuscado = 'Veracruz';
           this.lugarBuscadoParsed = 'Veracruz';
+        } else if (this.lugarBuscadoParsed === 'Aisa') {
+          this.lugarBuscado = 'Aínsa-Sobrarbe'
+          this.lugarBuscadoParsed = 'Aínsa-Sobrarbe';
+        } else if (this.lugarBuscadoParsed === 'Baélls') {
+          this.lugarBuscado = 'Baells'
+          this.lugarBuscadoParsed = 'Baells'
+        } else if (this.lugarBuscadoParsed === 'Camporrélls') {
+          this.lugarBuscado = 'Camporrells'
+          this.lugarBuscadoParsed = 'Camporrells'
+        } else if (this.lugarBuscadoParsed === 'Puente_La_Reina_de_Jaca') {
+          this.lugarBuscadoParsed = 'Puente_la_Reina_de_Jaca'
+        } else if (this.lugarBuscadoParsed === 'Hoz_y_Costean') {
+          this.lugarBuscado = 'Hoz y Costeán';
+          this.lugarBuscadoParsed = 'Hoz_y_Costeán';
+        } else if (this.lugarBuscadoParsed === 'Jarque_de_Moncayo') {
+          this.lugarBuscado = 'Jarque';
+          this.lugarBuscadoParsed = 'Jarque';
         }
       }
 
