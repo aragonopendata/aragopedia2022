@@ -62,8 +62,6 @@ export class AragopediaTablaDatosComponent {
         var dato = response.results.bindings[0]
         let datos = response.results.bindings;
 
-        console.log(dato)
-
         if (dato !== undefined) {
 
           this.displayedColumns = Object.keys(dato);
@@ -74,8 +72,6 @@ export class AragopediaTablaDatosComponent {
 
             columnasNormalized.push(this.normalizeColumnName(element))
           });
-
-          console.log(this.nombresColumnas)
 
           let auxColumnas = [{ nombre: 'Localidad', matColumnDef: 'nameRefArea' }, { nombre: 'Fecha subida', matColumnDef: 'nameRefPeriod' }]
 
@@ -126,10 +122,9 @@ export class AragopediaTablaDatosComponent {
                 }); */
 
         this.dataSrc = new MatTableDataSource(response.results.bindings);
-        this.sortedData = this.dataSrc.data.slice();
-        console.log(this.sortedData);
+        this.sortedData = new MatTableDataSource(this.dataSrc.data.slice());
 
-        this.dataSrc.paginator = this.paginator;
+        this.sortedData.paginator = this.paginator;
         this.dataSrc.sort = this.empTbSort;
       })
 
@@ -183,7 +178,6 @@ export class AragopediaTablaDatosComponent {
           return 0;
         }
       } else if (typeof a[column]?.value === 'string') {
-        console.log(a[column]);
 
         if (sort.active) {
           if (a[column].value < b[column].value) {
@@ -207,7 +201,9 @@ export class AragopediaTablaDatosComponent {
 
     });
     // this.loading = false;
-    return this.sortedData = data;
+    this.sortedData = new MatTableDataSource(data)
+    this.sortedData.paginator = this.paginator;
+    return this.sortedData;
   }
 }
 
