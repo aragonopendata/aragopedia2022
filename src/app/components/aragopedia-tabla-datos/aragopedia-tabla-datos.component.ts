@@ -41,6 +41,7 @@ export class AragopediaTablaDatosComponent {
   dataSrc!: MatTableDataSource<any>;
 
   @ViewChild('paginator') paginator!: MatPaginator;
+  @ViewChild('empTbSort') empTbSort = new MatSort();
 
   @ViewChild(AragopediaSelectorTemasComponent) selectorTemas!: AragopediaSelectorTemasComponent;
 
@@ -50,6 +51,7 @@ export class AragopediaTablaDatosComponent {
 
     this.aragopediaSvc.columnasTablaObserver.subscribe((dataColumnas: any) => {
       this.nombresColumnas = dataColumnas;
+
     });
 
     this.aragopediaSvc.queryTemasObserver.subscribe((data: any) => {
@@ -71,6 +73,7 @@ export class AragopediaTablaDatosComponent {
             columnasNormalized.push(this.normalizeColumnName(element))
           });
 
+          console.log(this.nombresColumnas)
 
           let auxColumnas = [{ nombre: 'Localidad', matColumnDef: 'nameRefArea' }, { nombre: 'Fecha subida', matColumnDef: 'nameRefPeriod' }]
 
@@ -82,7 +85,6 @@ export class AragopediaTablaDatosComponent {
             }
           });
           //console.log(this.displayedColumns)
-          //console.log(this.nombresColumnas)
           //console.log(auxColumnas)
           //console.log(this.columnasTabla)
           this.columnasTabla = auxColumnas;
@@ -124,7 +126,7 @@ export class AragopediaTablaDatosComponent {
         this.dataSrc = new MatTableDataSource(response.results.bindings);
 
         this.dataSrc.paginator = this.paginator;
-
+        this.dataSrc.sort = this.empTbSort;
       })
 
     });
@@ -132,6 +134,7 @@ export class AragopediaTablaDatosComponent {
   }
 
   getKeys(element: any, columna: string): string {
+    console.log(element)
     let value: string = element?.[columna]?.value;
     return value
   }
