@@ -1,15 +1,18 @@
 <div>
     <div class="divDescarga">
         <!-- <a [href]="linkDescargaCSV" bypassSecurityTrustUrl id="descargarCSV" download="aragopediaFile.csv"
-                class="btn btn-descarga">CSV</a>
-            -->
+            class="btn btn-descarga">CSV</a>
+        -->
         <a [href]="linkDescargaJSON" bypassSecurityTrustUrl id="descargarJSON" class="btn btn-descarga"
             target="_blank">JSON</a>
     </div>
+
     <div class="table-container">
-
-
-        <mat-table mat-tablev [dataSource]="dataSrc" class="mat-elevation-z8" matSort #empTbSort="matSort">
+        <div class="loading-table" *ngIf="loading">
+            <mat-spinner [diameter]="70"></mat-spinner>
+        </div>
+        <mat-table mat-tablev [dataSource]="sortedData" class="mat-elevation-z8" matSort #empTbSort="matSort"
+            (matSortChange)="sortData($event)">
             <ng-container *ngFor="let columna of columnasTabla;" matColumnDef="{{columna.matColumnDef}}"
                 id="setColumnName(columna)">
                 <th mat-header-cell *matHeaderCellDef style="width: 1000px;" mat-sort-header>
@@ -22,5 +25,6 @@
         </mat-table>
         <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons>
         </mat-paginator>
+
     </div>
 </div>

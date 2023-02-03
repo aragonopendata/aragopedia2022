@@ -39,6 +39,8 @@ export class AragopediaTablaDatosComponent {
   isJqueryWorking!: string;
   nombresColumnas!: any;
   dataSrc!: MatTableDataSource<any>;
+  sortedData: any;
+  loading: boolean = false;
 
   @ViewChild('paginator') paginator!: MatPaginator;
   @ViewChild('empTbSort') empTbSort = new MatSort();
@@ -124,6 +126,8 @@ export class AragopediaTablaDatosComponent {
                 }); */
 
         this.dataSrc = new MatTableDataSource(response.results.bindings);
+        this.sortedData = this.dataSrc.data.slice();
+        console.log(this.sortedData);
 
         this.dataSrc.paginator = this.paginator;
         this.dataSrc.sort = this.empTbSort;
@@ -134,7 +138,7 @@ export class AragopediaTablaDatosComponent {
   }
 
   getKeys(element: any, columna: string): string {
-    console.log(element)
+    // console.log(element)
     let value: string = element?.[columna]?.value;
     return value
   }
@@ -154,4 +158,62 @@ export class AragopediaTablaDatosComponent {
 
   }
 
+
+  sortData(sort: Sort) {
+    // this.loading = true;
+    const column = sort.active;
+    this.dataSrc.data.map(element => {
+      for (const key in element) {
+        isNaN(Number(element[key].value)) ? element[key].value = element[key].value : element[key].value = Number(element[key].value);
+      }
+    });
+
+    const isAsc = sort.direction === 'asc';
+    const data = this.dataSrc.data.slice();
+    if (!sort.active || sort.direction === '') {
+      this.sortedData = data;
+      return;
+    }
+    data.sort((a: any, b: any) => {
+
+      if (typeof a[column]?.value === 'number') {
+        if (sort.active) {
+          return (isAsc ? a[column].value - b[column].value : b[column].value - a[column].value);
+        } else {
+          return 0;
+        }
+      } else if (typeof a[column]?.value === 'string') {
+        console.log(a[column]);
+
+        if (sort.active) {
+          if (a[column].value < b[column].value) {
+            this.loading = false;
+            return -1;
+          }
+          if (a[column].value > b[column].value) {
+            this.loading = false;
+            return 1;
+          }
+
+          return 0;
+        } else {
+          // this.loading = false;
+
+          return 0;
+        }
+      } else {
+        return 0
+      }
+
+    });
+    // this.loading = false;
+    return this.sortedData = data;
+  }
 }
+
+
+
+function compare(a: number | string, b: number | string, isAsc: boolean) {
+  return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
+}
+
