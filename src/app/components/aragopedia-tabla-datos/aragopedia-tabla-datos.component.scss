@@ -1,4 +1,36 @@
 ::ng-deep {
+    .table-container {
+        position: relative;
+        width: 100%;
+        overflow-x: scroll; //add horizontal bar option in html
+    }
+
+    .loading-table {
+        display: flex;
+        justify-content: center;
+        position: absolute;
+        top: 0;
+        height: 100%;
+        width: 100%;
+        background-color: rgba($color: #ffffff, $alpha: 0.5);
+        z-index: 999;
+
+        .mat-spinner {
+            margin-top: 100px;
+        }
+
+        .mat-progress-spinner circle,
+        .mat-spinner circle {
+            stroke: var(--accent-color);
+        }
+
+        p {
+            margin-top: 1em;
+            font-family: 'Signika', sans-serif;
+            font-size: var(--h3);
+            text-align: center;
+        }
+    }
 
     mat-table {
         border-radius: 10px;
@@ -21,11 +53,6 @@
         padding-top: 15px !important;
     }
 
-}
-
-.table-container {
-    width: 100%;
-    overflow-x: scroll; //add horizontal bar option in html
 }
 
 
