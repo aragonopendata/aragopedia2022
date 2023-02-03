@@ -51,7 +51,6 @@ export class AragopediaTablaDatosComponent {
 
     this.aragopediaSvc.columnasTablaObserver.subscribe((dataColumnas: any) => {
       this.nombresColumnas = dataColumnas;
-
     });
 
     this.aragopediaSvc.queryTemasObserver.subscribe((data: any) => {
@@ -59,8 +58,6 @@ export class AragopediaTablaDatosComponent {
 
         var dato = response.results.bindings[0]
         let datos = response.results.bindings;
-
-        console.log(dato)
 
         if (dato !== undefined) {
 
@@ -72,8 +69,6 @@ export class AragopediaTablaDatosComponent {
 
             columnasNormalized.push(this.normalizeColumnName(element))
           });
-
-          console.log(this.nombresColumnas)
 
           let auxColumnas = [{ nombre: 'Localidad', matColumnDef: 'nameRefArea' }, { nombre: 'Fecha subida', matColumnDef: 'nameRefPeriod' }]
 
@@ -88,6 +83,7 @@ export class AragopediaTablaDatosComponent {
           //console.log(auxColumnas)
           //console.log(this.columnasTabla)
           this.columnasTabla = auxColumnas;
+
           let nameRefPeriod = false;
           let mes_y_ano = false;
           this.displayedColumns.forEach((titulo: any) => { //Cambiar al tratamiento por objetos
@@ -134,7 +130,6 @@ export class AragopediaTablaDatosComponent {
   }
 
   getKeys(element: any, columna: string): string {
-    console.log(element)
     let value: string = element?.[columna]?.value;
     return value
   }
