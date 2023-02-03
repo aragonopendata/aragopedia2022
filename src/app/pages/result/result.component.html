@@ -221,7 +221,7 @@
             </div>
         </section> -->
         <section class="container template__graphics">
-            <div class="graphics__item" style="width: 100%;">
+            <div class="graphics__item" style="width: 100%;" *ngIf="lineChartData.datasets[0].data.length > 0">
                 <h2>Últimos datos de Población</h2>
                 <div class="tabla-container">
                     <table class="tabla-poblacion" *ngIf="this.tipoLocalidad === 'municipio'">
@@ -253,7 +253,7 @@
                         </td>
                     </tr>
                 </table>
-                <div class="grafica-poblacion">
+                <div class="grafica-poblacion" *ngIf="lineChartData.datasets[0].data.length > 0">
                     <h2>Gráfica de los últimos 5 años</h2>
                     <canvas baseChart class="chart" [data]="lineChartData" [options]="lineChartOptions"
                         [type]="lineChartType"></canvas>
