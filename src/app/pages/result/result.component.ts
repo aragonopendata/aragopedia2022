@@ -589,7 +589,23 @@ export class ResultComponent {
       this.queryUrlLocales = `https://opendata.aragon.es/sparql?default-graph-uri=&query=select+distinct%0D%0A%3FrefArea+%3FnameRefArea+%3FrefPeriod+str%28%3Fyear%29+AS+%3FnameRefPeriod%0D%0Axsd%3Aint%28%3Fnumero_de_edificios%29+where+%7B%0D%0A%3Fobs+qb%3AdataSet+%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fiaest%2Fdataset%2F01-010009${this.sufijoCuboDatosGlobal}%3E.%0D%0A%3Fobs+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refPeriod%3E+%3FrefPeriod.%0D%0A%3FrefPeriod+time%3AinXSDgYear+%3Fyear.%0D%0A%3Fobs+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refArea%3E+%3FrefArea.%0D%0A%3FrefArea+rdfs%3Alabel+%3FnameRefArea.+FILTER+%28+lang%28%3FnameRefArea%29+%3D+%22es%22+%29.FILTER+%28%3FrefArea+IN+%28%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fterritorio%2F${this.capitalizeString(this.tipoLocalidadGlobal)}%2F${this.lugarBuscadoParsed}%3E%29%29.%0D%0A%3Fobs+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fiaest%2Fdimension%23tipo-edificio-detalle%3E+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fkos%2Fiaest%2Ftipo-edificio-detalle%2Flocales%3E.%0D%0A%3Fobs+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fiaest%2Fmedida%23numero-de-edificios%3E+%3Fnumero_de_edificios+.%0D%0A%7D%0D%0Aorder+by+desc%28%3Fyear%29%0D%0ALIMIT+1%0D%0A&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`;
       this.dataSource.edificiosDestinadosLocales = this.exportHtmlQuery(this.queryUrlLocales);
 
+      //Datos Aragopedia portátil
 
+      this.queryTemas = `https://opendata.aragon.es/sparql?default-graph-uri=&query=select+distinct+%3Fdataset+%3Fid+%3Fdsd+%3Fnombre++where+%7B%0D%0A+++%3Fobs+qb%3AdataSet+%3Fdataset.%0D%0A+++%3Fdataset+dct%3Aidentifier+%3Fid%3B%0D%0A+++++++++++++++++++qb%3Astructure+%3Fdsd.%0D%0A++++%3Fdsd+dc%3Atitle+%3Fnombre.%0D%0A%0D%0A+++%3Fobs+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refArea%3E+%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fterritorio%2F${this.capitalizeString(this.tipoLocalidad)}%2F${this.lugarBuscadoParsed}%3E.%0D%0A%7D+%0D%0A%0D%0A&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`
+
+      console.log(this.queryTemas);
+      setTimeout(() => {
+
+        this.resultSvc.getData(this.queryTemas).subscribe(data => {
+
+          console.log(data.results.bindings);
+          this.temasAragopedia = data.results.bindings;
+          this.showTemas = data.results.bindings;
+          this.filteredTemas = data.results.bindings;
+
+          this.initForm();
+        });
+      }, 150);
       //Obtención de datos NOMBRE MUNICIPIO
 
       this.resultSvc.getData(this.queryUrlExtension).subscribe((data: any) => {
@@ -785,46 +801,6 @@ export class ResultComponent {
       });
 
     });
-
-    // DATOS ARAGOPEDIA
-
-    this.queryTemas = "https://opendata.aragon.es/solrWIKI/informesIAEST/select?q=*&rows=2000&omitHeader=true&wt=json"
-
-    this.resultSvc.getData(this.queryTemas).subscribe(data => {
-      this.temasAragopedia = data.response.docs;
-      let unique = [... new Set(data.response.docs.map((item: { Descripcion: any }) => item.Descripcion))];
-      this.temasAragopedia.forEach((tema: any) => {
-        if (tema.Tipo === 'A') {
-          this.temasComunidad.push(tema)
-        } else if (tema.Tipo === 'TP') {
-          this.temasProvincia.push(tema)
-        } else if (tema.Tipo === 'TC') {
-          this.temasComarca.push(tema)
-        } else if (tema.Tipo === 'TM') {
-          this.temasMunicipio.push(tema);
-        }
-      });
-
-      if (this.tipoLocalidad === 'comarca') {
-        this.showTemas = this.temasComarca;
-        this.filteredTemas = this.showTemas;
-
-      } else if (this.tipoLocalidad === 'municipio') {
-
-        this.showTemas = this.temasMunicipio;
-
-        this.filteredTemas = this.showTemas;
-
-      } else if (this.tipoLocalidad === 'diputacion') {
-        this.showTemas = this.temasProvincia
-        this.filteredTemas = this.showTemas
-      }
-
-      this.showTemas.shift();
-      this.initForm();
-    });
-
-
   }
 
   capitalizeString(str: any): string {
@@ -965,80 +941,97 @@ export class ResultComponent {
 
 
   temaSelected(tema: any) {
-    let query: string = 'select distinct ?refArea ?nameRefArea ?refPeriod (strafter(str(?refPeriod), "http://reference.data.gov.uk/id/year/") AS ?nameRefPeriod) '
 
-    let index = tema.Ruta.indexOf('/')
-
-    let rutaLimpia = '/' + tema.Ruta.substring(index + 1).replaceAll('/', '-')
-    let queryColumna: string = `https://opendata.aragon.es/sparql?default-graph-uri=&query=select+distinct+%3FcolUri+%3FtipoCol+str%28%3FnombreCol%29%0D%0A+where+%7B%0D%0A++%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fiaest%2Fdataset${rutaLimpia}%3E+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fcube%23structure%3E+%3Fdsd.%0D%0A++%3Fdsd+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fcube%23component%3E+%3Fcol.%0D%0A++%3Fcol+%3FtipoCol+%3FcolUri.%0D%0A++%3FcolUri+rdfs%3Alabel+%3FnombreCol.%0D%0A%7D%0D%0A%0D%0ALIMIT+500%0D%0A&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`
-
-    this.resultSvc.getData(queryColumna).subscribe(data => {
-      this.columnas = data.results.bindings;
-
-      this.columnas.forEach((element: any) => {
-        let nombreColumnaAux = element['callret-2'].value.replaceAll(' ', '_').toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[{(/,.)}]/g, '');
-        query += '?' + nombreColumnaAux + ' as ' + '?' + nombreColumnaAux + ' '
-      });
-
-      let queryPrefijo = "<http://reference.data.gov.uk/id/year/"
-
-      query += 'where { \n'
-      query += " ?obs qb:dataSet <http://opendata.aragon.es/recurso/iaest/dataset" + rutaLimpia + ">.\n";
-      query += " ?obs <http://purl.org/linked-data/sdmx/2009/dimension#refPeriod> ?refPeriod.\n";
-      //query += "FILTER (?refPeriod IN (";
-      //query += queryPrefijo = "<http://reference.data.gov.uk/id/year/" + '2010' + ">"; //Cambiar por minimo años
-      // for (var i = (2010); i <= 2020; i++) {
-      //   query += ',' + queryPrefijo + i + ">";
-      // }
-      query += " ?obs <http://purl.org/linked-data/sdmx/2009/dimension#refArea> ?refArea.\n";
-      query += " ?refArea rdfs:label ?nameRefArea.";
-      query += ' FILTER ( lang(?nameRefArea) = "es" ).\n';
-
-      if (rutaLimpia.charAt(rutaLimpia.length - 1) != "A") {
-
-        this.showTemas
-        let tipoZona = "";
-        let nombreZona = "";
-
-        if (this.tipoLocalidad === 'diputacion') {
-          tipoZona = "Provincia"
-          nombreZona = this.lugarBuscadoParsed
-        } else if (this.tipoLocalidad === 'comarca') {
-          tipoZona = "Comarca"
-          nombreZona = this.lugarBuscadoParsed
-        } else if (this.tipoLocalidad === 'municipio') {
-          tipoZona = "Municipio"
-          nombreZona = this.lugarBuscadoParsed
-        }
-
-        let uriPrefix = "<http://opendata.aragon.es/recurso/territorio/" + tipoZona + "/";
-        query += "FILTER (?refArea IN (";
-        query += uriPrefix + this.deleteSpace(nombreZona) + ">";
-        query += ")).\n";
+    let rutaLimpia = '/' + tema.id.value;
+    setTimeout(() => {
+      if (rutaLimpia == '/') {
+        return;
       }
+      let query: string = 'select distinct ?refArea ?nameRefArea ?refPeriod (strafter(str(?refPeriod), "http://reference.data.gov.uk/id/year/") AS ?nameRefPeriod) '
 
-      this.columnas.forEach((element: any) => {
-        let nombreColumnaAux = element['callret-2'].value.replaceAll(' ', '_').toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[{(/,.)}]/g, '');
-        query += "OPTIONAL {  ?obs <" + element.colUri.value + "> ?" + nombreColumnaAux + " } .\n";
-        element
-      });
+      let queryColumna: string = `https://opendata.aragon.es/sparql?default-graph-uri=&query=select+distinct+%3FcolUri+%3FtipoCol+str%28%3FnombreCol%29%0D%0A+where+%7B%0D%0A++%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fiaest%2Fdataset${rutaLimpia}%3E+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fcube%23structure%3E+%3Fdsd.%0D%0A++%3Fdsd+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fcube%23component%3E+%3Fcol.%0D%0A++%3Fcol+%3FtipoCol+%3FcolUri.%0D%0A++%3FcolUri+rdfs%3Alabel+%3FnombreCol.%0D%0A%7D%0D%0A%0D%0ALIMIT+500%0D%0A&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`
 
-      query += "} \n";
-      query += "ORDER BY ASC(?refArea) ASC(?refPeriod)\n";
-      query += "LIMIT 200\n"
+      this.aragopediaSvc.getData(queryColumna).subscribe(data => {
 
-      this.sparql(query);
+        this.columnas = data.results.bindings;
 
-      this.queryTabla = 'https://opendata.aragon.es/sparql?default-graph-uri=&query=' + encodeURIComponent(query) + '&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on';
+        this.columnas.forEach((element: any) => {
+          let nombreColumnaAux = element['callret-2'].value.replaceAll(' ', '_').toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[{(/,.)}]/g, '');
+          query += '?' + nombreColumnaAux + ' as ' + '?' + nombreColumnaAux + ' '
+        });
 
-      this.aragopediaSvc.change(this.queryTabla);
-    });
+        this.aragopediaSvc.changeColumnas(this.columnas);
+
+        let queryPrefijo = "<http://reference.data.gov.uk/id/year/"
+
+        query += 'where { \n'
+        query += " ?obs qb:dataSet <http://opendata.aragon.es/recurso/iaest/dataset" + rutaLimpia + ">.\n";
+        query += " ?obs <http://purl.org/linked-data/sdmx/2009/dimension#refPeriod> ?refPeriod.\n";
+        //query += "FILTER (?refPeriod IN (";
+        //query += queryPrefijo = "<http://reference.data.gov.uk/id/year/" + '2010' + ">"; //Cambiar por minimo años
+        // for (var i = (2010); i <= 2020; i++) {
+        //   query += ',' + queryPrefijo + i + ">";
+        // }
+        query += " ?obs <http://purl.org/linked-data/sdmx/2009/dimension#refArea> ?refArea.\n";
+        query += " ?refArea rdfs:label ?nameRefArea.";
+        query += ' FILTER ( lang(?nameRefArea) = "es" ).\n';
+
+
+        if (rutaLimpia.charAt(rutaLimpia.length - 1) != "A") {
+
+          this.showTemas
+          let tipoZona = "";
+
+          // //console.log(this.selectedProvinciaNombre != '');
+          // //console.log(this.selectedComarcaNombre != '');
+          // //console.log(this.selectedMunicipioNombre != '')
+          // //console.log("nombre zona " + nombreZona);
+
+          // //console.log(this.deleteSpace(nombreZona));
+
+          let uriPrefix = "<http://opendata.aragon.es/recurso/territorio/" + this.capitalizeString(this.tipoLocalidad) + "/";
+          query += "FILTER (?refArea IN (";
+          query += uriPrefix + this.lugarBuscadoParsed + ">";
+          query += ")).\n";
+        }
+        let icolumnas = 0
+        this.columnas.forEach((element: any) => {
+
+          let nombreColumnaAux = element['callret-2'].value.replaceAll(' ', '_').toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[{(/,.)}]/g, '')
+          if (element.colUri.value.indexOf("http://opendata.aragon.es/def/iaest/dimension") != -1 && element.colUri.value.indexOf("http://opendata.aragon.es/def/iaest/dimension#mes-y-ano") == -1) {
+            icolumnas++
+            query += "OPTIONAL { ?obs <" + element.colUri.value + "> ?foo" + icolumnas + ".\n";
+            query += " ?foo" + icolumnas + " skos:prefLabel " + "?" + nombreColumnaAux + " } .\n";
+
+          } /* else if (element.colUri.value.indexOf("http://opendata.aragon.es/def/iaest/dimension/mes_y_ano") == -1){
+            query += "OPTIONAL {  ?obs <" + element.colUri.value + "> ?" + nombreColumnaAux + " } .\n";
+          } */
+          else {
+            query += "OPTIONAL {  ?obs <" + element.colUri.value + "> ?" + nombreColumnaAux + " } .\n";
+          }
+        });
+
+        query += "} \n";
+        query += "ORDER BY ASC(?refArea) ASC(?refPeriod)\n";
+        //query += "LIMIT 200\n"
+
+        console.log(query);
+        console.log('https://opendata.aragon.es/sparql?default-graph-uri=&query=' + encodeURIComponent(query) + '&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on');
+
+        this.sparql(query);
+
+        this.queryTabla = 'https://opendata.aragon.es/sparql?default-graph-uri=&query=' + encodeURIComponent(query) + '&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on';
+
+
+        this.aragopediaSvc.change(this.queryTabla);
+      })
+    }, 200);
   }
 
   filterData(enteredData: any) {
 
     this.filteredTemas = this.showTemas.filter((item: any) => {
-      return this.removeAccents(item.DescripcionMejorada.toLowerCase()).indexOf(this.removeAccents(enteredData.toLowerCase())) > -1
+      return this.removeAccents(item.nombre.value.toLowerCase()).indexOf(this.removeAccents(enteredData.toLowerCase())) > -1
     })
   }
 
@@ -1103,7 +1096,6 @@ export class ResultComponent {
         this.errorTabla = false;
 
       }
-
 
     })
 

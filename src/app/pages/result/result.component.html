@@ -354,8 +354,8 @@
                             type="select" [matAutocomplete]="auto" />
                         <mat-autocomplete #auto="matAutocomplete">
                             <mat-option *ngFor="let tema of filteredTemas" (click)="temaSelected(tema)"
-                                [value]="tema.DescripcionMejorada">
-                                {{tema.DescripcionMejorada}}
+                                [value]="tema.nombre.value">
+                                {{tema.nombre.value}}
                             </mat-option>
                         </mat-autocomplete>
                     </mat-form-field>
@@ -628,8 +628,8 @@
                             type="select" [matAutocomplete]="auto" />
                         <mat-autocomplete #auto="matAutocomplete">
                             <mat-option *ngFor="let tema of filteredTemas" (click)="temaSelected(tema)"
-                                [value]="tema.DescripcionMejorada">
-                                {{tema.DescripcionMejorada}}
+                                [value]="tema.nombre.value">
+                                {{tema.nombre.value}}
                             </mat-option>
                         </mat-autocomplete>
                     </mat-form-field>
