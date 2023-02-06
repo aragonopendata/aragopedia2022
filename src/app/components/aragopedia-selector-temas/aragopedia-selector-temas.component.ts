@@ -538,6 +538,12 @@ export class AragopediaSelectorTemasComponent implements OnInit {
       .replace('Torla-Ordesa', 'Torla')
       .replace('Monflorite Lascasas', 'Monflorite-Lascasas')
       .replace('Lascellas Ponzano', 'Lascellas-Ponzano')
+      .replace('Aisa', 'Aínsa-Sobrarbe')
+      .replace('Baélls', 'Baells')
+      .replace('Camporrélls', 'Camporrells')
+      .replace('Hoz_y_Costean', 'Hoz_y_Costeán')
+      .replace('Jarque_de_Moncayo', 'Jarque')
+      .replace('Sabiñán', 'Saviñán')
   }
 
 
