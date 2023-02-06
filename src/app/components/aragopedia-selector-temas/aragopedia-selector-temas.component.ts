@@ -73,6 +73,7 @@ export class AragopediaSelectorTemasComponent implements OnInit {
   filteredTemas: any;
 
   submitted: boolean = false;
+  loading: boolean = false;
 
   columnas: any;
 
@@ -252,6 +253,8 @@ export class AragopediaSelectorTemasComponent implements OnInit {
     let rutaUsable: string;
     let rutaLimpia = '/';
 
+    //this.loading = true
+
     if (tema.id) {
       rutaLimpia = '/' + tema.id.value
       this.displayTema = tema.nombre.value;
@@ -302,7 +305,7 @@ export class AragopediaSelectorTemasComponent implements OnInit {
         this.columnas = data.results.bindings;
 
         this.columnas.forEach((element: any) => {
-          let nombreColumnaAux = element['callret-2'].value.replaceAll(' ', '_').toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[{(/,.)}]/g, '');
+          let nombreColumnaAux = element['callret-2'].value.replaceAll('%', 'porcentaje').replaceAll(' ', '_').toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[{(/,.)}]/g, '');
           query += '?' + nombreColumnaAux + ' as ' + '?' + nombreColumnaAux + ' '
         });
 
@@ -355,7 +358,7 @@ export class AragopediaSelectorTemasComponent implements OnInit {
         let icolumnas = 0
         this.columnas.forEach((element: any) => {
 
-          let nombreColumnaAux = element['callret-2'].value.replaceAll(' ', '_').toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[{(/,.)}]/g, '')
+          let nombreColumnaAux = element['callret-2'].value.replaceAll('%', 'porcentaje').replaceAll(' ', '_').toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[{(/,.)}]/g, '')
           if (element.colUri.value.indexOf("http://opendata.aragon.es/def/iaest/dimension") != -1 && element.colUri.value.indexOf("http://opendata.aragon.es/def/iaest/dimension#mes-y-ano") == -1) {
             icolumnas++
             query += "OPTIONAL { ?obs <" + element.colUri.value + "> ?foo" + icolumnas + ".\n";
@@ -444,7 +447,7 @@ export class AragopediaSelectorTemasComponent implements OnInit {
 
     })
 
-
+    //this.loading = false;
 
   }
 

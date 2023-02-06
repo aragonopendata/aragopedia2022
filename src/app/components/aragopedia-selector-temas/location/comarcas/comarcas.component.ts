@@ -177,7 +177,7 @@ export class ComarcasComponent implements OnInit {
     this.aragopediaSvc.getData(this.queryUrlComarcasId).subscribe(response => {
 
       this.comarcas = response.results.bindings;
-      console.log(this.comarcas);
+      //console.log(this.comarcas);
       this.filteredComarcas = this.comarcas;
       this.comarcas[this.comarcas.indexOf('La Litera/La Llitera')] = 'litera/la llitera, la';
       this.comarcas[this.comarcas.indexOf('La Jacetania')] = 'jacetania, la';
