@@ -28,7 +28,6 @@
         <h3 class="datos-seleccionados" *ngIf="!firstLand || displayTema"><b>Datos seleccionados:</b><br>
             <u>{{displayTema}}</u> en {{displayZona}}
         </h3>
-
         <app-aragopedia-tabla-datos class="tabla-datos" [hidden]="errorTabla || firstLand"></app-aragopedia-tabla-datos>
 
         <div *ngIf="errorTabla">
