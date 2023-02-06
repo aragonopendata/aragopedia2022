@@ -14,6 +14,7 @@ import { ProvinciasComponent } from './provincias/provincias.component';
   styleUrls: ['./location.component.scss']
 })
 export class LocationComponent implements OnInit {
+  activeAragon: boolean = false;
 
   constructor(private router: Router, private _route: ActivatedRoute, public locationService: LocationServiceService, public aragopediaService: AragopediaService) { }
   locationForm = new FormGroup('');
@@ -109,6 +110,9 @@ export class LocationComponent implements OnInit {
   // }
 
   selectProvincia(provincia: any) {
+
+    this.activeAragon = false
+
     this.provincia = provincia
     this.provinciaSelected = this.provincia.nombre;
     this.idProvincia = this.provincia.id;
@@ -126,6 +130,9 @@ export class LocationComponent implements OnInit {
     }
   }
   selectComarca(newComarcaName: any, newComarcaId: any) {
+
+    this.activeAragon = false
+
     this.comarcaSelected = newComarcaName;
     this.idComarca = newComarcaId;
     this.selected = this.comarcaSelected
@@ -141,6 +148,9 @@ export class LocationComponent implements OnInit {
     }
   }
   selectMunicipio(newMunicipioName: any, newMunicipioId: any) {
+
+    this.activeAragon = false
+
     this.municipioSelected = newMunicipioName;
     this.idMunicipio = newMunicipioId;
     this.selected = this.municipioSelected;
@@ -162,5 +172,28 @@ export class LocationComponent implements OnInit {
   updateTemas(tipoZona: string) {
     this.aragopediaService.changeTriggerSubmitObserver(tipoZona);
   }
+
+  goToAragon() {
+    this.municipioSelected = '';
+    this.idMunicipio = '';
+    this.selected = '';
+
+    this.comarcaSelected = '';
+    this.idComarca = '';
+
+    this.provinciaSelected = '';
+    this.idProvincia = '';
+
+    this.locationService.changeMunicipio('', '');
+    this.locationService.changeProvincia('');
+    this.locationService.changeComarca('', '');
+
+    this.activeAragon = true
+
+    this.updateTemas('ComunidadAutonoma')
+
+    //this.router.navigate(['detalles/aragon'], { queryParams: { tipo: 'comunidad', id: '2' } })
+  }
+
 
 }

@@ -39,3 +39,23 @@ form.location-form {
     color: var(--accent-color);
     margin-left: 15px;
 }
+
+.link-aragon {
+    //color: var(--accent-color);
+    border-color: transparent;
+    display: block;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 2em;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+.link-aragon.active {
+    color: var(--accent-color);
+    background-color: transparent;
+    border-color: var(--accent-color);
+    text-decoration: underline;
+}

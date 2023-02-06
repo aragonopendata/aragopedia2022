@@ -2,6 +2,7 @@
     <h2><mat-icon> place</mat-icon> Selecciona una entidad territorial</h2>
     <p *ngIf="error" class="error">Debes seleccionar alguna localidad</p>
     <form class="location-form" [formGroup]="locationForm">
+
         <div class="location-form__input">
             <app-provincias></app-provincias>
 
@@ -16,6 +17,8 @@
         </div>
         <!-- <button type="submit" class="btn">Seleccionar entidad territorial</button> -->
     </form>
+    <button class="btn link-aragon" (click)="goToAragon()" [ngClass]="{'active':activeAragon}">
+        Consultar datos de toda la Comunidad de Aragón</button>
     <!-- <p *ngIf="this.selected" class="location-selected">Has seleccionado: <b>{{this.selected}}</b><br> Haz click en el
         siguiente
         botón para generar
