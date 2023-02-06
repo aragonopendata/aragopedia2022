@@ -105,7 +105,7 @@ export class AragopediaSelectorTemasComponent implements OnInit {
         this.firstLand = true;
         this.submitFromChangeZona(tipoZona);
       });
-    }, 50);
+    }, 1000);
 
 
   }
@@ -121,14 +121,12 @@ export class AragopediaSelectorTemasComponent implements OnInit {
     } else if (this.location.municipioSelected != '') {
       selectedZonaNombre = this.location.municipioSelected
     }
-    console.log(selectedZonaNombre);
 
 
 
     this.newQueryTemas = `https://opendata.aragon.es/sparql?default-graph-uri=&query=select+distinct+%3Fdataset+%3Fid+%3Fdsd+%3Fnombre++where+%7B%0D%0A+++%3Fobs+qb%3AdataSet+%3Fdataset.%0D%0A+++%3Fdataset+dct%3Aidentifier+%3Fid%3B%0D%0A+++++++++++++++++++qb%3Astructure+%3Fdsd.%0D%0A++++%3Fdsd+dc%3Atitle+%3Fnombre.%0D%0A%0D%0A+++%3Fobs+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refArea%3E+%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fterritorio%2F${datos}%2F${this.fixNames(this.deleteSpace(selectedZonaNombre))}%3E.%0D%0A%7D+%0D%0A%0D%0A&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`
 
     this.aragopediaSvc.getData(this.newQueryTemas).subscribe((data: any) => {
-      console.log(this.newQueryTemas)
 
       this.showTemas = []
 
@@ -259,7 +257,6 @@ export class AragopediaSelectorTemasComponent implements OnInit {
       rutaLimpia = '/' + tema.id.value
       this.displayTema = tema.nombre.value;
 
-      console.log(rutaLimpia)
     } else {
       setTimeout(() => {
 
@@ -408,7 +405,7 @@ export class AragopediaSelectorTemasComponent implements OnInit {
       }
 
       this.aragopediaSvc.lastZona = this.deleteSpace(nombreZona);
-    }, 300);
+    }, 1000);
   }
 
   sparql(query: any) {

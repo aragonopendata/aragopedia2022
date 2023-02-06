@@ -593,12 +593,9 @@ export class ResultComponent {
 
       this.queryTemas = `https://opendata.aragon.es/sparql?default-graph-uri=&query=select+distinct+%3Fdataset+%3Fid+%3Fdsd+%3Fnombre++where+%7B%0D%0A+++%3Fobs+qb%3AdataSet+%3Fdataset.%0D%0A+++%3Fdataset+dct%3Aidentifier+%3Fid%3B%0D%0A+++++++++++++++++++qb%3Astructure+%3Fdsd.%0D%0A++++%3Fdsd+dc%3Atitle+%3Fnombre.%0D%0A%0D%0A+++%3Fobs+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refArea%3E+%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fterritorio%2F${this.capitalizeString(this.tipoLocalidad)}%2F${this.lugarBuscadoParsed}%3E.%0D%0A%7D+%0D%0A%0D%0A&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`
 
-      console.log(this.queryTemas);
       setTimeout(() => {
 
         this.resultSvc.getData(this.queryTemas).subscribe(data => {
-
-          console.log(data.results.bindings);
           this.temasAragopedia = data.results.bindings;
           this.showTemas = data.results.bindings;
           this.filteredTemas = data.results.bindings;
