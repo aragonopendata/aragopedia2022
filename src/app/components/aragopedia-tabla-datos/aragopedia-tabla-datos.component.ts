@@ -182,14 +182,26 @@ export class AragopediaTablaDatosComponent {
       } else if (typeof a[column]?.value === 'string') {
 
         if (sort.active) {
-          if (a[column].value < b[column].value) {
-            this.loading = false;
-            return -1;
+          if (isAsc) {
+            if (a[column].value < b[column].value) {
+              this.loading = false;
+              return -1;
+            }
+            if (a[column].value > b[column].value) {
+              this.loading = false;
+              return 1;
+            }
+          } else {
+            if (a[column].value > b[column].value) {
+              this.loading = false;
+              return -1;
+            }
+            if (a[column].value < b[column].value) {
+              this.loading = false;
+              return 1;
+            }
           }
-          if (a[column].value > b[column].value) {
-            this.loading = false;
-            return 1;
-          }
+
 
           return 0;
         } else {
