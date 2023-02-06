@@ -21,6 +21,7 @@ import { StickyDirection } from '@angular/cdk/table';
 export class AragopediaSelectorTemasComponent implements OnInit {
 
   previousQuery: string = '';
+  tipoZonaAbreviada!: string;
 
   constructor(private router: Router, private _route: ActivatedRoute, public aragopediaSvc: AragopediaService, private fb: FormBuilder, private http: HttpClient) { }
 
@@ -115,16 +116,22 @@ export class AragopediaSelectorTemasComponent implements OnInit {
     let selectedZonaNombre: string = '';
 
     if (this.location.provinciaSelected != '' && this.location.provinciaSelected != undefined) {
+      this.tipoZonaAbreviada = "TP";
       selectedZonaNombre = this.location.provinciaSelected
     } else if (this.location.comarcaSelected != '') {
+      this.tipoZonaAbreviada = "TC";
       selectedZonaNombre = this.location.comarcaSelected
     } else if (this.location.municipioSelected != '') {
+      this.tipoZonaAbreviada = "TM";
       selectedZonaNombre = this.location.municipioSelected
+    } else if (datos = 'ComunidadAutonoma') {
+      selectedZonaNombre = 'Aragón'
+      this.tipoZonaAbreviada = "A";
     }
 
+    this.newQueryTemas = `https://opendata.aragon.es/sparql?default-graph-uri=&query=select+distinct+%3Fdataset+%3Fid+%3Fdsd+%3Fnombre++where+%7B%0D%0A+++%3Fobs+qb%3AdataSet+%3Fdataset.%0D%0A+++%3Fdataset+dct%3Aidentifier+%3Fid%3B%0D%0A+++++++++++++++++++qb%3Astructure+%3Fdsd.%0D%0A++++%3Fdsd+dc%3Atitle+%3Fnombre.%0D%0A++filter+(regex(%3Fid%2C+%22${this.tipoZonaAbreviada}%24%22)).%0D%0A+++%3Fobs+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refArea%3E+%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fterritorio%2F${datos}%2F${this.fixNames(this.deleteSpace(selectedZonaNombre))}%3E.%0D%0A%7D+%0D%0A%0D%0A&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`
 
-
-    this.newQueryTemas = `https://opendata.aragon.es/sparql?default-graph-uri=&query=select+distinct+%3Fdataset+%3Fid+%3Fdsd+%3Fnombre++where+%7B%0D%0A+++%3Fobs+qb%3AdataSet+%3Fdataset.%0D%0A+++%3Fdataset+dct%3Aidentifier+%3Fid%3B%0D%0A+++++++++++++++++++qb%3Astructure+%3Fdsd.%0D%0A++++%3Fdsd+dc%3Atitle+%3Fnombre.%0D%0A%0D%0A+++%3Fobs+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refArea%3E+%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fterritorio%2F${datos}%2F${this.fixNames(this.deleteSpace(selectedZonaNombre))}%3E.%0D%0A%7D+%0D%0A%0D%0A&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`
+    console.log(this.newQueryTemas);
 
     this.aragopediaSvc.getData(this.newQueryTemas).subscribe((data: any) => {
 
@@ -154,7 +161,7 @@ export class AragopediaSelectorTemasComponent implements OnInit {
       if (this.selectedProvincia !== '' && this.selectedComarca !== undefined) {
 
         this.tipoLocalidad = 'provincia';
-        this.rutaLimpia = this.rutaLimpia.replace('TC', 'TP').replace('TM', 'TP');
+        this.rutaLimpia = this.rutaLimpia.replace('TC', 'TP').replace('TM', 'TP').replace('A', 'TP');
 
         this.displayZona = this.selectedProvinciaNombre;
 
@@ -162,17 +169,23 @@ export class AragopediaSelectorTemasComponent implements OnInit {
 
       } else if (this.selectedComarca !== '') {
         this.tipoLocalidad = 'comarca';
-        this.rutaLimpia = this.rutaLimpia.replace('TP', 'TC').replace('TM', 'TC');
+        this.rutaLimpia = this.rutaLimpia.replace('TP', 'TC').replace('TM', 'TC').replace('A', 'TC');
         this.displayZona = this.selectedComarcaNombre;
 
         this.router.navigate(['aragopedia'], { queryParams: { tipo: this.tipoLocalidad, id: this.selectedComarca, datos: this.rutaLimpia } })
 
       } else if (this.selectedMunicipio !== '') {
         this.tipoLocalidad = 'municipio';
-        this.rutaLimpia = this.rutaLimpia.replace('TC', 'TM').replace('TP', 'TM');
+        this.rutaLimpia = this.rutaLimpia.replace('TC', 'TM').replace('TP', 'TM').replace('A', 'TM');
         this.displayZona = this.selectedMunicipioNombre;
 
         this.router.navigate(['aragopedia'], { queryParams: { tipo: this.tipoLocalidad, id: this.selectedMunicipio, datos: this.rutaLimpia } })
+      } else if (this.selectedMunicipio == '' && selectedZonaNombre == 'Aragón' && this.selectedMunicipio == '' && this.selectedComarca == '') {
+        this.tipoLocalidad = 'comunidad';
+        this.rutaLimpia = this.rutaLimpia.replace('TC', 'A').replace('TP', 'A').replace('TM', 'A');
+        this.displayZona = 'Aragón';
+
+        this.router.navigate(['aragopedia'], { queryParams: { tipo: this.tipoLocalidad, id: '2', datos: this.rutaLimpia } })
       }
 
       if (this.selectedProvincia !== '' && this.selectedProvincia !== undefined) {
@@ -196,12 +209,14 @@ export class AragopediaSelectorTemasComponent implements OnInit {
 
         if (this.rutaLimpia !== '') {
           if (this.selectedProvincia !== '') {
-            this.rutaLimpia = params['datos'].replace('TC', 'TP').replace('TM', 'TP');
+            this.rutaLimpia = params['datos'].replace('TC', 'TP').replace('TM', 'TP').replace('A', 'TP');
           } else if (this.selectedComarca !== '') {
-            this.rutaLimpia = params['datos'].replace('TP', 'TC').replace('TM', 'TC');
+            this.rutaLimpia = params['datos'].replace('TP', 'TC').replace('TM', 'TC').replace('A', 'TC');
 
           } else if (this.selectedMunicipio !== '') {
-            this.rutaLimpia = params['datos'].replace('TC', 'TM').replace('TP', 'TM');
+            this.rutaLimpia = params['datos'].replace('TC', 'TM').replace('TP', 'TM').replace('A', 'TM');
+          } else if (this.selectedMunicipio == '' && selectedZonaNombre == 'Aragón' && this.selectedMunicipio == '' && this.selectedComarca == '') {
+            this.rutaLimpia = params['datos'].replace('TC', 'A').replace('TP', 'A').replace('TM', 'A');
           }
           if (this.router.url != this.urlAnterior) {
             this.urlAnterior = this.router.url
@@ -302,7 +317,7 @@ export class AragopediaSelectorTemasComponent implements OnInit {
         this.columnas = data.results.bindings;
 
         this.columnas.forEach((element: any) => {
-          let nombreColumnaAux = element['callret-2'].value.replaceAll('%', 'porcentaje').replaceAll(' ', '_').toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[{(/,.)}]/g, '');
+          let nombreColumnaAux = element['callret-2'].value.replaceAll('%', 'porcentaje').replaceAll('*', 'por').replaceAll(' ', '_').toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[{(/,.)}]/g, '');
           query += '?' + nombreColumnaAux + ' as ' + '?' + nombreColumnaAux + ' '
         });
 
@@ -355,7 +370,7 @@ export class AragopediaSelectorTemasComponent implements OnInit {
         let icolumnas = 0
         this.columnas.forEach((element: any) => {
 
-          let nombreColumnaAux = element['callret-2'].value.replaceAll('%', 'porcentaje').replaceAll(' ', '_').toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[{(/,.)}]/g, '')
+          let nombreColumnaAux = element['callret-2'].value.replaceAll('%', 'porcentaje').replaceAll('*', 'por').replaceAll(' ', '_').toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[{(/,.)}]/g, '')
           if (element.colUri.value.indexOf("http://opendata.aragon.es/def/iaest/dimension") != -1 && element.colUri.value.indexOf("http://opendata.aragon.es/def/iaest/dimension#mes-y-ano") == -1) {
             icolumnas++
             query += "OPTIONAL { ?obs <" + element.colUri.value + "> ?foo" + icolumnas + ".\n";
