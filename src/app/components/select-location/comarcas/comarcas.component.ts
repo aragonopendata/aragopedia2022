@@ -116,7 +116,9 @@ export class SelectComarcaComponent implements OnInit {
   }
 
   removeAccents(str: any): any {
-    return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    // return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    const acentos: any = { 'á': 'a', 'é': 'e', 'í': 'i', 'ó': 'o', 'ú': 'u' };
+    return str.split('').map((letra: any) => acentos[letra] || letra).join('').toString();
   }
 
   removeSpace(str: string): string {

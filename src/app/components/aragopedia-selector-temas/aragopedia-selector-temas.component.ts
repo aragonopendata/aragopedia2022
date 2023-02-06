@@ -120,9 +120,11 @@ export class AragopediaSelectorTemasComponent implements OnInit {
     } else if (this.location.municipioSelected != '') {
       selectedZonaNombre = this.location.municipioSelected
     }
+    console.log(selectedZonaNombre);
 
 
-    this.newQueryTemas = `https://opendata.aragon.es/sparql?default-graph-uri=&query=select+distinct+%3Fdataset+%3Fid+%3Fdsd+%3Fnombre++where+%7B%0D%0A+++%3Fobs+qb%3AdataSet+%3Fdataset.%0D%0A+++%3Fdataset+dct%3Aidentifier+%3Fid%3B%0D%0A+++++++++++++++++++qb%3Astructure+%3Fdsd.%0D%0A++++%3Fdsd+dc%3Atitle+%3Fnombre.%0D%0A%0D%0A+++%3Fobs+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refArea%3E+%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fterritorio%2F${datos}%2F${selectedZonaNombre}%3E.%0D%0A%7D+%0D%0A%0D%0A&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`
+
+    this.newQueryTemas = `https://opendata.aragon.es/sparql?default-graph-uri=&query=select+distinct+%3Fdataset+%3Fid+%3Fdsd+%3Fnombre++where+%7B%0D%0A+++%3Fobs+qb%3AdataSet+%3Fdataset.%0D%0A+++%3Fdataset+dct%3Aidentifier+%3Fid%3B%0D%0A+++++++++++++++++++qb%3Astructure+%3Fdsd.%0D%0A++++%3Fdsd+dc%3Atitle+%3Fnombre.%0D%0A%0D%0A+++%3Fobs+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refArea%3E+%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fterritorio%2F${datos}%2F${this.fixNames(this.deleteSpace(selectedZonaNombre))}%3E.%0D%0A%7D+%0D%0A%0D%0A&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`
 
     this.aragopediaSvc.getData(this.newQueryTemas).subscribe((data: any) => {
       console.log(this.newQueryTemas)
@@ -217,7 +219,7 @@ export class AragopediaSelectorTemasComponent implements OnInit {
   filterData(enteredData: any) {
 
     this.filteredTemas = this.showTemas.filter((item: any) => {
-      return item.nombre.value.toLowerCase().indexOf(enteredData.toLowerCase()) > -1
+      return this.removeAccents(item.nombre.value.toLowerCase()).indexOf(this.removeAccents(enteredData.toLowerCase())) > -1
 
     })
   }
@@ -297,7 +299,6 @@ export class AragopediaSelectorTemasComponent implements OnInit {
       let queryColumna: string = `https://opendata.aragon.es/sparql?default-graph-uri=&query=select+distinct+%3FcolUri+%3FtipoCol+str%28%3FnombreCol%29%0D%0A+where+%7B%0D%0A++%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fiaest%2Fdataset${rutaLimpia}%3E+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fcube%23structure%3E+%3Fdsd.%0D%0A++%3Fdsd+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fcube%23component%3E+%3Fcol.%0D%0A++%3Fcol+%3FtipoCol+%3FcolUri.%0D%0A++%3FcolUri+rdfs%3Alabel+%3FnombreCol.%0D%0A%7D%0D%0A%0D%0ALIMIT+500%0D%0A&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`
 
       this.aragopediaSvc.getData(queryColumna).subscribe(data => {
-
         this.columnas = data.results.bindings;
 
         this.columnas.forEach((element: any) => {
@@ -348,7 +349,7 @@ export class AragopediaSelectorTemasComponent implements OnInit {
 
           let uriPrefix = "<http://opendata.aragon.es/recurso/territorio/" + tipoZona + "/";
           query += "FILTER (?refArea IN (";
-          query += uriPrefix + this.deleteSpace(nombreZona) + ">";
+          query += uriPrefix + this.fixNames(this.deleteSpace(nombreZona)) + ">";
           query += ")).\n";
         }
         let icolumnas = 0
@@ -381,6 +382,7 @@ export class AragopediaSelectorTemasComponent implements OnInit {
 
         this.sparql(query);
 
+
         this.queryTabla = 'https://opendata.aragon.es/sparql?default-graph-uri=&query=' + encodeURIComponent(query) + '&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on';
 
         this.aragopediaSvc.change(this.queryTabla);
@@ -402,8 +404,8 @@ export class AragopediaSelectorTemasComponent implements OnInit {
         this.router.navigate(['aragopedia'], { queryParams: { tipo: this.tipoLocalidad, id: this.selectedMunicipio, datos: this.rutaLimpia } })
       }
 
-      this.aragopediaSvc.lastZona = nombreZona;
-    }, 200);
+      this.aragopediaSvc.lastZona = this.deleteSpace(nombreZona);
+    }, 300);
   }
 
   sparql(query: any) {
@@ -519,6 +521,23 @@ export class AragopediaSelectorTemasComponent implements OnInit {
     });
   }
 
+  fixNames(str: string): string {
+    return str
+      .replace('Bajo_Aragón_–_Caspe_/_Baix_Aragó_–_Casp', 'Bajo_Aragón-Caspe/Baix_Aragó-Casp')
+      .replace('Andorra_–_Sierra_de_Arcos', 'Andorra-Sierra_de_Arcos')
+      .replace('Bajo_Cinca_-_Baix_Cinca', 'Bajo_Cinca/Baix_Cinca')
+      .replace('Matarraña_-_Matarranya', 'Matarraña/Matarranya')
+      .replace('La_Litera_-_La_Llitera', 'La_Litera/La_Llitera')
+      .replace('Gúdar_–_Javalambre', 'Gúdar-Javalambre')
+      .replace('Hoya_de_Huesca_-_Plana_de_Uesca', 'Hoya_de_Huesca/Plana_de_Uesca')
+      .replace('de_La', 'de_la')
+      .replace('Beranuy', 'Veracruz')
+      .replace('Torla-Ordesa', 'Torla')
+      .replace('Monflorite Lascasas', 'Monflorite-Lascasas')
+      .replace('Lascellas Ponzano', 'Lascellas-Ponzano')
+  }
+
+
   capitalAfterSlash(str: string): string {
     const index = str.indexOf('/');
     const replacement = str[index + 1].toUpperCase();
@@ -550,9 +569,6 @@ export class AragopediaSelectorTemasComponent implements OnInit {
   }
 
   deleteSpace(str: any): string {
-    if (str == 'Bajo Aragón-Caspe/ Baix Aragó-Casp') {
-      return 'Bajo_Aragón-Caspe/Baix_Aragó-Casp'
-    }
     return str.split(' ').join('_');
   }
 

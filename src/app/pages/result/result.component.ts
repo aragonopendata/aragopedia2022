@@ -1025,7 +1025,7 @@ export class ResultComponent {
 
         this.aragopediaSvc.change(this.queryTabla);
       })
-    }, 200);
+    }, 500);
   }
 
   filterData(enteredData: any) {

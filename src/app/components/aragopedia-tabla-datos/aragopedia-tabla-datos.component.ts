@@ -167,6 +167,8 @@ export class AragopediaTablaDatosComponent {
     const data = this.dataSrc.data.slice();
     if (!sort.active || sort.direction === '') {
       this.sortedData = data;
+      this.sortedData = new MatTableDataSource(data)
+      this.sortedData.paginator = this.paginator;
       return;
     }
     data.sort((a: any, b: any) => {
