@@ -29,7 +29,7 @@ export class MunicipiosComponent implements OnInit {
   queryUrlGetCodigoIne!: string;
   queryIdWikiData!: string;
   municipiosParsed = this.temp || [{ nombre: '', url: '', id: '', codigoIne: '' }];
-  municipiosURL: string = 'https://opendata.aragon.es/sparql?default-graph-uri=&query=select+str%28%3Fnombre%29%0D%0Awhere++%7B%0D%0A++++++++++++%3Fs+%3Chttp%3A%2F%2Fwww.w3.org%2F1999%2F02%2F22-rdf-syntax-ns%23type%3E++%3Chttp%3A%2F%2Fdbpedia.org%2Fontology%2FGovernmentalAdministrativeRegion%3E+.+%0D%0A++++++++++++%3Fs+%3Chttp%3A%2F%2Fwww.w3.org%2F2000%2F01%2Frdf-schema%23label%3E+%3Fnombre.%0D%0A++++++++++++%3Fs+a+dbo%3AMunicipality.%0D%0A%7D%0D%0Aorder+by+asc%28%3Fs%29+&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on';
+  municipiosURL: string = 'https://opendata.aragon.es/sparql?default-graph-uri=http%3A%2F%2Fopendata.aragon.es%2Fdef%2Fei2av2&query=select+distinct+%3Fnombre+from+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fei2av2%3E+where+%7B%0D%0A%3Fx+a+%3Chttp%3A%2F%2Fwww.w3.org%2Fns%2Forg%23Organization%3E%3B%0D%0A++++++dc%3Atitle+%3Fnombre.%0D%0Afilter%28ucase%28%3Fnombre%29%21%3D%3Fnombre%29.%0D%0Afilter%28regex%28%3Fx+%2C+%22http%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fsector-publico%2Forganizacion%2Fmunicipio%2F%22%29%29%0D%0A%7D%0D%0Aorder+by+%3Fnombre&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on';
 
   URLparameters: any = [];
 
@@ -50,8 +50,8 @@ export class MunicipiosComponent implements OnInit {
 
       this.municipios.forEach((municipio: any) => {
         listId.forEach((element: any) => {
-          if (municipio['callret-0'].value.toLowerCase() == element['callret-1'].value.toLowerCase()) {
-            this.municipiosParsed[index] = { nombre: municipio['callret-0'].value, url: element.s.value, id: element.id.value, codigoIne: '' }
+          if (municipio.nombre.value.toLowerCase() == element['callret-1'].value.toLowerCase()) {
+            this.municipiosParsed[index] = { nombre: municipio.nombre.value, url: element.s.value, id: element.id.value, codigoIne: '' }
             index++;
           }
         });
@@ -143,24 +143,24 @@ export class MunicipiosComponent implements OnInit {
 
   filterData(enteredData: any) {
     this.filteredMunicipios = this.municipios.filter((item: any) => {
-      if (item['callret-0'].value.toLowerCase().includes('(la)')) {
+      if (item.nombre.value.toLowerCase().includes('(la)')) {
         let stringOrdenado = 'La ';
-        stringOrdenado += item['callret-0'].value.toLowerCase().substring(0, item['callret-0'].value.toLowerCase().indexOf('(la)'));
-        item['callret-0'].value = stringOrdenado;
-      } else if (item['callret-0'].value.toLowerCase().includes('(el)')) {
+        stringOrdenado += item.nombre.value.toLowerCase().substring(0, item.nombre.value.toLowerCase().indexOf('(la)'));
+        item.nombre.value = stringOrdenado;
+      } else if (item.nombre.value.toLowerCase().includes('(el)')) {
         let stringOrdenado = 'El ';
-        stringOrdenado += item['callret-0'].value.toLowerCase().substring(0, item['callret-0'].value.toLowerCase().indexOf('(el)'));
-        item['callret-0'].value = stringOrdenado;
-      } else if (item['callret-0'].value.toLowerCase().includes('(los)')) {
+        stringOrdenado += item.nombre.value.toLowerCase().substring(0, item.nombre.value.toLowerCase().indexOf('(el)'));
+        item.nombre.value = stringOrdenado;
+      } else if (item.nombre.value.toLowerCase().includes('(los)')) {
         let stringOrdenado = 'Los ';
-        stringOrdenado += item['callret-0'].value.toLowerCase().substring(0, item['callret-0'].value.toLowerCase().indexOf('(los)'));
-        item['callret-0'].value = stringOrdenado;
-      } else if (item['callret-0'].value.toLowerCase().includes('(las)')) {
+        stringOrdenado += item.nombre.value.toLowerCase().substring(0, item.nombre.value.toLowerCase().indexOf('(los)'));
+        item.nombre.value = stringOrdenado;
+      } else if (item.nombre.value.toLowerCase().includes('(las)')) {
         let stringOrdenado = 'Las ';
-        stringOrdenado += item['callret-0'].value.toLowerCase().substring(0, item['callret-0'].value.toLowerCase().indexOf('(las)'));
-        item['callret-0'].value = stringOrdenado;
+        stringOrdenado += item.nombre.value.toLowerCase().substring(0, item.nombre.value.toLowerCase().indexOf('(las)'));
+        item.nombre.value = stringOrdenado;
       }
-      return this.removeAccents(item['callret-0'].value.toLowerCase()).indexOf(this.removeAccents(enteredData.toLowerCase())) > -1
+      return this.removeAccents(item.nombre.value.toLowerCase()).indexOf(this.removeAccents(enteredData.toLowerCase())) > -1
     });
   }
 
