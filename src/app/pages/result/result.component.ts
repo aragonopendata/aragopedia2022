@@ -591,11 +591,18 @@ export class ResultComponent {
 
       //Datos Aragopedia portátil
 
-      this.queryTemas = `https://opendata.aragon.es/sparql?default-graph-uri=&query=select+distinct+%3Fdataset+%3Fid+%3Fdsd+%3Fnombre++where+%7B%0D%0A+++%3Fobs+qb%3AdataSet+%3Fdataset.%0D%0A+++%3Fdataset+dct%3Aidentifier+%3Fid%3B%0D%0A+++++++++++++++++++qb%3Astructure+%3Fdsd.%0D%0A++++%3Fdsd+dc%3Atitle+%3Fnombre.%0D%0A%0D%0A+++%3Fobs+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refArea%3E+%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fterritorio%2F${this.capitalizeString(this.tipoLocalidad)}%2F${this.lugarBuscadoParsed}%3E.%0D%0A%7D+%0D%0A%0D%0A&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`
+      if (this.tipoLocalidad === 'diputacion') {
+        this.queryTemas = `https://opendata.aragon.es/sparql?default-graph-uri=&query=select+distinct+%3Fdataset+%3Fid+%3Fdsd+%3Fnombre++where+%7B%0D%0A+++%3Fobs+qb%3AdataSet+%3Fdataset.%0D%0A+++%3Fdataset+dct%3Aidentifier+%3Fid%3B%0D%0A+++++++++++++++++++qb%3Astructure+%3Fdsd.%0D%0A++++%3Fdsd+dc%3Atitle+%3Fnombre.%0D%0A%0D%0A+++%3Fobs+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refArea%3E+%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fterritorio%2FProvincia%2F${this.lugarBuscadoParsed}%3E.%0D%0A%7D+%0D%0A%0D%0A&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`
+      } else {
+        this.queryTemas = `https://opendata.aragon.es/sparql?default-graph-uri=&query=select+distinct+%3Fdataset+%3Fid+%3Fdsd+%3Fnombre++where+%7B%0D%0A+++%3Fobs+qb%3AdataSet+%3Fdataset.%0D%0A+++%3Fdataset+dct%3Aidentifier+%3Fid%3B%0D%0A+++++++++++++++++++qb%3Astructure+%3Fdsd.%0D%0A++++%3Fdsd+dc%3Atitle+%3Fnombre.%0D%0A%0D%0A+++%3Fobs+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fsdmx%2F2009%2Fdimension%23refArea%3E+%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fterritorio%2F${this.capitalizeString(this.tipoLocalidad)}%2F${this.lugarBuscadoParsed}%3E.%0D%0A%7D+%0D%0A%0D%0A&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`
+      }
+
 
       setTimeout(() => {
 
         this.resultSvc.getData(this.queryTemas).subscribe(data => {
+          console.log(this.queryTemas);
+
           this.temasAragopedia = data.results.bindings;
           this.showTemas = data.results.bindings;
           this.filteredTemas = data.results.bindings;
@@ -985,8 +992,14 @@ export class ResultComponent {
           // //console.log("nombre zona " + nombreZona);
 
           // //console.log(this.deleteSpace(nombreZona));
+          let uriPrefix;
+          if (this.tipoLocalidad === 'diputacion') {
+            uriPrefix = "<http://opendata.aragon.es/recurso/territorio/" + "Provincia/";
+          } else {
 
-          let uriPrefix = "<http://opendata.aragon.es/recurso/territorio/" + this.capitalizeString(this.tipoLocalidad) + "/";
+            uriPrefix = "<http://opendata.aragon.es/recurso/territorio/" + this.capitalizeString(this.tipoLocalidad) + "/";
+          }
+
           query += "FILTER (?refArea IN (";
           query += uriPrefix + this.lugarBuscadoParsed + ">";
           query += ")).\n";

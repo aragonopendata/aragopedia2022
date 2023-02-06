@@ -155,6 +155,8 @@ export class AragopediaTablaDatosComponent {
 
 
   sortData(sort: Sort) {
+    console.log(sort);
+
     // this.loading = true;
     const column = sort.active;
     this.dataSrc.data.map(element => {
@@ -175,7 +177,7 @@ export class AragopediaTablaDatosComponent {
 
       if (typeof a[column]?.value === 'number') {
         if (sort.active) {
-          return (isAsc ? a[column].value - b[column].value : b[column].value - a[column].value);
+          return (isAsc ? a[column]?.value - b[column]?.value : b[column]?.value - a[column]?.value);
         } else {
           return 0;
         }
@@ -183,25 +185,27 @@ export class AragopediaTablaDatosComponent {
 
         if (sort.active) {
           if (isAsc) {
-            if (a[column].value < b[column].value) {
+            if (a[column]?.value < b[column]?.value) {
               this.loading = false;
               return -1;
             }
-            if (a[column].value > b[column].value) {
+            if (a[column]?.value > b[column]?.value) {
               this.loading = false;
               return 1;
             }
           } else {
-            if (a[column].value > b[column].value) {
+            if (!a[column].value || !b[column].value) {
+              return 0;
+            }
+            if (a[column]?.value > b[column]?.value) {
               this.loading = false;
               return -1;
             }
-            if (a[column].value < b[column].value) {
+            if (a[column]?.value < b[column]?.value) {
               this.loading = false;
               return 1;
             }
           }
-
 
           return 0;
         } else {
