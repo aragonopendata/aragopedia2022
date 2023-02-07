@@ -417,6 +417,8 @@ export class AragopediaSelectorTemasComponent implements OnInit {
         this.router.navigate(['aragopedia'], { queryParams: { tipo: this.tipoLocalidad, id: this.selectedComarca, datos: this.rutaLimpia } })
       } else if (rutaLimpia !== '' && rutaLimpia !== undefined && this.selectedMunicipio != '') {
         this.router.navigate(['aragopedia'], { queryParams: { tipo: this.tipoLocalidad, id: this.selectedMunicipio, datos: this.rutaLimpia } })
+      } else if (rutaLimpia !== '' && rutaLimpia !== undefined && this.selectedProvincia == '' && this.selectedComarca == '' && this.selectedMunicipio == '' && this.displayZona == 'Aragón') {
+        this.router.navigate(['aragopedia'], { queryParams: { tipo: this.tipoLocalidad, id: this.selectedMunicipio, datos: this.rutaLimpia } })
       }
 
       this.aragopediaSvc.lastZona = this.deleteSpace(nombreZona);
