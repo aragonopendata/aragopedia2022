@@ -63,6 +63,7 @@ export class ProvinciasComponent implements OnInit {
 
     this.locationService.provinciaObserver.subscribe((provincia: any) => {
       this.selectedProvincia = provincia.nombre;
+      console.log(this.selectedProvincia)
     });
 
     setTimeout(() => {

@@ -113,9 +113,9 @@ export class AragopediaSelectorTemasComponent implements OnInit {
   submitFromChangeZona(datos: string) {
 
     let selectedZonaNombre: string = '';
-    console.log(datos == 'ComunidadAutonoma')
+    //console.log(datos == 'ComunidadAutonoma')
     if (datos == 'ComunidadAutonoma') {
-      console.log(datos)
+      //console.log(datos)
       selectedZonaNombre = 'Aragón'
       this.tipoZonaAbreviada = "A";
     }
@@ -212,7 +212,6 @@ export class AragopediaSelectorTemasComponent implements OnInit {
             this.rutaLimpia = params['datos'].replace('TC', 'TP').replace('TM', 'TP').replace('A', 'TP');
             this.aragopediaSvc.tipoLocalidad = this.capitalizeString(this.tipoLocalidad);
           } else if (this.selectedComarca !== '') {
-
             this.rutaLimpia = params['datos'].replace('TP', 'TC').replace('TM', 'TC').replace('A', 'TC');
             this.aragopediaSvc.tipoLocalidad = this.capitalizeString(this.tipoLocalidad);
           } else if (this.selectedMunicipio !== '') {
@@ -268,6 +267,11 @@ export class AragopediaSelectorTemasComponent implements OnInit {
   }
 
   temaSelectedAuto(tema: any) {
+
+
+    this.filteredTemas = this.showTemas
+
+
     let nombreZona = "";
     let rutaUsable: string;
     let rutaLimpia = '/';
