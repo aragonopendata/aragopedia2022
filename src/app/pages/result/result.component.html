@@ -79,6 +79,7 @@
                     <h2 *ngIf="this.direccion">Contacto</h2>
                     <ul>
                         <li *ngIf="this.direccion"><b>Dirección</b> {{this.capitalizeString(this.direccion)}}</li>
+                        <li *ngIf="this.localidad"><b>Localidad</b> {{this.capitalizeString(this.localidad)}}</li>
                         <li *ngIf="this.codPostal"><b>Código postal</b> {{this.codPostal}}</li>
                         <li *ngIf="this.telefono"><b>Teléfono</b> <a href="tel:{{this.telefono}}">{{this.telefono}}</a>
                         </li>
@@ -461,6 +462,7 @@
                 <h2 *ngIf="this.direccion">Contacto</h2>
                 <ul>
                     <li *ngIf="this.direccion"><b>Dirección</b> {{this.capitalizeString(this.direccion)}}</li>
+                    <li *ngIf="this.localidad"><b>Localidad</b> {{this.capitalizeString(this.localidad)}}</li>
                     <li *ngIf="this.codPostal"><b>Código postal</b> {{this.codPostal}}</li>
                     <li *ngIf="this.telefono"><b>Teléfono</b> <a href="tel:{{this.telefono}}">{{this.telefono}}</a></li>
                     <li *ngIf="this.email"><b>email</b> <a href="mailto:{{this.email}}">{{this.email}}</a></li>
