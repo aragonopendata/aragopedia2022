@@ -57,13 +57,15 @@
                 <div class="main-search container">
                     <form>
                         <input type="text" class="main-search__input" id="main-search"
-                            placeholder="Buscar en los resultados" [(ngModel)]="filterResult" name="filterResult">
+                            placeholder="Buscar en los resultados" [(ngModel)]="filterResult" name="filterResult"
+                            (ngModelChange)="transform($event)">
+
                     </form>
                 </div>
                 <!-- buscador -->
                 <div class="filter-type__container">
                     <button class="filter-type" [ngClass]="{'active-type': activeAll}" (click)="this.showAll()">Todos
-                        ({{this.results.length}})</button>
+                        ({{this.numberOfResults}})</button>
                     <button class="filter-type" [ngClass]="{'active-type': activeDataset}"
                         (click)="this.filterByDataset()">Datasets ({{this.totalDatasets}})</button>
                     <button class="filter-type" [ngClass]="{'active-type': activeCube}"
