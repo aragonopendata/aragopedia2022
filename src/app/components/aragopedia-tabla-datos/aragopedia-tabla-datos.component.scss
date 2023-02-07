@@ -55,7 +55,16 @@
 
 }
 
+::ng-deep {
+    .mat-sort-header-arrow {
+        color: white;
+    }
 
+    .mat-sort-header-container {
+        justify-content: center;
+        text-align: center;
+    }
+}
 
 table {
     width: 100%;

@@ -6,7 +6,7 @@ import { Subject } from 'rxjs';
 })
 export class LocationServiceService {
 
-  provincia!: string;
+  provincia!: any;
   provinciaObserver: Subject<string> = new Subject<string>();
 
   comarcaNombre!: string;

@@ -73,8 +73,8 @@ export class AragopediaTablaDatosComponent {
             columnasNormalized.push(this.normalizeColumnName(element))
           });
 
-          let auxColumnas = [{ nombre: `${this.aragopediaSvc.tipoLocalidad}`, matColumnDef: 'nameRefArea' }, { nombre: 'Fecha subida', matColumnDef: 'nameRefPeriod' }]
-
+          let auxColumnas = [{ nombre: /* `${this.aragopediaSvc.tipoLocalidad}` */ 'Área', matColumnDef: 'nameRefArea' }, { nombre: 'Fecha subida', matColumnDef: 'nameRefPeriod' }]
+          //console.log(auxColumnas)
           this.nombresColumnas.forEach((element: any) => {
             //console.log(this.normalizeColumnName(element['callret-2'].value))
             if (this.displayedColumns.includes(this.normalizeColumnName(element['callret-2'].value))) {
