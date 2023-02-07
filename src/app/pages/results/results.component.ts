@@ -362,7 +362,7 @@ export class ResultsComponent implements OnInit {
     const index = cubo.lastIndexOf('/') + 1;
     const cuboId = cubo.substring(index);
     console.log(cuboId);
-    this.router.navigate(['aragopedia'], { queryParams: { tipo: 'comunidad', id: '', datos: `${cuboId}A` } })
+    this.router.navigate(['aragopedia'], { queryParams: { tipo: 'provincia', id: '7823', datos: `${cuboId}TP` } })
   }
 
 }

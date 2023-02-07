@@ -96,7 +96,6 @@
                         <span *ngIf="result.year !== ' - ' && result.year !== '-'">|</span>
                         <span class="type"><mat-icon> category</mat-icon> {{result.type}}</span>
                     </p>
-
                     <a href="{{result.resultURL}}" target="_blank" class="item__title">
                         <mat-icon>open_in_new</mat-icon>
                         <h3>{{result.title}}</h3>
@@ -104,6 +103,7 @@
                 </article>
             </div>
         </div>
+
         <div *ngIf="this.numberOfResults === 1">
             <div *ngFor="let result of results" class="search__results">
                 <article class="search__results-item">
@@ -114,6 +114,7 @@
                             {{result.year}}</span> <span *ngIf="result.year !== ' - ' && result.year !== '-'">|</span>
                         <span class="type"><mat-icon> category</mat-icon> {{result.type}}</span>
                     </p>
+
                     <a href="{{result.resultURL}}" target="_blank" class="item__title">
                         <mat-icon>open_in_new</mat-icon>
                         <h3>{{result.title}}</h3>

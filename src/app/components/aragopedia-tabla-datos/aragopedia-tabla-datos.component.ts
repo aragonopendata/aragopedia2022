@@ -155,13 +155,13 @@ export class AragopediaTablaDatosComponent {
 
 
   sortData(sort: Sort) {
-    console.log(sort);
 
     // this.loading = true;
     const column = sort.active;
     this.dataSrc.data.map(element => {
       for (const key in element) {
         isNaN(Number(element[key].value)) ? element[key].value = element[key].value : element[key].value = Number(element[key].value);
+        element[key].value === '10 o más' ? element[key].value = 10 : element[key].value;
       }
     });
 
@@ -174,7 +174,6 @@ export class AragopediaTablaDatosComponent {
       return;
     }
     data.sort((a: any, b: any) => {
-
       if (typeof a[column]?.value === 'number') {
         if (sort.active) {
           return (isAsc ? a[column]?.value - b[column]?.value : b[column]?.value - a[column]?.value);
