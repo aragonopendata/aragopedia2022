@@ -35,8 +35,8 @@
             [hidden]="errorTabla || firstLand"></app-aragopedia-tabla-datos>
 
 
-        <div *ngIf="errorTabla">
-            <p>No se encontraron datos</p>
+        <div *ngIf="errorTabla" class="error-msg">
+            <p>No se encontraron datos. Consulta otra entidad territorial u otro dato estadístico.</p>
         </div>
     </div>
 </section>
