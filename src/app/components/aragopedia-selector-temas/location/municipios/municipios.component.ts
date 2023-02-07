@@ -36,42 +36,44 @@ export class MunicipiosComponent implements OnInit {
   ngOnInit(): void {
     this.initForm();
     this.getNames();
+    setTimeout(() => {
 
-    this.locationService.municipioObserver.subscribe((municipio: any) => {
-      this.selectedMunicipio = municipio;
-    });
 
-    this.queryIdWikiData = `https://opendata.aragon.es/sparql?default-graph-uri=&query=select+%3Fs+str%28%3Fnombre%29+%3Fid+%3Fclasif%0D%0Awhere++%7B%0D%0A++++++%3Fs+%3Chttp%3A%2F%2Fwww.w3.org%2Fns%2Forg%23classification%3E+%3Fclasif.+%0D%0A++++++%3Fs+dc%3Aidentifier+%3Fid.+%0D%0A+++++%3Fs+dc%3Atitle+%3Fnombre.%0D%0A+++++VALUES+%3Fclasif+%7B%3Chttps%3A%2F%2Fwww.geonames.org%2Fontology%23A.ADM2%3E+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fkos%2Fcomarca%3E+%3Chttps%3A%2F%2Fwww.geonames.org%2Fontology%23P.PPL%3E%7D%0D%0A%7D%0D%0Aorder+by+asc%28%3Fclasif%29+%3Fid+%0D%0A&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`;
+      this.locationService.municipioObserver.subscribe((municipio: any) => {
+        this.selectedMunicipio = municipio;
+      });
 
-    //Añado URL e ID a la lista de municipios
-    this.aragopediaSvc.getData(this.queryIdWikiData).subscribe(data => {
-      const listId = data.results.bindings;
-      let index = 0;
+      this.queryIdWikiData = `https://opendata.aragon.es/sparql?default-graph-uri=&query=select+%3Fs+str%28%3Fnombre%29+%3Fid+%3Fclasif%0D%0Awhere++%7B%0D%0A++++++%3Fs+%3Chttp%3A%2F%2Fwww.w3.org%2Fns%2Forg%23classification%3E+%3Fclasif.+%0D%0A++++++%3Fs+dc%3Aidentifier+%3Fid.+%0D%0A+++++%3Fs+dc%3Atitle+%3Fnombre.%0D%0A+++++VALUES+%3Fclasif+%7B%3Chttps%3A%2F%2Fwww.geonames.org%2Fontology%23A.ADM2%3E+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fkos%2Fcomarca%3E+%3Chttps%3A%2F%2Fwww.geonames.org%2Fontology%23P.PPL%3E%7D%0D%0A%7D%0D%0Aorder+by+asc%28%3Fclasif%29+%3Fid+%0D%0A&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`;
 
-      this.municipios.forEach((municipio: any) => {
-        listId.forEach((element: any) => {
-          if (municipio.nombre.value.toLowerCase() == element['callret-1'].value.toLowerCase()) {
-            this.municipiosParsed[index] = { nombre: municipio.nombre.value, url: element.s.value, id: element.id.value, codigoIne: '' }
-            index++;
-          }
+      //Añado URL e ID a la lista de municipios
+      this.aragopediaSvc.getData(this.queryIdWikiData).subscribe(data => {
+        const listId = data.results.bindings;
+        let index = 0;
+
+        this.municipios.forEach((municipio: any) => {
+          listId.forEach((element: any) => {
+            if (municipio.nombre.value.toLowerCase() == element['callret-1'].value.toLowerCase()) {
+              this.municipiosParsed[index] = { nombre: municipio.nombre.value, url: element.s.value, id: element.id.value, codigoIne: '' }
+              index++;
+            }
+          });
         });
+
+        this._route.queryParams.subscribe(params => {  //DE AQUI LEES LOS PARAMETROS DE LA URL PARAMETROS URL
+
+          this.URLparameters = params;
+        });
+        let tipoLocalidad = this.URLparameters['tipo'];
+
+        if (tipoLocalidad === 'municipio' && this.URLparameters['id'] !== this.selectedId) {
+          let idMuni = this.URLparameters['id'];
+          this.selectMunicipioFromURL(idMuni);
+        }
+
+
       });
 
-      this._route.queryParams.subscribe(params => {  //DE AQUI LEES LOS PARAMETROS DE LA URL PARAMETROS URL
-
-        this.URLparameters = params;
-      });
-      let tipoLocalidad = this.URLparameters['tipo'];
-
-      if (tipoLocalidad === 'municipio' && this.URLparameters['id'] !== this.selectedId) {
-        let idMuni = this.URLparameters['id'];
-        this.selectMunicipioFromURL(idMuni);
-      }
-
-
-    });
-
-
+    }, 200);
 
   }
 

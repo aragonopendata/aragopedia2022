@@ -764,12 +764,8 @@ export class FichaAragonComponent implements OnInit {
       } else {
 
         this.errorTabla = false;
-
       }
-
     })
-
-
   }
 
 }
