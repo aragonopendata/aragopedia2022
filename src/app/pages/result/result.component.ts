@@ -103,6 +103,7 @@ export class ResultComponent {
   email: any;
   telefono: any;
   direccion: any;
+  localidad: any;
   codPostal: any;
   creativeWork: any;
   numberOfCreativeWork: any;
@@ -353,7 +354,8 @@ export class ResultComponent {
 
           this.email = data.results.bindings[0].email?.value;
           this.telefono = data.results.bindings[0].tel?.value;
-          locality !== undefined ? this.direccion = data.results.bindings[0].direccion?.value.toLowerCase() + ', ' + locality : this.direccion = data.results.bindings[0].direccion?.value;
+          this.localidad = locality;
+          this.direccion = data.results.bindings[0].direccion?.value;
           this.codPostal = data.results.bindings[0].codPostal?.value;
 
           this.dataDownload[0].email = this.email;
