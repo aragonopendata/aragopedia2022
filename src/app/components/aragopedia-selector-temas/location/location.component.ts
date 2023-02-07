@@ -53,6 +53,9 @@ export class LocationComponent implements OnInit {
         } else if (params['tipo'] == 'municipio') {
 
           this.locationService.changeMunicipio(this.locationService.municipioNombre, this.locationService.municipioId)
+        } else if (params['tipo'] == 'comunidad') {
+
+          this.goToAragon()
         }
       }
     })
@@ -189,7 +192,6 @@ export class LocationComponent implements OnInit {
     this.locationService.changeComarca('', '');
 
     this.activeAragon = true
-
     this.updateTemas('ComunidadAutonoma')
 
     //this.router.navigate(['detalles/aragon'], { queryParams: { tipo: 'comunidad', id: '2' } })
