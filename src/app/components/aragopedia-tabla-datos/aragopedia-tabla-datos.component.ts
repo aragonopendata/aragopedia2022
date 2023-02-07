@@ -73,7 +73,7 @@ export class AragopediaTablaDatosComponent {
             columnasNormalized.push(this.normalizeColumnName(element))
           });
 
-          let auxColumnas = [{ nombre: 'Localidad', matColumnDef: 'nameRefArea' }, { nombre: 'Fecha subida', matColumnDef: 'nameRefPeriod' }]
+          let auxColumnas = [{ nombre: `${this.aragopediaSvc.tipoLocalidad}`, matColumnDef: 'nameRefArea' }, { nombre: 'Fecha subida', matColumnDef: 'nameRefPeriod' }]
 
           this.nombresColumnas.forEach((element: any) => {
             //console.log(this.normalizeColumnName(element['callret-2'].value))
@@ -143,7 +143,7 @@ export class AragopediaTablaDatosComponent {
   }
 
   normalizeColumnName(columnName: string) {
-    let auxName = columnName.replace(/[\u0300-\u036f]/g, "").normalize("NFD").replaceAll(" ", "_").toLowerCase().replace(/[^\w\s]/gi, '')
+    let auxName = columnName.replace(/[\u0300-\u036f]/g, "").normalize("NFD").replaceAll(" ", "_").replaceAll('-', '_').toLowerCase().replace(/[^\w\s]/gi, '')
     if (auxName.startsWith("n_")) {
 
       let nameEnd = auxName.substring(2);

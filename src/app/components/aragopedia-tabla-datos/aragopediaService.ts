@@ -22,6 +22,8 @@ export class AragopediaService {
     triggerSubmit: string = '';
     triggerSubmitObserver: Subject<string> = new Subject<string>();
 
+    tipoLocalidad: string = '';
+
     lastZona: string = '';
 
     constructor(private http: HttpClient) {
