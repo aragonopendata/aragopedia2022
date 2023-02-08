@@ -98,3 +98,17 @@ th {
     margin-bottom: 1rem;
     justify-content: right;
 }
+
+@media screen and (max-width: 992px) {
+    .btn-descarga {
+        background-color: #ffffff;
+        border: solid 1px #00475C;
+        color: #00475C;
+        cursor: pointer;
+        display: flex;
+    }
+
+    .divDescarga {
+        justify-content: center;
+    }
+}
