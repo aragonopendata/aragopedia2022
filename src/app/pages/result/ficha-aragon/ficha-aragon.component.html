@@ -6,7 +6,7 @@
         </section>
         <section class="container container template__inicio">
             <div class="inicio__img">
-                <h1 class="inicio__name">Comunidad de Aragón</h1>
+                <h1 class="inicio__name">Aragón</h1>
                 <a href={{this.urlMap}} target="_blank">
                     <img *ngIf="this.map" src={{this.map}} alt="Mapa de {{this.lugarBuscado}}">
                 </a>
@@ -99,11 +99,11 @@
         </section>
 
         <section class="container template__caracteristicas">
-            <h2>Características de la Comunidad de Aragón</h2>
+            <h2>Características de Aragón</h2>
             <div class="caracteristicas__list">
                 <a href="{{dataSource.densidad}}" target="_blank">
                     <div class="caracteristica__item">
-                        <mat-icon>people</mat-icon> La densidad de población de <b>La Comunidad de Aragón</b> es de
+                        <mat-icon>people</mat-icon> La densidad de población de <b>Aragón</b> es de
                         {{this.densidadPoblacion}} habitantes por km<sup>2</sup>
                     </div>
                 </a>
@@ -160,7 +160,7 @@
             </div>
 
             <div class="graphics__item presupuestos" *ngIf="presupuestos">
-                <h2>Información sobre los presupuestos en <b>La Comunidad de Aragón</b></h2>
+                <h2>Información sobre presupuestos</h2>
                 <a href="{{presupuestos}}" target="_blank"
                     class="btn btn-presupuestos"><mat-icon>open_in_new</mat-icon>Ver información de
                     presupuestos</a>
