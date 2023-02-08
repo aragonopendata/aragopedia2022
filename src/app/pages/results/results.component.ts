@@ -178,7 +178,6 @@ export class ResultsComponent implements OnInit {
         });
 
         this.items = this.results;
-        this.filteredResults = this.results;
         this.numberOfResults = this.items.length;
 
       });
@@ -280,7 +279,7 @@ export class ResultsComponent implements OnInit {
   }
 
   showAll() {
-    this.items = this.results;
+    this.items = this.pageOfItems;
     this.activeAll = true;
     this.activeDataset = false;
     this.activeCube = false;
@@ -290,11 +289,14 @@ export class ResultsComponent implements OnInit {
 
   filterByDataset() {
     const datasetResults = [{}];
-    this.results.forEach((element: any) => {
+    this.pageOfItems = this.results;
+    this.pageOfItems.forEach((element: any) => {
       if (element.type === 'Dataset') {
         datasetResults.push(element);
       }
     });
+    console.log(datasetResults);
+
     this.activeDataset = true;
     this.activeAll = false;
     this.activeCube = false;
@@ -307,7 +309,8 @@ export class ResultsComponent implements OnInit {
 
   filterByCube() {
     const cubeResults = [{}];
-    this.results.forEach((element: any) => {
+    this.pageOfItems = this.results;
+    this.pageOfItems.forEach((element: any) => {
       if (element.type === 'Cubo estadístico') {
         cubeResults.push(element);
       }
@@ -323,7 +326,8 @@ export class ResultsComponent implements OnInit {
 
   filterByEli() {
     const eliResults = [{}];
-    this.results.forEach((element: any) => {
+    this.pageOfItems = this.results;
+    this.pageOfItems.forEach((element: any) => {
       if (element.type === 'ELI') {
         eliResults.push(element);
       }
@@ -339,7 +343,8 @@ export class ResultsComponent implements OnInit {
 
   filterBySiua() {
     const siuaResults = [{}];
-    this.results.forEach((element: any) => {
+    this.pageOfItems = this.results;
+    this.pageOfItems.forEach((element: any) => {
       if (element.type === 'SIUa') {
         siuaResults.push(element);
       }
@@ -369,10 +374,10 @@ export class ResultsComponent implements OnInit {
 
   transform(arg: any): any {
     console.log(arg);
-    console.log(this.results);
-
+    const auxResults = this.results;
 
     if (arg === '' || arg.length < 3) {
+      this.pageOfItems = this.results;
       this.items = this.results;
       this.numberOfResults = this.results.length;
 
@@ -384,21 +389,21 @@ export class ResultsComponent implements OnInit {
     } else {
       console.log(arg);
 
-      let auxResults = this.pageOfItems;
-      auxResults.filter(element => element.title.toLowerCase().includes(arg.toLowerCase()))
-      console.log(auxResults);
+      this.pageOfItems = auxResults.filter(element => element.title.toLowerCase().includes(arg.toLowerCase()))
+      console.log(auxResults.filter(element => element.title.toLowerCase().includes(arg.toLowerCase())));
+      this.items = this.pageOfItems;
 
+      this.numberOfResults = this.pageOfItems.length;
+
+
+      //Modifico el nº de datos de cada tipo
       this.totalDatasets, this.totalCubes, this.totalEli, this.totalSiua = 0;
+      this.totalDatasets = this.pageOfItems.filter(element => element.type === 'Dataset').length;
+      this.totalCubes = this.pageOfItems.filter(element => element.type === 'Cubo estadístico').length;
+      this.totalEli = this.pageOfItems.filter(element => element.type === 'ELI').length;
+      this.totalSiua = this.pageOfItems.filter(element => element.type === 'SIUa').length;
+      //////////////
 
-      this.totalDatasets = auxResults.filter(element => element.type === 'Dataset').length;
-      this.totalCubes = auxResults.filter(element => element.type === 'Cubo estadístico').length;
-      this.totalEli = auxResults.filter(element => element.type === 'ELI').length;
-      this.totalSiua = auxResults.filter(element => element.type === 'SIUa').length;
-
-      this.filteredResults = auxResults;
-      this.numberOfResults = auxResults.length;
-      this.onChangePage(auxResults);
-      console.log(auxResults.length);
     }
   }
 

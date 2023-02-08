@@ -88,7 +88,7 @@
             <p>No se han encontrado resultados, prueba a <a (click)="toggleSidebar()">aplicar otros filtros.</a></p>
         </div>
         <div *ngIf="this.numberOfResults > 1">
-            <div *ngFor="let result of filteredResults " class="search__results">
+            <div *ngFor="let result of pageOfItems" class="search__results">
                 <article class="search__results-item">
                     <p class="item__category"><span class="type"><mat-icon>bookmark_border</mat-icon>
                             {{result.category}}</span> |
@@ -107,7 +107,7 @@
         </div>
 
         <div *ngIf="this.numberOfResults === 1">
-            <div *ngFor="let result of filteredResults" class="search__results">
+            <div *ngFor="let result of results" class="search__results">
                 <article class="search__results-item">
                     <p class="item__category" *ngIf="result.category !== ''"><span
                             class="type"><mat-icon>bookmark_border</mat-icon>
