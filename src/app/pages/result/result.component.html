@@ -268,8 +268,12 @@
                 </div>
             </div>
 
-            <div class="graphics__item presupuestos">
-                <h2>Información de los presupuestos en <b>{{tituloFicha}}</b></h2>
+            <div class="graphics__item presupuestos" *ngIf="presupuestos">
+                <h2>Información sobre los presupuestos en <b>{{tituloFicha}}</b></h2>
+                <a href="{{presupuestos}}" target="_blank"
+                    class="btn btn-presupuestos"><mat-icon>open_in_new</mat-icon>Ver información de
+                    presupuestos</a>
+                <a class="data-link" href="{{dataSource.presupuestos}}" target="_blank">Ver origen de los datos</a>
             </div>
 
             <div *ngIf="this.numberOfCreativeWork !== 0" class="graphics__item" fragment="creative-works">
@@ -565,8 +569,12 @@
 
 
         <section class="container template__graphics">
-            <div class="graphics__item presupuestos">
-                <h2>Información de los presupuestos en <b>{{tituloFicha}}</b></h2>
+            <div class="graphics__item presupuestos" *ngIf="presupuestos">
+                <h2>Información sobre los presupuestos en <b>{{tituloFicha}}</b></h2>
+                <a href="{{presupuestos}}" target="_blank"
+                    class="btn btn-presupuestos"><mat-icon>open_in_new</mat-icon>Ver información de
+                    presupuestos</a>
+                <a class="data-link" href="{{dataSource.presupuestos}}" target="_blank">Ver origen de los datos</a>
             </div>
             <div *ngIf="this.numberOfCreativeWork" class="graphics__item" fragment="creative-works">
                 <div class="graphics__item-cw">

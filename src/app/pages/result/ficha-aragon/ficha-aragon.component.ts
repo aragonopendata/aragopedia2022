@@ -33,7 +33,8 @@ interface DataLinks {
   miembrosPleno: string,
   datosContacto: string,
   image: string,
-  publicaciones: string
+  publicaciones: string,
+  presupuestos: string
 }
 
 @Component({
@@ -145,7 +146,8 @@ export class FichaAragonComponent implements OnInit {
     miembrosPleno: '',
     datosContacto: '',
     image: '',
-    publicaciones: ''
+    publicaciones: '',
+    presupuestos: ''
   };
 
 
@@ -171,6 +173,7 @@ export class FichaAragonComponent implements OnInit {
   queryUrlMiembrosPleno!: string;
   queryUrlContacto!: string;
   queryUrlMunicipiosEnTerritorio!: string;
+  queryUrlPresupuestos!: string;
 
   // ARAGOPEDIA
   queryTemas!: string;
@@ -240,6 +243,9 @@ export class FichaAragonComponent implements OnInit {
 
         this.queryUrlGetCodigoIne = `https://opendata.aragon.es/sparql?default-graph-uri=&query=select+%3Fwikidata+%3Faragopedia+from+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fei2av2%3E+where+%7B%0D%0A++%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fsector-publico%2Forganizacion%2Fcomunidad%2F2%3E+skos%3AexactMatch+%3Fwikidata%3B%0D%0A++skos%3AexactMatch+%3Faragopedia.%0D%0A++FILTER%28regex%28%3Fwikidata%2C+%22http%3A%2F%2Fwww.wikidata.org%2F%22%29%29.%0D%0A++FILTER%28regex%28%3Faragopedia%2C+%22http%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fterritorio%2FComunidadAutonoma%2F%22%29%29.%0D%0A%7D&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`;
 
+        this.queryUrlPresupuestos = `https://opendata.aragon.es/sparql?default-graph-uri=&query=select+%3Furl+from+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fei2av2%3E+where+%7B%0D%0A++%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fsector-publico%2Forganizacion%2Fcomunidad%2F2%3E+dc%3Arelation+%3Furl.+%0D%0A++filter%28regex%28%3Furl%2C+%22https%3A%2F%2Fpresupuesto.aragon.es%2F%22%29%29.%0D%0A%7D&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`
+        this.dataSource.presupuestos = this.exportHtmlQuery(this.queryUrlPresupuestos)
+
         //Obtención de datos por ID
 
         this.resultSvc.getData(this.queryUrlPoligonos).subscribe((data: any) => {
@@ -268,6 +274,10 @@ export class FichaAragonComponent implements OnInit {
           this.plazasHoteleras = data.results.bindings[0]['callret-0'].value;
           this.dataDownload[0].plazasHoteleras = this.plazasHoteleras;
         });
+
+        this.resultSvc.getData(this.queryUrlPresupuestos).subscribe(data => {
+          this.presupuestos = data.results.bindings[0].url.value;
+        })
 
         this.resultSvc.getData(this.queryUrlGetCodigoIne).subscribe((data) => {
           const urlAnalizada = data.results.bindings[0].wikidata.value;
