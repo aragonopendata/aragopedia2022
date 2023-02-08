@@ -128,33 +128,39 @@
             </div>
         </section> -->
         <section class="container template__graphics">
-            <div class="graphics__item" style="width: 100%;">
-                <h2>Últimos datos de Población</h2>
-
-                <div class="tabla-container">
-                    <table class="tabla-poblacion">
-                        <tr>
-                            <th>Año</th>
-                            <td *ngFor="let year of yearsTablaPoblacion"><span>{{year}}</span></td>
-                        </tr>
-                        <tr>
-                            <th>{{this.comunidad[0]}}</th>
-                            <td *ngFor="let element of tablaPoblacion">
-                                <span *ngIf="element.nameRefArea.value == this.comunidad[0]">
-                                    {{format(element.poblac.value)}}
-                                </span>
-                            </td>
-                        </tr>
-                    </table>
+            <div class="graphics__item poblacion" style="width: 100%;">
+                <div class="tabla">
+                    <h2>Últimos datos de Población</h2>
+                    <div class="tabla-container">
+                        <table class="tabla-poblacion">
+                            <tr>
+                                <th>Año</th>
+                                <td *ngFor="let year of yearsTablaPoblacion"><span>{{year}}</span></td>
+                            </tr>
+                            <tr>
+                                <th>{{this.comunidad[0]}}</th>
+                                <td *ngFor="let element of tablaPoblacion">
+                                    <span *ngIf="element.nameRefArea.value == this.comunidad[0]">
+                                        {{format(element.poblac.value)}}
+                                    </span>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
                 </div>
-                <div class="grafica-poblacion">
-                    <h2>Gráfica de los últimos 5 años</h2>
-
-                    <canvas baseChart class="chart" [data]="lineChartData" [options]="lineChartOptions"
-                        [type]="lineChartType"></canvas>
-
+                <div class="grafica">
+                    <div class="grafica-poblacion">
+                        <h2>Gráfica de los últimos 5 años</h2>
+                        <canvas baseChart class="chart" [data]="lineChartData" [options]="lineChartOptions"
+                            [type]="lineChartType"></canvas>
+                    </div>
+                    <a class="data-link" href="{{dataSource.tablaPoblacion}}" target="_blank">Ver origen de los
+                        datos</a>
                 </div>
-                <a class="data-link" href="{{dataSource.tablaPoblacion}}" target="_blank">Ver origen de los datos</a>
+            </div>
+
+            <div class="graphics__item presupuestos">
+                <h2>Información de los presupuestos en <b>La Comunidad de Aragón</b></h2>
             </div>
 
             <div class="graphics__item" fragment="creative-works">

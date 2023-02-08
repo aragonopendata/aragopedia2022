@@ -1,3 +1,14 @@
+.poblacion {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+
+    .tabla,
+    .grafica {
+        flex: 0 0 50%;
+    }
+}
+
 .grafica-poblacion {
     max-width: 500px;
 }
@@ -378,9 +389,17 @@ section.container {
     }
 }
 
+.poblacion {
+    justify-content: space-between;
+}
+
 .tabla-container {
     overflow-x: scroll;
     width: 100%;
+}
+
+.tabla-container::-webkit-scrollbar {
+    display: none;
 }
 
 .tabla-poblacion {

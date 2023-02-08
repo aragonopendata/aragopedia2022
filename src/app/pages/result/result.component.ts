@@ -144,6 +144,7 @@ export class ResultComponent {
   municipiosEnTerritorio: any;
   datosDePoblacion: any;
   dataYearExtension: any;
+  presupuestos!: string;
 
   @ViewChild(AragopediaSelectorTemasComponent) aragopediaMunicipio: any;
 

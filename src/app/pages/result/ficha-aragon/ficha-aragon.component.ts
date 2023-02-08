@@ -125,6 +125,8 @@ export class FichaAragonComponent implements OnInit {
   telefono!: string;
   municipiosEnTerritorio: any;
   dataYearExtension: any;
+  presupuestos!: string;
+
 
   dataSource: DataLinks = {
     sueloUrbano: '',
