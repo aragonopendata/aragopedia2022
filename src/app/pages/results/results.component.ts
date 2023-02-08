@@ -62,6 +62,7 @@ export class ResultsComponent implements OnInit {
   initialData: any;
   selectedUrlSplit: string = '';
   numberOfResults!: number;
+  filteredResults: any;
 
   // Queries URL
   queryUrlResultTemas!: string;
@@ -177,6 +178,7 @@ export class ResultsComponent implements OnInit {
         });
 
         this.items = this.results;
+        this.filteredResults = this.results;
         this.numberOfResults = this.items.length;
 
       });
@@ -367,28 +369,23 @@ export class ResultsComponent implements OnInit {
 
   transform(arg: any): any {
     console.log(arg);
+    console.log(this.results);
+
 
     if (arg === '' || arg.length < 3) {
-      console.log(arg.length);
-      console.log(this.results);
       this.items = this.results;
       this.numberOfResults = this.results.length;
 
-      this.results.forEach((element: any) => {
-        if (element.type === 'Dataset') {
-          this.totalDatasets += 1;
-        } else if (element.type === 'Cubo estadístico') {
-          this.totalCubes += 1;
-        } else if (element.type === 'ELI') {
-          this.totalEli += 1;
-        } else if (element.type === 'SIUa') {
-          this.totalSiua += 1;
-        }
-      });
+      this.totalDatasets = this.results.filter(element => element.type === 'Dataset').length;
+      this.totalCubes = this.results.filter(element => element.type === 'Cubo estadístico').length;
+      this.totalEli = this.results.filter(element => element.type === 'ELI').length;
+      this.totalSiua = this.results.filter(element => element.type === 'SIUa').length;
 
     } else {
+      console.log(arg);
+
       let auxResults = this.pageOfItems;
-      auxResults.find(element => element.title.toLowerCase().includes(arg.toLowerCase()))
+      auxResults.filter(element => element.title.toLowerCase().includes(arg.toLowerCase()))
       console.log(auxResults);
 
       this.totalDatasets, this.totalCubes, this.totalEli, this.totalSiua = 0;
@@ -398,15 +395,16 @@ export class ResultsComponent implements OnInit {
       this.totalEli = auxResults.filter(element => element.type === 'ELI').length;
       this.totalSiua = auxResults.filter(element => element.type === 'SIUa').length;
 
-      this.items = auxResults;
+      this.filteredResults = auxResults;
       this.numberOfResults = auxResults.length;
+      this.onChangePage(auxResults);
       console.log(auxResults.length);
     }
   }
 
   removeAccents(str: any): any {
     // return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-    const acentos: any = { 'á': 'a', 'é': 'e', 'í': 'i', 'ó': 'o', 'ú': 'u', 'Á': 'A', 'É': 'É', 'Í': 'I', 'Ó': 'O', 'Ú': 'U' };
+    const acentos: any = { 'á': 'a', 'é': 'e', 'í': 'i', 'ó': 'o', 'ú': 'u', 'Á': 'A', 'É': 'E', 'Í': 'I', 'Ó': 'O', 'Ú': 'U' };
     return str.split('').map((letra: any) => acentos[letra] || letra).join('').toString();
   }
 
