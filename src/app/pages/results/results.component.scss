@@ -74,6 +74,7 @@
 
 .filter-type__container {
     display: flex;
+    flex-wrap: wrap;
     flex-direction: row;
     justify-content: center;
     margin-top: 20px;
@@ -99,7 +100,8 @@
 
     ul.pagination {
         display: flex;
-        justify-content: space-evenly;
+        flex-wrap: wrap;
+        justify-content: space-between;
         list-style: none;
         margin: auto;
         padding: 0 1em;
@@ -109,6 +111,7 @@
             font-size: 18px;
             color: var(--text-color);
             margin: auto;
+            margin-bottom: 15px;
             display: block;
             text-align: center;
             transition: background-color 0.3s;
@@ -313,6 +316,7 @@ ul.pagination {
 
             p {
                 margin: 0 0 0 5px;
+                font-size: 11px;
             }
         }
 
@@ -327,7 +331,7 @@ ul.pagination {
         margin: 20px 15px;
 
         .search__results-item {
-            padding: 10px;
+            padding: 10px 0;
             border-top: 1px solid #aaa;
 
             .item__category {
@@ -346,9 +350,9 @@ ul.pagination {
                 }
 
                 h3 {
-                    font-size: 20px;
+                    font-size: 18px;
                     margin: 0 0 0 10px;
-                    flex: 0 0 90%;
+                    flex: 0 0 85%;
                 }
             }
         }
@@ -423,7 +427,19 @@ ul.pagination {
     height: 100%;
 }
 
+@media screen and (min-width: 480px) {
+
+    .results__filter-menu,
+    .results__filter-order {
+        p {
+            font-size: 16px !important;
+        }
+    }
+}
+
 @media screen and (min-width: 712px) {
+
+
     .results {
         .filter-temas {
             grid-template-columns: repeat(3, auto);
