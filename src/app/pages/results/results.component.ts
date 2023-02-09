@@ -219,7 +219,7 @@ export class ResultsComponent implements OnInit {
     this.yearAsc = true;
     this.yearDesc = false;
     this.items = resultsByYear;
-    this.pageOfItems = resultsByYear;
+    this.pageOfItems = resultsByYear.slice(0, 9);
   }
 
   sortByYearDesc() {
@@ -229,7 +229,7 @@ export class ResultsComponent implements OnInit {
     this.yearAsc = false;
     this.yearDesc = true;
     this.items = resultsByYear;
-    this.pageOfItems = resultsByYear;
+    this.pageOfItems = resultsByYear.slice(0, 9);
   }
 
   toggleSidebar(): void {
