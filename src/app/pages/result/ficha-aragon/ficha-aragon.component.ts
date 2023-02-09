@@ -485,9 +485,8 @@ export class FichaAragonComponent implements OnInit {
   }
 
   filterData(enteredData: any) {
-
     this.filteredTemas = this.showTemas.filter((item: any) => {
-      return this.removeAccents(item.nombre.toLowerCase()).indexOf(this.removeAccents(enteredData.toLowerCase())) > -1
+      return this.removeAccents(item.nombre.value.toLowerCase()).indexOf(this.removeAccents(enteredData.toLowerCase())) > -1
     })
   }
 
