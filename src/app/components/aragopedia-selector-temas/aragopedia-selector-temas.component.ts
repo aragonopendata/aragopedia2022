@@ -276,7 +276,7 @@ export class AragopediaSelectorTemasComponent implements OnInit {
     let rutaUsable: string;
     let rutaLimpia = '/';
 
-    //this.loading = true
+    this.loading = true
 
     if (tema.id) {
 
@@ -409,6 +409,8 @@ export class AragopediaSelectorTemasComponent implements OnInit {
 
         this.sparql(query);
 
+        query ? this.loading = false : this.loading = true;
+
 
         this.queryTabla = 'https://opendata.aragon.es/sparql?default-graph-uri=&query=' + encodeURIComponent(query) + '&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on';
 
@@ -473,8 +475,6 @@ export class AragopediaSelectorTemasComponent implements OnInit {
       }
 
     })
-
-    //this.loading = false;
 
   }
 

@@ -156,7 +156,6 @@ export class AragopediaTablaDatosComponent {
 
   sortData(sort: Sort) {
 
-    // this.loading = true;
     const column = sort.active;
     this.dataSrc.data.map(element => {
       for (const key in element) {
@@ -185,11 +184,9 @@ export class AragopediaTablaDatosComponent {
         if (sort.active) {
           if (isAsc) {
             if (a[column]?.value < b[column]?.value) {
-              this.loading = false;
               return -1;
             }
             if (a[column]?.value > b[column]?.value) {
-              this.loading = false;
               return 1;
             }
           } else {
@@ -197,18 +194,15 @@ export class AragopediaTablaDatosComponent {
               return 0;
             }
             if (a[column]?.value > b[column]?.value) {
-              this.loading = false;
               return -1;
             }
             if (a[column]?.value < b[column]?.value) {
-              this.loading = false;
               return 1;
             }
           }
 
           return 0;
         } else {
-          // this.loading = false;
 
           return 0;
         }
@@ -217,7 +211,6 @@ export class AragopediaTablaDatosComponent {
       }
 
     });
-    // this.loading = false;
     this.sortedData = new MatTableDataSource(data)
     this.sortedData.paginator = this.paginator;
     return this.sortedData;

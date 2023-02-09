@@ -146,6 +146,7 @@ export class ResultComponent {
   datosDePoblacion: any;
   dataYearExtension: any;
   presupuestos!: string;
+  loading: boolean = false;
 
   @ViewChild(AragopediaSelectorTemasComponent) aragopediaMunicipio: any;
 
@@ -957,6 +958,7 @@ export class ResultComponent {
   temaSelected(tema: any) {
 
     let rutaLimpia = '/' + tema.id.value;
+    this.loading = true
     setTimeout(() => {
       if (rutaLimpia == '/') {
         return;
@@ -1039,6 +1041,7 @@ export class ResultComponent {
         console.log('https://opendata.aragon.es/sparql?default-graph-uri=&query=' + encodeURIComponent(query) + '&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on');
 
         this.sparql(query);
+        query ? this.loading = false : this.loading = true;
 
         this.queryTabla = 'https://opendata.aragon.es/sparql?default-graph-uri=&query=' + encodeURIComponent(query) + '&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on';
 

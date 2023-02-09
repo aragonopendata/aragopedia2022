@@ -268,9 +268,12 @@
                     <u>{{displayTema}}</u>
                 </h3>
                 <p [ngClass]="{'errorTabla' : !this.errorTabla}">No se encontraron datos</p>
-
+                <div class="loading" *ngIf="loading">
+                    <mat-spinner [diameter]="70"></mat-spinner>
+                </div>
                 <app-aragopedia-tabla-datos
-                    [ngClass]="{'errorTabla' : this.errorTabla, 'hidden': this.displayTema === ''}" class="tabla-datos">
+                    [ngClass]="{'errorTabla' : this.errorTabla, 'hidden': this.displayTema === '' || loading}"
+                    class="tabla-datos">
                 </app-aragopedia-tabla-datos>
             </div>
         </section>
