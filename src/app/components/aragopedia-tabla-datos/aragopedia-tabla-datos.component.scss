@@ -8,7 +8,7 @@
     .loading-table {
         display: flex;
         justify-content: center;
-        position: absolute;
+        // position: absolute;
         top: 0;
         height: 100%;
         width: 100%;
@@ -55,7 +55,16 @@
 
 }
 
+::ng-deep {
+    .mat-sort-header-arrow {
+        color: white;
+    }
 
+    .mat-sort-header-container {
+        justify-content: center;
+        text-align: center;
+    }
+}
 
 table {
     width: 100%;
@@ -88,4 +97,18 @@ th {
     margin: 0 20px;
     margin-bottom: 1rem;
     justify-content: right;
+}
+
+@media screen and (max-width: 992px) {
+    .btn-descarga {
+        background-color: #ffffff;
+        border: solid 1px #00475C;
+        color: #00475C;
+        cursor: pointer;
+        display: flex;
+    }
+
+    .divDescarga {
+        justify-content: center;
+    }
 }

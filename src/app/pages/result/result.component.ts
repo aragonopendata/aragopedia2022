@@ -33,7 +33,8 @@ interface DataLinks {
   datosContacto: string,
   entidadesSingulares: string,
   personasIlustres: string,
-  image: string
+  image: string,
+  presupuestos: string
 }
 
 @Component({
@@ -103,6 +104,7 @@ export class ResultComponent {
   email: any;
   telefono: any;
   direccion: any;
+  localidad: any;
   codPostal: any;
   creativeWork: any;
   numberOfCreativeWork: any;
@@ -143,6 +145,8 @@ export class ResultComponent {
   municipiosEnTerritorio: any;
   datosDePoblacion: any;
   dataYearExtension: any;
+  presupuestos!: string;
+  loading: boolean = false;
 
   @ViewChild(AragopediaSelectorTemasComponent) aragopediaMunicipio: any;
 
@@ -172,6 +176,7 @@ export class ResultComponent {
   queryUrlLocales!: string;
   queryUrlOficinaComarcal!: string;
   queryUrlMunicipiosEnTerritorio!: string;
+  queryUrlPresupuestos!: string;
 
   dataSource: DataLinks = {
     sueloUrbano: '',
@@ -197,7 +202,8 @@ export class ResultComponent {
     datosContacto: '',
     entidadesSingulares: '',
     personasIlustres: '',
-    image: ''
+    image: '',
+    presupuestos: ''
   };
 
   // ARAGOPEDIA
@@ -340,6 +346,9 @@ export class ResultComponent {
         this.queryUrlMunicipiosEnTerritorio = `https://opendata.aragon.es/sparql?default-graph-uri=&query=select+count%28distinct+%3Fs%29+from+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fei2av2%3E+where+%7B%0D%0A%3Fs+%3Chttp%3A%2F%2Fwww.w3.org%2Fns%2Forg%23subOrganizationOf%3E+%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fsector-publico%2Forganizacion%2F${this.tipoLocalidad}%2F${this.codigoIne}%3E.+%7D%0D%0A&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`;
         this.dataSource.municipios = this.exportHtmlQuery(this.queryUrlMunicipiosEnTerritorio);
 
+        this.queryUrlPresupuestos = `https://opendata.aragon.es/sparql?default-graph-uri=&query=select+%3Furl+from+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fei2av2%3E+where+%7B%0D%0A++%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fsector-publico%2Forganizacion%2F${this.tipoLocalidad}%2F${this.codigoIne}%3E+dc%3Arelation+%3Furl.+%0D%0A++filter%28regex%28%3Furl%2C+%22https%3A%2F%2Fpresupuesto.aragon.es%2F%22%29%29.%0D%0A%7D&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`
+        this.dataSource.presupuestos = this.exportHtmlQuery(this.queryUrlPresupuestos)
+
         //Obtención de datos por ID
 
         this.resultSvc.getData(this.queryUrlPoligonos).subscribe((data: any) => {
@@ -353,7 +362,8 @@ export class ResultComponent {
 
           this.email = data.results.bindings[0].email?.value;
           this.telefono = data.results.bindings[0].tel?.value;
-          locality !== undefined ? this.direccion = data.results.bindings[0].direccion?.value.toLowerCase() + ', ' + locality : this.direccion = data.results.bindings[0].direccion?.value;
+          this.localidad = locality;
+          this.direccion = data.results.bindings[0].direccion?.value;
           this.codPostal = data.results.bindings[0].codPostal?.value;
 
           this.dataDownload[0].email = this.email;
@@ -442,6 +452,10 @@ export class ResultComponent {
       this.resultSvc.getData(this.queryUrlMunicipiosEnTerritorio).subscribe(data => {
         this.municipiosEnTerritorio = data.results.bindings[0]['callret-0'].value;
       });
+
+      this.resultSvc.getData(this.queryUrlPresupuestos).subscribe(data => {
+        this.presupuestos = data.results.bindings[0].url?.value;
+      })
     });
 
 
@@ -944,6 +958,7 @@ export class ResultComponent {
   temaSelected(tema: any) {
 
     let rutaLimpia = '/' + tema.id.value;
+    this.loading = true
     setTimeout(() => {
       if (rutaLimpia == '/') {
         return;
@@ -1026,6 +1041,7 @@ export class ResultComponent {
         console.log('https://opendata.aragon.es/sparql?default-graph-uri=&query=' + encodeURIComponent(query) + '&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on');
 
         this.sparql(query);
+        query ? this.loading = false : this.loading = true;
 
         this.queryTabla = 'https://opendata.aragon.es/sparql?default-graph-uri=&query=' + encodeURIComponent(query) + '&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on';
 

@@ -358,4 +358,11 @@ export class ResultsComponent implements OnInit {
     })
   }
 
+  navigateAragopedia(cubo: string) {
+    const index = cubo.lastIndexOf('/') + 1;
+    const cuboId = cubo.substring(index);
+    console.log(cuboId);
+    this.router.navigate(['aragopedia'], { queryParams: { tipo: 'provincia', id: '7823', datos: `${cuboId}TP` } })
+  }
+
 }

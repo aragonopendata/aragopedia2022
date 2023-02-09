@@ -31,12 +31,12 @@
         <div class="loading-table" *ngIf="loading">
             <mat-spinner [diameter]="70"></mat-spinner>
         </div>
-        <app-aragopedia-tabla-datos *ngIf="!loading" class="tabla-datos"
-            [hidden]="errorTabla || firstLand"></app-aragopedia-tabla-datos>
+        <app-aragopedia-tabla-datos class="tabla-datos"
+            [hidden]="errorTabla || firstLand || loading"></app-aragopedia-tabla-datos>
 
 
-        <div *ngIf="errorTabla">
-            <p>No se encontraron datos</p>
+        <div *ngIf="errorTabla && !loading" class="error-msg">
+            <p>No se encontraron datos. Consulta otra entidad territorial u otro dato estadístico.</p>
         </div>
     </div>
 </section>

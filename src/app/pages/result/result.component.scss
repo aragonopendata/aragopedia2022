@@ -1,3 +1,50 @@
+.poblacion {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+
+    .tabla,
+    .grafica {
+        flex: 0 0 50%;
+    }
+}
+
+.presupuestos {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 3em;
+    background-color: #f4f4f4;
+    margin: 4em 0;
+    border-radius: 10px;
+    transition: all .3s;
+
+    &:hover {
+        transform: translateY(-10px);
+        box-shadow: var(--shadow-hover);
+    }
+
+    h2 {
+        font-size: 30px;
+        text-align: center;
+    }
+}
+
+.btn-presupuestos {
+    margin: 1em 0;
+    outline: none;
+    border-width: 0;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .mat-icon {
+        margin-right: 10px;
+    }
+}
+
 .grafica-poblacion {
     max-width: 500px;
 }
@@ -378,9 +425,17 @@ section.container {
     }
 }
 
+.poblacion {
+    justify-content: space-between;
+}
+
 .tabla-container {
     overflow-x: scroll;
     width: 100%;
+}
+
+.tabla-container::-webkit-scrollbar {
+    display: none;
 }
 
 .tabla-poblacion {

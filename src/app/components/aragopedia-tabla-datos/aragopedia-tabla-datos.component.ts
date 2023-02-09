@@ -73,8 +73,8 @@ export class AragopediaTablaDatosComponent {
             columnasNormalized.push(this.normalizeColumnName(element))
           });
 
-          let auxColumnas = [{ nombre: 'Localidad', matColumnDef: 'nameRefArea' }, { nombre: 'Fecha subida', matColumnDef: 'nameRefPeriod' }]
-
+          let auxColumnas = [{ nombre: /* `${this.aragopediaSvc.tipoLocalidad}` */ 'Área', matColumnDef: 'nameRefArea' }, { nombre: 'Fecha subida', matColumnDef: 'nameRefPeriod' }]
+          //console.log(auxColumnas)
           this.nombresColumnas.forEach((element: any) => {
             //console.log(this.normalizeColumnName(element['callret-2'].value))
             if (this.displayedColumns.includes(this.normalizeColumnName(element['callret-2'].value))) {
@@ -143,7 +143,7 @@ export class AragopediaTablaDatosComponent {
   }
 
   normalizeColumnName(columnName: string) {
-    let auxName = columnName.replace(/[\u0300-\u036f]/g, "").normalize("NFD").replaceAll(" ", "_").toLowerCase().replace(/[^\w\s]/gi, '')
+    let auxName = columnName.replace(/[\u0300-\u036f]/g, "").normalize("NFD").replaceAll(" ", "_").replaceAll('-', '_').toLowerCase().replace(/[^\w\s]/gi, '')
     if (auxName.startsWith("n_")) {
 
       let nameEnd = auxName.substring(2);
@@ -155,13 +155,12 @@ export class AragopediaTablaDatosComponent {
 
 
   sortData(sort: Sort) {
-    console.log(sort);
 
-    // this.loading = true;
     const column = sort.active;
     this.dataSrc.data.map(element => {
       for (const key in element) {
         isNaN(Number(element[key].value)) ? element[key].value = element[key].value : element[key].value = Number(element[key].value);
+        element[key].value === '10 o más' ? element[key].value = 10 : element[key].value;
       }
     });
 
@@ -174,7 +173,6 @@ export class AragopediaTablaDatosComponent {
       return;
     }
     data.sort((a: any, b: any) => {
-
       if (typeof a[column]?.value === 'number') {
         if (sort.active) {
           return (isAsc ? a[column]?.value - b[column]?.value : b[column]?.value - a[column]?.value);
@@ -186,11 +184,9 @@ export class AragopediaTablaDatosComponent {
         if (sort.active) {
           if (isAsc) {
             if (a[column]?.value < b[column]?.value) {
-              this.loading = false;
               return -1;
             }
             if (a[column]?.value > b[column]?.value) {
-              this.loading = false;
               return 1;
             }
           } else {
@@ -198,18 +194,15 @@ export class AragopediaTablaDatosComponent {
               return 0;
             }
             if (a[column]?.value > b[column]?.value) {
-              this.loading = false;
               return -1;
             }
             if (a[column]?.value < b[column]?.value) {
-              this.loading = false;
               return 1;
             }
           }
 
           return 0;
         } else {
-          // this.loading = false;
 
           return 0;
         }
@@ -218,7 +211,6 @@ export class AragopediaTablaDatosComponent {
       }
 
     });
-    // this.loading = false;
     this.sortedData = new MatTableDataSource(data)
     this.sortedData.paginator = this.paginator;
     return this.sortedData;

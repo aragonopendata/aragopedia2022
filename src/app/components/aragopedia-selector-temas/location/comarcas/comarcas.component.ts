@@ -36,46 +36,48 @@ export class ComarcasComponent implements OnInit {
 
     this.getNames();
     this.initForm();
+    setTimeout(() => {
 
-    this.locationService.comarcaObserver.subscribe((comarca: any) => {
-      this.selectedComarca = comarca;
-    });
+      this.locationService.comarcaObserver.subscribe((comarca: any) => {
+        this.selectedComarca = comarca;
+      });
 
-    //Añado URL e ID a la lista de municipios
-    this.aragopediaSvc.getData(this.queryIdWikiData).subscribe(data => {
+      //Añado URL e ID a la lista de municipios
+      this.aragopediaSvc.getData(this.queryIdWikiData).subscribe(data => {
 
-      const listId = data.results.bindings;
-      let index = 0;
+        const listId = data.results.bindings;
+        let index = 0;
 
-      this.comarcas.forEach((comarca: any) => {
+        this.comarcas.forEach((comarca: any) => {
 
-        listId.forEach((element: any) => {
-          // console.log(element);
-          if (this.fixNames(comarca.nombre.value.toLowerCase()) == element['callret-1'].value.toLowerCase()) {
-            this.comarcasParsed[index] = {
-              nombre: comarca.nombre.value,
-              url: element.s.value,
-              id: element.id.value,
-              codigoIne: ''
+          listId.forEach((element: any) => {
+            // console.log(element);
+            if (this.fixNames(comarca.nombre.value.toLowerCase()) == element['callret-1'].value.toLowerCase()) {
+              this.comarcasParsed[index] = {
+                nombre: comarca.nombre.value,
+                url: element.s.value,
+                id: element.id.value,
+                codigoIne: ''
+              }
+              index++;
             }
-            index++;
-          }
+          });
         });
+
+        this._route.queryParams.subscribe(params => {
+          this.URLparameters = params;
+        });
+
+        let tipoLocalidad = this.URLparameters['tipo'];
+
+        if (tipoLocalidad === 'comarca' && this.URLparameters['id'] !== this.selectedId) {
+          let idComa = this.URLparameters['id'];
+          this.selectComarcaFromURL(idComa);
+        }
+
       });
 
-      this._route.queryParams.subscribe(params => {
-        this.URLparameters = params;
-      });
-
-      let tipoLocalidad = this.URLparameters['tipo'];
-
-      if (tipoLocalidad === 'comarca' && this.URLparameters['id'] !== this.selectedId) {
-        let idComa = this.URLparameters['id'];
-        this.selectComarcaFromURL(idComa);
-      }
-
-    });
-
+    }, 200);
   }
 
   fixNames(str: string): string {

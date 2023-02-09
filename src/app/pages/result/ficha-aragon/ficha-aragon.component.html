@@ -6,7 +6,7 @@
         </section>
         <section class="container container template__inicio">
             <div class="inicio__img">
-                <h1 class="inicio__name">Comunidad de Aragón</h1>
+                <h1 class="inicio__name">Aragón</h1>
                 <a href={{this.urlMap}} target="_blank">
                     <img *ngIf="this.map" src={{this.map}} alt="Mapa de {{this.lugarBuscado}}">
                 </a>
@@ -99,11 +99,11 @@
         </section>
 
         <section class="container template__caracteristicas">
-            <h2>Características de la Comunidad de Aragón</h2>
+            <h2>Características de Aragón</h2>
             <div class="caracteristicas__list">
                 <a href="{{dataSource.densidad}}" target="_blank">
                     <div class="caracteristica__item">
-                        <mat-icon>people</mat-icon> La densidad de población de <b>La Comunidad de Aragón</b> es de
+                        <mat-icon>people</mat-icon> La densidad de población de <b>Aragón</b> es de
                         {{this.densidadPoblacion}} habitantes por km<sup>2</sup>
                     </div>
                 </a>
@@ -128,33 +128,43 @@
             </div>
         </section> -->
         <section class="container template__graphics">
-            <div class="graphics__item" style="width: 100%;">
-                <h2>Últimos datos de Población</h2>
-
-                <div class="tabla-container">
-                    <table class="tabla-poblacion">
-                        <tr>
-                            <th>Año</th>
-                            <td *ngFor="let year of yearsTablaPoblacion"><span>{{year}}</span></td>
-                        </tr>
-                        <tr>
-                            <th>{{this.comunidad[0]}}</th>
-                            <td *ngFor="let element of tablaPoblacion">
-                                <span *ngIf="element.nameRefArea.value == this.comunidad[0]">
-                                    {{format(element.poblac.value)}}
-                                </span>
-                            </td>
-                        </tr>
-                    </table>
+            <div class="graphics__item poblacion" style="width: 100%;">
+                <div class="tabla">
+                    <h2>Últimos datos de Población</h2>
+                    <div class="tabla-container">
+                        <table class="tabla-poblacion">
+                            <tr>
+                                <th>Año</th>
+                                <td *ngFor="let year of yearsTablaPoblacion"><span>{{year}}</span></td>
+                            </tr>
+                            <tr>
+                                <th>{{this.comunidad[0]}}</th>
+                                <td *ngFor="let element of tablaPoblacion">
+                                    <span *ngIf="element.nameRefArea.value == this.comunidad[0]">
+                                        {{format(element.poblac.value)}}
+                                    </span>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
                 </div>
-                <div class="grafica-poblacion">
-                    <h2>Gráfica de los últimos 5 años</h2>
-
-                    <canvas baseChart class="chart" [data]="lineChartData" [options]="lineChartOptions"
-                        [type]="lineChartType"></canvas>
-
+                <div class="grafica">
+                    <div class="grafica-poblacion">
+                        <h2>Gráfica de los últimos 5 años</h2>
+                        <canvas baseChart class="chart" [data]="lineChartData" [options]="lineChartOptions"
+                            [type]="lineChartType"></canvas>
+                    </div>
+                    <a class="data-link" href="{{dataSource.tablaPoblacion}}" target="_blank">Ver origen de los
+                        datos</a>
                 </div>
-                <a class="data-link" href="{{dataSource.tablaPoblacion}}" target="_blank">Ver origen de los datos</a>
+            </div>
+
+            <div class="graphics__item presupuestos" *ngIf="presupuestos">
+                <h2>Información sobre presupuestos</h2>
+                <a href="{{presupuestos}}" target="_blank"
+                    class="btn btn-presupuestos"><mat-icon>open_in_new</mat-icon>Ver información de
+                    presupuestos</a>
+                <a class="data-link" href="{{dataSource.presupuestos}}" target="_blank">Ver origen de los datos</a>
             </div>
 
             <div class="graphics__item" fragment="creative-works">
@@ -258,9 +268,12 @@
                     <u>{{displayTema}}</u>
                 </h3>
                 <p [ngClass]="{'errorTabla' : !this.errorTabla}">No se encontraron datos</p>
-
+                <div class="loading" *ngIf="loading">
+                    <mat-spinner [diameter]="70"></mat-spinner>
+                </div>
                 <app-aragopedia-tabla-datos
-                    [ngClass]="{'errorTabla' : this.errorTabla, 'hidden': this.displayTema === ''}" class="tabla-datos">
+                    [ngClass]="{'errorTabla' : this.errorTabla, 'hidden': this.displayTema === '' || loading}"
+                    class="tabla-datos">
                 </app-aragopedia-tabla-datos>
             </div>
         </section>
