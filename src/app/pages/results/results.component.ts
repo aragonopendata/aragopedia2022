@@ -221,7 +221,7 @@ export class ResultsComponent implements OnInit {
     this.yearAsc = true;
     this.yearDesc = false;
     this.items = resultsByYear;
-    this.pageOfItems = resultsByYear;
+    this.pageOfItems = resultsByYear.slice(0, 9);
   }
 
   sortByYearDesc() {
@@ -231,7 +231,7 @@ export class ResultsComponent implements OnInit {
     this.yearAsc = false;
     this.yearDesc = true;
     this.items = resultsByYear;
-    this.pageOfItems = resultsByYear;
+    this.pageOfItems = resultsByYear.slice(0, 9);
   }
 
   toggleSidebar(): void {
@@ -280,7 +280,8 @@ export class ResultsComponent implements OnInit {
   }
 
   showAll() {
-    this.items, this.pageOfItems = this.filteredResults;
+    this.items = this.results;
+    this.pageOfItems = this.results.slice(0, 9);
     this.activeAll = true;
     this.activeDataset = false;
     this.activeCube = false;
@@ -289,17 +290,17 @@ export class ResultsComponent implements OnInit {
   }
 
   filterByDataset() {
-    if (!this.filteredResults) {
-      this.filteredResults = this.results;
-    }
+    // if (!this.filteredResults) {
+    //   this.filteredResults = this.results;
+    // }
 
     const datasetResults = [{}];
-    this.items = this.filteredResults;
-    this.filteredResults.forEach((element: any) => {
+    this.results.forEach((element: any) => {
       if (element.type === 'Dataset') {
         datasetResults.push(element);
       }
     });
+
     console.log(datasetResults);
 
     this.activeDataset = true;
@@ -308,17 +309,18 @@ export class ResultsComponent implements OnInit {
     this.activeSiua = false;
     this.activeEli = false;
     datasetResults.shift();
-    this.items, this.filteredResults, this.pageOfItems = datasetResults;
+    this.items = datasetResults;
+    this.pageOfItems = datasetResults.slice(0, 9);
     this.totalDatasets = datasetResults.length;
   }
 
   filterByCube() {
     const cubeResults = [{}];
-    if (!this.filteredResults) {
-      this.filteredResults = this.results;
-    }
+    // if (!this.filteredResults) {
+    //   this.filteredResults = this.results;
+    // }
 
-    this.filteredResults.forEach((element: any) => {
+    this.results.forEach((element: any) => {
       if (element.type === 'Cubo estadístico') {
         cubeResults.push(element);
       }
@@ -329,13 +331,14 @@ export class ResultsComponent implements OnInit {
     this.activeSiua = false;
     this.activeEli = false;
     cubeResults.shift();
-    this.items, this.filteredResults, this.pageOfItems = cubeResults;
+    this.items = cubeResults;
+    this.pageOfItems = cubeResults.slice(0, 9);
+    this.totalCubes = cubeResults.length;
   }
 
   filterByEli() {
     const eliResults = [{}];
-    // this.pageOfItems = this.results;
-    this.filteredResults.forEach((element: any) => {
+    this.results.forEach((element: any) => {
       if (element.type === 'ELI') {
         eliResults.push(element);
       }
@@ -346,13 +349,14 @@ export class ResultsComponent implements OnInit {
     this.activeSiua = false;
     this.activeDataset = false;
     eliResults.shift();
-    this.items, this.filteredResults, this.pageOfItems = eliResults;
+    this.items = eliResults;
+    this.pageOfItems = eliResults.slice(0, 9)
   }
 
   filterBySiua() {
     const siuaResults = [{}];
     // this.pageOfItems = this.results;
-    this.filteredResults.forEach((element: any) => {
+    this.results.forEach((element: any) => {
       if (element.type === 'SIUa') {
         siuaResults.push(element);
       }
@@ -363,7 +367,8 @@ export class ResultsComponent implements OnInit {
     this.activeAll = false;
     this.activeDataset = false;
     siuaResults.shift();
-    this.items, this.filteredResults, this.pageOfItems = siuaResults;
+    this.items = siuaResults
+    this.pageOfItems = siuaResults.slice(0, 9);
   }
 
   uncheckTemas(event: Event) {
@@ -398,12 +403,11 @@ export class ResultsComponent implements OnInit {
       console.log(arg);
       this.searchTerms = arg;
 
-      this.filteredResults = auxResults.filter(element => this.removeAccents(element.title.toLowerCase()).includes(this.removeAccents(arg.toLowerCase())))
-      console.log(auxResults.filter(element => element.title.toLowerCase().includes(arg.toLowerCase())));
+      auxResults.filter(element => this.removeAccents(element.title.toLowerCase()).includes(this.removeAccents(arg.toLowerCase())))
 
-      this.items = this.filteredResults;
+      this.pageOfItems = auxResults.slice(0, 9);
 
-      this.numberOfResults = this.filteredResults.length;
+      this.numberOfResults = auxResults.length;
 
 
       //Modifico el nº de datos de cada tipo
