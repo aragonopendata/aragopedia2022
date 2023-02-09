@@ -63,6 +63,7 @@ export class ResultsComponent implements OnInit {
   selectedUrlSplit: string = '';
   numberOfResults!: number;
   filteredResults: any;
+  searchTerms!: string;
 
   // Queries URL
   queryUrlResultTemas!: string;
@@ -279,7 +280,7 @@ export class ResultsComponent implements OnInit {
   }
 
   showAll() {
-    this.items = this.pageOfItems;
+    this.items, this.pageOfItems = this.filteredResults;
     this.activeAll = true;
     this.activeDataset = false;
     this.activeCube = false;
@@ -288,9 +289,13 @@ export class ResultsComponent implements OnInit {
   }
 
   filterByDataset() {
+    if (!this.filteredResults) {
+      this.filteredResults = this.results;
+    }
+
     const datasetResults = [{}];
-    this.pageOfItems = this.results;
-    this.pageOfItems.forEach((element: any) => {
+    this.items = this.filteredResults;
+    this.filteredResults.forEach((element: any) => {
       if (element.type === 'Dataset') {
         datasetResults.push(element);
       }
@@ -303,14 +308,17 @@ export class ResultsComponent implements OnInit {
     this.activeSiua = false;
     this.activeEli = false;
     datasetResults.shift();
-    this.items = datasetResults;
-    // this.totalDatasets = datasetResults.length;
+    this.items, this.filteredResults, this.pageOfItems = datasetResults;
+    this.totalDatasets = datasetResults.length;
   }
 
   filterByCube() {
     const cubeResults = [{}];
-    this.pageOfItems = this.results;
-    this.pageOfItems.forEach((element: any) => {
+    if (!this.filteredResults) {
+      this.filteredResults = this.results;
+    }
+
+    this.filteredResults.forEach((element: any) => {
       if (element.type === 'Cubo estadístico') {
         cubeResults.push(element);
       }
@@ -321,13 +329,13 @@ export class ResultsComponent implements OnInit {
     this.activeSiua = false;
     this.activeEli = false;
     cubeResults.shift();
-    this.items = cubeResults;
+    this.items, this.filteredResults, this.pageOfItems = cubeResults;
   }
 
   filterByEli() {
     const eliResults = [{}];
-    this.pageOfItems = this.results;
-    this.pageOfItems.forEach((element: any) => {
+    // this.pageOfItems = this.results;
+    this.filteredResults.forEach((element: any) => {
       if (element.type === 'ELI') {
         eliResults.push(element);
       }
@@ -338,13 +346,13 @@ export class ResultsComponent implements OnInit {
     this.activeSiua = false;
     this.activeDataset = false;
     eliResults.shift();
-    this.items = eliResults;
+    this.items, this.filteredResults, this.pageOfItems = eliResults;
   }
 
   filterBySiua() {
     const siuaResults = [{}];
-    this.pageOfItems = this.results;
-    this.pageOfItems.forEach((element: any) => {
+    // this.pageOfItems = this.results;
+    this.filteredResults.forEach((element: any) => {
       if (element.type === 'SIUa') {
         siuaResults.push(element);
       }
@@ -355,7 +363,7 @@ export class ResultsComponent implements OnInit {
     this.activeAll = false;
     this.activeDataset = false;
     siuaResults.shift();
-    this.items = siuaResults;
+    this.items, this.filteredResults, this.pageOfItems = siuaResults;
   }
 
   uncheckTemas(event: Event) {
@@ -388,12 +396,14 @@ export class ResultsComponent implements OnInit {
 
     } else {
       console.log(arg);
+      this.searchTerms = arg;
 
-      this.pageOfItems = auxResults.filter(element => element.title.toLowerCase().includes(arg.toLowerCase()))
+      this.filteredResults = auxResults.filter(element => this.removeAccents(element.title.toLowerCase()).includes(this.removeAccents(arg.toLowerCase())))
       console.log(auxResults.filter(element => element.title.toLowerCase().includes(arg.toLowerCase())));
-      this.items = this.pageOfItems;
 
-      this.numberOfResults = this.pageOfItems.length;
+      this.items = this.filteredResults;
+
+      this.numberOfResults = this.filteredResults.length;
 
 
       //Modifico el nº de datos de cada tipo
