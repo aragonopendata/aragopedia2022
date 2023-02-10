@@ -287,68 +287,76 @@ export class ResultsComponent implements OnInit {
   }
 
   filterByDataset() {
-    const datasetResults = [{}];
-    this.results.forEach((element: any) => {
-      if (element.type === 'Dataset') {
-        datasetResults.push(element);
-      }
-    });
+    // const datasetResults = [{}];
+    // this.results.forEach((element: any) => {
+    //   if (element.type === 'Dataset') {
+    //     datasetResults.push(element);
+    //   }
+    // });
+    const datasetResults = this.results.filter(element => element.type === 'Dataset');
     this.activeDataset = true;
     this.activeAll = false;
     this.activeCube = false;
     this.activeSiua = false;
     this.activeEli = false;
-    datasetResults.shift();
+    // datasetResults.shift();
     this.items = datasetResults;
+    this.pageOfItems = datasetResults.slice(0, 9)
     // this.totalDatasets = datasetResults.length;
   }
 
   filterByCube() {
-    const cubeResults = [{}];
-    this.results.forEach((element: any) => {
-      if (element.type === 'Cubo estadístico') {
-        cubeResults.push(element);
-      }
-    });
+    // const cubeResults = [{}];
+    // this.results.forEach((element: any) => {
+    //   if (element.type === 'Cubo estadístico') {
+    //     cubeResults.push(element);
+    //   }
+    // });
+    const cubeResults = this.results.filter(element => element.type === 'Cubo estadístico');
     this.activeCube = true;
     this.activeAll = false;
     this.activeDataset = false;
     this.activeSiua = false;
     this.activeEli = false;
-    cubeResults.shift();
+    // cubeResults.shift();
     this.items = cubeResults;
+    this.pageOfItems = cubeResults.slice(0, 9)
   }
 
   filterByEli() {
-    const eliResults = [{}];
-    this.results.forEach((element: any) => {
-      if (element.type === 'ELI') {
-        eliResults.push(element);
-      }
-    });
+    // const eliResults = [{}];
+    // this.results.forEach((element: any) => {
+    //   if (element.type === 'ELI') {
+    //     eliResults.push(element);
+    //   }
+    // });
+    const eliResults = this.results.filter(element => element.type === 'ELI');
     this.activeEli = true;
     this.activeCube = false;
     this.activeAll = false;
     this.activeSiua = false;
     this.activeDataset = false;
-    eliResults.shift();
+    // eliResults.shift();
     this.items = eliResults;
+    this.pageOfItems = eliResults.slice(0, 9);
   }
 
   filterBySiua() {
-    const siuaResults = [{}];
-    this.results.forEach((element: any) => {
-      if (element.type === 'SIUa') {
-        siuaResults.push(element);
-      }
-    });
+    // const siuaResults = [{}];
+    // this.results.forEach((element: any) => {
+    //   if (element.type === 'SIUa') {
+    //     siuaResults.push(element);
+    //   }
+    // });
+    const siuaResults = this.results.filter(element => element.type === 'SIUa');
     this.activeSiua = true;
     this.activeEli = false;
     this.activeCube = false;
     this.activeAll = false;
     this.activeDataset = false;
-    siuaResults.shift();
+    // siuaResults.shift();
     this.items = siuaResults;
+    this.pageOfItems = siuaResults.slice(0, 9);
   }
 
   uncheckTemas(event: Event) {
@@ -361,7 +369,6 @@ export class ResultsComponent implements OnInit {
   navigateAragopedia(cubo: string) {
     const index = cubo.lastIndexOf('/') + 1;
     const cuboId = cubo.substring(index);
-    console.log(cuboId);
     this.router.navigate(['aragopedia'], { queryParams: { tipo: 'provincia', id: '7823', datos: `${cuboId}TP` } })
   }
 
