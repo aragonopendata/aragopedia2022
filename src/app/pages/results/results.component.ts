@@ -240,7 +240,6 @@ export class ResultsComponent implements OnInit {
   onChangePage(pageOfItems: Array<any>) {
     // update current page of items
     this.pageOfItems = pageOfItems;
-
   }
 
   filterByCategory(event: any) {
@@ -279,7 +278,16 @@ export class ResultsComponent implements OnInit {
   }
 
   showAll() {
+    this.pageOfItems = this.results;
     this.items = this.pageOfItems;
+    //Reset buscador y filtros
+    this.filterResult = '';
+    this.numberOfResults = this.pageOfItems.length;
+    this.totalDatasets = this.pageOfItems.filter(element => element.type === 'Dataset').length;
+    this.totalCubes = this.pageOfItems.filter(element => element.type === 'Cubo estadístico').length;
+    this.totalEli = this.pageOfItems.filter(element => element.type === 'ELI').length;
+    this.totalSiua = this.pageOfItems.filter(element => element.type === 'SIUa').length;
+
     this.activeAll = true;
     this.activeDataset = false;
     this.activeCube = false;
@@ -295,7 +303,13 @@ export class ResultsComponent implements OnInit {
         datasetResults.push(element);
       }
     });
-    console.log(datasetResults);
+    //Reset buscador y filtros
+    this.filterResult = '';
+    this.numberOfResults = this.pageOfItems.length;
+    this.totalDatasets = this.pageOfItems.filter(element => element.type === 'Dataset').length;
+    this.totalCubes = this.pageOfItems.filter(element => element.type === 'Cubo estadístico').length;
+    this.totalEli = this.pageOfItems.filter(element => element.type === 'ELI').length;
+    this.totalSiua = this.pageOfItems.filter(element => element.type === 'SIUa').length;
 
     this.activeDataset = true;
     this.activeAll = false;
@@ -315,6 +329,15 @@ export class ResultsComponent implements OnInit {
         cubeResults.push(element);
       }
     });
+
+    //Reset buscador y filtros
+    this.filterResult = '';
+    this.numberOfResults = this.pageOfItems.length;
+    this.totalDatasets = this.pageOfItems.filter(element => element.type === 'Dataset').length;
+    this.totalCubes = this.pageOfItems.filter(element => element.type === 'Cubo estadístico').length;
+    this.totalEli = this.pageOfItems.filter(element => element.type === 'ELI').length;
+    this.totalSiua = this.pageOfItems.filter(element => element.type === 'SIUa').length;
+
     this.activeCube = true;
     this.activeAll = false;
     this.activeDataset = false;
@@ -332,6 +355,14 @@ export class ResultsComponent implements OnInit {
         eliResults.push(element);
       }
     });
+    //Reset buscador y filtros
+    this.filterResult = '';
+    this.numberOfResults = this.pageOfItems.length;
+    this.totalDatasets = this.pageOfItems.filter(element => element.type === 'Dataset').length;
+    this.totalCubes = this.pageOfItems.filter(element => element.type === 'Cubo estadístico').length;
+    this.totalEli = this.pageOfItems.filter(element => element.type === 'ELI').length;
+    this.totalSiua = this.pageOfItems.filter(element => element.type === 'SIUa').length;
+
     this.activeEli = true;
     this.activeCube = false;
     this.activeAll = false;
@@ -349,6 +380,14 @@ export class ResultsComponent implements OnInit {
         siuaResults.push(element);
       }
     });
+    //Reset buscador y filtros
+    this.filterResult = '';
+    this.numberOfResults = this.pageOfItems.length;
+    this.totalDatasets = this.pageOfItems.filter(element => element.type === 'Dataset').length;
+    this.totalCubes = this.pageOfItems.filter(element => element.type === 'Cubo estadístico').length;
+    this.totalEli = this.pageOfItems.filter(element => element.type === 'ELI').length;
+    this.totalSiua = this.pageOfItems.filter(element => element.type === 'SIUa').length;
+
     this.activeSiua = true;
     this.activeEli = false;
     this.activeCube = false;
@@ -389,8 +428,9 @@ export class ResultsComponent implements OnInit {
     } else {
       console.log(arg);
 
-      this.pageOfItems = auxResults.filter(element => element.title.toLowerCase().includes(arg.toLowerCase()))
-      console.log(auxResults.filter(element => element.title.toLowerCase().includes(arg.toLowerCase())));
+      this.pageOfItems = auxResults.filter(element => this.removeAccents(element.title.toLowerCase()).includes(this.removeAccents(arg.toLowerCase())))
+
+
       this.items = this.pageOfItems;
 
       this.numberOfResults = this.pageOfItems.length;
