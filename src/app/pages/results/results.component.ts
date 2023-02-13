@@ -63,6 +63,7 @@ export class ResultsComponent implements OnInit {
   selectedUrlSplit: string = '';
   numberOfResults!: number;
   filteredResults: any;
+  searchTerms!: string;
 
   // Queries URL
   queryUrlResultTemas!: string;
@@ -220,7 +221,7 @@ export class ResultsComponent implements OnInit {
     this.yearAsc = true;
     this.yearDesc = false;
     this.items = resultsByYear;
-    this.pageOfItems = resultsByYear;
+    this.pageOfItems = resultsByYear.slice(0, 9);
   }
 
   sortByYearDesc() {
@@ -230,7 +231,7 @@ export class ResultsComponent implements OnInit {
     this.yearAsc = false;
     this.yearDesc = true;
     this.items = resultsByYear;
-    this.pageOfItems = resultsByYear;
+    this.pageOfItems = resultsByYear.slice(0, 9);
   }
 
   toggleSidebar(): void {
@@ -278,6 +279,7 @@ export class ResultsComponent implements OnInit {
   }
 
   showAll() {
+<<<<<<< HEAD
     this.pageOfItems = this.results;
     this.items = this.pageOfItems;
     //Reset buscador y filtros
@@ -288,6 +290,10 @@ export class ResultsComponent implements OnInit {
     this.totalEli = this.pageOfItems.filter(element => element.type === 'ELI').length;
     this.totalSiua = this.pageOfItems.filter(element => element.type === 'SIUa').length;
 
+=======
+    this.items = this.results;
+    this.pageOfItems = this.results.slice(0, 9);
+>>>>>>> 8cc649474c552de086002d99868e3666bdaac4e9
     this.activeAll = true;
     this.activeDataset = false;
     this.activeCube = false;
@@ -296,13 +302,17 @@ export class ResultsComponent implements OnInit {
   }
 
   filterByDataset() {
+    // if (!this.filteredResults) {
+    //   this.filteredResults = this.results;
+    // }
+
     const datasetResults = [{}];
-    this.pageOfItems = this.results;
-    this.pageOfItems.forEach((element: any) => {
+    this.results.forEach((element: any) => {
       if (element.type === 'Dataset') {
         datasetResults.push(element);
       }
     });
+<<<<<<< HEAD
     //Reset buscador y filtros
     this.filterResult = '';
     this.numberOfResults = this.pageOfItems.length;
@@ -310,6 +320,10 @@ export class ResultsComponent implements OnInit {
     this.totalCubes = this.pageOfItems.filter(element => element.type === 'Cubo estadístico').length;
     this.totalEli = this.pageOfItems.filter(element => element.type === 'ELI').length;
     this.totalSiua = this.pageOfItems.filter(element => element.type === 'SIUa').length;
+=======
+
+    console.log(datasetResults);
+>>>>>>> 8cc649474c552de086002d99868e3666bdaac4e9
 
     this.activeDataset = true;
     this.activeAll = false;
@@ -318,13 +332,17 @@ export class ResultsComponent implements OnInit {
     this.activeEli = false;
     datasetResults.shift();
     this.items = datasetResults;
-    // this.totalDatasets = datasetResults.length;
+    this.pageOfItems = datasetResults.slice(0, 9);
+    this.totalDatasets = datasetResults.length;
   }
 
   filterByCube() {
     const cubeResults = [{}];
-    this.pageOfItems = this.results;
-    this.pageOfItems.forEach((element: any) => {
+    // if (!this.filteredResults) {
+    //   this.filteredResults = this.results;
+    // }
+
+    this.results.forEach((element: any) => {
       if (element.type === 'Cubo estadístico') {
         cubeResults.push(element);
       }
@@ -345,12 +363,13 @@ export class ResultsComponent implements OnInit {
     this.activeEli = false;
     cubeResults.shift();
     this.items = cubeResults;
+    this.pageOfItems = cubeResults.slice(0, 9);
+    this.totalCubes = cubeResults.length;
   }
 
   filterByEli() {
     const eliResults = [{}];
-    this.pageOfItems = this.results;
-    this.pageOfItems.forEach((element: any) => {
+    this.results.forEach((element: any) => {
       if (element.type === 'ELI') {
         eliResults.push(element);
       }
@@ -370,12 +389,13 @@ export class ResultsComponent implements OnInit {
     this.activeDataset = false;
     eliResults.shift();
     this.items = eliResults;
+    this.pageOfItems = eliResults.slice(0, 9)
   }
 
   filterBySiua() {
     const siuaResults = [{}];
-    this.pageOfItems = this.results;
-    this.pageOfItems.forEach((element: any) => {
+    // this.pageOfItems = this.results;
+    this.results.forEach((element: any) => {
       if (element.type === 'SIUa') {
         siuaResults.push(element);
       }
@@ -394,7 +414,8 @@ export class ResultsComponent implements OnInit {
     this.activeAll = false;
     this.activeDataset = false;
     siuaResults.shift();
-    this.items = siuaResults;
+    this.items = siuaResults
+    this.pageOfItems = siuaResults.slice(0, 9);
   }
 
   uncheckTemas(event: Event) {
@@ -427,13 +448,20 @@ export class ResultsComponent implements OnInit {
 
     } else {
       console.log(arg);
+      this.searchTerms = arg;
 
+<<<<<<< HEAD
       this.pageOfItems = auxResults.filter(element => this.removeAccents(element.title.toLowerCase()).includes(this.removeAccents(arg.toLowerCase())))
 
 
       this.items = this.pageOfItems;
+=======
+      auxResults.filter(element => this.removeAccents(element.title.toLowerCase()).includes(this.removeAccents(arg.toLowerCase())))
+>>>>>>> 8cc649474c552de086002d99868e3666bdaac4e9
 
-      this.numberOfResults = this.pageOfItems.length;
+      this.pageOfItems = auxResults.slice(0, 9);
+
+      this.numberOfResults = auxResults.length;
 
 
       //Modifico el nº de datos de cada tipo
