@@ -963,7 +963,7 @@ export class ResultComponent {
       if (rutaLimpia == '/') {
         return;
       }
-      let query: string = 'select distinct ?refArea ?nameRefArea ?refPeriod (strafter(str(?refPeriod), "http://reference.data.gov.uk/id/year/") AS ?nameRefPeriod) '
+      let query: string = 'select distinct ?refArea ?nameRefArea '
 
       let queryColumna: string = `https://opendata.aragon.es/sparql?default-graph-uri=&query=select+distinct+%3FcolUri+%3FtipoCol+str%28%3FnombreCol%29%0D%0A+where+%7B%0D%0A++%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fiaest%2Fdataset${rutaLimpia}%3E+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fcube%23structure%3E+%3Fdsd.%0D%0A++%3Fdsd+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fcube%23component%3E+%3Fcol.%0D%0A++%3Fcol+%3FtipoCol+%3FcolUri.%0D%0A++%3FcolUri+rdfs%3Alabel+%3FnombreCol.%0D%0A%7D%0D%0A%0D%0ALIMIT+500%0D%0A&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`
 
@@ -971,15 +971,18 @@ export class ResultComponent {
 
         this.columnas = data.results.bindings;
 
+        let columnasCheckMesYAno: Array<any> = [];
         this.columnas.forEach((element: any) => {
-          let nombreColumnaAux = element['callret-2'].value.replaceAll(' ', '_').toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[{(/,.)}]/g, '');
+          let nombreColumnaAux = element['callret-2'].value.replaceAll('%', 'porcentaje').replaceAll('-', '_').replaceAll('*', 'por').replaceAll(' ', '_').toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[{(/,.)}]/g, '');
           query += '?' + nombreColumnaAux + ' as ' + '?' + nombreColumnaAux + ' '
+
+          columnasCheckMesYAno.push(nombreColumnaAux)
         });
 
         this.aragopediaSvc.changeColumnas(this.columnas);
 
         let queryPrefijo = "<http://reference.data.gov.uk/id/year/"
-
+        columnasCheckMesYAno.includes('mes_y_ano') ? query += '' : query += '?refPeriod (strafter(str(?refPeriod), "http://reference.data.gov.uk/id/year/") AS ?nameRefPeriod) '
         query += 'where { \n'
         query += " ?obs qb:dataSet <http://opendata.aragon.es/recurso/iaest/dataset" + rutaLimpia + ">.\n";
         query += " ?obs <http://purl.org/linked-data/sdmx/2009/dimension#refPeriod> ?refPeriod.\n";

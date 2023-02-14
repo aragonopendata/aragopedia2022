@@ -316,7 +316,7 @@ export class AragopediaSelectorTemasComponent implements OnInit {
         return;
       }
 
-      let query: string = 'select distinct ?refArea ?nameRefArea ?refPeriod (strafter(str(?refPeriod), "http://reference.data.gov.uk/id/year/") AS ?nameRefPeriod) '
+      let query: string = 'select distinct ?refArea ?nameRefArea '
 
       // //console.log(rutaUsable.substring(index + 1).replaceAll('/', '-'));
 
@@ -328,15 +328,18 @@ export class AragopediaSelectorTemasComponent implements OnInit {
       this.aragopediaSvc.getData(queryColumna).subscribe(data => {
         this.columnas = data.results.bindings;
 
+        let columnasCheckMesYAno: Array<any> = [];
         this.columnas.forEach((element: any) => {
           let nombreColumnaAux = element['callret-2'].value.replaceAll('%', 'porcentaje').replaceAll('-', '_').replaceAll('*', 'por').replaceAll(' ', '_').toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[{(/,.)}]/g, '');
           query += '?' + nombreColumnaAux + ' as ' + '?' + nombreColumnaAux + ' '
+
+          columnasCheckMesYAno.push(nombreColumnaAux)
         });
 
         this.aragopediaSvc.changeColumnas(this.columnas);
 
         let queryPrefijo = "<http://reference.data.gov.uk/id/year/"
-
+        columnasCheckMesYAno.includes('mes_y_ano') ? query += '' : query += '?refPeriod (strafter(str(?refPeriod), "http://reference.data.gov.uk/id/year/") AS ?nameRefPeriod) '
         query += 'where { \n'
         query += " ?obs qb:dataSet <http://opendata.aragon.es/recurso/iaest/dataset" + rutaLimpia + ">.\n";
         query += " ?obs <http://purl.org/linked-data/sdmx/2009/dimension#refPeriod> ?refPeriod.\n";
