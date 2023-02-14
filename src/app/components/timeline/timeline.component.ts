@@ -54,7 +54,9 @@ export class TimeLineComponent implements OnInit {
         this.dataSource[index] = { date: element.year.value, dataQuantity: Number(element['callret-0'].value) }
       });
     });
+
   }
+
 
 }
 

@@ -2,9 +2,9 @@
     <div class="container space aragopedia-temas" style="margin:auto">
         <div class="filtrosDiv">
             <form [formGroup]="formGroup">
-                <div>
+                <fieldset>
                     <app-location></app-location>
-                </div>
+                </fieldset>
 
                 <div *ngIf="temasActive === true" class="seleccionar-datos">
                     <h2><mat-icon> table_chart</mat-icon> Seleccionar datos</h2>
@@ -26,7 +26,7 @@
         </div>
 
         <h3 class="datos-seleccionados" *ngIf="!firstLand || displayTema"><b>Datos seleccionados:</b><br>
-            <u>{{displayTema}}</u> en {{displayZona}}
+            <span class="underline">{{displayTema}}</span> en {{displayZona}}
         </h3>
         <div class="loading-table" *ngIf="loading">
             <mat-spinner [diameter]="70"></mat-spinner>
