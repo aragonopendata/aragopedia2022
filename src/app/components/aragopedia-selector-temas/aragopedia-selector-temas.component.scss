@@ -4,6 +4,14 @@
     text-align: center;
 }
 
+.underline {
+    text-decoration: underline;
+}
+
+fieldset {
+    border: none;
+}
+
 ::ng-deep {
     mat-form-field.temas {
         width: 75%;
