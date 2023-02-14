@@ -204,7 +204,9 @@ export class TimeLineComponent implements OnInit {
     this.staticDataSource.forEach((element: any, index: any) => {
       this.dataSource[index] = { date: element.year, dataQuantity: Number(element.datos) }
     });
+
   }
+
 
 }
 

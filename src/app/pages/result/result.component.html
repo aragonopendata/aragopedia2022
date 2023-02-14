@@ -379,7 +379,7 @@
             <div>
                 <h3 class="datos-seleccionados" [ngClass]="{'hidden': this.displayTema === ''}"><b>Datos
                         seleccionados:</b><br>
-                    <u>{{displayTema}}</u>
+                    <span class="underline">{{displayTema}}</span>
                 </h3>
                 <p [ngClass]="{'errorTabla' : !this.errorTabla}">No se encontraron datos</p>
                 <div class="loading" *ngIf="loading">
@@ -394,7 +394,8 @@
 
     </div>
     <div class="return">
-        <button class="btn return__btn" [routerLink]="['/']">Reanudar búsqueda</button>
+        <button class="btn return__btn" [routerLink]="['/']"><mat-icon>keyboard_arrow_left</mat-icon><span
+                class="return__text">Nueva búsqueda</span></button>
     </div>
 </ng-container>
 
@@ -669,7 +670,7 @@
             <div>
                 <h3 class="datos-seleccionados" [ngClass]="{'hidden': this.displayTema === ''}"><b>Datos
                         seleccionados:</b><br>
-                    <u>{{displayTema}}</u>
+                    <span class="underline">{{displayTema}}</span>
                 </h3>
                 <p [ngClass]="{'errorTabla' : !this.errorTabla}">No se encontraron datos</p>
                 <div class="loading" *ngIf="loading">
@@ -685,7 +686,8 @@
     </div>
 
     <div class="return">
-        <button class="btn return__btn" [routerLink]="['/']">Nueva búsqueda</button>
+        <button class="btn return__btn" [routerLink]="['/']"><mat-icon>keyboard_arrow_left</mat-icon><span
+                class="return__text">Nueva búsqueda</span></button>
     </div>
 </ng-container>
 
