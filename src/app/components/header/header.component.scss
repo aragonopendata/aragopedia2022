@@ -237,6 +237,10 @@ header {
     height: 169px;
     justify-content: center;
     align-items: center;
+
+    .opendata-header__logo {
+        max-width: 90%;
+    }
 }
 
 .app-title {
