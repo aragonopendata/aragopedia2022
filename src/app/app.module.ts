@@ -10,7 +10,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SearchComponent } from './components/search/search.component';
 import { TimeLineModule } from './components/timeline/timeline.component';
 import { SelectLocationComponent } from './components/select-location/select-location.component';
-import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatFormFieldModule, MatLabel } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { TemasComponent } from './components/temas/temas.component';
 import { HeaderComponent } from './components/header/header.component';
@@ -42,6 +42,7 @@ import { LocationComponent } from './components/aragopedia-selector-temas/locati
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { NgChartsModule } from 'ng2-charts';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -89,7 +90,9 @@ import { NgChartsModule } from 'ng2-charts';
     MatCheckboxModule,
     MatPaginatorModule,
     MatSortModule,
-    NgChartsModule
+    NgChartsModule,
+    MatSelectModule,
+
   ],
   providers: [ResultService],
   bootstrap: [AppComponent]

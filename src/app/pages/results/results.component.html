@@ -12,7 +12,8 @@
                 entre {{this.firstYear}} y {{this.lastYear}}:</u>
         </h2>
 
-        <form class="desktop__timeline" (ngSubmit)="filterByYears()">
+        <!-- <form class="desktop__timeline" (ngSubmit)="filterByYears()"> -->
+        <form class="desktop__timeline">
             <app-timeline [yearsSelected]="this.selectedYears"></app-timeline>
             <div class="results__filter-desktop" [ngClass]="{'active': active}">
 
@@ -26,7 +27,7 @@
                 <p class="hide" [ngClass]="{'error' : this.error}">Debes seleccionar entre 1 y 5 temas y un mínimo de 3
                     años</p>
                 <div class="buttons">
-                    <button class="btn filter-btn" type="submit">Aplicar filtros</button>
+                    <button (click)="filterByYears()" class="btn filter-btn" type="submit">Aplicar filtros</button>
                     <a class="uncheck-btn" (click)="uncheckTemas($event)">Borrar temas seleccionados</a>
                 </div>
             </div>

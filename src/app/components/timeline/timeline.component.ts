@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { DxRangeSelectorModule } from 'devextreme-angular';
 import { TimeLineSvc, YearsPeriod } from './timeline.service';
-
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-timeline',
@@ -12,6 +12,7 @@ import { TimeLineSvc, YearsPeriod } from './timeline.service';
   templateUrl: './timeline.component.html',
   styleUrls: ['./timeline.component.scss'],
 })
+
 
 export class TimeLineComponent implements OnInit {
   constructor(private timeLineSvc: TimeLineSvc) {
@@ -22,6 +23,11 @@ export class TimeLineComponent implements OnInit {
   firstYear: any;
   lastYear: any;
   dataSource = this.temp || [{}];
+  accessibleMode: boolean = false;
+  accessibleError: boolean = true;
+
+  firstYearSelected: string = '';
+  lastYearSelected: string = '';
 
   currentYear: string = (new Date().getFullYear()).toString();
 
@@ -168,7 +174,8 @@ export class TimeLineComponent implements OnInit {
       year: '2023',
       datos: '36',
     }
-  ]
+  ];
+  newStaticDataSource: any = [];
 
   getData(value: YearsPeriod[]): void {
     if (value) {
@@ -207,6 +214,19 @@ export class TimeLineComponent implements OnInit {
 
   }
 
+  accessibleSelect() {
+    this.firstYear = this.firstYearSelected;
+    if (this.firstYear) {
+      const index = this.staticDataSource.findIndex(element => element.year === this.firstYear);
+      this.newStaticDataSource = this.staticDataSource.slice(index);
+      console.log(this.newStaticDataSource);
+      this.accessibleError = false;
+    }
+    this.lastYear = this.lastYearSelected;
+    this.yearsSelected = [this.firstYear, this.lastYear];
+    this.yearsURL = `${this.yearsSelected[0]}-${this.yearsSelected[1]}`;
+
+  }
 
 }
 
@@ -214,7 +234,8 @@ export class TimeLineComponent implements OnInit {
   imports: [
     BrowserModule,
     DxRangeSelectorModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    FormsModule
   ],
   exports: [TimeLineComponent],
   declarations: [TimeLineComponent],
