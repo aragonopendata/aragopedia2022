@@ -3,8 +3,8 @@
     <p>Cargando línea temporal</p>
 </div>
 <div *ngIf="this.dataSource.length !== 1" class="space container" style="margin:auto; margin-bottom: 1rem">
-    <dx-range-selector (onValueChanged)="getData($event.value)" id="range-selector" title="Selecciona un rango de años"
-        [value]="yearsSelected" [dataSource]="dataSource">
+    <dx-range-selector *ngIf="!accessibleMode" (onValueChanged)="getData($event.value)" id="range-selector"
+        title="Selecciona un rango de años" [value]="yearsSelected" [dataSource]="dataSource">
         <dxo-margin [top]="50"></dxo-margin>
         <dxo-size [height]="280"></dxo-size>
         <dxo-chart>
@@ -17,10 +17,38 @@
         </dxo-scale>
         <dxo-slider-marker format="day"></dxo-slider-marker>
     </dx-range-selector>
+
+    <div class="accessible-mode" *ngIf="accessibleMode">
+        <form appearance="fill">
+            <div class="select-container">
+                <label>Año de inicio</label>
+                <select class="accessible__select select" [(ngModel)]="firstYearSelected" (change)="accessibleSelect()"
+                    [ngModelOptions]="{standalone: true}">
+                    <option *ngFor="let data of staticDataSource" [value]="data.year">
+                        {{data.year}}
+                    </option>
+                </select>
+            </div>
+
+            <div class="select-container" *ngIf="!accessibleError">
+                <label>Año de fin</label>
+                <select class="accessible__select select" [(ngModel)]="lastYearSelected" (change)="accessibleSelect()"
+                    [ngModelOptions]="{standalone: true}">
+                    <option *ngFor="let data of newStaticDataSource" [value]="data.year">
+                        {{data.year}}
+                    </option>
+                </select>
+            </div>
+        </form>
+    </div>
+
     <div class="years-selected" style="margin-top: 100px;">
         <p>Años seleccionados:
             <b> {{yearsURL}} </b>
         </p>
+        <button class="btn btn-accessible" (click)="accessibleMode = !accessibleMode"><span
+                *ngIf="!accessibleMode">Mostrar modo accesible</span><span *ngIf="accessibleMode">Ocultar modo
+                accesible</span></button>
 
     </div>
 </div>
