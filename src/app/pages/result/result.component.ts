@@ -823,9 +823,7 @@ export class ResultComponent {
   }
 
   checkForMunicipioProvincia() {
-    console.log(this.tipoLocalidadGlobal + ' ' + this.lugarBuscadoParsed)
     if (this.tipoLocalidadGlobal == 'municipio' && (this.lugarBuscadoParsed == 'Teruel' || this.lugarBuscadoParsed == 'Zaragoza' || this.lugarBuscadoParsed == 'Huesca')) {
-      console.log('cambia a provincia')
       return 'Provincia';
     }
     else {
