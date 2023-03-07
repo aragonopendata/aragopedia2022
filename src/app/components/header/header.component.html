@@ -1,40 +1,42 @@
 <header>
-  <div class="header container">
-    <div class="header__logo">
-      <a href="https://www.aragon.es/">
-        <img src="assets/logo-dga-color.svg" alt="Gobierno de Aragón. Ir a la página principal del portal." width="225"
-          height="50">
-      </a>
-    </div>
-    <div class="right-side">
-      <div class="header__europe">
-        <div class="zoom">
-          <a class="zoom-in" (click)="changeFont('+')">A<sup>+</sup></a>
-          <a class="zoom-out" (click)="changeFont('-')">A<sup>-</sup></a>
+    <div class="header container">
+        <div class="header__logo">
+            <a href="https://www.aragon.es/">
+                <img src="assets/logo-dga-color.svg" alt="Gobierno de Aragón. Ir a la página principal del portal."
+                    width="225" height="50">
+            </a>
         </div>
-        <img src="assets/flag_europe.svg" alt="Unión Europea" width="75" height="55">
-      </div>
-      <div class="header__menu">
-        <label for="toggle" class="header__burger">
-          <div></div>
-          <div></div>
-          <div></div>
-        </label>
-        <input type="checkbox" id="toggle">
-        <nav class="main-navigation">
-          <label class="close" for="toggle">
-            <svg xmlns="http://www.w3.org/2000/svg" width="23.334" height="23.334" viewBox="0 0 23.334 23.334">
-              <path id="Unión_1" data-name="Unión 1"
-                d="M10.607,10.607,0,21.213,10.607,10.607,0,0,10.607,10.607,21.213,0,10.607,10.607,21.213,21.213Z"
-                transform="translate(1.061 1.061)" fill="none" stroke="#fff" stroke-width="3"></path>
-            </svg>
-            <span>Cerrar</span>
-          </label>
-          <ul class="menu__links">
-            <li><span class="link-submenu" (click)="this.openSubMenuDatos()" [ngClass]="{'active':activeDatos}">Datos
-                <mat-icon class="link-submenu">keyboard_arrow_down</mat-icon>
-              </span>
-              <!-- (click)="activeDatos = !activeDatos; activeServicios = false; activeInfo = false;"
+        <div class="right-side">
+            <div class="header__europe">
+                <div class="zoom">
+                    <a class="zoom-in" (click)="changeFont('+')">A<sup>+</sup></a>
+                    <a class="zoom-out" (click)="changeFont('-')">A<sup>-</sup></a>
+                </div>
+                <img src="assets/flag_europe.svg" alt="Unión Europea" width="75" height="55">
+            </div>
+            <div class="header__menu">
+                <label for="toggle" class="header__burger">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </label>
+                <input type="checkbox" id="toggle">
+                <nav class="main-navigation">
+                    <label class="close" for="toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="23.334" height="23.334"
+                            viewBox="0 0 23.334 23.334">
+                            <path id="Unión_1" data-name="Unión 1"
+                                d="M10.607,10.607,0,21.213,10.607,10.607,0,0,10.607,10.607,21.213,0,10.607,10.607,21.213,21.213Z"
+                                transform="translate(1.061 1.061)" fill="none" stroke="#fff" stroke-width="3"></path>
+                        </svg>
+                        <span>Cerrar</span>
+                    </label>
+                    <ul class="menu__links">
+                        <li><span class="link-submenu" (click)="this.openSubMenuDatos()"
+                                [ngClass]="{'active':activeDatos}">Datos
+                                <mat-icon class="link-submenu">keyboard_arrow_down</mat-icon>
+                            </span>
+                            <!-- (click)="activeDatos = !activeDatos; activeServicios = false; activeInfo = false;"
                                 -->
                             <div class="submenu" [ngClass]="{'submenu__active-datos': activeDatos}">
                                 <div class="submenu__left">
@@ -135,17 +137,16 @@
             </div>
         </div>
     </div>
-  </div>
 </header>
 <div *ngIf="bodyOverlay" class="overlay"></div>
 <div class="opendata-header">
-  <div class="opendata-header__logo">
-    <a href="https://opendata.aragon.es/" alt="Enlace a la página principal de Aragón Open Data"><img
-        src="assets/logo-opendata.svg" alt="Logo de Aragón Open Data"></a>
-  </div>
+    <div class="opendata-header__logo">
+        <a href="https://opendata.aragon.es/" alt="Enlace a la página principal de Aragón Open Data"><img
+                src="assets/logo-opendata.svg" alt="Logo de Aragón Open Data"></a>
+    </div>
 </div>
 <div class="app-title">
-  <div class="container" style="margin: auto;">
-    <h1>Servicio Aragopedia: Datos enlazados en Aragón Open Data</h1>
-  </div>
+    <div class="container" style="margin: auto;">
+        <h1>Servicio Aragopedia: Datos enlazados en Aragón Open Data</h1>
+    </div>
 </div>
