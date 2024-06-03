@@ -3,7 +3,6 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { SelectLocationService } from '../select-location.service';
 
-
 @Component({
   selector: 'app-select-municipio',
   templateUrl: './municipios.component.html',
@@ -22,7 +21,6 @@ export class SelectMunicipioComponent implements OnInit {
   filteredMunicipios: any;
   myControlMunicipios = new FormControl('');
   temp = undefined;
-
   idLocalidad!: string;
   queryUrlGetCodigoIne!: string;
   queryIdWikiData!: string;
@@ -31,8 +29,6 @@ export class SelectMunicipioComponent implements OnInit {
   ngOnInit(): void {
 
     this.queryIdWikiData = `https://opendata.aragon.es/sparql?default-graph-uri=&query=select+%3Fs+str%28%3Fnombre%29+%3Fid+%3Fclasif%0D%0Awhere++%7B%0D%0A++++++%3Fs+%3Chttp%3A%2F%2Fwww.w3.org%2Fns%2Forg%23classification%3E+%3Fclasif.+%0D%0A++++++%3Fs+dc%3Aidentifier+%3Fid.+%0D%0A+++++%3Fs+dc%3Atitle+%3Fnombre.%0D%0A+++++VALUES+%3Fclasif+%7B%3Chttps%3A%2F%2Fwww.geonames.org%2Fontology%23A.ADM2%3E+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fkos%2Fcomarca%3E+%3Chttps%3A%2F%2Fwww.geonames.org%2Fontology%23P.PPL%3E%7D%0D%0A%7D%0D%0Aorder+by+asc%28%3Fclasif%29+%3Fid+%0D%0A&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`;
-
-    //Añado URL e ID a la lista de municipios
 
     setTimeout(() => {
       this.locationSvc.getData(this.queryIdWikiData).subscribe(data => {
@@ -47,6 +43,8 @@ export class SelectMunicipioComponent implements OnInit {
             }
           });
         });
+        //this.municipiosParsed.sort((a, b) => a.nombre.localeCompare(b.nombre, 'es', { sensitivity: 'base' })); // bien ordenados
+        //this.municipios.sort((a: string, b: string) => a.localeCompare(b, 'es', { sensitivity: 'base' })); // bien ordenados
       });
       this.show = true;
     }, 500);
@@ -56,12 +54,18 @@ export class SelectMunicipioComponent implements OnInit {
   }
 
   initForm() {
+
     this.formGroup = this.fb.group({
       'municipio': [this.selectedMunicipio]
     })
+
     this.formGroup.get('municipio')?.valueChanges.subscribe(response => {
       this.selectedMunicipio = response;
       this.selected = this.selectedMunicipio;
+      
+      this.municipiosParsed.sort((a, b) => a.nombre.localeCompare(b.nombre, 'es', { sensitivity: 'base' })); // bien ordenados
+      this.municipios.sort((a: string, b: string) => a.localeCompare(b, 'es', { sensitivity: 'base' })); // bien ordenados
+      
       this.municipiosParsed.forEach((municipio: any) => {
         if (municipio.nombre === this.selectedMunicipio) {
           this.selectedId = municipio.id;
@@ -71,7 +75,9 @@ export class SelectMunicipioComponent implements OnInit {
         this.router.navigate(['detalles'], { queryParams: { tipo: 'municipio', id: this.selectedId } })
       }
       this.filterData(response);
+
     });
+
   }
 
   filterData(enteredData: any) {
@@ -95,9 +101,11 @@ export class SelectMunicipioComponent implements OnInit {
       }
       return this.removeAccents(item.toLowerCase()).indexOf(this.removeAccents(enteredData.toLowerCase())) > -1
     });
+
   }
 
   getNames() {
+
     this.locationSvc.getMunicipios().subscribe(response => {
       this.municipios = response;
       this.filteredMunicipios = response;
@@ -107,7 +115,7 @@ export class SelectMunicipioComponent implements OnInit {
   removeAccents(str: any): any {
     // return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
     const acentos: any = { 'á': 'a', 'é': 'e', 'í': 'i', 'ó': 'o', 'ú': 'u' };
-    return str.split('').map((letra: any) => acentos[letra] || letra).join('').toString();
+   return str.split('').map((letra: any) => acentos[letra] || letra).join('').toString();
   }
 
 }
