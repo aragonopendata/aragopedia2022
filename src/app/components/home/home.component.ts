@@ -38,8 +38,10 @@ export class HomeComponent implements OnInit {
     this.temasSelected = this.temas.temasSeleccionados;
     this.selectedYears = this.years.yearsSelected;
     this.yearsURL = this.yearsSelectedURL.yearsURL;
+
     if ((this.temasSelected.length > 0 && this.temasSelected.length < 6) && Number(this.selectedYears[1]) - Number(this.selectedYears[0]) >= 2) {
       this.router.navigate([`results/${this.temasSelected}/${this.yearsURL}`]);
+      console.log([`results/${this.temasSelected}/${this.yearsURL}`])
     } else {
       this.error = true;
     }
