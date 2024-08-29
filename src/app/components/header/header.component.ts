@@ -19,6 +19,12 @@ export class HeaderComponent implements OnInit {
 
   fontSize: number = 16;
 
+  // showMenu: boolean = false;
+
+  isVisible: boolean = false; // Controla la visibilidad del menú
+  displayStyle: string = 'none'; // Controla el estilo display del menú
+
+
   constructor() { }
 
   ngOnInit(): void {
@@ -60,7 +66,29 @@ export class HeaderComponent implements OnInit {
       this.bodyOverlay = true;
     }
   }
+  openMenu()
+  {
+    
+  //   if(!this.showMenu)
+  //   {
+  //     this.showMenu=true;
+  //   }
+  //  else
+  //   {
+  //     this.showMenu=false;
+  //   }
+  if (this.isVisible) {
+    this.isVisible = false; // Oculta el menú
+  } else {
+    this.isVisible = true; // Muestra el menú
+  }
+}
 
+onTransitionEnd() {
+  if (!this.isVisible) {
+    this.displayStyle = 'none'; // Oculta completamente después de la transición
+  }
+}
   openSubMenuServicios() {
     this.activeDatos = false;
     this.activeInfo = false;

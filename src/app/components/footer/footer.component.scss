@@ -1,212 +1,120 @@
 footer {
-    background-color: var(--text-color);
-    color: #fff;
-    position: relative;
-    margin-top: 3em;
-
-    z-index: 9999;
-
-    h3 {
-        color: #fff;
-    }
-
-    a {
-        color: #fff;
-        text-decoration: none;
-
-        &:hover {
-            text-decoration: underline;
-        }
-    }
-
-    .footer-container {
-        margin: auto;
-    }
-
-    &::after {
-        content: "";
-        width: 100%;
-        position: relative;
-        height: 0.5rem;
-        background: #fdcb33;
-        background: -moz-linear-gradient(left, #fdcb33 0%, #fdcb33 33%, #fa9902 33%, #fa9902 66%, #f05442 66%, #f05442 100%, #f1f1f1 100%, #f05442 100%, #f05442 100%);
-        background: -webkit-linear-gradient(left, #fdcb33 0%, #fdcb33 33%, #fa9902 33%, #fa9902 66%, #f05442 66%, #f05442 100%, #f1f1f1 100%, #f05442 100%, #f05442 100%);
-        background: linear-gradient(to right, #fdcb33 0%, #fdcb33 33%, #fa9902 33%, #fa9902 66%, #f05442 66%, #f05442 100%, #f1f1f1 100%, #f05442 100%, #f05442 100%);
-        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fdcb33', endColorstr='#f05442', GradientType=1);
-        position: absolute;
-        bottom: 0;
-    }
-}
-
-.footer__suscriptions {
-    margin: auto;
-
-    .btn {
-        max-width: 130px;
-        margin: auto;
-
-
-    }
-
-    &::after {
-        content: "";
-        display: block;
-        width: 100%;
-        height: 2px;
-        background-color: #606060;
-        margin-top: 20px;
-    }
-}
-
-.footer__europe-mobile {
+    outline: 1px solid #92949B !important;
+    padding-top: 28px;
+    background-color: #f6f6f5;
+    margin-top: 50px;
+    padding-left: 25px;
+    padding-right: 25px;
+  } 
+ 
+  .c-footer__logo--ue {
+    background-image: url(https://preopendata.aragon.es/o/aragon-theme/images/dga/icons/icon-ue.svg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 42px;
+    width: 190px;
+  }
+ 
+  .d-block {
+    display: block !important;
+  }
+ 
+  .text-black {
+    color: #1f2331 !important;
+  }
+ 
+  .font-semibold {
+    font-weight: 400;
+  } 
+ 
+  .text-sm {
+    color: #00607a;
+  }
+ 
+  .no-underline {
+    text-decoration: underline;
+  }
+ 
+  .d-flex {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    text-align: center;
-
-    img {
-        max-width: 64px;
-        display: block;
-        margin: auto;
-    }
-}
-
-.footer__main-menu {
-    &::after {
-        content: "";
-        display: block;
-        width: 100%;
-        height: 2px;
-        background-color: #606060;
-        margin-top: 20px;
-    }
-
-    ul {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-wrap: wrap;
-        list-style: none;
-
-
-
-        li {
-            padding: .5em 1em;
-        }
-    }
-}
-
-.footer__menus {
-    display: flex;
-    flex-direction: column;
-
-    .footer__data::after,
-    .footer__services::after,
-    .footer__information::after {
-        content: "";
-        display: block;
-        width: 100%;
-        height: 2px;
-        background-color: #606060;
-        margin-top: 20px;
-    }
-
-    h3 {
-        font-size: 22px;
-        font-weight: bold;
-        margin-bottom: 1em;
-    }
-
-    ul {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-
-        li {
-            margin-bottom: .5em;
-        }
-    }
-}
-
-.footer__social {
-    ul {
-        list-style: none;
-        display: flex;
-        justify-content: center;
-        margin: auto;
-        padding: 0;
-
-        li {
-            margin: 0 .5em;
-
-            img {
-                max-width: 35px;
-            }
-        }
-    }
-}
-
-.footer__info {
-    text-align: center;
-}
-
-.europe__desktop {
-    display: none;
-}
-
-.suscriptions-pc {
-    display: none;
-}
-
-@media screen and (min-width: 768px) {
+  }
+ 
+  .space-between {
+    justify-content: space-between;
+  }
+ 
+  .c-ul--no-bullets li {
+    margin-bottom: 16px ;
+    font-size: 15px;
+    list-style: none;
+  }
+  .c-ul--no-bullets
+  {
+    padding-left: 0px;
+  }
+  .c-ul--no-bullets .seccion-aviso 
+  {
+    padding-right: 15px;
+    margin-bottom: 8px !important;
+  }
+ 
+  .c-link:focus
+  {
+    background-color: #fdcb33;
+      outline: 2px solid transparent;
+      outline-offset: 2px;
+      color: #1f2331;
+      box-shadow: 0 0 transparent, 0 0 transparent, inset 0 -2px 0 0 #1f2331;
+ 
+  }
+ 
+ .c-link:focus-within
+ {
+  background-color: #fdcb33;
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+    color: #1f2331;
+    box-shadow: 0 0 transparent, 0 0 transparent, inset 0 -2px 0 0 #1f2331;
+ 
+ }
+ 
+ .mt-30
+ {
+    margin-top: 30px;
+ } 
+ 
+ .c-h4 {
+    font-size: 15px;
+    font-weight: 600;
+  }
+ 
+  .c-link--neutral
+  {
+    color: #5e616b;
+  }
+  .mb-c-link--neutral
+  {
+    margin-bottom: 0px;
+  }
+  
+ 
+  @media screen and (max-width: 900px) {
     .footer__europe-mobile {
-        display: none;
+      flex-direction: column;
+      justify-content: left;
     }
-
-    .suscriptions-pc {
-        display: block
-    }
-
-    .footer__suscriptions {
-        display: none;
-    }
-
-    .footer__menus {
-        flex-direction: row;
-        justify-content: space-between;
-
-        .footer__data::after,
-        .footer__services::after,
-        .footer__information::after {
-            display: none;
-        }
-    }
-
-    .footer__submenu {
-        display: flex;
-        justify-content: center;
-
-        div {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        .europe__desktop {
-            display: block;
-            font-size: 10px;
-            text-align: center;
-            justify-content: center;
-
-            p {
-                line-height: 0.8rem;
-            }
-
-            img {
-                margin: auto;
-            }
-        }
-    }
-
-
-}
+  footer {
+    padding-left: 0px;
+    padding-right: 0px;
+  } 
+  }
+ 
+  .mb-c-n-footer
+  {
+    margin-top: -10px;
+  }
+ 
+  .border-neutral-base
+  {
+    margin-top: 20px;
+  }
