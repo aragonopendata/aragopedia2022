@@ -18,6 +18,9 @@ export class HeaderComponent implements OnInit {
   body: any = document.getElementsByTagName('body');
 
   fontSize: number = 16;
+  isVisible: boolean = false; 
+  displayStyle: string = 'none';
+
 
   constructor() { }
 
@@ -60,7 +63,19 @@ export class HeaderComponent implements OnInit {
       this.bodyOverlay = true;
     }
   }
+  openMenu() {
+    if (this.isVisible) {
+      this.isVisible = false; // Oculta el menú
+    } else {
+      this.isVisible = true; // Muestra el menú
+    }
+  }
 
+  onTransitionEnd() {
+    if (!this.isVisible) {
+      this.displayStyle = 'none'; // Oculta completamente después de la transición
+    }
+  }
   openSubMenuServicios() {
     this.activeDatos = false;
     this.activeInfo = false;
