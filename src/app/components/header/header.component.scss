@@ -12,7 +12,6 @@
   }
 }
 
-
 @media screen and (min-width: 576px) and (max-width: 991px) {
   .footer__europe-mobile {
     flex-direction: column !important;
@@ -96,15 +95,19 @@
 
 
 .c-h4 {
-  font-size: 15px;
-  font-weight: 600;
-  color: #00607a;
   text-decoration: underline;
+  font-weight: 700;
+  font-style: normal;
+  font-size: 16px;
+  line-height: 24px;
+  color: rgb(0, 71, 92);
 }
 
 header {
   padding-top: 10px;
   background-color: white;
+  /*tipo de letra general para todo el componente del header*/
+  font-family: "Open Sans", ui-sans-serif, system-ui, "Segoe UI", "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important;
 }
 
 header .header__logo {
@@ -128,11 +131,13 @@ header .header__logo {
 .c-link {
   text-decoration: none;
   color: #5c5963;
-  font-size: 15px;
+  font-size: 14px;
+  font-style: normal;
+  line-height: 24px;
 }
 
 .font-semibold {
-  font-weight: 400px;
+  font-weight: 400px !important;
 }
 
 .c-link:hover {
@@ -216,7 +221,6 @@ header .header__logo {
   color: #1f2331;
   outline: 2px solid transparent;
   outline-offset: 2px;
-
   cursor: pointer;
 }
 
@@ -225,9 +229,9 @@ header .header__logo {
   border: none;
   cursor: pointer;
   color: #00607a;
-  font-weight: 500;
+  font-weight: 600;
   border-radius: 2px;
-  font-size: 14px;
+  line-height: 20px;
 }
 
 
@@ -236,7 +240,6 @@ header .header__logo {
   align-items: center;
   padding: 7px 15px 7px 8px !important;
   font-size: 14px;
-  font-family: Arial, sans-serif;
   color: #005366;
   border-radius: 3px;
   cursor: pointer;

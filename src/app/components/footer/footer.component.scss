@@ -1,4 +1,3 @@
-
 //************************************MEDIA QUERYS*******************************
 @media screen and (min-width: 0px) and (max-width: 575px) {
   .footer__europe-mobile {
@@ -6,7 +5,12 @@
     justify-content: space-around !important;
   }
 
-  footer .container{
+  .footer__europe-mobile-mapa-web {
+    flex-direction: column !important;
+    justify-content: left !important;
+  }
+
+  footer .container {
     padding-left: 15px !important;
     padding-right: 15px !important;
   }
@@ -18,7 +22,12 @@
     justify-content: space-between !important;
   }
 
-  footer .container{
+  .footer__europe-mobile-mapa-web {
+    flex-direction: column !important;
+    justify-content: left !important;
+  }
+
+  footer .container {
     padding-left: 40px !important;
     padding-right: 40px !important;
   }
@@ -30,7 +39,12 @@
     justify-content: space-between !important;
   }
 
-  footer .container{
+  .footer__europe-mobile-mapa-web {
+    flex-direction: row !important;
+    justify-content: left !important;
+  }
+
+  footer .container {
     padding-left: 80px !important;
     padding-right: 80px !important;
   }
@@ -43,7 +57,12 @@
     justify-content: space-between !important;
   }
 
-  footer .container{
+  .footer__europe-mobile-mapa-web {
+    flex-direction: row !important;
+    justify-content:  left !important;
+  }
+
+  footer .container {
     padding-left: 150px !important;
     padding-right: 150px !important;
   }
@@ -53,9 +72,14 @@
   .footer__europe-mobile {
     flex-direction: row !important;
     justify-content: space-between !important;
+  } 
+
+  .footer__europe-mobile-mapa-web {
+    flex-direction: row !important;
+    justify-content:  left !important;
   }
 
-  footer .container{
+  footer .container {
     padding-left: 230px !important;
     padding-right: 230px !important;
   }
@@ -67,12 +91,16 @@
     justify-content: space-between !important;
   }
 
-  footer .container{
+  .footer__europe-mobile-mapa-web {
+    flex-direction: row !important;
+    justify-content:  left !important;
+  }
+
+  footer .container {
     padding-left: 400px !important;
     padding-right: 400px !important;
   }
 }
-
 
 //************************************MEDIA QUERYS*******************************
 
@@ -82,113 +110,108 @@
 }
 
 footer {
-    outline: 1px solid #92949B !important;
-    padding-top: 28px;
-    background-color: #f6f6f5;
-    margin-top: 50px;
-    // padding-left: 25px;
-    // padding-right: 25px;
-  } 
- 
-  .c-footer__logo--ue {
-    background-image: url(https://preopendata.aragon.es/o/aragon-theme/images/dga/icons/icon-ue.svg);
-    background-size: cover;
-    background-repeat: no-repeat;
-    height: 42px;
-    width: 190px;
-  }
- 
-  .d-block {
-    display: block !important;
-  }
- 
-  .text-black {
-    color: #1f2331 !important;
-  }
- 
-  .font-semibold {
-    font-weight: 400;
-  } 
- 
-  .text-sm {
-    color: #00607a;
-  }
- 
-  .no-underline {
-    text-decoration: underline;
-  }
- 
-  .d-flex {
-    display: flex;
-  }
- 
-  .space-between {
-    justify-content: space-between;
-  }
- 
-  .c-ul--no-bullets li {
-    margin-bottom: 16px ;
-    font-size: 15px;
-    list-style: none;
-  }
-  .c-ul--no-bullets
-  {
-    padding-left: 0px;
-  }
-  .c-ul--no-bullets .seccion-aviso 
-  {
-    padding-right: 15px;
-    margin-bottom: 8px !important;
-  }
- 
-  .c-link:focus
-  {
-    background-color: #fdcb33;
-      outline: 2px solid transparent;
-      outline-offset: 2px;
-      color: #1f2331;
-      box-shadow: 0 0 transparent, 0 0 transparent, inset 0 -2px 0 0 #1f2331;
- 
-  }
- 
- .c-link:focus-within
- {
+  /*tipo de letra general para todo el componente del header*/
+ /*tipo de letra general para todo el componente del header*/
+ font-family: "Open Sans", ui-sans-serif, system-ui, "Segoe UI", "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important;
+
+  outline: 1px solid #92949B !important;
+  padding-top: 28px;
+  background-color: #f6f6f5;
+  margin-top: 50px;
+  // padding-left: 25px;
+  // padding-right: 25px;
+}
+
+.c-footer__logo--ue {
+  background-image: url(https://preopendata.aragon.es/o/aragon-theme/images/dga/icons/icon-ue.svg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 42px;
+  width: 190px;
+}
+
+.d-block {
+  display: block !important;
+}
+
+.text-black {
+  color: #1f2331 !important;
+}
+
+.font-semibold {
+  font-weight: 400;
+}
+
+.text-sm {
+  color: #00607a;
+}
+
+.no-underline {
+  text-decoration: underline;
+}
+
+.d-flex {
+  display: flex;
+}
+
+.space-between {
+  justify-content: space-between;
+}
+
+.c-ul--no-bullets li {
+  margin-bottom: 16px;
+  font-size: 15px;
+  list-style: none;
+}
+
+.c-ul--no-bullets {
+  padding-left: 0px;
+}
+
+.c-ul--no-bullets .seccion-aviso {
+  padding-right: 15px;
+  margin-bottom: 8px !important;
+}
+
+.c-link:focus {
   background-color: #fdcb33;
-    outline: 2px solid transparent;
-    outline-offset: 2px;
-    color: #1f2331;
-    box-shadow: 0 0 transparent, 0 0 transparent, inset 0 -2px 0 0 #1f2331;
- 
- }
- 
- .mt-30
- {
-    margin-top: 30px;
- } 
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  color: #1f2331;
+  box-shadow: 0 0 transparent, 0 0 transparent, inset 0 -2px 0 0 #1f2331;
 
- .c-h4 {
-    font-size: 15px;
-    font-weight: 600;
-  }
- 
-  .c-link--neutral
-  {
-    color: #5e616b;
-  }
-  .mb-c-link--neutral
-  {
-    margin-bottom: 0px;
-  }
-  
- 
+}
 
- 
-  .mb-c-n-footer
-  {
-    margin-top: -10px;
-  }
- 
-  .border-neutral-base
-  {
-    margin-top: 20px;
-  }
+.c-link:focus-within {
+  background-color: #fdcb33;
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  color: #1f2331;
+  box-shadow: 0 0 transparent, 0 0 transparent, inset 0 -2px 0 0 #1f2331;
+
+}
+
+.mt-30 {
+  margin-top: 30px;
+}
+
+.c-h4 {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.c-link--neutral {
+  color: #5e616b;
+}
+
+.mb-c-link--neutral {
+  margin-bottom: 0px;
+}
+
+.mb-c-n-footer {
+  margin-top: -10px;
+}
+
+.border-neutral-base {
+  margin-top: 20px;
+}
