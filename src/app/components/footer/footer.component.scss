@@ -144,6 +144,7 @@ footer {
 
 .font-bold {
   font-weight: 600;
+  line-height: 20px !important;
 }
 
 
@@ -165,7 +166,7 @@ footer {
 
 .c-ul--no-bullets li {
   margin-bottom: 16px;
-  font-size: 15px;
+  font-size: 14px !important;
   list-style: none;
 }
 
