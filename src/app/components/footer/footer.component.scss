@@ -1,10 +1,93 @@
+
+//************************************MEDIA QUERYS*******************************
+@media screen and (min-width: 0px) and (max-width: 575px) {
+  .footer__europe-mobile {
+    flex-direction: column !important;
+    justify-content: space-around !important;
+  }
+
+  footer .container{
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+  }
+}
+
+@media screen and (min-width: 576px) and (max-width: 991px) {
+  .footer__europe-mobile {
+    flex-direction: column !important;
+    justify-content: space-between !important;
+  }
+
+  footer .container{
+    padding-left: 40px !important;
+    padding-right: 40px !important;
+  }
+}
+
+@media screen and (min-width: 992px) and (max-width: 1279px) {
+  .footer__europe-mobile {
+    flex-direction: row !important;
+    justify-content: space-between !important;
+  }
+
+  footer .container{
+    padding-left: 80px !important;
+    padding-right: 80px !important;
+  }
+}
+
+/*MEDIA QUERY PARA RESOLUCONES GRANDES*/
+@media screen and (min-width: 1280px) and (max-width: 1439px) {
+  .footer__europe-mobile {
+    flex-direction: row !important;
+    justify-content: space-between !important;
+  }
+
+  footer .container{
+    padding-left: 150px !important;
+    padding-right: 150px !important;
+  }
+}
+
+@media screen and (min-width: 1440px) and (max-width: 1650px) {
+  .footer__europe-mobile {
+    flex-direction: row !important;
+    justify-content: space-between !important;
+  }
+
+  footer .container{
+    padding-left: 230px !important;
+    padding-right: 230px !important;
+  }
+}
+
+@media screen and (min-width: 1651px) and (max-width: 1980px) {
+  .footer__europe-mobile {
+    flex-direction: row !important;
+    justify-content: space-between !important;
+  }
+
+  footer .container{
+    padding-left: 400px !important;
+    padding-right: 400px !important;
+  }
+}
+
+
+//************************************MEDIA QUERYS*******************************
+
+.footer__europe-mobile {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
 footer {
     outline: 1px solid #92949B !important;
     padding-top: 28px;
     background-color: #f6f6f5;
     margin-top: 50px;
-    padding-left: 25px;
-    padding-right: 25px;
+    // padding-left: 25px;
+    // padding-right: 25px;
   } 
  
   .c-footer__logo--ue {
@@ -98,16 +181,7 @@ footer {
   }
   
  
-  @media screen and (max-width: 900px) {
-    .footer__europe-mobile {
-      flex-direction: column;
-      justify-content: left;
-    }
-  footer {
-    padding-left: 0px;
-    padding-right: 0px;
-  } 
-  }
+
  
   .mb-c-n-footer
   {
