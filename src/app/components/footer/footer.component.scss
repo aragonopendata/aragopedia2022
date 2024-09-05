@@ -111,9 +111,8 @@
 
 footer {
   /*tipo de letra general para todo el componente del header*/
- /*tipo de letra general para todo el componente del header*/
- font-family: "Open Sans", ui-sans-serif, system-ui, "Segoe UI", "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important;
-
+//  font-family: "Open Sans", ui-sans-serif, system-ui, "Segoe UI", "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important;
+  font-family: 'Open Sans', sans-serif;
   outline: 1px solid #92949B !important;
   padding-top: 28px;
   background-color: #f6f6f5;
@@ -144,12 +143,14 @@ footer {
 
 .font-bold {
   font-weight: 600;
+  font-family: 'Open Sans', sans-serif !important;
   line-height: 20px !important;
 }
 
 
 .text-sm {
-  color: #00607a;
+  // color: #276981;
+  color:rgb(0, 71, 92) !important;
 }
 
 .no-underline {

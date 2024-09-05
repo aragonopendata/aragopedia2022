@@ -84,6 +84,7 @@
 .footer__europe-mobile {
   padding-left: 0 !important;
   padding-right: 0 !important;
+  padding-top: 16px !important;
 }
 
 /*--------------------------------------------------------------------------------*/
@@ -107,7 +108,8 @@ header {
   padding-top: 10px;
   background-color: white;
   /*tipo de letra general para todo el componente del header*/
-  font-family: "Open Sans", ui-sans-serif, system-ui, "Segoe UI", "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important;
+  // font-family: "Open Sans", ui-sans-serif, system-ui, "Segoe UI", "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important;
+  font-family: 'Open Sans', sans-serif !important;
 }
 
 header .header__logo {
@@ -121,11 +123,13 @@ header .header__logo {
 
 .c-ul--no-bullets li {
   list-style: none;
-  padding-bottom: 10px;
+  padding-bottom: 8px !important;
 }
 
 .c-ul--no-bullets {
   padding-left: 0px;
+  margin-top: 8px !important;
+  margin-bottom: 8px !important;
 }
 
 .c-link {
@@ -140,27 +144,26 @@ header .header__logo {
   font-weight: 400px !important;
 }
 
+/*Estilos para los links como titulo o submenú*/
 .c-link:hover {
   color: #00607a;
   text-decoration: underline;
 }
-
-.c-link:focus {
+.c-link:focus, .nav-item-item:focus {
   background-color: #fdcb33;
   outline: 2px solid transparent;
   outline-offset: 2px;
   color: #1f2331;
   box-shadow: 0 0 transparent, 0 0 transparent, inset 0 -2px 0 0 #1f2331;
 }
-
-.c-link:focus-within {
+.c-link:focus-within, .nav-item-item:focus-within {
   background-color: #fdcb33;
   outline: 2px solid transparent;
   outline-offset: 2px;
   color: #1f2331;
-  box-shadow: 0 0 transparent, 0 0 transparent, inset 0 -2px 0 0 #1f2331;
+  box-shadow: 0 0 transparent, 0 0 transparent, inset 0 -2px 0 0 #08090c;
 }
-
+/******************************************/
 .justify-content-end {
   justify-content: end;
 }
@@ -200,6 +203,7 @@ header .header__logo {
   transform: scaleY(1);
   /* Escala vertical completa */
   display: block;
+  border-bottom: 1px solid #92949B;
   /* Mostrar como bloque */
 }
 
@@ -245,8 +249,9 @@ header .header__logo {
   font-weight: 600;
   line-height: 20px;
   position: relative;
-   /*tipo de letra general para todo el componente del header*/
-   font-family: "Open Sans", ui-sans-serif, system-ui, "Segoe UI", "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important;
+  /*tipo de letra general para todo el componente del header*/
+  // font-family: "Open Sans", ui-sans-serif, system-ui, "Segoe UI", "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important;
+  font-family: 'Open Sans', sans-serif !important;
 
 }
 
