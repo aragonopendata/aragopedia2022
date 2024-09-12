@@ -321,12 +321,19 @@
                                     href="/results/">Medio Ambiente</a>
                             </span>
                             <p class="slides__abstract" *ngIf="leerMas">{{link.resumen.value}} <span class="leer-mas"
-                                    (click)="this.leerMas = !this.leerMas">Reducir resumen
+                                    (click)="this.leerMas = !this.leerMas"
+                                    (keyup.enter)="this.leerMas = !this.leerMas"
+                                    (keyup.space)="this.leerMas = !this.leerMas"
+                                    tabindex="0" >
+                                    Reducir resumen
                                     <mat-icon>keyboard_arrow_up</mat-icon></span></p>
                             <p class=" slides__abstract" *ngIf="leerMas === false">
                                 {{this.reduceText(link.resumen.value)}}... <span class="leer-mas"
-                                    (click)="this.leerMas = !this.leerMas">Ver
-                                    resumen completo <mat-icon>keyboard_arrow_down</mat-icon></span></p>
+                                    (click)="this.leerMas = !this.leerMas"
+                                    (keyup.space)="this.leerMas = !this.leerMas"
+                                    (keyup.enter)="this.leerMas = !this.leerMas" 
+                                    tabindex="0">
+                                    Ver resumen completo <mat-icon>keyboard_arrow_down</mat-icon></span></p>
 
 
                             <a href="{{link.url.value}}" target="_blank" class="slide__link">Leer más</a>
@@ -368,7 +375,9 @@
                         <input formControlName="tema" [(ngModel)]="selectedTema" matInput [formControl]="temasControl"
                             type="select" [matAutocomplete]="auto" />
                         <mat-autocomplete #auto="matAutocomplete">
-                            <mat-option *ngFor="let tema of filteredTemas" (click)="temaSelected(tema)"
+                            <mat-option *ngFor="let tema of filteredTemas" 
+                                (click)="temaSelected(tema)"
+                                (keyup)="temaSelected(tema)"
                                 [value]="tema.nombre.value">
                                 {{tema.nombre.value}}
                             </mat-option>
@@ -623,11 +632,16 @@
                                     href="{{link.tema.value}}" target="_blank">Medio Ambiente</a>
                             </span>
                             <p class="slides__abstract" *ngIf="leerMas">{{link.resumen.value}} <span class="leer-mas"
-                                    (click)="this.leerMas = !this.leerMas">Reducir resumen</span></p>
+                                    (click)="this.leerMas = !this.leerMas"
+                                    (keyup.enter)="this.leerMas = !this.leerMas"
+                                    (keyup.space)="this.leerMas = !this.leerMas"
+                                    tabindex="0" > Reducir resumen</span></p>
                             <p class=" slides__abstract" *ngIf="leerMas === false">
                                 {{this.reduceText(link.resumen.value)}}... <span class="leer-mas"
-                                    (click)="this.leerMas = !this.leerMas">Ver
-                                    resumen completo</span></p>
+                                    (click)="this.leerMas = !this.leerMas"
+                                    (keyup.enter)="this.leerMas = !this.leerMas"
+                                    (keyup.space)="this.leerMas = !this.leerMas"
+                                    tabindex="0" >Ver resumen completo</span></p>
 
 
                             <a href="{{link.url.value}}" target="_blank" class="slide__link">Leer más</a>
@@ -659,7 +673,9 @@
                         <input formControlName="tema" [(ngModel)]="selectedTema" matInput [formControl]="temasControl"
                             type="select" [matAutocomplete]="auto" />
                         <mat-autocomplete #auto="matAutocomplete">
-                            <mat-option *ngFor="let tema of filteredTemas" (click)="temaSelected(tema)"
+                            <mat-option *ngFor="let tema of filteredTemas" 
+                                (click)="temaSelected(tema)"
+                                (keyup)="temaSelected(tema)"
                                 [value]="tema.nombre.value">
                                 {{tema.nombre.value}}
                             </mat-option>

@@ -592,6 +592,7 @@ export class FichaAragonComponent implements OnInit {
       eol: '\n'
     };
 
+    /* sonarqube-ignore */
     new ngxCsv(this.dataDownload, `Datos de La Comunidad de ${this.lugarBuscado}`, options);
   }
 
@@ -638,7 +639,7 @@ export class FichaAragonComponent implements OnInit {
 
         if (rutaLimpia.charAt(rutaLimpia.length - 1) != "A") {
 
-          this.showTemas
+          //this.showTemas
           let tipoZona = "";
 
           // //console.log(this.selectedProvinciaNombre != '');

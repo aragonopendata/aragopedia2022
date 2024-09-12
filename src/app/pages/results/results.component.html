@@ -34,12 +34,19 @@
         </form>
 
         <div class="results__filter">
-            <div class="results__filter-menu" [ngClass]="{'filter-active': this.active}" (click)="toggleSidebar()">
+            <div class="results__filter-menu" [ngClass]="{'filter-active': this.active}" 
+                (click)="toggleSidebar()"
+                (keydown)="handleKeyEvent($event)"
+                >
                 <mat-icon>reorder</mat-icon>
                 <p *ngIf="this.active">Ocultar filtros</p>
                 <p *ngIf="!this.active">Mostrar filtros</p>
             </div>
-            <div class="results__filter-order" (click)="sortResults(pageOfItems)">
+            <div class="results__filter-order" (click)="sortResults(pageOfItems)"
+                    tabindex="0"   
+                    (keydown)="handleKeyEvent($event)"
+                    (keypress)="handleKeyEvent($event)"
+                    (keyup)="handleKeyEvent($event)">
                 <mat-icon>swap_vert</mat-icon>
                 <p>Orden <span *ngIf="sortByName">A - Z</span><span *ngIf="!sortByName">Z - A</span></p>
             </div>

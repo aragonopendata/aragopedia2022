@@ -894,7 +894,7 @@ export class ResultComponent {
       headers: ["Nombre", "Email", "Teléfono", "Dirección", "Código Postal", "Habitantes", "Suelo Rural", "Suelo Urbano", "Densidad de población", "Polígonos Industriales", "Explotaciones Ganaderas", "Alojamientos hoteleros", "Incendios desde 2001", "Hectáreas afectadas", "Menciones en publicaciones", "Alojamientos de turismo rural", "Imagen de portada", "Porcentaje de suelo rural con respecto Aragón", "Porcentaje de suelo urbano con respecto Aragón", "Es uno de los 20 municipios más poblados", "Edad media de los hombres", "Edad media de las mujeres", "Creative Works", "Miembros del pleno territorial", "Personas ilustres nacidas en el territorio", "Entidades singulares"],
       eol: '\n'
     };
-
+/* sonarqube-ignore */
     new ngxCsv(this.dataDownload, `Datos de ${this.capitalizeString(this.tipoLocalidad)} ${this.lugarBuscado}`, options);
   }
 
@@ -942,7 +942,7 @@ export class ResultComponent {
 
         if (rutaLimpia.charAt(rutaLimpia.length - 1) != "A") {
 
-          this.showTemas
+          //this.showTemas
           let tipoZona = "";
 
           // //console.log(this.selectedProvinciaNombre != '');

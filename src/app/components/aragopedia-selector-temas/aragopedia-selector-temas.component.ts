@@ -255,7 +255,8 @@ export class AragopediaSelectorTemasComponent implements OnInit {
     this.formGroup = this.fb.group({
       "tema": [this.selectedTema]
     })
-    this.formGroup.reset
+    /*se comento luego de correr SonarQube*/
+    //this.formGroup.reset
     this.formGroup.get('tema')?.valueChanges.subscribe(response => {
       this.selectedTema = response;
       /* this.displayTema = response; */
@@ -269,7 +270,7 @@ export class AragopediaSelectorTemasComponent implements OnInit {
   temaSelectedAuto(tema: any) {
 
 
-    this.filteredTemas = this.showTemas
+    this.filteredTemas = this.showTemas;
 
 
     let nombreZona = "";
@@ -354,7 +355,9 @@ export class AragopediaSelectorTemasComponent implements OnInit {
 
         if (rutaLimpia.charAt(rutaLimpia.length - 1) != "A") {
 
-          this.showTemas
+          //se comento luego de correr SonarQube
+          //-------this.showTemas
+
           let tipoZona = "";
 
           // //console.log(this.selectedProvinciaNombre != '');
@@ -374,7 +377,6 @@ export class AragopediaSelectorTemasComponent implements OnInit {
           }
 
           // //console.log("nombre zona " + nombreZona);
-
           // //console.log(this.deleteSpace(nombreZona));
 
           let uriPrefix = "<http://opendata.aragon.es/recurso/territorio/" + tipoZona + "/";
@@ -531,26 +533,16 @@ export class AragopediaSelectorTemasComponent implements OnInit {
 
   capitalizeString(str: any): string {
     return str.replace(/\w\S*/g, function (txt: any) {
-      for (let i = 0; i < txt.length; i++) {
-        if (txt.toLowerCase() === 'el'
-          || txt.toLowerCase() === 'y'
-          || txt.toLowerCase() === 'del'
-          || txt.toLowerCase() === 'de'
-          || txt.toLowerCase() === 'las') {
-          return txt.toLowerCase();
-        }
-        if (txt.toLowerCase() !== 'de'
-          || txt.toLowerCase() !== 'del'
-          || txt.toLowerCase() !== 'la'
-          || txt.toLowerCase() !== 'las'
-          || txt.toLowerCase() !== 'los') {
-          return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-        }
-        else {
-          return txt.toLowerCase()
-        }
-      }
 
+      const lowerTxt = txt.toLowerCase();
+
+      if (lowerTxt === 'el' || lowerTxt === 'y' || lowerTxt === 'del' ||
+          lowerTxt === 'de' || lowerTxt === 'las' || lowerTxt === 'la' || lowerTxt === 'los') {
+          return lowerTxt;
+      } else {
+
+          return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+      }
     });
   }
 

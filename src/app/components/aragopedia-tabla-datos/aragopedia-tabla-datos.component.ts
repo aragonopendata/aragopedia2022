@@ -159,8 +159,12 @@ export class AragopediaTablaDatosComponent {
     const column = sort.active;
     this.dataSrc.data.map(element => {
       for (const key in element) {
-        isNaN(Number(element[key].value)) ? element[key].value = element[key].value : element[key].value = Number(element[key].value);
-        element[key].value === '10 o más' ? element[key].value = 10 : element[key].value;
+        if (element[key].value === '10 o más') {
+          element[key].value = 10;
+        } 
+        else if (!isNaN(Number(element[key].value))) {
+          element[key].value = Number(element[key].value);
+        }
       }
     });
 

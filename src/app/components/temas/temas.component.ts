@@ -21,7 +21,9 @@ export class TemasComponent implements OnInit {
 
   temas: string[] = [];
   temasUnicos!: string[];
-  temasConIconos: any = undefined || [{}];
+  //temasConIconos: any = undefined || [{}];
+
+  temasConIconos: any = [{}]
 
   iconosTemas: string[] = [
     'ciencia.png',

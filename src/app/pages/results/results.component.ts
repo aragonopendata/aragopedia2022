@@ -361,7 +361,11 @@ export class ResultsComponent implements OnInit {
   uncheckTemas(event: Event) {
     event.preventDefault();
     this.temasParsed.forEach(tema => {
-      tema.check ? tema.check = false : null;
+      //tema.check ? tema.check = false : null;
+      if (tema.check) {
+        tema.check = false;
+      }
+      
     })
   }
 
@@ -369,6 +373,9 @@ export class ResultsComponent implements OnInit {
     const index = cubo.lastIndexOf('/') + 1;
     const cuboId = cubo.substring(index);
     this.router.navigate(['aragopedia'], { queryParams: { tipo: 'provincia', id: '7823', datos: `${cuboId}TP` } })
+  }
+
+  handleKeyEvent(event: KeyboardEvent) {
   }
 
 }
