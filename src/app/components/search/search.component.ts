@@ -30,7 +30,7 @@ export class SearchComponent implements OnInit {
   onSubmit(searchData: any) {
     // Process checkout data here
     this.currentSearch('');
-    // this.currentYears;
+    
     searchData.years = this.timelineSvc.getCurrentYears();
     this.formGroup.reset();
     console.warn('Búsqueda completa: ', searchData);

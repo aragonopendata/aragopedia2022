@@ -9,8 +9,6 @@
         </mat-label>
         <input [(ngModel)]="selectedComarca" matInput [formControl]="myControlComarcas" type="select"
             [matAutocomplete]="auto" formControlName="municipio" (change)="initForm()" />
-        <!-- <input [(ngModel)]="selected"  matInput [formControl]="myControlMunicipios" type="select"
-        [matAutocomplete]="auto" />-->
         <mat-autocomplete #auto="matAutocomplete">
             <mat-option *ngFor="let comarca of filteredComarcas" [value]="comarca.nombre.value">
                 {{comarca.nombre.value}}

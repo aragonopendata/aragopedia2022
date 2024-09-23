@@ -245,7 +245,6 @@ export class AragopediaSelectorTemasComponent implements OnInit {
   }
 
   removeAccents(str: any): any {
-    // return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
     const acentos: any = { 'á': 'a', 'é': 'e', 'í': 'i', 'ó': 'o', 'ú': 'u', 'Á': 'A', 'É': 'E', 'Í': 'I', 'Ó': 'O', 'Ú': 'U' };
     return str.split('').map((letra: any) => acentos[letra] || letra).join('').toString();
   }
@@ -339,16 +338,12 @@ export class AragopediaSelectorTemasComponent implements OnInit {
 
         this.aragopediaSvc.changeColumnas(this.columnas);
 
-        let queryPrefijo = "<http://reference.data.gov.uk/id/year/"
+
         columnasCheckMesYAno.includes('mes_y_ano') ? query += '' : query += '?refPeriod (strafter(str(?refPeriod), "http://reference.data.gov.uk/id/year/") AS ?nameRefPeriod) '
         query += 'where { \n'
         query += " ?obs qb:dataSet <http://opendata.aragon.es/recurso/iaest/dataset" + rutaLimpia + ">.\n";
         query += " ?obs <http://purl.org/linked-data/sdmx/2009/dimension#refPeriod> ?refPeriod.\n";
-        //query += "FILTER (?refPeriod IN (";
-        //query += queryPrefijo = "<http://reference.data.gov.uk/id/year/" + '2010' + ">"; //Cambiar por minimo años
-        // for (var i = (2010); i <= 2020; i++) {
-        //   query += ',' + queryPrefijo + i + ">";
-        // }
+   
         query += " ?obs <http://purl.org/linked-data/sdmx/2009/dimension#refArea> ?refArea.\n";
         query += " ?refArea rdfs:label ?nameRefArea.";
         query += ' FILTER ( lang(?nameRefArea) = "es" ).\n';

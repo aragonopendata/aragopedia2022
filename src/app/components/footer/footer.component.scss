@@ -110,15 +110,11 @@
 }
 
 footer {
-  /*tipo de letra general para todo el componente del header*/
-//  font-family: "Open Sans", ui-sans-serif, system-ui, "Segoe UI", "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important;
-  font-family: 'Open Sans', sans-serif;
+ font-family: 'Open Sans', sans-serif;
   outline: 1px solid #92949B !important;
   padding-top: 28px;
   background-color: #f6f6f5;
   margin-top: 50px;
-  // padding-left: 25px;
-  // padding-right: 25px;
 }
 
 .c-footer__logo--ue {
@@ -149,7 +145,6 @@ footer {
 
 
 .text-sm {
-  // color: #276981;
   color:rgb(0, 71, 92) !important;
 }
 

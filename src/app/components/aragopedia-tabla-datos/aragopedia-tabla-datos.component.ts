@@ -6,7 +6,6 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { timeout } from 'rxjs';
-// import * as $ from 'jquery';
 declare var $: any;
 interface DatosTabla {
   [key: string]: string;
@@ -74,17 +73,15 @@ export class AragopediaTablaDatosComponent {
           });
 
           let auxColumnas = [{ nombre: /* `${this.aragopediaSvc.tipoLocalidad}` */ 'Área', matColumnDef: 'nameRefArea' }, { nombre: 'Fecha subida', matColumnDef: 'nameRefPeriod' }]
-          //console.log(auxColumnas)
+      
           this.nombresColumnas.forEach((element: any) => {
-            //console.log(this.normalizeColumnName(element['callret-2'].value))
+       
             if (this.displayedColumns.includes(this.normalizeColumnName(element['callret-2'].value))) {
               let columnaAux: Columna = { nombre: element['callret-2'].value, matColumnDef: this.normalizeColumnName(element['callret-2'].value) }
               auxColumnas.push(columnaAux);
             }
           });
-          //console.log(this.displayedColumns)
-          //console.log(auxColumnas)
-          //console.log(this.columnasTabla)
+        
           this.columnasTabla = auxColumnas;
           let nameRefPeriod = false;
           let mes_y_ano = false;
@@ -107,19 +104,6 @@ export class AragopediaTablaDatosComponent {
         this.displayedColumns.splice((this.displayedColumns.indexOf('refPeriod')), 1);
 
         this.linkDescargaJSON = this.aragopediaSvc.queryTemas;
-
-        /*         datos.forEach((item: any) => {
-                  for (const key in item) {
-                    const element = item[key].value;
-        
-                    if (element.startsWith('http')) {
-                      const index = element.lastIndexOf('/')
-                      element.substring(index);
-                      item[key].value = element.substring(index + 1);
-                    }
-        
-                  }
-                }); */
 
         this.dataSrc = new MatTableDataSource(response.results.bindings);
         this.sortedData = new MatTableDataSource(this.dataSrc.data.slice());

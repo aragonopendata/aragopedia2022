@@ -215,12 +215,6 @@
                 </a>
             </div>
         </section>
-
-        <!-- <section class="container template__graphics">
-            <div class="graphics__item" style="width: 100%;">
-                <app-piramide-poblacion></app-piramide-poblacion>
-            </div>
-        </section> -->
         <section class="container template__graphics">
             <div class="graphics__item poblacion" style="width: 100%;"
                 *ngIf="lineChartData.datasets[0].data.length > 0">
@@ -365,7 +359,6 @@
 
         <section class="container template__statistics">
             <h2>Encuentra los datos estadísticos de {{this.tituloFicha}}</h2>
-            <!-- <app-aragopedia-selector-temas [selectedMunicipioNombre]="'Ababuj'"></app-aragopedia-selector-temas> -->
             <form [formGroup]="formGroup">
                 <div class="selector-temas">
                     <mat-form-field class="temas">
@@ -444,10 +437,7 @@
                             target="_blank"><mat-icon>open_in_new</mat-icon><span
                                 class="big-number">{{format(this.poblacion)}}</span>Habitantes ({{yearPoblacion}})</a>
                     </li>
-                    <!-- <li *ngIf="this.densidadPoblacion"><a href="{{dataSource.densidad}}"
-                            target="_blank"><mat-icon>open_in_new</mat-icon><span
-                                class="big-number">{{format(this.densidadPoblacion)}}</span>Habitantes por
-                            KM<sup>2</sup></a></li> -->
+     
                     <li *ngIf="this.poligonos"><a href="{{dataSource.poligonos}}"
                             target="_blank"><mat-icon>open_in_new</mat-icon><span
                                 class="big-number">{{format(this.poligonos)}}</span></a>Polígonos industriales
@@ -578,9 +568,6 @@
                 </div>
             </div>
         </section>
-
-
-
         <section class="container template__graphics">
             <div class="graphics__item presupuestos" *ngIf="presupuestos">
                 <h2>Información sobre presupuestos</h2>

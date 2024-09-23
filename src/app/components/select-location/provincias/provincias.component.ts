@@ -21,7 +21,7 @@ export class SelectProvinciaComponent implements OnInit {
   idLocalidad!: string;
   selectedId!: string;
   queryIdWikiData!: string;
-  // temp = undefined;
+
   provinciasParsed: object[] = [
     {
       nombreCompleto: 'Diputación Provincial de Zaragoza',

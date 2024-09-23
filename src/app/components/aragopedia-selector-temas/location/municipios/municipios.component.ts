@@ -108,7 +108,7 @@ export class MunicipiosComponent implements OnInit {
 
     this.municipiosParsed.forEach((municipio: any) => {
       if (municipio.nombre === this.selectedMunicipio) {
-        //////console.log('selected')
+        
         this.selectedId = municipio.id;
         if (this.locationService.comarcaNombre != '' || this.locationService.provincia != '' || this.locationService.provincia != undefined) {
 
@@ -121,8 +121,6 @@ export class MunicipiosComponent implements OnInit {
   }
 
   selectMunicipioFromURL(idMuni: any) {
-
-    //////console.log('selectMunicipiofromURL');
 
     this.municipiosParsed.forEach((municipio: any) => {
       if (municipio.id === idMuni) {
@@ -167,7 +165,7 @@ export class MunicipiosComponent implements OnInit {
   }
 
   removeAccents(str: any): any {
-    // return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    
     const acentos: any = { 'á': 'a', 'é': 'e', 'í': 'i', 'ó': 'o', 'ú': 'u' };
     return str.split('').map((letra: any) => acentos[letra] || letra).join('').toString();
   }

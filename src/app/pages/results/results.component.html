@@ -12,7 +12,7 @@
                 entre {{this.firstYear}} y {{this.lastYear}}:</u>
         </h2>
 
-        <!-- <form class="desktop__timeline" (ngSubmit)="filterByYears()"> -->
+        
         <form class="desktop__timeline">
             <app-timeline [yearsSelected]="this.selectedYears"></app-timeline>
             <div class="results__filter-desktop" [ngClass]="{'active': active}">
@@ -141,23 +141,6 @@
             </div>
         </div>
     </section>
-
-    <!-- <section class="sidebar" [ngClass]="{'active': active}">
-        <div class="sidebar__cerrar" (click)="toggleSidebar()">
-            <mat-icon>close</mat-icon> <span>Cerrar filtros</span>
-        </div>
-        <div class="sidebar__timeline">
-            <app-timeline [yearsSelected]="this.selectedYears"></app-timeline>
-        </div>
-        <div class="sidebar__categories">
-            <h3 class="sidebar__categories-title">Categorías</h3>
-            <ul *ngFor="let tema of temasParsed">
-                <li>
-                    <mat-icon>chevron_right</mat-icon><a (click)="filterByCategory(tema.title)">{{tema.title}}</a>
-                </li>
-            </ul>
-        </div>
-    </section> -->
 
     <div class="return">
         <button class="btn return__btn" [routerLink]="['/']"><mat-icon>keyboard_arrow_left</mat-icon><span

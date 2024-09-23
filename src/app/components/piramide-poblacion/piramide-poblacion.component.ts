@@ -72,9 +72,6 @@ export class PiramidePoblacionComponent implements OnInit {
 
   ngOnInit() {
 
-
-    // this.codigoIne = this.capitalizeString(this._route.snapshot.paramMap.get('municipio'));
-    // this.lugarBuscadoParsed = this.deleteSpace(this._route.snapshot.paramMap.get('municipio'));
     this._route.queryParams.subscribe(params => {
       this.tipoLocalidad = params['tipo'];
       this.codigoIne = params['id'];
@@ -273,16 +270,6 @@ export class PiramidePoblacionComponent implements OnInit {
         newStr += str[i + 1]
       }
     }
-
-    // if (str.includes('-')) {
-    //   const index = str.indexOf('-');
-    //   const replacement = str[index + 1].toUpperCase();
-    //   return str
-    //     .replaceAll(str[index + 1], replacement)
-    //     .replace('ArcoS', 'Arcos')
-    //     .replace('MonfLorite', 'Monflorite')
-    //     .replace('AínSa', 'Aínsa')
-    // }
     return newStr;
   }
 

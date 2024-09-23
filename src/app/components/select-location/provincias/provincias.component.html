@@ -5,8 +5,7 @@
         </mat-label>
         <input [(ngModel)]="selectedProvincia" matInput [formControl]="myControlProvincias" type="select"
             [matAutocomplete]="auto" formControlName="municipio" />
-        <!-- <input [(ngModel)]="selected"  matInput [formControl]="myControlMunicipios" type="select"
-        [matAutocomplete]="auto" />-->
+
         <mat-autocomplete #auto="matAutocomplete">
             <mat-option *ngFor="let provincia of filteredProvincias" [value]="provincia">
                 {{provincia}}

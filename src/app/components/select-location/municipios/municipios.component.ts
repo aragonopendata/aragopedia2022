@@ -43,8 +43,6 @@ export class SelectMunicipioComponent implements OnInit {
             }
           });
         });
-        //this.municipiosParsed.sort((a, b) => a.nombre.localeCompare(b.nombre, 'es', { sensitivity: 'base' })); // bien ordenados
-        //this.municipios.sort((a: string, b: string) => a.localeCompare(b, 'es', { sensitivity: 'base' })); // bien ordenados
       });
       this.show = true;
     }, 500);
@@ -113,7 +111,6 @@ export class SelectMunicipioComponent implements OnInit {
   }
 
   removeAccents(str: any): any {
-    // return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
     const acentos: any = { 'á': 'a', 'é': 'e', 'í': 'i', 'ó': 'o', 'ú': 'u' };
    return str.split('').map((letra: any) => acentos[letra] || letra).join('').toString();
   }

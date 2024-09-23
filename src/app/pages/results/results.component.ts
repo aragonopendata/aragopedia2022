@@ -75,10 +75,6 @@ export class ResultsComponent implements OnInit {
     this.lastYear = this.selectedYears[1]
     this.yearsURL = `${this.firstYear}-${this.lastYear}`;
     this.temasSelected = this._route.snapshot.paramMap.get('temas')?.split(',');
-
-
-    //this.queryTemasUrl = 'https://opendata.aragon.es/sparql?default-graph-uri=&query=select+sum%28%3Fcnt%29+%3Ftipo+%3FlabelTema+%3FuriTema+from+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fei2av2%3E+where%0D%0A%7B%0D%0A%3FuriTema+a+%3Chttp%3A%2F%2Fwww.w3.org%2F2004%2F02%2Fskos%2Fcore%23Concept%3E%3B%0D%0A++++%3Chttp%3A%2F%2Fwww.w3.org%2F2004%2F02%2Fskos%2Fcore%23prefLabel%3E+%3FlabelTema%3B%0D%0A++++%3Chttp%3A%2F%2Fwww.w3.org%2Fns%2Fprov%23wasUsedBy%3E+%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fprocedencia%2FE2F7D8F3-6578-15FA-D429-F957DC7D61EF%3E.%0D%0A%7B%0D%0Aselect+distinct+count%28distinct+%3Fs%29+as+%3Fcnt+%3Ftipo++%3FlabelTema+%7B%0D%0A%3Fs+%3FpTema+%3Ftema.%0D%0A%3Fs+a+%3Ftipo.%0D%0A%3Ftema+skos%3AprefLabel+%3FlabelTema.%0D%0A%0D%0A+VALUES+%3FpTema+%7B+%3Chttp%3A%2F%2Fwww.w3.org%2Fns%2Forg%23classification%3E+%3Chttp%3A%2F%2Fwww.w3.org%2Fns%2Fdcat%23theme%3E+%7D.%0D%0A%0D%0AVALUES+%3Ftipo+%7B+%0D%0A%3Chttp%3A%2F%2Fschema.org%2FCreativeWork%3E%0D%0A%3Chttp%3A%2F%2Fwww.w3.org%2Fns%2Fdcat%23Dataset%3E%0D%0A%3Chttp%3A%2F%2Fwww.w3.org%2Fns%2Forg%23Organization%3E%0D%0A%3Chttp%3A%2F%2Fwww.w3.org%2F2006%2Fvcard%2Fns%23Location%3E%0D%0A%3Chttp%3A%2F%2Fschema.org%2FEvent%3E%0D%0A%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fcube%23dataSet%3E%0D%0A%7D%0D%0A%7D%0D%0Agroup+by+%3Ftipo+%3FlabelTema%0D%0A%7D%0D%0Aunion%0D%0A%7B%0D%0Aselect+distinct+count%28distinct+%3Fs%29+as+%3Fcnt+%3Ftipo++%3FlabelTema+%7B%0D%0A%3Fs+%3FpTema+%3FlabelTema.%0D%0A%3Fs+a+%3Ftipo.%0D%0A%0D%0A+VALUES+%3FpTema+%7B++%3Chttp%3A%2F%2Fwww.w3.org%2Fns%2Fdcat%23theme%3E+%7D.%0D%0A%0D%0AVALUES+%3Ftipo+%7B+%0D%0A%3Chttp%3A%2F%2Fwww.w3.org%2Fns%2Fdcat%23Dataset%3E%0D%0A%7D%0D%0A%7D%0D%0Agroup+by+%3Ftipo+%3FlabelTema%0D%0A%0D%0A%7D%0D%0AFILTER+%28regex%28%3FuriTema%2C+%22http%3A%2F%2Fdatos.gob.es%2Fkos%2Fsector-publico%2Fsector%2F%22%29%29.%0D%0A%7D%0D%0Agroup+by+%3Ftipo+%3FlabelTema+%3FuriTema%0D%0Aorder+by+%3FlabelTema&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on';
-    // temas datos.gob.es
     this.queryTemasUrl = 'https://opendata.aragon.es/sparql?default-graph-uri=&query=PREFIX+skos%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2004%2F02%2Fskos%2Fcore%23%3E%0D%0A%0D%0ASELECT+DISTINCT+count%28%3FuriTema+as+%3Fcnt%29+%3Ftipo+%3FlabelTema+%3FuriTema+WHERE+%7B%0D%0A++%3FuriTema+a+skos%3AConcept.%0D%0A++%3FuriTema+skos%3AprefLabel+%3FlabelTema.%0D%0A++FILTER%28CONTAINS%28STR%28%3FuriTema%29%2C+%22datos.gob.es%22%29%29%0D%0A++BIND%28%22skos%3AConcept%22+AS+%3Ftipo%29.%0D%0A%7D&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on'
 
 
@@ -255,7 +251,6 @@ export class ResultsComponent implements OnInit {
     let temasFiltered: string[] = [];
 
     this.temasParsed.forEach(tema => {
-      // tema.check ? temasFiltered.filter(temaFiltered => temaFiltered !== tema.title) : temasFiltered;
       if (tema.check) {
         temasFiltered.push(tema.title)
       } else {
@@ -286,74 +281,48 @@ export class ResultsComponent implements OnInit {
   }
 
   filterByDataset() {
-    // const datasetResults = [{}];
-    // this.results.forEach((element: any) => {
-    //   if (element.type === 'Dataset') {
-    //     datasetResults.push(element);
-    //   }
-    // });
     const datasetResults = this.results.filter(element => element.type === 'Dataset');
     this.activeDataset = true;
     this.activeAll = false;
     this.activeCube = false;
     this.activeSiua = false;
     this.activeEli = false;
-    // datasetResults.shift();
     this.items = datasetResults;
     this.pageOfItems = datasetResults.slice(0, 9)
-    // this.totalDatasets = datasetResults.length;
   }
 
   filterByCube() {
-    // const cubeResults = [{}];
-    // this.results.forEach((element: any) => {
-    //   if (element.type === 'Cubo estadístico') {
-    //     cubeResults.push(element);
-    //   }
-    // });
+    
     const cubeResults = this.results.filter(element => element.type === 'Cubo estadístico');
     this.activeCube = true;
     this.activeAll = false;
     this.activeDataset = false;
     this.activeSiua = false;
     this.activeEli = false;
-    // cubeResults.shift();
+    
     this.items = cubeResults;
     this.pageOfItems = cubeResults.slice(0, 9)
   }
 
   filterByEli() {
-    // const eliResults = [{}];
-    // this.results.forEach((element: any) => {
-    //   if (element.type === 'ELI') {
-    //     eliResults.push(element);
-    //   }
-    // });
     const eliResults = this.results.filter(element => element.type === 'ELI');
     this.activeEli = true;
     this.activeCube = false;
     this.activeAll = false;
     this.activeSiua = false;
     this.activeDataset = false;
-    // eliResults.shift();
+    
     this.items = eliResults;
     this.pageOfItems = eliResults.slice(0, 9);
   }
 
   filterBySiua() {
-    // const siuaResults = [{}];
-    // this.results.forEach((element: any) => {
-    //   if (element.type === 'SIUa') {
-    //     siuaResults.push(element);
-    //   }
-    // });
     const siuaResults = this.results.filter(element => element.type === 'SIUa');
     this.activeSiua = true;
     this.activeEli = false;
     this.activeCube = false;
     this.activeAll = false;
     this.activeDataset = false;
-    // siuaResults.shift();
     this.items = siuaResults;
     this.pageOfItems = siuaResults.slice(0, 9);
   }
@@ -361,7 +330,6 @@ export class ResultsComponent implements OnInit {
   uncheckTemas(event: Event) {
     event.preventDefault();
     this.temasParsed.forEach(tema => {
-      //tema.check ? tema.check = false : null;
       if (tema.check) {
         tema.check = false;
       }

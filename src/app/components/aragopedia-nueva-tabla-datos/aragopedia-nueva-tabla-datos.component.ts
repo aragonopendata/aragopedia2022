@@ -2,7 +2,7 @@ import { Component, NgModule, OnInit, Sanitizer, ViewChild, AfterViewInit } from
 import { AragopediaService } from '../aragopedia-tabla-datos/aragopediaService';
 import { DomSanitizer } from '@angular/platform-browser';
 import { AragopediaSelectorTemasComponent } from '../aragopedia-selector-temas/aragopedia-selector-temas.component';
-// import * as $ from 'jquery';
+
 declare var $: any;
 interface DatosTabla {
   [key: string]: string;

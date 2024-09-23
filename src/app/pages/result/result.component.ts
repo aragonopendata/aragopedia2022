@@ -234,16 +234,7 @@ export class ResultComponent {
 
   ngOnInit() {
 
-
-
-    //Query id-localidades-tipo
     this.queryIdWikiData = `https://opendata.aragon.es/sparql?default-graph-uri=&query=select+%3Fs+str%28%3Fnombre%29+%3Fid+%3Fclasif%0D%0Awhere++%7B%0D%0A++++++%3Fs+%3Chttp%3A%2F%2Fwww.w3.org%2Fns%2Forg%23classification%3E+%3Fclasif.+%0D%0A++++++%3Fs+dc%3Aidentifier+%3Fid.+%0D%0A+++++%3Fs+dc%3Atitle+%3Fnombre.%0D%0A+++++VALUES+%3Fclasif+%7B%3Chttps%3A%2F%2Fwww.geonames.org%2Fontology%23A.ADM2%3E+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fkos%2Fcomarca%3E+%3Chttps%3A%2F%2Fwww.geonames.org%2Fontology%23P.PPL%3E%7D%0D%0A%7D%0D%0Aorder+by+asc%28%3Fclasif%29+%3Fid+%0D%0A&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`;
-
-    // this.lugarBuscado = this.capitalizeString(this._route.snapshot.paramMap.get('municipio'));
-    // this.lugarBuscadoParsed = this.deleteSpace(this._route.snapshot.paramMap.get('municipio'));
-    // this.tipoLocalidad = this.deleteSpace(this._route.snapshot.paramMap.get('tipoLocalidad'));
-
-    // this.codigoIne = this._route.snapshot.paramMap.get('municipio');
     this._route.queryParams.subscribe(params => {  //DE AQUI LEES LOS PARAMETROS DE LA URL PARAMETROS URL
       this.codigoIne = params['id'];
       this.tipoLocalidad = params['tipo'];
@@ -266,15 +257,6 @@ export class ResultComponent {
     //Obtenemos id y tipo de localidad antes de nada
 
     this.resultSvc.getData(this.queryIdWikiData).subscribe((data: any) => {
-      // const found = data?.results.bindings.find((element: any) => this.capitalizeString(element['callret-1'].value) == this.lugarBuscado);
-      //   element['callret-1'].value.toUpperCase() === this.lugarBuscado.toUpperCase();
-      // }))
-
-      // this.codigoIne = found.id.value;
-
-      // const urlAnalizada = found.s.value.split('/');
-      // this.tipoLocalidad = urlAnalizada[6];
-
       if (this.codigoIne !== undefined) {
 
         //Queries con ID
@@ -416,7 +398,6 @@ export class ResultComponent {
           });
         })
 
-        //if (this.tipoLocalidad === 'municipio') {
         this.resultSvc.getData(this.queryUrlGetCodigoIne).subscribe((data) => {
           const urlAnalizada = data?.results.bindings[0].wikidata.value;
           this.idLocalidad = urlAnalizada.split('/')[4];
@@ -442,8 +423,6 @@ export class ResultComponent {
           })
 
         });
-        //}
-
         this.resultSvc.getData(this.queryUrlOficinaComarcal).subscribe(data => {
           this.tieneOficinaComarcal = Number(data.results.bindings[0]['callret-0'].value);
         })
@@ -531,8 +510,6 @@ export class ResultComponent {
           this.lugarBuscadoParsed = 'Jarque';
         }
       }
-
-
       // Queries con nombres
 
       if (this.tipoLocalidad === 'municipio') {
@@ -687,7 +664,6 @@ export class ResultComponent {
           const datos = data.results.bindings;
 
           this.poblacion = data.results.bindings[0].poblac.value;
-          // this.poblacion = data.results.bindings.find((lugar: any) => lugar.nameRefArea.value === this.lugarBuscado).poblac.value;
           this.dataDownload[0].habitantes = this.poblacion;
           this.tablaPoblacion = datos;
 
@@ -798,16 +774,6 @@ export class ResultComponent {
         newStr += str[i + 1]
       }
     }
-
-    // if (str.includes('-')) {
-    //   const index = str.indexOf('-');
-    //   const replacement = str[index + 1].toUpperCase();
-    //   return str
-    //     .replaceAll(str[index + 1], replacement)
-    //     .replace('ArcoS', 'Arcos')
-    //     .replace('MonfLorite', 'Monflorite')
-    //     .replace('AínSa', 'Aínsa')
-    // }
     return newStr;
   }
 
@@ -930,11 +896,6 @@ export class ResultComponent {
         query += 'where { \n'
         query += " ?obs qb:dataSet <http://opendata.aragon.es/recurso/iaest/dataset" + rutaLimpia + ">.\n";
         query += " ?obs <http://purl.org/linked-data/sdmx/2009/dimension#refPeriod> ?refPeriod.\n";
-        //query += "FILTER (?refPeriod IN (";
-        //query += queryPrefijo = "<http://reference.data.gov.uk/id/year/" + '2010' + ">"; //Cambiar por minimo años
-        // for (var i = (2010); i <= 2020; i++) {
-        //   query += ',' + queryPrefijo + i + ">";
-        // }
         query += " ?obs <http://purl.org/linked-data/sdmx/2009/dimension#refArea> ?refArea.\n";
         query += " ?refArea rdfs:label ?nameRefArea.";
         query += ' FILTER ( lang(?nameRefArea) = "es" ).\n';
@@ -942,15 +903,7 @@ export class ResultComponent {
 
         if (rutaLimpia.charAt(rutaLimpia.length - 1) != "A") {
 
-          //this.showTemas
           let tipoZona = "";
-
-          // //console.log(this.selectedProvinciaNombre != '');
-          // //console.log(this.selectedComarcaNombre != '');
-          // //console.log(this.selectedMunicipioNombre != '')
-          // //console.log("nombre zona " + nombreZona);
-
-          // //console.log(this.deleteSpace(nombreZona));
           let uriPrefix;
           if (this.tipoLocalidad === 'diputacion') {
             uriPrefix = "<http://opendata.aragon.es/recurso/territorio/" + "Provincia/";
@@ -972,9 +925,7 @@ export class ResultComponent {
             query += "OPTIONAL { ?obs <" + element.colUri.value + "> ?foo" + icolumnas + ".\n";
             query += " ?foo" + icolumnas + " skos:prefLabel " + "?" + nombreColumnaAux + " } .\n";
 
-          } /* else if (element.colUri.value.indexOf("http://opendata.aragon.es/def/iaest/dimension/mes_y_ano") == -1){
-            query += "OPTIONAL {  ?obs <" + element.colUri.value + "> ?" + nombreColumnaAux + " } .\n";
-          } */
+          } 
           else {
             query += "OPTIONAL {  ?obs <" + element.colUri.value + "> ?" + nombreColumnaAux + " } .\n";
           }
@@ -982,11 +933,6 @@ export class ResultComponent {
 
         query += "} \n";
         query += "ORDER BY ASC(?refArea) ASC(?refPeriod)\n";
-        //query += "LIMIT 200\n"
-
-        console.log(query);
-        console.log('https://opendata.aragon.es/sparql?default-graph-uri=&query=' + encodeURIComponent(query) + '&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on');
-
         this.sparql(query);
         query ? this.loading = false : this.loading = true;
 
@@ -1006,7 +952,7 @@ export class ResultComponent {
   }
 
   removeAccents(str: any): any {
-    // return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    
     const acentos: any = { 'á': 'a', 'é': 'e', 'í': 'i', 'ó': 'o', 'ú': 'u', 'Á': 'A', 'É': 'E', 'Í': 'I', 'Ó': 'O', 'Ú': 'U' };
     return str.split('').map((letra: any) => acentos[letra] || letra).join('').toString();
   }
