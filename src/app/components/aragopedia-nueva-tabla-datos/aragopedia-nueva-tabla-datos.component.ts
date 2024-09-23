@@ -108,8 +108,4 @@ export class AragopediaNuevaTablaDatosComponent {
     return "columna" + columna;
   }
 
-  clearHiphens() {
-
-  }
-
 }

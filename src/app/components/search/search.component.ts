@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { YearsPeriod, TimeLineSvc } from '../timeline/timeline.service';
 import { FormBuilder } from '@angular/forms';
 
@@ -7,7 +7,7 @@ import { FormBuilder } from '@angular/forms';
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.scss']
 })
-export class SearchComponent implements OnInit {
+export class SearchComponent {
   currentYears: YearsPeriod[];
   formGroup;
 
@@ -22,9 +22,6 @@ export class SearchComponent implements OnInit {
       text: this.currentSearch(''),
       years: this.currentYears,
     })
-  };
-
-  ngOnInit() {
   };
 
   onSubmit(searchData: any) {

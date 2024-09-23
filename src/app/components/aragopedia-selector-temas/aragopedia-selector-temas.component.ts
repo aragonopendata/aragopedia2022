@@ -113,9 +113,8 @@ export class AragopediaSelectorTemasComponent implements OnInit {
   submitFromChangeZona(datos: string) {
 
     let selectedZonaNombre: string = '';
-    //console.log(datos == 'ComunidadAutonoma')
+    
     if (datos == 'ComunidadAutonoma') {
-      //console.log(datos)
       selectedZonaNombre = 'Aragón'
       this.tipoZonaAbreviada = "A";
     }
@@ -254,13 +253,8 @@ export class AragopediaSelectorTemasComponent implements OnInit {
     this.formGroup = this.fb.group({
       "tema": [this.selectedTema]
     })
-    /*se comento luego de correr SonarQube*/
-    //this.formGroup.reset
     this.formGroup.get('tema')?.valueChanges.subscribe(response => {
       this.selectedTema = response;
-      /* this.displayTema = response; */
-      // //console.log('DISPLAY TEMA: ', this.displayTema);
-
       this.filterData(response);
     })
 
@@ -268,10 +262,7 @@ export class AragopediaSelectorTemasComponent implements OnInit {
 
   temaSelectedAuto(tema: any) {
 
-
-    this.filteredTemas = this.showTemas;
-
-
+     this.filteredTemas = this.showTemas;
     let nombreZona = "";
     let rutaUsable: string;
     let rutaLimpia = '/';
@@ -302,11 +293,7 @@ export class AragopediaSelectorTemasComponent implements OnInit {
     this.showTemas.forEach((element: any) => {
       let rutaElement = element.id.value.substring(element.id.value.indexOf('/') + 1).replaceAll('/', '-');
       if (rutaElement === rutaUsable) {
-        //console.log('done')
         this.firstLand = false;
-        //console.log(element);
-
-        //this.displayTema = element.Descripcion;
       }
 
     });
@@ -317,10 +304,6 @@ export class AragopediaSelectorTemasComponent implements OnInit {
       }
 
       let query: string = 'select distinct ?refArea ?nameRefArea '
-
-      // //console.log(rutaUsable.substring(index + 1).replaceAll('/', '-'));
-
-
       this.rutaLimpia = rutaLimpia.substring(1);
 
       let queryColumna: string = `https://opendata.aragon.es/sparql?default-graph-uri=&query=select+distinct+%3FcolUri+%3FtipoCol+str%28%3FnombreCol%29%0D%0A+where+%7B%0D%0A++%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fiaest%2Fdataset${rutaLimpia}%3E+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fcube%23structure%3E+%3Fdsd.%0D%0A++%3Fdsd+%3Chttp%3A%2F%2Fpurl.org%2Flinked-data%2Fcube%23component%3E+%3Fcol.%0D%0A++%3Fcol+%3FtipoCol+%3FcolUri.%0D%0A++%3FcolUri+rdfs%3Alabel+%3FnombreCol.%0D%0A%7D%0D%0A%0D%0ALIMIT+500%0D%0A&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`
@@ -354,12 +337,6 @@ export class AragopediaSelectorTemasComponent implements OnInit {
           //-------this.showTemas
 
           let tipoZona = "";
-
-          // //console.log(this.selectedProvinciaNombre != '');
-          // //console.log(this.selectedComarcaNombre != '');
-          // //console.log(this.selectedMunicipioNombre != '');
-
-
           if (this.selectedProvincia != '') {
             tipoZona = "Provincia"
             nombreZona = this.selectedProvinciaNombre
@@ -370,10 +347,6 @@ export class AragopediaSelectorTemasComponent implements OnInit {
             tipoZona = "Municipio"
             nombreZona = this.selectedMunicipioNombre
           }
-
-          // //console.log("nombre zona " + nombreZona);
-          // //console.log(this.deleteSpace(nombreZona));
-
           let uriPrefix = "<http://opendata.aragon.es/recurso/territorio/" + tipoZona + "/";
           query += "FILTER (?refArea IN (";
           query += uriPrefix + this.fixNames(this.deleteSpace(nombreZona)) + ">";
@@ -383,14 +356,12 @@ export class AragopediaSelectorTemasComponent implements OnInit {
         this.columnas.forEach((element: any) => {
 
           let nombreColumnaAux = element['callret-2'].value.replaceAll('%', 'porcentaje').replaceAll('-', '_').replaceAll('*', 'por').replaceAll(' ', '_').toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[{(/,.)}]/g, '')
-          if (element.colUri.value.indexOf("http://opendata.aragon.es/def/iaest/dimension") != -1 && element.colUri.value.indexOf("http://opendata.aragon.es/def/iaest/dimension#mes-y-ano") == -1) {
+          if (element.colUri.value.indexOf("https://opendata.aragon.es/def/iaest/dimension") != -1 && element.colUri.value.indexOf("https://opendata.aragon.es/def/iaest/dimension#mes-y-ano") == -1) {
             icolumnas++
             query += "OPTIONAL { ?obs <" + element.colUri.value + "> ?foo" + icolumnas + ".\n";
             query += " ?foo" + icolumnas + " skos:prefLabel " + "?" + nombreColumnaAux + " } .\n";
 
-          } /* else if (element.colUri.value.indexOf("http://opendata.aragon.es/def/iaest/dimension/mes_y_ano") == -1){
-            query += "OPTIONAL {  ?obs <" + element.colUri.value + "> ?" + nombreColumnaAux + " } .\n";
-          } */
+          }
           else {
             query += "OPTIONAL {  ?obs <" + element.colUri.value + "> ?" + nombreColumnaAux + " } .\n";
           }
@@ -417,14 +388,12 @@ export class AragopediaSelectorTemasComponent implements OnInit {
         this.aragopediaSvc.change(this.queryTabla);
 
         if (this.selectedTema != '') {
-          //this.displayTema = this.selectedTema;
+    
         }
 
         this.selectedTema = '';
         this.firstLand = false;
       })
-
-      // //console.log(rutaLimpia)
       if (rutaLimpia !== '' && rutaLimpia !== undefined && this.selectedProvincia != '') {
         this.router.navigate(['aragopedia'], { queryParams: { tipo: this.tipoLocalidad, id: this.selectedProvincia, datos: this.rutaLimpia } })
       } else if (rutaLimpia !== '' && rutaLimpia !== undefined && this.selectedComarca != '') {
@@ -457,10 +426,7 @@ export class AragopediaSelectorTemasComponent implements OnInit {
     this.http.get(('https://opendata.aragon.es/sparql?default-graph-uri=&query=' + encodeURIComponent(query) + '&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on'), httpOptions).pipe(
       catchError(this.handleError<string>())
     ).subscribe((data: any) => {
-      // //console.log(data);
-
       if (this.selectedTema != '') {
-        //this.displayTema = this.selectedTema;
       }
 
       this.selectedTema = '';
@@ -581,16 +547,6 @@ export class AragopediaSelectorTemasComponent implements OnInit {
         newStr += str[i + 1]
       }
     }
-
-    // if (str.includes('-')) {
-    //   const index = str.indexOf('-');
-    //   const replacement = str[index + 1].toUpperCase();
-    //   return str
-    //     .replaceAll(str[index + 1], replacement)
-    //     .replace('ArcoS', 'Arcos')
-    //     .replace('MonfLorite', 'Monflorite')
-    //     .replace('AínSa', 'Aínsa')
-    // }
     return newStr;
   }
 
