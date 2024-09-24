@@ -731,29 +731,14 @@ export class ResultComponent {
 
   capitalizeString(str: any): string {
     return str.replace(/\w\S*/g, function (txt: any) {
-      for (let i = 0; i < txt.length; i++) {
-        if (txt.toLowerCase() === 'el'
-          || txt.toLowerCase() === 'y'
-          || txt.toLowerCase() === 'del'
-          || txt.toLowerCase() === 'de'
-          || txt.toLowerCase() === 'las'
-          || txt.toLowerCase() === 'de la'
-          || txt.toLowerCase() === 'los') {
-          return txt.toLowerCase();
-        }
-        if (txt.toLowerCase() !== 'de'
-          || txt.toLowerCase() !== 'del'
-          || txt.toLowerCase() !== 'la'
-          || txt.toLowerCase() !== 'las'
-          || txt.toLowerCase() !== 'de la'
-          || txt.toLowerCase() !== 'los') {
+      const lowerTxt = txt.toLowerCase();
+      if (lowerTxt === 'el' || lowerTxt === 'y' || lowerTxt === 'del' ||
+          lowerTxt === 'de' || lowerTxt === 'las' || lowerTxt === 'la' || 
+          lowerTxt === 'los' || lowerTxt === 'de la' ) {
+          return lowerTxt;
+      } else {
           return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-        }
-        else {
-          return txt.toLowerCase()
-        }
       }
-
     });
   }
 
@@ -960,17 +945,22 @@ export class ResultComponent {
   format(number: any) {
     if (typeof number === 'number') {
       let partesNumero = number.toString().split('.');
-      partesNumero[0] = partesNumero[0].replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+      partesNumero[0] = this.formatNumber(partesNumero[0]);//partesNumero[0].replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 
       return partesNumero.join('.');
 
     } else {
       let partesNumero = number.split('.');
-      partesNumero[0] = partesNumero[0].replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+      partesNumero[0] = this.formatNumber(partesNumero[0]); //partesNumero[0].replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 
       return partesNumero.join('.');
     }
   }
+
+  formatNumber(num:any) {
+    // Convertir la cadena numérica a un número y luego formatearlo con separadores de miles.
+    return new Intl.NumberFormat('de-DE').format(Number(num));
+}
 
   initForm() {
     this.formGroup = this.fb.group({

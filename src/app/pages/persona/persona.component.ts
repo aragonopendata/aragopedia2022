@@ -105,7 +105,11 @@ export class PersonaComponent implements OnInit {
   }
 
   deleteTags(str: string): string {
-    return str.replace(/(<([^>]+)>)/ig, '');
+    if (str.length > 10000) {
+      throw new Error("Cadena demasiado grande");
+    }
+    
+    return str.replace(/<\/?\w+((\s+\w+(\s*=\s*(?:".*?"|'.*?'|[^'">\s]+))?)+\s*|\s*)\/?>/g, '');
   }
 
 }

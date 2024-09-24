@@ -342,8 +342,4 @@ export class ResultsComponent implements OnInit {
     const cuboId = cubo.substring(index);
     this.router.navigate(['aragopedia'], { queryParams: { tipo: 'provincia', id: '7823', datos: `${cuboId}TP` } })
   }
-
-  handleKeyEvent(event: KeyboardEvent) {
-  }
-
 }

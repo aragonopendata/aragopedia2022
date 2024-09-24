@@ -531,19 +531,24 @@ export class FichaAragonComponent implements OnInit {
   format(number: any) {
     if (typeof number === 'number') {
       let partesNumero = number.toString().split('.');
-      partesNumero[0] = partesNumero[0].replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+      partesNumero[0] = this.formatNumber(partesNumero[0]); //partesNumero[0].replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 
       return partesNumero.join('.');
 
     } else {
 
       let partesNumero = number.split('.');
-      partesNumero[0] = partesNumero[0].replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+      partesNumero[0] = this.formatNumber(partesNumero[0]);//partesNumero[0].replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 
       return partesNumero.join('.');
     }
   }
 
+  formatNumber(num:any) {
+    // Convertir la cadena numérica a un número y luego formatearlo con separadores de miles.
+    return new Intl.NumberFormat('de-DE').format(Number(num));
+}
+  
   reduceText(text: string): string {
     const reducedText = text.substr(0, 120);
     return (

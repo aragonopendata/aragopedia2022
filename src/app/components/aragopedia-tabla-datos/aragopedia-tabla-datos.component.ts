@@ -6,6 +6,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { timeout } from 'rxjs';
+
 declare var $: any;
 interface DatosTabla {
   [key: string]: string;
@@ -48,7 +49,14 @@ export class AragopediaTablaDatosComponent {
 
   ngOnInit() {
 
-    this.linkDescargaCSV = this.sanitizer.bypassSecurityTrustUrl(this.queryAragopediaCSV);
+    //this.linkDescargaCSV = this.sanitizer.bypassSecurityTrustUrl(this.queryAragopediaCSV);
+    if(this.validateUrl(this.queryAragopediaCSV)){
+      this.linkDescargaCSV = this.queryAragopediaCSV;
+    }
+    else
+    {
+      console.log("url no bvalida o no segura", this.queryAragopediaCSV)
+    }
 
     this.aragopediaSvc.columnasTablaObserver.subscribe((dataColumnas: any) => {
       this.nombresColumnas = dataColumnas;
@@ -75,7 +83,7 @@ export class AragopediaTablaDatosComponent {
           let auxColumnas = [{ nombre: /* `${this.aragopediaSvc.tipoLocalidad}` */ 'Área', matColumnDef: 'nameRefArea' }, { nombre: 'Fecha subida', matColumnDef: 'nameRefPeriod' }]
       
           this.nombresColumnas.forEach((element: any) => {
-       
+            //console.log(this.normalizeColumnName(element['callret-2'].value))
             if (this.displayedColumns.includes(this.normalizeColumnName(element['callret-2'].value))) {
               let columnaAux: Columna = { nombre: element['callret-2'].value, matColumnDef: this.normalizeColumnName(element['callret-2'].value) }
               auxColumnas.push(columnaAux);
@@ -227,6 +235,11 @@ export class AragopediaTablaDatosComponent {
     const csvQuery = query?.replace(jsonFormat, csvFormat).replace(count, '+').replace(countDistinct, distinct).replace('+count%28distinct+%3Fs%29+', '+distinct+%3Fs+').replace('+count%28+distinct+%3Fs%29+', '+distinct+%3Fs+').replace('https://query.wikidata.org/sparql?query=', 'https://query.wikidata.org/#');
     return csvQuery;
   }
+
+  validateUrl(url: string): boolean {
+    // Verifica que la URL comience con http o https
+    return /^https?:\/\//i.test(url);
+    }
 
 }
 

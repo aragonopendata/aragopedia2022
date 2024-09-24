@@ -498,11 +498,10 @@ export class AragopediaSelectorTemasComponent implements OnInit {
       const lowerTxt = txt.toLowerCase();
 
       if (lowerTxt === 'el' || lowerTxt === 'y' || lowerTxt === 'del' ||
-          lowerTxt === 'de' || lowerTxt === 'las' || lowerTxt === 'la' || lowerTxt === 'los') {
+        lowerTxt === 'de' || lowerTxt === 'las' || lowerTxt === 'la' || lowerTxt === 'los') {
           return lowerTxt;
       } else {
-
-          return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
       }
     });
   }
