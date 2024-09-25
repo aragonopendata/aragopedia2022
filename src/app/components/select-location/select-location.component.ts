@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { SelectComarcaComponent } from './comarcas/comarcas.component';
@@ -14,7 +14,7 @@ import { SelectLocationService } from './select-location.service';
   styleUrls: ['./select-location.component.scss'],
 })
 
-export class SelectLocationComponent implements OnInit {
+export class SelectLocationComponent {
   constructor(private router: Router, public locationSvc: SelectLocationService) { }
   locationForm = new FormGroup('');
 
@@ -34,11 +34,6 @@ export class SelectLocationComponent implements OnInit {
   @ViewChild(SelectProvinciaComponent) provincia: any;
   @ViewChild(SelectMunicipioComponent) municipio: any;
   @ViewChild(SelectComarcaComponent) comarca: any;
-
-  ngOnInit(): void {
-
-  }
-
 
   locationSelected(): void {
     this.provinciaSelected = this.provincia.selectedProvincia;

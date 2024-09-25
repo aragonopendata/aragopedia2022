@@ -72,9 +72,6 @@ export class PiramidePoblacionComponent implements OnInit {
 
   ngOnInit() {
 
-
-    // this.codigoIne = this.capitalizeString(this._route.snapshot.paramMap.get('municipio'));
-    // this.lugarBuscadoParsed = this.deleteSpace(this._route.snapshot.paramMap.get('municipio'));
     this._route.queryParams.subscribe(params => {
       this.tipoLocalidad = params['tipo'];
       this.codigoIne = params['id'];
@@ -220,27 +217,13 @@ export class PiramidePoblacionComponent implements OnInit {
   //Métodos
   capitalizeString(str: any): string {
     return str.replace(/\w\S*/g, function (txt: any) {
-      for (let i = 0; i < txt.length; i++) {
-        if (txt.toLowerCase() === 'el'
-          || txt.toLowerCase() === 'y'
-          || txt.toLowerCase() === 'del'
-          || txt.toLowerCase() === 'de'
-          || txt.toLowerCase() === 'las'
-          || txt.toLowerCase() === 'los') {
-          return txt.toLowerCase();
-        }
-        else if (txt.toLowerCase() !== 'de'
-          || txt.toLowerCase() !== 'del'
-          || txt.toLowerCase() !== 'la'
-          || txt.toLowerCase() !== 'las'
-          || txt.toLowerCase() !== 'los') {
-          return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-        }
-        else {
-          return txt.toLowerCase()
-        }
+      const lowerTxt = txt.toLowerCase();
+      if (lowerTxt === 'el' || lowerTxt === 'y' || lowerTxt === 'del' ||
+        lowerTxt === 'de' || lowerTxt === 'las' || lowerTxt === 'la' || lowerTxt === 'los') {
+        return lowerTxt;
+      } else {
+        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
       }
-
     });
   }
 
@@ -273,16 +256,6 @@ export class PiramidePoblacionComponent implements OnInit {
         newStr += str[i + 1]
       }
     }
-
-    // if (str.includes('-')) {
-    //   const index = str.indexOf('-');
-    //   const replacement = str[index + 1].toUpperCase();
-    //   return str
-    //     .replaceAll(str[index + 1], replacement)
-    //     .replace('ArcoS', 'Arcos')
-    //     .replace('MonfLorite', 'Monflorite')
-    //     .replace('AínSa', 'Aínsa')
-    // }
     return newStr;
   }
 

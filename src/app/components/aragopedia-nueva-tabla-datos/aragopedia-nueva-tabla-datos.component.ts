@@ -2,7 +2,6 @@ import { Component, NgModule, OnInit, Sanitizer, ViewChild, AfterViewInit } from
 import { AragopediaService } from '../aragopedia-tabla-datos/aragopediaService';
 import { DomSanitizer } from '@angular/platform-browser';
 import { AragopediaSelectorTemasComponent } from '../aragopedia-selector-temas/aragopedia-selector-temas.component';
-// import * as $ from 'jquery';
 declare var $: any;
 interface DatosTabla {
   [key: string]: string;
@@ -41,7 +40,13 @@ export class AragopediaNuevaTablaDatosComponent {
 
   ngOnInit() {
 
-    this.linkDescargaCSV = this.sanitizer.bypassSecurityTrustUrl(this.queryAragopediaCSV);
+    //this.linkDescargaCSV = this.sanitizer.bypassSecurityTrustUrl(this.queryAragopediaCSV);
+
+    if (this.validateUrl(this.queryAragopediaCSV)) {
+      this.linkDescargaCSV = this.queryAragopediaCSV; // Sin necesidad de bypass
+    } else {
+      console.log('URL no válida o no segura:', this.queryAragopediaCSV);
+    }
 
     this.aragopediaSvc.columnasTablaObserver.subscribe((dataColumnas: any) => {
       this.nombresColumnas = dataColumnas;
@@ -108,8 +113,9 @@ export class AragopediaNuevaTablaDatosComponent {
     return "columna" + columna;
   }
 
-  clearHiphens() {
-
+  validateUrl(url: string): boolean {
+  // Verifica que la URL comience con http o https
+  return /^https?:\/\//i.test(url);
   }
 
 }

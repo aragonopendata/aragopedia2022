@@ -51,7 +51,7 @@ export class ComarcasComponent implements OnInit {
         this.comarcas.forEach((comarca: any) => {
 
           listId.forEach((element: any) => {
-            // console.log(element);
+            
             if (this.fixNames(comarca.nombre.value.toLowerCase()) == element['callret-1'].value.toLowerCase()) {
               this.comarcasParsed[index] = {
                 nombre: comarca.nombre.value,
@@ -179,7 +179,7 @@ export class ComarcasComponent implements OnInit {
     this.aragopediaSvc.getData(this.queryUrlComarcasId).subscribe(response => {
 
       this.comarcas = response.results.bindings;
-      //console.log(this.comarcas);
+      
       this.filteredComarcas = this.comarcas;
       this.comarcas[this.comarcas.indexOf('La Litera/La Llitera')] = 'litera/la llitera, la';
       this.comarcas[this.comarcas.indexOf('La Jacetania')] = 'jacetania, la';
@@ -189,7 +189,7 @@ export class ComarcasComponent implements OnInit {
   }
 
   removeAccents(str: any): any {
-    // return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    
     const acentos: any = { 'á': 'a', 'é': 'e', 'í': 'i', 'ó': 'o', 'ú': 'u' };
     return str.split('').map((letra: any) => acentos[letra] || letra).join('').toString();
   }

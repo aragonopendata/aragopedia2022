@@ -32,27 +32,13 @@ export class SelectLocationService {
 
     capitalizeString(str: any): string {
         return str.replace(/\w\S*/g, function (txt: any) {
-            for (let i = 0; i < txt.length; i++) {
-                if (txt.toLowerCase() === 'el'
-                    || txt.toLowerCase() === 'y'
-                    || txt.toLowerCase() === 'del'
-                    || txt.toLowerCase() === 'de'
-                    || txt.toLowerCase() === 'las'
-                    || txt.toLowerCase() === 'los') {
-                    return txt.toLowerCase();
-                }
-                if (txt.toLowerCase() !== 'de'
-                    || txt.toLowerCase() !== 'del'
-                    || txt.toLowerCase() !== 'la'
-                    || txt.toLowerCase() !== 'las'
-                    || txt.toLowerCase() !== 'los') {
-                    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-                }
-                else {
-                    return txt.toLowerCase()
-                }
+            const lowerTxt = txt.toLowerCase();
+            if (lowerTxt === 'el' || lowerTxt === 'y' || lowerTxt === 'del' ||
+                lowerTxt === 'de' || lowerTxt === 'las' || lowerTxt === 'la' || lowerTxt === 'los') {
+                return lowerTxt;
+            } else {
+                return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
             }
-
         });
     }
 }

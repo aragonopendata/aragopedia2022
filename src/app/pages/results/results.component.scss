@@ -369,8 +369,6 @@ ul.pagination {
 }
 
 .sidebar {
-    // margin: 20px;
-    padding: 1em;
     box-sizing: border-box;
     background-color: #EDEDEC;
     display: none;
@@ -381,7 +379,6 @@ ul.pagination {
         font-weight: 500;
         display: flex;
         align-items: center;
-        // justify-content: flex-end;
         cursor: pointer;
 
         p {

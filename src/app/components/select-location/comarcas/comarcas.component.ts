@@ -116,7 +116,7 @@ export class SelectComarcaComponent implements OnInit {
   }
 
   removeAccents(str: any): any {
-    // return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+
     const acentos: any = { 'á': 'a', 'é': 'e', 'í': 'i', 'ó': 'o', 'ú': 'u' };
     return str.split('').map((letra: any) => acentos[letra] || letra).join('').toString();
   }
@@ -151,26 +151,13 @@ export class SelectComarcaComponent implements OnInit {
 
   capitalizeString(str: any): string {
     return str.replace(/\w\S*/g, function (txt: any) {
-      for (let i = 0; i < txt.length; i++) {
-        if (txt.toLowerCase() === 'el'
-          || txt.toLowerCase() === 'y'
-          || txt.toLowerCase() === 'del'
-          || txt.toLowerCase() === 'de'
-          || txt.toLowerCase() === 'las') {
-          return txt.toLowerCase();
-        }
-        if (txt.toLowerCase() !== 'de'
-          || txt.toLowerCase() !== 'del'
-          || txt.toLowerCase() !== 'la'
-          || txt.toLowerCase() !== 'las'
-          || txt.toLowerCase() !== 'los') {
-          return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-        }
-        else {
-          return txt.toLowerCase()
-        }
+      const lowerTxt = txt.toLowerCase();
+      if (lowerTxt === 'el' || lowerTxt === 'y' || lowerTxt === 'del' ||
+        lowerTxt === 'de' || lowerTxt === 'las' || lowerTxt === 'la' || lowerTxt === 'los') {
+        return lowerTxt;
+      } else {
+        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
       }
-
     });
   }
 

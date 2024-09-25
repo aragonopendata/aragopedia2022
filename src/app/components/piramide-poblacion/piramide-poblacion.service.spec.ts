@@ -5,7 +5,7 @@ import { Observable } from "rxjs";
 
 const headers = new HttpHeaders()
   .set('content-type', 'image/png')
-  .set('Access-Control-Allow-Origin', '*');
+  //.set('Access-Control-Allow-Origin', '*');
 
 
 @Injectable({

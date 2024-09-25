@@ -37,21 +37,21 @@ export class ProvinciasComponent implements OnInit {
     {
       nombreCompleto: 'Diputación Provincial de Zaragoza',
       nombre: 'Zaragoza',
-      url: 'http://opendata.aragon.es/recurso/sector-publico/organizacion/diputacion/7823',
+      url: 'https://opendata.aragon.es/recurso/sector-publico/organizacion/diputacion/7823',
       id: '7823',
       codigoIne: ''
     },
     {
       nombreCompleto: 'Diputación Provincial de Huesca',
       nombre: 'Huesca',
-      url: 'http://opendata.aragon.es/recurso/sector-publico/organizacion/diputacion/7824',
+      url: 'https://opendata.aragon.es/recurso/sector-publico/organizacion/diputacion/7824',
       id: '7824',
       codigoIne: ''
     },
     {
       nombreCompleto: 'Diputación Provincial de Teruel',
       nombre: 'Teruel',
-      url: 'http://opendata.aragon.es/recurso/sector-publico/organizacion/diputacion/7825',
+      url: 'https://opendata.aragon.es/recurso/sector-publico/organizacion/diputacion/7825',
       id: '7825',
       codigoIne: ''
     }

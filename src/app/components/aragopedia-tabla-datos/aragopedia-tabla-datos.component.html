@@ -1,14 +1,9 @@
 <div>
     <div class="divDescarga">
-        <!-- <a [href]="linkDescargaCSV" bypassSecurityTrustUrl id="descargarCSV" download="aragopediaFile.csv"
-            class="btn btn-descarga">CSV</a>
-        -->
-        <!-- <a [href]="linkDescargaJSON" bypassSecurityTrustUrl id="descargarJSON" class="btn btn-descarga"
-            target="_blank">JSON</a> -->
         <a [href]="exportHtmlQuery(linkDescargaJSON)" bypassSecurityTrustUrl class="btn btn-descarga"
-            target="_blank">HTML</a>
+           target="_blank" rel="noopener" >HTML</a>
         <a [href]="exportCsvQuery(linkDescargaJSON)" bypassSecurityTrustUrl class="btn btn-descarga"
-            target="_blank">CSV</a>
+           target="_blank" rel="noopener" >CSV</a>
     </div>
 
     <div class="table-container">

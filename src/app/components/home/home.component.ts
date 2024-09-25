@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { SelectLocationComponent } from '../select-location/select-location.component';
 import { TemasComponent } from '../temas/temas.component';
@@ -10,7 +10,7 @@ import { TimeLineComponent } from '../timeline/timeline.component';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent  {
   constructor(private timelineSvc: TimeLineSvc, private router: Router) {
   }
 
@@ -30,9 +30,6 @@ export class HomeComponent implements OnInit {
   comarcaSelected!: string;
   temasSelected!: string[];
   error: boolean = false;
-
-  ngOnInit(): void {
-  }
 
   submit(): void {
     this.temasSelected = this.temas.temasSeleccionados;

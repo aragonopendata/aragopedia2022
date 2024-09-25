@@ -158,7 +158,6 @@ section.container {
 
     .inicio__img img {
         display: block;
-        margin: auto;
         order: 1;
         margin: 1em auto;
     }
@@ -387,7 +386,6 @@ section.container {
 
         .slides__abstract {
             margin: 1.5em 0;
-            // max-width: 600px;
             font-size: 16px;
 
             .leer-mas {
@@ -460,7 +458,6 @@ section.container {
 
 .tabla-poblacion {
     display: flex;
-    // flex-direction: column;
     justify-content: center;
     align-items: center;
     empty-cells: hide;

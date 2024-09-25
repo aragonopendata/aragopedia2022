@@ -1,16 +1,12 @@
 <div class="container template">
     <div class="breadcrumbs">
         <p><a [routerLink]="['/']">Inicio</a> > {{municipio}}
-            <!-- <a
-                href="/servicios/aragopedia2022/detalles?tipo=municipio&id={{this.idMunicipio}}">{{municipio}}</a> -->
             > Personas > {{nombre}}
         </p>
     </div>
 
     <section class="container template__persona">
-        <!-- <div class="persona__img">
-        <img src="assets/persona.png" alt="Foto de la persona">
-    </div> -->
+    
         <div class="persona__content">
             <h2 class="persona__name">{{nombre}}</h2>
             <div *ngIf="this.biografia" class="bio">
@@ -50,7 +46,7 @@
             <article *ngFor="let publicacion of creativeWorks" class="creative-works__articles">
                 <h3 class="article__title">{{publicacion.title.value}}</h3>
                 <p class="article__abstract">{{this.reduceText(publicacion.abstract.value)}}...</p>
-                <a href="{{publicacion.url.value}}" target="_blank" class="article__link">Leer más</a>
+                <a href="{{publicacion.url.value}}"  target="_blank" rel="noopener"  class="article__link">Leer más</a>
             </article>
         </div>
         <div *ngIf="this.items" class="results__pagination">
