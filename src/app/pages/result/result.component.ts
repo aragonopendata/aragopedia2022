@@ -609,7 +609,16 @@ export class ResultComponent {
       });
 
       this.resultSvc.getData(this.queryUrlDensidadPoblacion).subscribe((data: any) => {
-        this.densidadPoblacion = (Number(data?.results.bindings[0].densidad_de_poblacion_habkm2.value)).toFixed(1).replace('.', ',');
+        debugger;
+        //this.densidadPoblacion = (Number(data?.results.bindings[0].densidad_de_poblacion_habkm2.value)).toFixed(1).replace('.', ',');
+        const densidad = data?.results.bindings[0]?.densidad_de_poblacion_habkm2?.value;
+         //Se va a verificar si ante de llamar a la funcion number este es un valor valido
+        if (densidad && !isNaN(Number(densidad))) {
+          this.densidadPoblacion = (Number(densidad)).toFixed(1).replace('.', ',');
+        } else {
+          this.densidadPoblacion = '0'; // O cualquier otro valor por defecto
+        }
+       
         this.dataDownload[0].densidad = this.densidadPoblacion;
       });
 
@@ -943,18 +952,20 @@ export class ResultComponent {
   }
 
   format(number: any) {
-    if (typeof number === 'number') {
-      let partesNumero = number.toString().split('.');
-      partesNumero[0] = this.formatNumber(partesNumero[0]);//partesNumero[0].replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-
-      return partesNumero.join('.');
-
-    } else {
-      let partesNumero = number.split('.');
-      partesNumero[0] = this.formatNumber(partesNumero[0]); //partesNumero[0].replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-
-      return partesNumero.join('.');
-    }
+      if (typeof number === 'number') {
+        let partesNumero = number.toString().split('.');
+        partesNumero[0] = this.formatNumber(partesNumero[0]); 
+        return partesNumero.join('.'); 
+      } else if (typeof number === 'string') {
+        const numberConPunto = number.replace(',', '.');
+       // Ahora convertimos a número y procedemos a formatear
+        let partesNumero = Number(numberConPunto).toString().split('.');
+        partesNumero[0] = this.formatNumber(partesNumero[0]); // Formatea la parte entera
+    
+        return partesNumero.join('.');
+      }
+    
+      return number;
   }
 
   formatNumber(num:any) {

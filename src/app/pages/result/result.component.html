@@ -36,7 +36,10 @@
                     </li>
                     <li *ngIf="this.densidadPoblacion && this.tipoLocalidad === 'municipio'"><a
                             href="{{dataSource.densidad}}"  target="_blank" rel="noopener" ><mat-icon>open_in_new</mat-icon><span
-                                class="big-number">{{format(this.densidadPoblacion)}}</span>Habitantes por
+                                class="big-number">
+                                {{ format(this.densidadPoblacion) }}   
+                                <!-- {{ this.densidadPoblacion !== 'NaN' ? format(this.densidadPoblacion) : '0' }} -->
+                            </span>Habitantes por
                             KM<sup>2</sup></a></li>
                     <li *ngIf="this.poligonos"><a href="{{dataSource.poligonos}}"
                              target="_blank" rel="noopener" ><mat-icon>open_in_new</mat-icon><span
