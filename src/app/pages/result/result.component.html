@@ -75,6 +75,11 @@
                                 class="big-number">{{format(this.municipiosEnTerritorio)}}</span>Municipios en
                             el territorio</a>
                     </li>
+
+                    <li *ngIf="this.mascotas"><a href="{{dataSource.mascotas}}"
+                            target="_blank" rel="noopener" ><mat-icon>open_in_new</mat-icon><span
+                            class="big-number">{{format(this.mascotas)}}</span>Animales de compañía</a>
+                    </li>
                 </ul>
             </div>
             <div class="inicio__contact">
