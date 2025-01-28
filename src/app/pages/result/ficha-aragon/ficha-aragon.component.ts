@@ -34,7 +34,8 @@ interface DataLinks {
   datosContacto: string,
   image: string,
   publicaciones: string,
-  presupuestos: string
+  presupuestos: string,
+  mascotas: string
 }
 
 @Component({
@@ -128,6 +129,7 @@ export class FichaAragonComponent implements OnInit {
   dataYearExtension: any;
   presupuestos!: string;
   loading: boolean = false;
+  mascotas!: string;
 
 
   dataSource: DataLinks = {
@@ -148,7 +150,8 @@ export class FichaAragonComponent implements OnInit {
     datosContacto: '',
     image: '',
     publicaciones: '',
-    presupuestos: ''
+    presupuestos: '',
+    mascotas: ''
   };
 
 
@@ -175,6 +178,7 @@ export class FichaAragonComponent implements OnInit {
   queryUrlContacto!: string;
   queryUrlMunicipiosEnTerritorio!: string;
   queryUrlPresupuestos!: string;
+  queryUrlMascotas!: string;
 
   // ARAGOPEDIA
   queryTemas!: string;
@@ -197,7 +201,7 @@ export class FichaAragonComponent implements OnInit {
 
   // Download data
 
-  dataDownload = this.temp || [{ nombre: '', email: '', telefono: '', direccion: '', codigoPostal: '', habitantes: '', sueloRural: '', sueloUrbano: '', poligonosIndustriales: '', plazasHoteleras: '', incendiosDesde2022: '', hectareasAfectadasPorIncendios: '', mencionesEnPublicaciones: '', alojamientosTuristicos: '', edadMediaHombres: '', edadMediaMujeres: '', creativeWorks: '', miembrosPleno: '', municipiosDelTerritorio: '' }];
+  dataDownload = this.temp || [{ nombre: '', email: '', telefono: '', direccion: '', codigoPostal: '', habitantes: '', sueloRural: '', sueloUrbano: '', poligonosIndustriales: '', plazasHoteleras: '', incendiosDesde2022: '', hectareasAfectadasPorIncendios: '', mencionesEnPublicaciones: '', alojamientosTuristicos: '', edadMediaHombres: '', edadMediaMujeres: '', creativeWorks: '', miembrosPleno: '', municipiosDelTerritorio: '', mascotas: '' }];
 
 
 
@@ -237,6 +241,8 @@ export class FichaAragonComponent implements OnInit {
         this.queryUrlPresupuestos = `https://opendata.aragon.es/sparql?default-graph-uri=&query=select+%3Furl+from+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fei2av2%3E+where+%7B%0D%0A++%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fsector-publico%2Forganizacion%2Fcomunidad%2F2%3E+dc%3Arelation+%3Furl.+%0D%0A++filter%28regex%28%3Furl%2C+%22https%3A%2F%2Fpresupuesto.aragon.es%2F%22%29%29.%0D%0A%7D&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`
         this.dataSource.presupuestos = this.exportHtmlQuery(this.queryUrlPresupuestos)
 
+        this.queryUrlMascotas = `https://opendata.aragon.es/sparql?default-graph-uri=&query=PREFIX+ei2a%3A+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fei2av2%23%3E%0D%0A%0D%0ASELECT+%28COUNT%28%3Fpet%29+AS+%3FtotalMascotas%29%0D%0AWHERE+%7B%0D%0A++%3Fpet+a+ei2a%3APet+%0D%0A%7D%0D%0A&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on&interface=true`;
+        this.dataSource.mascotas = this.exportHtmlQuery(this.queryUrlMascotas);
         //Obtención de datos por ID
 
         this.resultSvc.getData(this.queryUrlPoligonos).subscribe((data: any) => {
@@ -270,6 +276,17 @@ export class FichaAragonComponent implements OnInit {
           this.presupuestos = data.results.bindings[0].url.value;
         })
 
+        this.resultSvc.getData(this.queryUrlMascotas).subscribe((data) => {
+          if (data.results.bindings.length !== 0) {
+            const bindings = data.results.bindings;
+            this.mascotas = bindings[0].totalMascotas.value;
+            this.dataDownload[0].mascotas = this.mascotas;
+          } else {
+            this.mascotas = "0";
+            this.dataDownload[0].mascotas = this.mascotas;
+          }
+        });
+
         this.resultSvc.getData(this.queryUrlGetCodigoIne).subscribe((data) => {
           const urlAnalizada = data.results.bindings[0].wikidata.value;
           this.idLocalidad = urlAnalizada.split('/')[4];
@@ -294,6 +311,8 @@ export class FichaAragonComponent implements OnInit {
           })
 
         });
+
+
 
       }
 

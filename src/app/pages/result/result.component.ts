@@ -319,16 +319,16 @@ export class ResultComponent {
 
         if (this.tipoLocalidad === 'municipio') {
           // total
-          //this.queryUrlMascotas = `https://opendata.aragon.es/sparql?default-graph-uri=&query=PREFIX+ei2a%3A+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fei2av2%23%3E%0D%0APREFIX+vcard%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2006%2Fvcard%2Fns%23%3E%0D%0A%0D%0ASELECT+%28COUNT%28%3Fpet%29+AS+%3FtotalMascotas%29%0D%0AWHERE+%7B%0D%0A++%3Fpet+a+ei2a%3APet+%3B%0D%0A+++++++vcard%3Alocality+%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fsector-publico%2Forganizacion%2Fmunicipio%2F${this.codigoIne}%3E+.%0D%0A%7D%0D%0A&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on&interface=true`
+          this.queryUrlMascotas = `https://opendata.aragon.es/sparql?default-graph-uri=&query=PREFIX+ei2a%3A+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fei2av2%23%3E%0D%0APREFIX+vcard%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2006%2Fvcard%2Fns%23%3E%0D%0A%0D%0ASELECT+%28COUNT%28%3Fpet%29+AS+%3FtotalMascotas%29%0D%0AWHERE+%7B%0D%0A++%3Fpet+a+ei2a%3APet+%3B%0D%0A+++++++vcard%3Alocality+%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fsector-publico%2Forganizacion%2Fmunicipio%2F${this.codigoIne}%3E+.%0D%0A%7D%0D%0A&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on&interface=true`
           
           // todas las mascotas
-          this.queryUrlMascotas = `https://opendata.aragon.es/sparql?default-graph-uri=&query=PREFIX+ei2a%3A+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fei2av2%23%3E%0D%0APREFIX+vcard%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2006%2Fvcard%2Fns%23%3E%0D%0A%0D%0ASELECT+%3Fpet%0D%0AWHERE+%7B%0D%0A++%3Fpet+a+ei2a%3APet+%3B%0D%0A+++++++vcard%3Alocality+%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fsector-publico%2Forganizacion%2Fmunicipio%2F${this.codigoIne}%3E+.%0D%0A%7D%0D%0A&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on&interface=true`
+          //this.queryUrlMascotas = `https://opendata.aragon.es/sparql?default-graph-uri=&query=PREFIX+ei2a%3A+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fei2av2%23%3E%0D%0APREFIX+vcard%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2006%2Fvcard%2Fns%23%3E%0D%0A%0D%0ASELECT+%3Fpet%0D%0AWHERE+%7B%0D%0A++%3Fpet+a+ei2a%3APet+%3B%0D%0A+++++++vcard%3Alocality+%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fsector-publico%2Forganizacion%2Fmunicipio%2F${this.codigoIne}%3E+.%0D%0A%7D%0D%0A&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on&interface=true`
         } else if (this.tipoLocalidad === 'diputacion') {
           // total
-          //this.queryUrlMascotas = `https://opendata.aragon.es/sparql?default-graph-uri=&query=PREFIX+ei2a%3A+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fei2av2%23%3E%0D%0APREFIX+vcard%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2006%2Fvcard%2Fns%23%3E%0D%0A%0D%0ASELECT+%28COUNT%28%3Fpet%29+AS+%3FtotalMascotas%29%0D%0AWHERE+%7B%0D%0A++%3Fpet+a+ei2a%3APet+%3B%0D%0A+++++++vcard%3Aregion+%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fsector-publico%2Forganizacion%2Fdiputacion%2F${this.codigoIne}%3E+.%0D%0A%7D%0D%0A&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on&interface=true`;
+          this.queryUrlMascotas = `https://opendata.aragon.es/sparql?default-graph-uri=&query=PREFIX+ei2a%3A+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fei2av2%23%3E%0D%0APREFIX+vcard%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2006%2Fvcard%2Fns%23%3E%0D%0A%0D%0ASELECT+%28COUNT%28%3Fpet%29+AS+%3FtotalMascotas%29%0D%0AWHERE+%7B%0D%0A++%3Fpet+a+ei2a%3APet+%3B%0D%0A+++++++vcard%3Aregion+%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fsector-publico%2Forganizacion%2Fdiputacion%2F${this.codigoIne}%3E+.%0D%0A%7D%0D%0A&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on&interface=true`;
 
           //todas las mascotas
-          this.queryUrlMascotas = `https://opendata.aragon.es/sparql?default-graph-uri=&query=PREFIX+ei2a%3A+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fei2av2%23%3E%0D%0APREFIX+vcard%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2006%2Fvcard%2Fns%23%3E%0D%0A%0D%0ASELECT+%3Fpet%0D%0AWHERE+%7B%0D%0A++%3Fpet+a+ei2a%3APet+%3B%0D%0A+++++++vcard%3Aregion+%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fsector-publico%2Forganizacion%2Fdiputacion%2F${this.codigoIne}%3E+.%0D%0A%7D%0D%0A&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on&interface=true`;
+          //this.queryUrlMascotas = `https://opendata.aragon.es/sparql?default-graph-uri=&query=PREFIX+ei2a%3A+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fei2av2%23%3E%0D%0APREFIX+vcard%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2006%2Fvcard%2Fns%23%3E%0D%0A%0D%0ASELECT+%3Fpet%0D%0AWHERE+%7B%0D%0A++%3Fpet+a+ei2a%3APet+%3B%0D%0A+++++++vcard%3Aregion+%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fsector-publico%2Forganizacion%2Fdiputacion%2F${this.codigoIne}%3E+.%0D%0A%7D%0D%0A&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on&interface=true`;
         }
         this.dataSource.mascotas = this.exportHtmlQuery(this.queryUrlMascotas);
 
@@ -410,28 +410,28 @@ export class ResultComponent {
         });
 
         // TODAS LAS MASCOTAS DE FORMA INDIVIDUAL
-        this.resultSvc.getData(this.queryUrlMascotas).subscribe((data) => {
-          if (data.results.bindings && data.results.bindings.length > 0) {
-            const mascotas = data.results.bindings;
-            
-            const total = mascotas.length;
-            
-            this.mascotas = total.toString();
-            this.dataDownload[0].mascotas = this.mascotas;
-          }
-        });
-
-        // NÚMERO TOTAL DE MASCOTAS
         // this.resultSvc.getData(this.queryUrlMascotas).subscribe((data) => {
-        //   if (data.results.bindings.length !== 0) {
-        //     const bindings = data.results.bindings;
-        //     this.mascotas = bindings[0].totalMascotas.value;
-        //     this.dataDownload[0].mascotas = this.mascotas;
-        //   } else {
-        //     this.mascotas = "0";
+        //   if (data.results.bindings && data.results.bindings.length > 0) {
+        //     const mascotas = data.results.bindings;
+            
+        //     const total = mascotas.length;
+            
+        //     this.mascotas = total.toString();
         //     this.dataDownload[0].mascotas = this.mascotas;
         //   }
         // });
+
+        //NÚMERO TOTAL DE MASCOTAS
+        this.resultSvc.getData(this.queryUrlMascotas).subscribe((data) => {
+          if (data.results.bindings.length !== 0) {
+            const bindings = data.results.bindings;
+            this.mascotas = bindings[0].totalMascotas.value;
+            this.dataDownload[0].mascotas = this.mascotas;
+          } else {
+            this.mascotas = "0";
+            this.dataDownload[0].mascotas = this.mascotas;
+          }
+        });
 
         this.resultSvc.getData(this.queryUrlPlazasHoteleras).subscribe((data) => {
 
