@@ -55,7 +55,7 @@ export class AragopediaTablaDatosComponent {
     }
     else
     {
-      console.log("url no bvalida o no segura", this.queryAragopediaCSV)
+      console.log("url no válida o no segura", this.queryAragopediaCSV)
     }
 
     this.aragopediaSvc.columnasTablaObserver.subscribe((dataColumnas: any) => {

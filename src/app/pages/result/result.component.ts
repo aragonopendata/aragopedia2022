@@ -34,7 +34,9 @@ interface DataLinks {
   entidadesSingulares: string,
   personasIlustres: string,
   image: string,
-  presupuestos: string
+  presupuestos: string,
+
+  mascotas: string
 }
 
 @Component({
@@ -148,6 +150,8 @@ export class ResultComponent {
   presupuestos!: string;
   loading: boolean = false;
 
+  mascotas!: string;
+
   @ViewChild(AragopediaSelectorTemasComponent) aragopediaMunicipio: any;
 
 
@@ -178,6 +182,8 @@ export class ResultComponent {
   queryUrlMunicipiosEnTerritorio!: string;
   queryUrlPresupuestos!: string;
 
+  queryUrlMascotas!: string;
+
   dataSource: DataLinks = {
     sueloUrbano: '',
     sueloRural: '',
@@ -203,7 +209,9 @@ export class ResultComponent {
     entidadesSingulares: '',
     personasIlustres: '',
     image: '',
-    presupuestos: ''
+    presupuestos: '',
+
+    mascotas: ''
   };
 
   // ARAGOPEDIA
@@ -228,7 +236,7 @@ export class ResultComponent {
 
   // Download data
 
-  dataDownload = this.temp || [{ nombre: '', email: '', telefono: '', direccion: '', codigoPostal: '', habitantes: '', sueloRural: '', sueloUrbano: '', densidad: '', poligonosIndustriales: '', explotacionesGanaderas: '', plazasHoteleras: '', incendiosDesde2022: '', hectareasAfectadasPorIncendios: '', mencionesEnPublicaciones: '', alojamientosTuristicos: '', urlImagen: '', porcentajeSueloRural: '', porcentajeSueloUrbano: '', esDeLosMasPoblados: '', edadMediaHombres: '', edadMediaMujeres: '', creativeWorks: '', miembrosPleno: '', personasIlustres: '', entidadesSingulares: '' }];
+  dataDownload = this.temp || [{ nombre: '', email: '', telefono: '', direccion: '', codigoPostal: '', habitantes: '', sueloRural: '', sueloUrbano: '', densidad: '', poligonosIndustriales: '', explotacionesGanaderas: '', plazasHoteleras: '', incendiosDesde2022: '', hectareasAfectadasPorIncendios: '', mencionesEnPublicaciones: '', alojamientosTuristicos: '', urlImagen: '', porcentajeSueloRural: '', porcentajeSueloUrbano: '', esDeLosMasPoblados: '', edadMediaHombres: '', edadMediaMujeres: '', creativeWorks: '', miembrosPleno: '', personasIlustres: '', entidadesSingulares: '', mascotas: '' }];
 
 
 
@@ -309,6 +317,23 @@ export class ResultComponent {
 
         this.dataSource.explotacionesGanaderas = this.exportHtmlQuery(this.queryUrlExplotacionesGanaderas);
 
+        if (this.tipoLocalidad === 'municipio') {
+          // total
+          this.queryUrlMascotas = `https://opendata.aragon.es/sparql?default-graph-uri=&query=PREFIX+ei2a%3A+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fei2av2%23%3E%0D%0APREFIX+vcard%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2006%2Fvcard%2Fns%23%3E%0D%0A%0D%0ASELECT+%28COUNT%28%3Fpet%29+AS+%3FtotalMascotas%29%0D%0AWHERE+%7B%0D%0A++%3Fpet+a+ei2a%3APet+%3B%0D%0A+++++++vcard%3Alocality+%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fsector-publico%2Forganizacion%2Fmunicipio%2F${this.codigoIne}%3E+.%0D%0A%7D%0D%0A&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on&interface=true`
+          
+          // todas las mascotas
+          //this.queryUrlMascotas = `https://opendata.aragon.es/sparql?default-graph-uri=&query=PREFIX+ei2a%3A+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fei2av2%23%3E%0D%0APREFIX+vcard%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2006%2Fvcard%2Fns%23%3E%0D%0A%0D%0ASELECT+%3Fpet%0D%0AWHERE+%7B%0D%0A++%3Fpet+a+ei2a%3APet+%3B%0D%0A+++++++vcard%3Alocality+%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fsector-publico%2Forganizacion%2Fmunicipio%2F${this.codigoIne}%3E+.%0D%0A%7D%0D%0A&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on&interface=true`
+        } else if (this.tipoLocalidad === 'diputacion') {
+          // total
+          this.queryUrlMascotas = `https://opendata.aragon.es/sparql?default-graph-uri=&query=PREFIX+ei2a%3A+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fei2av2%23%3E%0D%0APREFIX+vcard%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2006%2Fvcard%2Fns%23%3E%0D%0A%0D%0ASELECT+%28COUNT%28%3Fpet%29+AS+%3FtotalMascotas%29%0D%0AWHERE+%7B%0D%0A++%3Fpet+a+ei2a%3APet+%3B%0D%0A+++++++vcard%3Aregion+%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fsector-publico%2Forganizacion%2Fdiputacion%2F${this.codigoIne}%3E+.%0D%0A%7D%0D%0A&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on&interface=true`;
+
+          //todas las mascotas
+          //this.queryUrlMascotas = `https://opendata.aragon.es/sparql?default-graph-uri=&query=PREFIX+ei2a%3A+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fei2av2%23%3E%0D%0APREFIX+vcard%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2006%2Fvcard%2Fns%23%3E%0D%0A%0D%0ASELECT+%3Fpet%0D%0AWHERE+%7B%0D%0A++%3Fpet+a+ei2a%3APet+%3B%0D%0A+++++++vcard%3Aregion+%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fsector-publico%2Forganizacion%2Fdiputacion%2F${this.codigoIne}%3E+.%0D%0A%7D%0D%0A&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on&interface=true`;
+        }
+        this.dataSource.mascotas = this.exportHtmlQuery(this.queryUrlMascotas);
+
+
+
         this.queryUrlPlazasHoteleras = `https://opendata.aragon.es/sparql?default-graph-uri=http%3A%2F%2Fopendata.aragon.es%2Fdef%2Fei2av2&query=select+count%28+distinct+%3Fs%29+from+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fdef%2Fei2av2%3E+where+%7B%0D%0A%3Fs+a+%3Chttp%3A%2F%2Fwww.w3.org%2Fns%2Forg%23Organization%3E%3B%0D%0A++++%3Chttp%3A%2F%2Fwww.w3.org%2Fns%2Forg%23linkedTo%3E+%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fsector-publico%2Forganizacion%2F${this.tipoLocalidad}%2F${this.codigoIne}%3E%3B%0D%0A++++dc%3Asource+%3Chttps%3A%2F%2Fopendata.aragon.es%2Fdataset%2F87b07cd4-c1b0-41c4-b071-c18db7c0cf58%2Fresource%2F8303127d-90c6-4e94-9617-e6e602a0140a%3E.%0D%0A%7D%0D%0A&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`;
         this.dataSource.alojamientosHoteleros = this.exportHtmlQuery(this.queryUrlPlazasHoteleras);
 
@@ -380,6 +405,31 @@ export class ResultComponent {
             });
             this.explotacionesGanaderas = total.toString();
             this.dataDownload[0].explotacionesGanaderas = this.explotacionesGanaderas;
+          }
+
+        });
+
+        // TODAS LAS MASCOTAS DE FORMA INDIVIDUAL
+        // this.resultSvc.getData(this.queryUrlMascotas).subscribe((data) => {
+        //   if (data.results.bindings && data.results.bindings.length > 0) {
+        //     const mascotas = data.results.bindings;
+            
+        //     const total = mascotas.length;
+            
+        //     this.mascotas = total.toString();
+        //     this.dataDownload[0].mascotas = this.mascotas;
+        //   }
+        // });
+
+        //NÚMERO TOTAL DE MASCOTAS
+        this.resultSvc.getData(this.queryUrlMascotas).subscribe((data) => {
+          if (data.results.bindings.length !== 0) {
+            const bindings = data.results.bindings;
+            this.mascotas = bindings[0].totalMascotas.value;
+            this.dataDownload[0].mascotas = this.mascotas;
+          } else {
+            this.mascotas = "0";
+            this.dataDownload[0].mascotas = this.mascotas;
           }
         });
 
@@ -609,7 +659,7 @@ export class ResultComponent {
       });
 
       this.resultSvc.getData(this.queryUrlDensidadPoblacion).subscribe((data: any) => {
-        debugger;
+        //debugger;
         //this.densidadPoblacion = (Number(data?.results.bindings[0].densidad_de_poblacion_habkm2.value)).toFixed(1).replace('.', ',');
         const densidad = data?.results.bindings[0]?.densidad_de_poblacion_habkm2?.value;
          //Se va a verificar si ante de llamar a la funcion number este es un valor valido
