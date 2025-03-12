@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 import { PersonaRoutingModule } from './persona-rounting.module';
 import { PersonaComponent } from './persona.component';
 import { BrowserModule } from '@angular/platform-browser';
-import { JwPaginationModule } from 'jw-angular-pagination';
 import { MatIconModule } from '@angular/material/icon';
 
 
@@ -12,7 +11,6 @@ import { MatIconModule } from '@angular/material/icon';
         CommonModule,
         PersonaRoutingModule,
         BrowserModule,
-        JwPaginationModule,
         MatIconModule
     ],
     exports: [PersonaComponent],
