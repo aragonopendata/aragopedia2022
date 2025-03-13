@@ -5,6 +5,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { DxRangeSelectorModule } from 'devextreme-angular';
 import { TimeLineSvc, YearsPeriod } from './timeline.service';
 import { FormsModule } from '@angular/forms';
+import { DxChartModule } from 'devextreme-angular';
 
 
 @Component({
@@ -91,16 +92,16 @@ export class TimeLineComponent implements OnInit {
   }
 }
 
-@NgModule({
-  imports: [
-    BrowserModule,
-    DxRangeSelectorModule,
-    MatProgressSpinnerModule,
-    FormsModule
-  ],
-  exports: [TimeLineComponent],
-  declarations: [TimeLineComponent],
-  bootstrap: [TimeLineComponent],
-})
+// @NgModule({
+//   imports: [
+//     BrowserModule,
+//     DxRangeSelectorModule,
+//     MatProgressSpinnerModule,
+//     FormsModule
+//   ],
+//   exports: [TimeLineComponent],
+//   // declarations: [TimeLineComponent],
+//   bootstrap: [TimeLineComponent],
+// })
 export class TimeLineModule {
 }
