@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { TemasComponent } from 'src/app/components/temas/temas.component';
 import { TemasService } from 'src/app/components/temas/temas.service';
 import { TimeLineComponent } from 'src/app/components/timeline/timeline.component';
