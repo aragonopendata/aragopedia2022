@@ -20,8 +20,12 @@
 
     <div class="container submit">
         <p *ngIf="error" class="error">Debes seleccionar entre 1 y 5 temas y un mínimo de 3 años</p>
+        
         <button (click)="submit()" class="btn submit__btn">Realizar
             búsqueda</button>
+
+        <desy-button (click)="submit()" classes="btn submit__btn">Realizar
+            búsqueda</desy-button>
     </div>
 </div>
 

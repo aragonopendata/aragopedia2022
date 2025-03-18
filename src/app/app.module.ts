@@ -44,7 +44,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { NgChartsModule } from 'ng2-charts';
 import { MatSelectModule } from '@angular/material/select';
 import { TimeLineComponent } from './components/timeline/timeline.component';
-
+import { DesyButtonsModule } from 'desy-angular'
 import { DxRangeSelectorModule, DxChartModule } from 'devextreme-angular';
 
 @NgModule({
@@ -97,7 +97,8 @@ import { DxRangeSelectorModule, DxChartModule } from 'devextreme-angular';
     NgChartsModule,
     MatSelectModule,
     DxRangeSelectorModule,
-    DxChartModule
+    DxChartModule,
+    DesyButtonsModule
   ],
   providers: [ResultService],
   bootstrap: [AppComponent]
