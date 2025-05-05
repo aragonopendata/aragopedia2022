@@ -48,9 +48,12 @@
         <p>Años seleccionados:
             <b> {{yearsURL}} </b>
         </p>
-        <button class="btn btn-accessible" (click)="toggleAccessibleMode()"><span
-                *ngIf="!accessibleMode">Mostrar modo accesible</span><span *ngIf="accessibleMode">Ocultar modo
-                accesible</span></button>
+        <desy-button 
+        classes="c-button--link" 
+        (clickEvent)="toggleAccessibleMode()">
+        <span *ngIf="!accessibleMode">Mostrar modo accesible</span>
+        <span *ngIf="accessibleMode">Ocultar modo accesible</span>
+      </desy-button>
 
     </div>
 </div>

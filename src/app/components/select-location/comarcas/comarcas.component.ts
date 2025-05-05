@@ -67,22 +67,31 @@ export class SelectComarcaComponent implements OnInit {
       'municipio': [this.selectedComarca]
     })
     this.formGroup.get('municipio')?.valueChanges.subscribe(response => {
-
       this.selected = this.selectedComarca;
       this.selectedComarca = response;
-
-      this.comarcasParsed.forEach((comarca: any) => {
-        if (comarca.nombre === this.selectedComarca) {
-          comarca.id[0] === '0' ? this.selectedId = comarca.id.substring(1) : this.selectedId = comarca.id;
-        }
-      });
-
-      if (this.selectedId !== '') {
-        this.router.navigate(['detalles'], { queryParams: { tipo: 'comarca', id: this.selectedId } })
-      }
-
+      this.findSelectedId();
       this.filterData(response);
     });
+  }
+
+  // Función para manejar la selección desde desy-option
+  selectComarca(comarca: string) {
+    this.selectedComarca = comarca;
+    this.formGroup.get('municipio')?.setValue(comarca);
+    this.findSelectedId();
+  }
+
+  // Extrae la búsqueda de ID a una función separada
+  findSelectedId() {
+    this.comarcasParsed.forEach((comarca: any) => {
+      if (comarca.nombre === this.selectedComarca) {
+        comarca.id[0] === '0' ? this.selectedId = comarca.id.substring(1) : this.selectedId = comarca.id;
+      }
+    });
+
+    if (this.selectedId !== '') {
+      this.router.navigate(['detalles'], { queryParams: { tipo: 'comarca', id: this.selectedId } })
+    }
   }
 
   filterData(enteredData: any) {
@@ -160,5 +169,4 @@ export class SelectComarcaComponent implements OnInit {
       }
     });
   }
-
 }
