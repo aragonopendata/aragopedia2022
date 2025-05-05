@@ -8,7 +8,7 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SearchComponent } from './components/search/search.component';
-import { TimeLineModule } from './components/timeline/timeline.component';
+import { TimeLineComponent, TimeLineModule } from './components/timeline/timeline.component';
 import { SelectLocationComponent } from './components/select-location/select-location.component';
 import { MatFormFieldModule, MatLabel } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -43,11 +43,12 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { NgChartsModule } from 'ng2-charts';
 import { MatSelectModule } from '@angular/material/select';
+import { DesyAngularModule, DesyPaginationModule, DesyTablesModule } from 'desy-angular';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    HomeComponent,
+/*     AppComponent,
+ */    HomeComponent,
     SearchComponent,
     SelectLocationComponent,
     TemasComponent,
@@ -56,26 +57,28 @@ import { MatSelectModule } from '@angular/material/select';
     SelectProvinciaComponent,
     SelectComarcaComponent,
     SelectMunicipioComponent,
-    ResultsComponent,
-    ResultComponent,
-    NotFoundComponent,
-    PiramidePoblacionComponent,
-    FilterPipe,
+/*     ResultsComponent, */
+/*     ResultComponent,
+ */    NotFoundComponent,
+/*     PiramidePoblacionComponent,
+ */    FilterPipe,
     AragopediaComponent,
     AragopediaSelectorTemasComponent,
-    AragopediaTablaDatosComponent,
-    FichaAragonComponent,
+/*     AragopediaTablaDatosComponent,
+ */   /*  FichaAragonComponent, */
     ProvinciasComponent,
     ComarcasComponent,
     MunicipiosComponent,
     LocationComponent,
-  ],
+/*     TimeLineComponent
+ */  ],
   imports: [
     BrowserModule,
+    
     AppRoutingModule,
     BrowserAnimationsModule,
-    TimeLineModule,
-    ReactiveFormsModule,
+/*     TimeLineModule,
+ */    ReactiveFormsModule,
     MatAutocompleteModule,
     MatFormFieldModule,
     MatInputModule,
@@ -92,6 +95,9 @@ import { MatSelectModule } from '@angular/material/select';
     MatSortModule,
     NgChartsModule,
     MatSelectModule,
+        DesyAngularModule,
+        DesyTablesModule,
+        DesyPaginationModule
 
   ],
   providers: [ResultService],

@@ -86,7 +86,11 @@ export class ResultComponent {
 
   temp = undefined;
   currentLink: any;
-
+  firstLand: boolean | undefined;
+  pageSize: number = 10; // Limitamos a 10 elementos por página
+  currentPage: number = 1;
+  maxPagesToShow: number = 5; // Limitamos a mostrar 5 páginas numeradas
+  totalPages: number = 0; // Total de páginas disponibles
   tituloFicha!: string;
   lugarBuscado: any;
   lugarBuscadoParsed!: string;
@@ -1002,26 +1006,46 @@ export class ResultComponent {
   }
 
   format(number: any) {
+    // Verificar si el valor es null, undefined o una cadena vacía
+    if (number === null || number === undefined || number === '') {
+      return '0';
+    }
+    
+    try {
       if (typeof number === 'number') {
         let partesNumero = number.toString().split('.');
         partesNumero[0] = this.formatNumber(partesNumero[0]); 
         return partesNumero.join('.'); 
       } else if (typeof number === 'string') {
+        // Primero verificamos si la cadena es un número válido
+        if (isNaN(Number(number.replace(',', '.')))) {
+          return '0';
+        }
+        
         const numberConPunto = number.replace(',', '.');
-       // Ahora convertimos a número y procedemos a formatear
         let partesNumero = Number(numberConPunto).toString().split('.');
-        partesNumero[0] = this.formatNumber(partesNumero[0]); // Formatea la parte entera
-    
+        partesNumero[0] = this.formatNumber(partesNumero[0]);
+        
         return partesNumero.join('.');
       }
-    
-      return number;
+      
+      return '0'; // Si no es ni número ni string, devolvemos '0'
+    } catch (error) {
+      console.error('Error al formatear número:', error);
+      return '0'; // En caso de error, devolver un valor por defecto
+    }
   }
-
-  formatNumber(num:any) {
-    // Convertir la cadena numérica a un número y luego formatearlo con separadores de miles.
-    return new Intl.NumberFormat('de-DE').format(Number(num));
-}
+  
+  formatNumber(num: any) {
+    if (!num) return '0';
+    try {
+      // Convertir la cadena numérica a un número y luego formatearlo con separadores de miles.
+      return new Intl.NumberFormat('de-DE').format(Number(num));
+    } catch (error) {
+      console.error('Error en formatNumber:', error);
+      return '0';
+    }
+  }
 
   initForm() {
     this.formGroup = this.fb.group({

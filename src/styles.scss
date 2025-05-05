@@ -13,10 +13,10 @@ $my-app-theme: mat.m2-define-light-theme((color: (primary: $my-app-primary,
 
 @include mat.all-component-themes($my-app-theme);
 
-html,
-body {
-    height: 100%;
-}
+// html,
+// body {
+//     height: 100%;
+// }
 
 body {
     margin: 0;
@@ -40,9 +40,9 @@ body.zoomed {
     --text-color: #333333;
     --accent-color: #00475C;
     --accent-color-light: #00607A;
-    --bg-dark: #92949B;
-    --bg-light: #F8F8F8;
-    --shadow: 0 4px 4px rgba(0, 0, 0, 0.05);
+    --bg-dark: #35f400;
+    --bg-light: hsl(299, 100%, 46%);
+    --shadow: 0 4px 4px #00ff110d;
     --shadow-hover: 0 4px 8px rgba(0, 0, 0, 0.3);
     --transition: all 0.3s;
     --div-padding: 1em;
@@ -51,11 +51,11 @@ body.zoomed {
     --h3: 24px;
 }
 
-html,
-body {
-    height: 100%;
-    color: var(--text-color);
-}
+// html,
+// body {
+//     height: 100%;
+//     color: var(--text-color);
+// }
 
 body {
     margin: 0;
@@ -124,6 +124,10 @@ main .container,
 footer .container {
     max-width: 1350px;
     padding: 0 50px;
+    align-items: center;
+    text-align: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 
 .btn {
@@ -144,14 +148,14 @@ footer .container {
 
     main section,
     main .container {
-        // width: 100%;
+        //width: 100%;
         padding: 0 10px;
 
     }
 }
 
 
-// Tablet
+//Tablet
 
 @media screen and (max-width: 992px) {
 

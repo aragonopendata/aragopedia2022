@@ -240,7 +240,7 @@
                 <div class="selector-temas">
                     <mat-form-field class="temas">
                         <mat-label>
-                            Seleccionar datos
+                            Seleccionar datos FICHA ARAGON
                         </mat-label>
                         <input formControlName="tema" [(ngModel)]="selectedTema" matInput [formControl]="temasControl"
                             type="select" [matAutocomplete]="auto" />
@@ -265,9 +265,9 @@
                     <mat-spinner [diameter]="70"></mat-spinner>
                 </div>
                 <app-aragopedia-tabla-datos
-                    [ngClass]="{'errorTabla' : this.errorTabla, 'hidden': this.displayTema === '' || loading}"
-                    class="tabla-datos">
-                </app-aragopedia-tabla-datos>
+            [hidden]="errorTabla || firstLand || loading"
+            class="tabla-datos display-block">
+        </app-aragopedia-tabla-datos>
             </div>
         </section>
 

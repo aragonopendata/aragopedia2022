@@ -19,9 +19,10 @@ export interface Result {
 export class ResultsComponent implements OnInit {
 
   constructor(public temasSvc: TemasService, public timelineSvc: TimeLineSvc, private _route: ActivatedRoute, private router: Router) { }
-
   @ViewChild(TemasComponent) selected: any;
   @ViewChild(TimeLineComponent) years: any;
+  pageSize: number = 10;
+  currentPage: number = 1;
 
   active: boolean = true;
   error: boolean = false;
@@ -67,7 +68,7 @@ export class ResultsComponent implements OnInit {
   queryTemasUrl!: string;
   queryDatasetsResults!: string;
 
-
+  allResults: any[] = [];
   ngOnInit(): void {
 
     this.selectedYears = this._route.snapshot.paramMap.get('years')?.split('-');
@@ -173,6 +174,9 @@ export class ResultsComponent implements OnInit {
 
         this.items = this.results;
         this.numberOfResults = this.items.length;
+        this.allResults = [...this.results];
+        // inicializa la página
+        this.applyYearFilter(this.firstYear, this.lastYear);
 
       });
 
@@ -181,6 +185,8 @@ export class ResultsComponent implements OnInit {
     //### parseo de temas
 
   }
+
+  
 
   sortResults(results: Result[]): Result[] {
 
@@ -231,11 +237,41 @@ export class ResultsComponent implements OnInit {
     this.active = !this.active;
   }
 
-  onChangePage(pageOfItems: Array<any>) {
-    // update current page of items
-    this.pageOfItems = pageOfItems;
-
+  onChangePage(newPage: number): void {
+    this.currentPage = newPage;
+    const start = (newPage - 1) * this.pageSize;
+    this.pageOfItems = this.items.slice(start, start + this.pageSize);
   }
+  
+  // Asegúrate de que cuando filtramos los resultados, se mantenga la paginación correcta
+
+  onYearsChanged(event: {value: [string,string]}) {
+    const [start, end] = event.value;
+    this.firstYear = start;
+    this.lastYear  = end;
+    this.applyYearFilter(start, end);
+  }
+
+  /**
+   * Filtra los resultados por año y recalcula paginación
+   */
+  private applyYearFilter(start: string, end: string) {
+    const from = parseInt(start, 10);
+    const to   = parseInt(end,   10);
+
+    // Filtrar a partir del array completo
+    this.items = this.allResults.filter(r => {
+      const y = parseInt(r.year.substring(0,4), 10) || 0;
+      return y >= from && y <= to;
+    });
+
+    // Recalcular número total y primera página
+    this.numberOfResults = this.items.length;
+    this.currentPage     = 1;
+    this.pageOfItems     = this.items.slice(0, this.pageSize);
+  }
+
+  
 
   filterByCategory(event: any) {
     this.temasSelected = event;
@@ -247,29 +283,7 @@ export class ResultsComponent implements OnInit {
     }, 500)
   }
 
-  filterByYears() {
-    let temasFiltered: string[] = [];
 
-    this.temasParsed.forEach(tema => {
-      if (tema.check) {
-        temasFiltered.push(tema.title)
-      } else {
-        temasFiltered.filter((temaFiltered) => temaFiltered !== tema.title)
-      }
-    });
-
-    this.selectedYears = this.years.yearsSelected;
-    this.yearsURL = `${this.selectedYears[0]}-${this.selectedYears[1]}`
-
-    if (temasFiltered.length >= 1 && temasFiltered.length <= 5) {
-      this.router.navigate([`results/${temasFiltered}/${this.yearsURL}`]);
-      setTimeout(function () {
-        window.location.reload()
-      }, 500)
-    } else {
-      this.error = true;
-    }
-  }
 
   showAll() {
     this.items = this.results;
@@ -280,6 +294,7 @@ export class ResultsComponent implements OnInit {
     this.activeSiua = false;
   }
 
+  // Por ejemplo, en el método filterByDataset():
   filterByDataset() {
     const datasetResults = this.results.filter(element => element.type === 'Dataset');
     this.activeDataset = true;
@@ -288,7 +303,11 @@ export class ResultsComponent implements OnInit {
     this.activeSiua = false;
     this.activeEli = false;
     this.items = datasetResults;
-    this.pageOfItems = datasetResults.slice(0, 9)
+    
+    // Resetear la página actual a 1 cuando se cambia el filtro
+    this.currentPage = 1;
+    // Actualizar los elementos de la página actual
+    this.pageOfItems = datasetResults.slice(0, this.pageSize);
   }
 
   filterByCube() {

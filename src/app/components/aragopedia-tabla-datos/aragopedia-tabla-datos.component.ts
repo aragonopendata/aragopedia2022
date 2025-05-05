@@ -1,4 +1,4 @@
-import { Component, ViewChild, OnInit } from '@angular/core';
+import { Component, ViewChild, OnInit, ChangeDetectorRef } from '@angular/core';
 import { AragopediaService } from './aragopediaService';
 import { DomSanitizer } from '@angular/platform-browser';
 import { AragopediaSelectorTemasComponent } from '../aragopedia-selector-temas/aragopedia-selector-temas.component';
@@ -78,6 +78,7 @@ export class AragopediaTablaDatosComponent implements OnInit {
   itemsPerPage: number = 10; 
   currentPage: number = 1;
   totalItems: number = 0;
+  totalPages: number = 0; // Nueva propiedad para el total de páginas
   
   // Variables para ordenación
   currentSort: any = null;
@@ -85,7 +86,7 @@ export class AragopediaTablaDatosComponent implements OnInit {
   @ViewChild('paginator') paginator!: MatPaginator;
   @ViewChild(AragopediaSelectorTemasComponent) selectorTemas!: AragopediaSelectorTemasComponent;
 
-  constructor(public aragopediaSvc: AragopediaService, private sanitizer: DomSanitizer) {}
+  constructor(public aragopediaSvc: AragopediaService, private sanitizer: DomSanitizer, private cd: ChangeDetectorRef) {}
 
   ngOnInit() {
     if (this.validateUrl(this.queryAragopediaCSV)) {
@@ -191,7 +192,8 @@ export class AragopediaTablaDatosComponent implements OnInit {
         
         this.loading = false;
         this.totalItems = this.rowsData.length;
-        this.handlePageChange(1);
+        this.totalPages = Math.ceil(this.totalItems / this.itemsPerPage); // Calcular el total de páginas
+        setTimeout(() => this.handlePageChange(1));
       });
     });
   }
@@ -222,24 +224,31 @@ export class AragopediaTablaDatosComponent implements OnInit {
 
   // Método para manejar la paginación
   handlePageChange(page: number) {
+    console.log('Paginador: cambio a página', page);
     this.currentPage = page;
     const startIndex = (page - 1) * this.itemsPerPage;
     const endIndex = Math.min(startIndex + this.itemsPerPage, this.visibleRowsData.length);
     this.paginatedRowsData = this.visibleRowsData.slice(startIndex, endIndex);
+    
+    // Actualizar el total de páginas
+    this.totalPages = Math.ceil(this.visibleRowsData.length / this.itemsPerPage);
+    this.cd.detectChanges();
   }
-
+  
   // Método para manejar la recalculación de la tabla (filtrado y ordenación)
   handleRecalculateTable(params: TableRecalculateParams) {
     let rows = [...this.rowsData];
     
     // Aplicar filtros
-    if (params.filters && params.filters.length > 0) {
-      params.filters.forEach((filter: TableFilter) => {
-        if (filter.filterText.trim()) {
-          rows = rows.filter(row => {
-            const cellText = row.cellsList[filter.columnIndex].text.toString().toLowerCase();
-            return cellText.includes(filter.filterText.toLowerCase());
-          });
+    if (params.filters?.length) {
+      params.filters.forEach(f => {
+        if (f.filterText.trim()) {
+          rows = rows.filter(row =>
+            row.cellsList[f.columnIndex].text
+               .toString()
+               .toLowerCase()
+               .includes(f.filterText.toLowerCase())
+          );
         }
       });
     }
@@ -268,10 +277,20 @@ export class AragopediaTablaDatosComponent implements OnInit {
       
       this.currentSort = params.sort;
     }
-    
+
+    // Si hay filtros activos o se ha cambiado la ordenación, volver a la primera página
+    if ((params.filters?.some(f => f.filterText.trim())) || params.sort) {
+      this.currentPage = 1;
+    }
+  
+    // Actualizar datos visibles y paginación
     this.visibleRowsData = rows;
     this.totalItems = rows.length;
-    this.handlePageChange(1);
+    this.totalPages = Math.ceil(this.totalItems / this.itemsPerPage); // Actualizar el total de páginas
+    
+    // Actualizo la página actual
+    this.handlePageChange(this.currentPage);
+    this.cd.detectChanges();
   }
 
   isNumeric(value: any): boolean {

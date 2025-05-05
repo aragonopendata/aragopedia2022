@@ -8,9 +8,9 @@
 
     <!-- Versión con desy-table-advanced -->
     <div class="table-container">
-        <!-- Spinner de carga -->
+        <!-- Spinner de carga DESY -->
         <div class="loading-table" *ngIf="loading">
-            <mat-spinner [diameter]="70"></mat-spinner>
+            <desy-spinner [id]="'loading-spinner'" [text]="'Cargando...'" [classes]="'text-2xl'"></desy-spinner>
         </div>
 
         <!-- Tabla DESY con implementación por contenido (content) para más control -->
@@ -43,12 +43,25 @@
             </ng-container>
         </desy-table-advanced>
 
-        <!-- Paginación DESY -->
+        <!-- Paginación DESY mejorada con navegación limitada -->
         <desy-pagination 
             [totalItems]="totalItems"
             [itemsPerPage]="itemsPerPage"
             [(currentPage)]="currentPage"
-            (currentPageChange)="handlePageChange($event)">
+            (currentPageChange)="handlePageChange($event)"
+            [showFirst]="true"
+            [showLast]="true"
+            [showPrevious]="true"
+            [showNext]="true"
+            [hasFirst]="currentPage !== 1"
+            [hasLast]="currentPage !== totalPages"
+            [hasPrevious]="currentPage > 1"
+            [hasNext]="currentPage < totalPages"
+            firstText="Primera"
+            lastText="Última"
+            previousText="Anterior"
+            nextText="Siguiente"
+            [classes]="'pagination-container'">
         </desy-pagination>
     </div>
 </div>

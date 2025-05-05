@@ -1,5 +1,86 @@
-<div>
-    <ngx-datatable class="material" [rows]="this.rows" [columns]="this.columns" [headerHeight]="50" [footerHeight]="50"
-        rowHeight="auto">
-    </ngx-datatable>
+<!-- aragopedia-nueva-tabla-datos.component.html -->
+<div class="table-container">
+    <!-- Spinner de carga -->
+    <div class="loading-table" *ngIf="loading">
+        <desy-spinner [id]="'loading-spinner'" [text]="'Cargando...'" [classes]="'text-2xl'"></desy-spinner>    </div>
+
+    <!-- Tabla DESY con implementación por contenido (content) para más control -->
+    <desy-table-advanced 
+    [classes]="'min-w-full'"
+    [wrapper]="{ classes: 'overflow-x-auto' }"
+    [caption]="'Datos efgnufhguhgfuhigfstadísticos'" 
+    [firstCellIsHeader]="false"
+    [hasCheckboxes]="false"
+    (recalculateTable)="handleRecalculateTable($event)">
+    
+    <!-- Cabeceras -->
+    <desy-table-advanced-header>
+        <ng-container *ngFor="let column of columns; let colIndex = index">
+            <desy-table-advanced-header-cell 
+                [hasFilter]="true" 
+                [orderBy]="OrderBy.asc"
+           >
+                <desy-content>{{ column.name || column.prop }}</desy-content>
+            </desy-table-advanced-header-cell>
+        </ng-container>
+    </desy-table-advanced-header>
+    
+    <!-- Filas de datos -->
+    <ng-container *ngFor="let row of paginatedRows; let i = index">
+        <desy-table-advanced-row [id]="'row-' + i">
+            <ng-container *ngFor="let column of columns">
+                <desy-table-advanced-row-cell>
+                    <desy-content>
+                        {{ row[column.prop || (column.name ? column.name.toLowerCase() : '')] || '' }}
+                    </desy-content>
+                </desy-table-advanced-row-cell>
+            </ng-container>
+        </desy-table-advanced-row>
+    </ng-container>
+
+        <!-- Mensaje de no datos -->
+        <ng-container *ngIf="!loading && (!paginatedRows || paginatedRows.length === 0)">
+            <desy-table-advanced-row>
+                <desy-table-advanced-row-cell [attr.colspan]="columns.length || 1">
+                    <desy-content>
+                        <div class="text-center py-4">No hay datos disponibles</div>
+                    </desy-content>
+                </desy-table-advanced-row-cell>
+            </desy-table-advanced-row>
+        </ng-container>
+    </desy-table-advanced>
+
+    <!-- Paginación DESY, solo mostrarla si hay datos -->
+    <desy-pagination 
+    [totalItems]="totalItems"
+    [itemsPerPage]="itemsPerPage"
+    [(currentPage)]="currentPage"
+    (currentPageChange)="handlePageChange($event)"
+    [showFirst]="true"
+    [showLast]="true"
+    [showPrevious]="true"
+    [showNext]="true"
+    [hasFirst]="currentPage !== 1"
+    [hasLast]="currentPage !== totalPages"
+    [hasPrevious]="currentPage > 1"
+    [hasNext]="currentPage < totalPages"
+    firstText="Primera"
+    lastText="Última"
+    previousText="Anterior"
+    nextText="Siguiente"
+    [classes]="'mt-4'">
+</desy-pagination>
+
+    <!-- Opciones de descarga, si están disponibles -->
+    <div class="download-options" *ngIf="linkDescargaCSV || linkDescargaJSON">
+        <h3>Descargar datos</h3>
+        <div class="download-links">
+            <a *ngIf="linkDescargaCSV" [href]="linkDescargaCSV" download class="download-link">
+                Descargar CSV
+            </a>
+            <a *ngIf="linkDescargaJSON" [href]="linkDescargaJSON" download class="download-link">
+                Descargar JSON
+            </a>
+        </div>
+    </div>
 </div>
