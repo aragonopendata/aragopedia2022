@@ -15,33 +15,34 @@
 
         <!-- Tabla DESY con implementación por contenido (content) para más control -->
         <desy-table-advanced 
-            [classes]="'min-w-full'"
-            [wrapper]="{ classes: 'overflow-x-auto' }"
-            [caption]="tituloTabla" 
-            [firstCellIsHeader]="false"
-            [hasCheckboxes]="false"
-            (recalculateTable)="handleRecalculateTable($event)">
-            
-            <!-- Cabeceras sin ordenación ni filtros -->
-            <desy-table-advanced-header>
-                <ng-container *ngFor="let columna of columnasTabla; let i = index">
-                    <desy-table-advanced-header-cell [hasFilter]="false">
-                        <desy-content>{{ columna.nombre }}</desy-content>
-                    </desy-table-advanced-header-cell>
-                </ng-container>
-            </desy-table-advanced-header>
-            
-            <!-- Filas de datos -->
-            <ng-container *ngFor="let row of paginatedRowsData">
-                <desy-table-advanced-row [id]="row.id">
-                    <ng-container *ngFor="let cell of row.cellsList">
-                        <desy-table-advanced-row-cell [classes]="cell.classes">
-                            {{ cell.text }}
-                        </desy-table-advanced-row-cell>
-                    </ng-container>
-                </desy-table-advanced-row>
-            </ng-container>
-        </desy-table-advanced>
+        [classes]="'min-w-full'"
+        [wrapper]="{ classes: 'overflow-x-auto' }"
+        [caption]="tituloTabla" 
+        [firstCellIsHeader]="false"
+        [hasCheckboxes]="false"
+        (recalculateTable)="handleRecalculateTable($event)"
+    >
+      <desy-table-advanced-header>
+        <ng-container *ngFor="let columna of columnasTabla; let i = index">
+          <!-- ACTIVAMOS FILTRO y ORDENACIÓN -->
+          <desy-table-advanced-header-cell 
+              [orderBy]="OrderBy.none"          >
+            <desy-content>{{ columna.nombre }}</desy-content>
+          </desy-table-advanced-header-cell>
+        </ng-container>
+      </desy-table-advanced-header>
+    
+      <ng-container *ngFor="let row of paginatedRowsData">
+        <desy-table-advanced-row [id]="row.id">
+          <ng-container *ngFor="let cell of row.cellsList">
+            <desy-table-advanced-row-cell [classes]="cell.classes">
+              {{ cell.text }}
+            </desy-table-advanced-row-cell>
+          </ng-container>
+        </desy-table-advanced-row>
+      </ng-container>
+    </desy-table-advanced>
+    
 
         <!-- Paginación DESY mejorada con navegación limitada -->
         <desy-pagination 

@@ -1047,6 +1047,48 @@ export class ResultComponent {
     }
   }
 
+  shouldShowCaracteristicas(): boolean {
+    if (this.tipoLocalidad === 'municipio') {
+      // For municipio type, check if any of the relevant data exists
+      return (
+        (this.porcentajeSueloRural !== undefined && this.porcentajeSueloRural !== 'NaN') ||
+        (this.porcentajeSueloUrbano !== undefined && this.porcentajeSueloUrbano !== 'NaN') ||
+        this.esPoblado !== undefined ||
+        !!this.edadMediaHombres ||
+        !!this.edadMediaMujeres ||
+        this.tieneOficinaComarcal !== undefined
+      );
+    } else if (this.tipoLocalidad === 'diputacion' || this.tipoLocalidad === 'comarca') {
+      // For diputacion or comarca type, check if any of the relevant data exists
+      return (
+        !!this.densidadPoblacion ||
+        !!this.edadMediaHombres ||
+        !!this.edadMediaMujeres
+      );
+    }
+    
+    // Default to false if no condition is met
+    return false;
+  }
+
+  shouldShowEnlacesInteres(): boolean {
+    // Check if there are creative works (publications)
+    return this.numberOfCreativeWork !== undefined && 
+           this.numberOfCreativeWork !== null && 
+           this.numberOfCreativeWork !== 0 &&
+           this.creativeWork && 
+           this.creativeWork.length > 0;
+  }
+  
+  /**
+   * Determines whether the "Datos estadísticos" section should be displayed
+   * Returns true if there are any statistical data themes available
+   */
+  shouldShowDatosEstadisticos(): boolean {
+    // Check if there are any statistical data themes available
+    return this.filteredTemas && this.filteredTemas.length > 0;
+  }
+
   initForm() {
     this.formGroup = this.fb.group({
       "tema": [this.selectedTema]

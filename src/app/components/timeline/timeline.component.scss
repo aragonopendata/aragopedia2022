@@ -1,149 +1,173 @@
+.timeline-container {
+  margin: auto;
+  margin-bottom: 2.5rem; /* Increased bottom margin for better separation */
+}
+
 .timeline-chart-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+  padding-top: 1rem;
+
+  canvas {
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  
+  p {
+    margin-top: 1rem;
+    font-size: 16px;
+  }
+}
+
+.years-selected {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2rem; /* Increased top margin */
+  margin-bottom: 1.5rem; /* Added bottom margin */
+
+  p {
+    text-align: center;
+    font-size: 20px;
+  }
+}
+
+// Accesible mode styles
+.accessible-mode {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 1rem;
+  padding: 2em;
+  border-radius: 10px;
+  background-color: #f2f2f2;
+
+  form {
     width: 100%;
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
-    margin-bottom: 2rem;
-    padding-top: 1rem;
-  
+    gap: 2rem; /* Added gap between selects */
+  }
+}
+
+.btn-accessible {
+  display: block;
+  border: none;
+  cursor: pointer;
+  background-color: transparent;
+  color: var(--accent-color);
+  text-decoration: underline;
+  font-size: 18px;
+}
+
+select {
+  padding: 0 1em 0 0;
+  margin: 0;
+  width: 100%;
+  outline: none;
+}
+
+.select-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column; /* Changed to column for better mobile alignment */
+  min-width: 180px; /* Minimum width for select containers */
+}
+
+.select {
+  display: grid;
+  grid-template-areas: "select";
+  align-items: center;
+  position: relative;
+  border: 1px solid var(--bg-dark);
+
+  select,
+  &::after {
+    grid-area: select;
+  }
+
+  min-width: 15ch;
+  max-width: 30ch;
+
+  border-radius: 0.25em;
+  padding: 0.25em 0.5em;
+  margin: .5em;
+
+  font-size: 1.25rem;
+  cursor: pointer;
+  line-height: 1.1;
+
+  // Optional styles
+  // remove for transparency
+  background-color: #fff;
+  background-image: linear-gradient(to top, #f9f9f9, #fff 33%);
+}
+
+// Interim solution until :focus-within has better support
+select:focus+.focus {
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  right: -1px;
+  bottom: -1px;
+  border: 2px solid var(--accent-color);
+  border-radius: inherit;
+}
+
+label {
+  font-size: 1.125rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem; /* Added margin below labels */
+}
+
+.select+label {
+  margin-top: 2rem;
+}
+
+// Responsive adjustments
+@media screen and (max-width: 768px) {
+  .timeline-chart-container {
     canvas {
-      max-width: 100%;
-      height: auto;
+      width: 100% !important;
+      height: auto !important;
     }
-  }
-  
-  .loading {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 2rem;
-    
-    p {
-      margin-top: 1rem;
-      font-size: 16px;
-    }
-  }
-  
-  .years-selected {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  
-    p {
-      text-align: center;
-      font-size: 20px;
-    }
-  }
-  
-  // Accesible mode styles
-  .accessible-mode {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    margin-bottom: -80px;
-    padding: 2em;
-    border-radius: 10px;
-    // background-color: #f2f2f2;
-  
-    form {
-      width: 100%;
-    }
-  }
-  
-  .btn-accessible {
-    display: block;
-    border: none;
-    cursor: pointer;
-    background-color: transparent;
-    color: var(--accent-color);
-    text-decoration: underline;
-    font-size: 18px;
-  }
-  
-  select {
-    padding: 0 1em 0 0;
-    margin: 0;
-    width: 100%;
-    outline: none;
   }
   
   .select-container {
-    display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
-  }
-  
-  .select {
-    display: grid;
-    grid-template-areas: "select";
-    align-items: center;
-    position: relative;
-    border: 1px solid var(--bg-dark);
-  
-    select,
-    &::after {
-      grid-area: select;
-    }
-  
-    min-width: 15ch;
-    max-width: 30ch;
-  
-    border-radius: 0.25em;
-    padding: 0.25em 0.5em;
-    margin: .5em;
-  
-    font-size: 1.25rem;
-    cursor: pointer;
-    line-height: 1.1;
-  
-    // Optional styles
-    // remove for transparency
-    background-color: #fff;
-    background-image: linear-gradient(to top, #f9f9f9, #fff 33%);
-  }
-  
-  // Interim solution until :focus-within has better support
-  select:focus+.focus {
-    position: absolute;
-    top: -1px;
-    left: -1px;
-    right: -1px;
-    bottom: -1px;
-    border: 2px solid var(--accent-color);
-    border-radius: inherit;
-  }
-  
-  label {
-    font-size: 1.125rem;
-    font-weight: 500;
-  }
-  
-  .select+label {
-    margin-top: 2rem;
-  }
-  
-  // Responsive adjustments
-  @media screen and (max-width: 768px) {
-    .timeline-chart-container {
-      canvas {
-        width: 100% !important;
-        height: auto !important;
-      }
+    width: 100%;
+    
+    label {
+      margin-bottom: 0.5rem;
     }
     
-    .select-container {
-      flex-direction: column;
-      align-items: flex-start;
-      
-      label {
-        margin-bottom: 0.5rem;
-      }
-      
-      .select {
-        width: 100%;
-        max-width: 100%;
-      }
+    .select {
+      width: 100%;
+      max-width: 100%;
     }
   }
+}
+
+/* Wider screens need more canvas width */
+@media screen and (min-width: 1200px) {
+  .timeline-chart-container {
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+}

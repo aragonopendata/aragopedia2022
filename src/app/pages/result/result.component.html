@@ -165,7 +165,7 @@
               
         </section>
 
-        <section class="container template__caracteristicas">
+        <section class="container template__caracteristicas"  *ngIf="shouldShowCaracteristicas()">
             <h2>Características del territorio</h2>
             <div class="caracteristicas__list" *ngIf="this.tipoLocalidad === 'municipio'">
                 <a *ngIf="this.porcentajeSueloRural !== undefined && this.porcentajeSueloRural !== 'NaN'"
@@ -311,9 +311,12 @@
             </div>
 
             <div *ngIf="this.numberOfCreativeWork !== 0" class="graphics__item" fragment="creative-works">
-                <div class="graphics__item-cw">
-                    <h2>Enlaces de interés</h2>
-                    <p class="big-number"><b>Menciones en publicaciones:</b> {{this.numberOfCreativeWork}} <span
+                <div *ngIf="shouldShowEnlacesInteres()" class="graphics__item-cw">
+                    <h2 style="text-align: left;
+                    font-size: 20px;
+                ">Enlaces de interés</h2>
+                    <p class="big-number" style="    text-align: left;
+    font-size: 20px;"><b>Menciones en publicaciones:</b> {{this.numberOfCreativeWork}} <span
                             *ngIf="numberOfCreativeWork >= 10 || this.tipoLocalidad === 'diputacion'">
                             (Mostrando las
                             últimas 10 publicaciones)
@@ -371,16 +374,21 @@
             </div>
 
             <div class="graphics__item miembros" *ngIf="this.cantidadMiembrosPleno !== 0">
-                <h2>Miembros del pleno territorial</h2>
-                <ul>
+                <h2 style="    font-size: 26px;
+                margin-bottom: 10px;
+                font-weight: 600;
+                text-align: left;
+            ">Miembros del pleno territorial</h2>
+                <ul style="    text-align: left;
+">
                     <li *ngFor="let miembro of miembrosPleno"><b>{{miembro.cargo.value}}: </b>
                         <a
                             [routerLink]="['/persona/', this.createNameForUrl(miembro.persona.value)]">{{miembro.nombrePersona.value}}</a>
                     </li>
                 </ul>
-                <a class="data-link" href="{{dataSource.miembrosPleno}}"  target="_blank" rel="noopener" >Ver origen de los datos</a>
+                <a  style="text-align: left;"  class="data-link" href="{{dataSource.miembrosPleno}}"  target="_blank" rel="noopener" >Ver origen de los datos</a>
             </div>
-            <div class="graphics__item personas-ilustres" *ngIf="this.cantidadPersonasIlustres !== 0">
+            <div  style="text-align: left;"  class="graphics__item personas-ilustres" *ngIf="this.cantidadPersonasIlustres !== 0">
                 <h2>Personas Ilustres nacidas en {{this.tituloFicha}} (<a href="{{dataSource.personasIlustres}}"
                          target="_blank" rel="noopener" >Obtenido de WikiData</a> bajo licencia CC 4.0.0)
                 </h2>
@@ -391,8 +399,12 @@
             </div>
         </section>
 
-        <section class="container template__statistics">
-            <h2>Encuentra los datos estadísticos de {{this.tituloFicha}}</h2>
+        <section  *ngIf="shouldShowDatosEstadisticos()" class="container template__statistics">
+            <h2 style="    text-align: left;
+            font-size: 26px;
+            font-weight: 600;
+            margin-top: 30px;
+            margin-bottom: 20px;">Encuentra los datos estadísticos de {{this.tituloFicha}}</h2>
             <form [formGroup]="formGroup">
                 <div class="selector-temas">
                     <mat-form-field class="temas">
@@ -517,7 +529,8 @@
             <li *ngIf="this.numberOfCreativeWork">
               <a href="{{ dataSource.publicaciones }}" target="_blank" rel="noopener">
                 <mat-icon>open_in_new</mat-icon>
-                <span class="big-number">{{ format(this.numberOfCreativeWork) }}</span>
+                <span class="big-number" style="    text-align: left;
+    font-size: 20px;">{{ format(this.numberOfCreativeWork) }}</span>
                 Menciones en publicaciones
               </a>
             </li>
@@ -619,7 +632,7 @@
         </div>
       </section>
   
-      <section class="container template__caracteristicas">
+      <section class="container template__caracteristicas"  *ngIf="shouldShowCaracteristicas()">
         <h2>Características del territorio</h2>
         <div class="caracteristicas__list">
           <a *ngIf="this.densidadPoblacion" href="{{ dataSource.densidad }}" target="_blank" rel="noopener">
@@ -684,8 +697,10 @@
           </a>
         </div>
         <div *ngIf="this.numberOfCreativeWork" class="graphics__item" fragment="creative-works">
-          <div class="graphics__item-cw">
-            <h2>Enlaces de interés</h2>
+          <div *ngIf="shouldShowEnlacesInteres()" class="graphics__item-cw">
+            <h2 style="text-align: left;
+            font-size: 20px;
+        ">Enlaces de interés</h2>
             <p class="big-number">
               <b>Menciones en publicaciones:</b> {{ format(this.numberOfCreativeWork) }}
               <span *ngIf="this.numberOfCreativeWork >= 10">
@@ -738,8 +753,12 @@
           </div>
         </div>
         <div class="graphics__item miembros" *ngIf="this.cantidadMiembrosPleno !== 0">
-          <h2>Miembros del pleno territorial</h2>
-          <ul>
+          <h2 style="    font-size: 26px;
+          margin-bottom: 10px;
+          font-weight: 600;
+      ">Miembros del pleno territorial</h2>
+          <ul style="    text-align: left;
+">
             <li *ngFor="let miembro of miembrosPleno">
               <b>{{ miembro.cargo.value }}:</b>
               <a [routerLink]="['/persona/', this.createNameForUrl(miembro.persona.value)]">
@@ -747,14 +766,18 @@
               </a>
             </li>
           </ul>
-          <a class="data-link" href="{{ dataSource.miembrosPleno }}" target="_blank" rel="noopener">
+          <a class="data-link" href="{{ dataSource.miembrosPleno }}" target="_blank" rel="noopener" style="text-align: left;">
             Ver origen de los datos
           </a>
         </div>
       </section>
   
-      <section class="container template__statistics">
-        <h2>Encuentra los datos estadísticos de {{ this.lugarBuscado }}</h2>
+      <section  *ngIf="shouldShowDatosEstadisticos()" class="container template__statistics">
+        <h2 style="    text-align: left;
+        font-size: 26px;
+        font-weight: 600;
+        margin-top: 30px;
+        margin-bottom: 20px;">Encuentra los datos estadísticos de {{ this.lugarBuscado }}</h2>
         <form [formGroup]="formGroup">
           <div class="selector-temas">
             <mat-form-field class="temas">

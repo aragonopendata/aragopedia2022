@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { TemasComponent } from 'src/app/components/temas/temas.component';
 import { TemasService } from 'src/app/components/temas/temas.service';
@@ -16,7 +16,7 @@ export interface Result {
   styleUrls: ['./results.component.scss']
 })
 
-export class ResultsComponent implements OnInit {
+export class ResultsComponent implements OnInit, AfterViewInit  {
 
   constructor(public temasSvc: TemasService, public timelineSvc: TimeLineSvc, private _route: ActivatedRoute, private router: Router) { }
   @ViewChild(TemasComponent) selected: any;
@@ -186,7 +186,60 @@ export class ResultsComponent implements OnInit {
 
   }
 
-  
+  // recibe el array de temas marcados
+onTemasChanged(temasSeleccionados: string[]) {
+  this.temasSelected = temasSeleccionados;
+}
+
+// cuando el usuario pulsa “Aplicar filtros”
+applyFilters() {
+  // 1) filtramos por años (ya lo tienes en applyYearFilter)
+  this.applyYearFilter(this.firstYear, this.lastYear);
+  // 2) filtramos por categoría/tema
+  this.items = this.items.filter((item: { category: any; }) =>
+    this.temasSelected.includes(item.category)
+  );
+  // 3) reajustamos paginación
+  this.currentPage = 1;
+  this.pageOfItems = this.items.slice(0, this.pageSize);
+}
+
+
+  ngAfterViewInit() {
+    // Dar tiempo para que el componente timeline se inicialice
+    setTimeout(() => {
+      this.initializeTimelineComponent();
+    }, 500);
+  }
+
+    initializeTimelineComponent() {
+    // Verificar si el componente timeline está disponible
+    if (this.years) {
+      // Establecer los años seleccionados en el timeline
+      if (this.selectedYears && this.selectedYears.length >= 2) {
+        this.years.firstYearSelected = this.selectedYears[0];
+        this.years.lastYearSelected = this.selectedYears[1];
+        this.years.yearsSelected = this.selectedYears;
+        
+        // Limpiar los índices guardados para forzar una reinicialización completa
+        this.years.savedLeftIndex = -1;
+        this.years.savedRightIndex = -1;
+        
+        // Reinicializar el timeline
+        if (this.years.chartLoaded) {
+          this.years.reinitializeChart();
+        } else if (this.years.dataSource && this.years.dataSource.length > 0) {
+          // Si los datos están disponibles pero el gráfico no está cargado
+          this.years.initChart();
+        }
+      }
+    } else {
+      // Si el componente timeline aún no está disponible, intentarlo de nuevo
+      setTimeout(() => {
+        this.initializeTimelineComponent();
+      }, 300);
+    }
+  }
 
   sortResults(results: Result[]): Result[] {
 

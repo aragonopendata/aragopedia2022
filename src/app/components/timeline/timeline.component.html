@@ -2,10 +2,10 @@
     <mat-spinner [diameter]="70"></mat-spinner>
     <p>Cargando línea temporal</p>
 </div>
-<div *ngIf="!isLoading" class="space container" style="margin:auto; margin-bottom: 1rem">
+<div *ngIf="!isLoading" class="timeline-container">
     <!-- Custom range selector -->
     <div class="timeline-chart-container" [hidden]="accessibleMode">
-        <canvas id="timeline-chart" [width]="canvasWidth" [height]="canvasHeight"></canvas>
+        <canvas #timelineCanvas id="timeline-chart" [width]="canvasWidth" [height]="canvasHeight"></canvas>
     </div>
 
     <div class="accessible-mode" *ngIf="accessibleMode">
@@ -32,7 +32,7 @@
         </form>
     </div>
 
-    <div class="years-selected" style="margin-top: 100px;">
+    <div class="years-selected">
         <p>Años seleccionados:
             <b> {{yearsURL}} </b>
         </p>

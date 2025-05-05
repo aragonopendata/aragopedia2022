@@ -5,6 +5,7 @@ import { AragopediaSelectorTemasComponent } from '../aragopedia-selector-temas/a
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
+import { OrderBy } from 'desy-angular';
 
 // Definimos el enum localmente para evitar problemas de importación
 export enum OrderByEnum {
@@ -45,7 +46,7 @@ interface TableRecalculateParams {
 })
 export class AragopediaTablaDatosComponent implements OnInit {
   // Exponemos el enum para usarlo en el template
-  OrderBy = OrderByEnum;
+  OrderBy = OrderBy;
   
   ocultarPeriod: boolean = false;
   displayedColumns!: string[];
@@ -53,7 +54,8 @@ export class AragopediaTablaDatosComponent implements OnInit {
     { nombre: 'Localidad', matColumnDef: 'nameRefArea' },
     { nombre: 'Fecha subida', matColumnDef: 'nameRefPeriod' },
   ];
-  
+  rawRowsData: Array<{ id: string, cellsList: { text: string, classes?: string }[] }> = [];
+  filteredRowsData = [...this.rawRowsData];
   // Variables para la tabla DESY
   headCells: any[] = [];
   rowsData: any[] = [];

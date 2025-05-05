@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { TimeLineSvc, YearsPeriod } from './timeline.service';
 
 @Component({
@@ -7,13 +7,20 @@ import { TimeLineSvc, YearsPeriod } from './timeline.service';
   templateUrl: './timeline.component.html',
   styleUrls: ['./timeline.component.scss'],
 })
-export class TimeLineComponent implements OnInit {
+export class TimeLineComponent implements OnInit, AfterViewInit {
   constructor(private timeLineSvc: TimeLineSvc) {}
 
   // Chart dimensions
-  canvasWidth = 800;
+  canvasWidth = 960; // Increased width
   canvasHeight = 280;
   chartLoaded = false;
+  activeHandle: 'left' | 'right' | null = null;
+  initialRightYearIndex: number = -1;
+
+  savedLeftIndex: number = -1; 
+savedRightIndex: number = -1;
+  // Canvas reference
+  @ViewChild('timelineCanvas') canvasRef?: ElementRef<HTMLCanvasElement>;
 
   // Data properties
   dataSource: any[] = [];
@@ -71,34 +78,39 @@ export class TimeLineComponent implements OnInit {
         };
       });
 
-      this.firstYearSelected = this.dataSource[0]?.date;
-      this.lastYearSelected =
+      this.firstYearSelected = this.yearsSelected ? this.yearsSelected[0] : this.dataSource[0]?.date;
+      this.lastYearSelected = this.yearsSelected ? this.yearsSelected[1] : 
         this.dataSource[this.dataSource.length - 1]?.date;
 
       this.updateRangeSelector();
       this.isLoading = false;
-      
-      // Initialize chart after data is loaded
-      setTimeout(() => {
-        this.initChart();
-      }, 100);
+
+        setTimeout(() => this.initChart(), 0);
+
     });
   }
 
+  ngAfterViewInit(): void {
+    // Wait for canvas to be available
+    setTimeout(() => {
+      this.initChart();
+    }, 300);
+  }
+
   initChart() {
-    const canvas = document.getElementById('timeline-chart') as HTMLCanvasElement;
+    const canvas = this.canvasRef?.nativeElement || document.getElementById('timeline-chart') as HTMLCanvasElement;
     if (!canvas) return;
     
     this.chartContext = canvas.getContext('2d');
     
     // Draw the chart and setup slider
     this.drawChart();
-    this.setupSliderHandlers();
+    this.setupSliderHandlers(canvas);
     this.chartLoaded = true;
   }
 
   drawChart() {
-    if (!this.chartContext) return;
+    if (!this.chartContext || !this.dataSource.length) return;
     
     const ctx = this.chartContext;
     const width = this.canvasWidth;
@@ -119,8 +131,8 @@ export class TimeLineComponent implements OnInit {
     const maxValue = Math.max(...this.dataSource.map(item => item.dataQuantity));
     
     // Calculate bar width and spacing
-    const barWidth = chartWidth / this.dataSource.length * 0.8;
-    const barSpacing = chartWidth / this.dataSource.length * 0.2;
+    const barWidth = chartWidth / this.dataSource.length * 0.7; // Slightly narrower bars
+    const barSpacing = chartWidth / this.dataSource.length * 0.3; // More spacing
     
     // Draw background
     ctx.fillStyle = '#f9f9f9';
@@ -143,7 +155,7 @@ export class TimeLineComponent implements OnInit {
     // Draw data bars
     this.dataSource.forEach((item, index) => {
       const x = chartLeft + (chartWidth / this.dataSource.length) * index;
-      const barHeight = (item.dataQuantity / maxValue) * chartHeight;
+      const barHeight = (item.dataQuantity / maxValue) * chartHeight * 0.9; // Slightly shorter bars
       const y = chartBottom - barHeight;
       
       // Draw bar
@@ -151,7 +163,7 @@ export class TimeLineComponent implements OnInit {
       ctx.fillRect(x, y, barWidth, barHeight);
       
       // Draw year labels for some years (not all to avoid clutter)
-      if (index % Math.ceil(this.dataSource.length / 10) === 0) {
+      if (index % Math.ceil(this.dataSource.length / 15) === 0) {
         ctx.fillStyle = '#333';
         ctx.font = '12px Arial';
         ctx.textAlign = 'center';
@@ -162,12 +174,18 @@ export class TimeLineComponent implements OnInit {
     // Setup slider track
     this.slider.track.width = chartWidth;
     
-    // Initialize handles at default or selected positions
-    const firstYearIndex = this.dataSource.findIndex(d => d.date === this.firstYearSelected);
-    const lastYearIndex = this.dataSource.findIndex(d => d.date === this.lastYearSelected);
+    // Si los índices guardados no están inicializados, inicialízalos ahora
+    if (this.savedLeftIndex === -1 || this.savedRightIndex === -1) {
+      const firstYearIndex = this.dataSource.findIndex(d => d.date === this.firstYearSelected);
+      const lastYearIndex = this.dataSource.findIndex(d => d.date === this.lastYearSelected);
+      
+      this.savedLeftIndex = firstYearIndex !== -1 ? firstYearIndex : 0;
+      this.savedRightIndex = lastYearIndex !== -1 ? lastYearIndex : this.dataSource.length - 1;
+    }
     
-    const leftX = chartLeft + (chartWidth / this.dataSource.length) * firstYearIndex + barWidth / 2;
-    const rightX = chartLeft + (chartWidth / this.dataSource.length) * lastYearIndex + barWidth / 2;
+    // Usar los índices guardados para posicionar los handles
+    const leftX = chartLeft + (chartWidth / (this.dataSource.length - 1)) * this.savedLeftIndex;
+    const rightX = chartLeft + (chartWidth / (this.dataSource.length - 1)) * this.savedRightIndex;
     
     this.slider.leftHandle.x = leftX;
     this.slider.rightHandle.x = rightX;
@@ -183,6 +201,7 @@ export class TimeLineComponent implements OnInit {
   
   drawSliderHandle(x: number, y: number) {
     const ctx = this.chartContext;
+    if (!ctx) return;
     
     // Draw handle
     ctx.fillStyle = '#00607A';
@@ -209,135 +228,277 @@ export class TimeLineComponent implements OnInit {
     ctx.stroke();
   }
 
-  setupSliderHandlers() {
-    const canvas = document.getElementById('timeline-chart') as HTMLCanvasElement;
-    const chartBottom = this.canvasHeight - 50;
+  // Nuevas variables para mantener registro exacto del estado de ambos handles
+
+
+// Reemplazar el setupSliderHandlers
+setupSliderHandlers(canvas: HTMLCanvasElement) {
+  if (!canvas) return;
+  
+  const chartBottom = this.canvasHeight - 50;
+  
+  // Check if point is near handle
+  const isNearHandle = (x: number, y: number, handleX: number) => {
+    return Math.sqrt(Math.pow(x - handleX, 2) + Math.pow(y - chartBottom, 2)) <= 15;
+  };
+  
+  // Mouse events
+  const handleMouseDown = (e: MouseEvent) => {
+    const rect = canvas.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
     
-    if (!canvas) return;
-    
-    let isDraggingLeft = false;
-    let isDraggingRight = false;
-    
-    // Check if point is near handle
-    const isNearHandle = (x: number, y: number, handleX: number) => {
-      return Math.sqrt(Math.pow(x - handleX, 2) + Math.pow(y - chartBottom, 2)) <= 15;
-    };
-    
-    // Mouse events
-    canvas.addEventListener('mousedown', (e) => {
-      const rect = canvas.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
+    // Inicializar los índices guardados si aún no se han establecido
+    if (this.savedLeftIndex === -1 || this.savedRightIndex === -1) {
+      const chartLeft = 50;
+      const chartWidth = this.canvasWidth - 100;
       
-      if (isNearHandle(x, y, this.slider.leftHandle.x)) {
-        isDraggingLeft = true;
-      } else if (isNearHandle(x, y, this.slider.rightHandle.x)) {
-        isDraggingRight = true;
-      }
-    });
-    
-    canvas.addEventListener('mousemove', (e) => {
-      const rect = canvas.getBoundingClientRect();
-      const x = e.clientX - rect.left;
+      // Guardar las posiciones actuales de ambos handles
+      const leftPos = (this.slider.leftHandle.x - chartLeft) / chartWidth;
+      const rightPos = (this.slider.rightHandle.x - chartLeft) / chartWidth;
       
-      if (isDraggingLeft || isDraggingRight) {
-        const chartLeft = 50;
-        const chartRight = this.canvasWidth - 50;
-        
-        // Constrain x to chart area
-        const constX = Math.max(chartLeft, Math.min(chartRight, x));
-        
-        if (isDraggingLeft) {
-          // Don't let left handle go beyond right handle
-          if (constX < this.slider.rightHandle.x) {
-            this.slider.leftHandle.x = constX;
-            this.updateSelectedRangeFromHandles();
-            this.drawChart();
-          }
-        } else if (isDraggingRight) {
-          // Don't let right handle go beyond left handle
-          if (constX > this.slider.leftHandle.x) {
-            this.slider.rightHandle.x = constX;
-            this.updateSelectedRangeFromHandles();
-            this.drawChart();
-          }
-        }
+      this.savedLeftIndex = Math.max(0, Math.min(this.dataSource.length - 1, 
+        Math.round(leftPos * (this.dataSource.length - 1))));
+      this.savedRightIndex = Math.max(0, Math.min(this.dataSource.length - 1, 
+        Math.round(rightPos * (this.dataSource.length - 1))));
+    }
+    
+    if (isNearHandle(x, y, this.slider.leftHandle.x)) {
+      this.activeHandle = 'left';
+    } else if (isNearHandle(x, y, this.slider.rightHandle.x)) {
+      this.activeHandle = 'right';
+    }
+  };
+  
+  const handleMouseMove = (e: MouseEvent) => {
+    if (!this.activeHandle) return;
+    
+    const rect = canvas.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    
+    const chartLeft = 50;
+    const chartRight = this.canvasWidth - 50;
+    const chartWidth = chartRight - chartLeft;
+    
+    // Constrain x to chart area
+    const constX = Math.max(chartLeft, Math.min(chartRight, x));
+    
+    // Calcular el índice del año basado en la posición del mouse
+    const pos = (constX - chartLeft) / chartWidth;
+    const yearIndex = Math.round(pos * (this.dataSource.length - 1));
+    
+    if (this.activeHandle === 'left') {
+      // No permitir que el handle izquierdo vaya más allá del handle derecho
+      if (yearIndex < this.savedRightIndex) {
+        this.savedLeftIndex = yearIndex;
+        this.updateHandlePositions();
       }
-    });
-    
-    const endDrag = () => {
-      if (isDraggingLeft || isDraggingRight) {
-        isDraggingLeft = false;
-        isDraggingRight = false;
-        this.emitValueChanged();
+    } else if (this.activeHandle === 'right') {
+      // No permitir que el handle derecho vaya más allá del handle izquierdo
+      if (yearIndex > this.savedLeftIndex) {
+        this.savedRightIndex = yearIndex;
+        this.updateHandlePositions();
       }
-    };
+    }
+  };
+  
+  const endDrag = () => {
+    if (this.activeHandle) {
+      this.activeHandle = null;
+      this.emitValueChanged();
+    }
+  };
+  
+  // Touch events for mobile - similar logic
+  const handleTouchStart = (e: TouchEvent) => {
+    e.preventDefault();
+    const rect = canvas.getBoundingClientRect();
+    const x = e.touches[0].clientX - rect.left;
+    const y = e.touches[0].clientY - rect.top;
     
-    canvas.addEventListener('mouseup', endDrag);
-    canvas.addEventListener('mouseleave', endDrag);
-    
-    // Touch events for mobile
-    canvas.addEventListener('touchstart', (e) => {
-      e.preventDefault();
-      const rect = canvas.getBoundingClientRect();
-      const x = e.touches[0].clientX - rect.left;
-      const y = e.touches[0].clientY - rect.top;
+    // Inicializar los índices guardados si aún no se han establecido
+    if (this.savedLeftIndex === -1 || this.savedRightIndex === -1) {
+      const chartLeft = 50;
+      const chartWidth = this.canvasWidth - 100;
       
-      if (isNearHandle(x, y, this.slider.leftHandle.x)) {
-        isDraggingLeft = true;
-      } else if (isNearHandle(x, y, this.slider.rightHandle.x)) {
-        isDraggingRight = true;
-      }
-    });
-    
-    canvas.addEventListener('touchmove', (e) => {
-      e.preventDefault();
-      const rect = canvas.getBoundingClientRect();
-      const x = e.touches[0].clientX - rect.left;
+      // Guardar las posiciones actuales de ambos handles
+      const leftPos = (this.slider.leftHandle.x - chartLeft) / chartWidth;
+      const rightPos = (this.slider.rightHandle.x - chartLeft) / chartWidth;
       
-      if (isDraggingLeft || isDraggingRight) {
-        const chartLeft = 50;
-        const chartRight = this.canvasWidth - 50;
-        
-        // Constrain x to chart area
-        const constX = Math.max(chartLeft, Math.min(chartRight, x));
-        
-        if (isDraggingLeft) {
-          // Don't let left handle go beyond right handle
-          if (constX < this.slider.rightHandle.x) {
-            this.slider.leftHandle.x = constX;
-            this.updateSelectedRangeFromHandles();
-            this.drawChart();
-          }
-        } else if (isDraggingRight) {
-          // Don't let right handle go beyond left handle
-          if (constX > this.slider.leftHandle.x) {
-            this.slider.rightHandle.x = constX;
-            this.updateSelectedRangeFromHandles();
-            this.drawChart();
-          }
-        }
-      }
-    });
+      this.savedLeftIndex = Math.max(0, Math.min(this.dataSource.length - 1, 
+        Math.round(leftPos * (this.dataSource.length - 1))));
+      this.savedRightIndex = Math.max(0, Math.min(this.dataSource.length - 1, 
+        Math.round(rightPos * (this.dataSource.length - 1))));
+    }
     
-    canvas.addEventListener('touchend', endDrag);
+    if (isNearHandle(x, y, this.slider.leftHandle.x)) {
+      this.activeHandle = 'left';
+    } else if (isNearHandle(x, y, this.slider.rightHandle.x)) {
+      this.activeHandle = 'right';
+    }
+  };
+  
+  const handleTouchMove = (e: TouchEvent) => {
+    e.preventDefault();
+    if (!this.activeHandle) return;
+    
+    const rect = canvas.getBoundingClientRect();
+    const x = e.touches[0].clientX - rect.left;
+    
+    const chartLeft = 50;
+    const chartRight = this.canvasWidth - 50;
+    const chartWidth = chartRight - chartLeft;
+    
+    // Constrain x to chart area
+    const constX = Math.max(chartLeft, Math.min(chartRight, x));
+    
+    // Calcular el índice del año basado en la posición del mouse
+    const pos = (constX - chartLeft) / chartWidth;
+    const yearIndex = Math.round(pos * (this.dataSource.length - 1));
+    
+    if (this.activeHandle === 'left') {
+      // No permitir que el handle izquierdo vaya más allá del handle derecho
+      if (yearIndex < this.savedRightIndex) {
+        this.savedLeftIndex = yearIndex;
+        this.updateHandlePositions();
+      }
+    } else if (this.activeHandle === 'right') {
+      // No permitir que el handle derecho vaya más allá del handle izquierdo
+      if (yearIndex > this.savedLeftIndex) {
+        this.savedRightIndex = yearIndex;
+        this.updateHandlePositions();
+      }
+    }
+  };
+  
+  // Eliminar event listeners previos
+  canvas.removeEventListener('mousedown', handleMouseDown);
+  document.removeEventListener('mousemove', handleMouseMove);
+  document.removeEventListener('mouseup', endDrag);
+  canvas.removeEventListener('touchstart', handleTouchStart);
+  document.removeEventListener('touchmove', handleTouchMove);
+  document.removeEventListener('touchend', endDrag);
+  
+  // Agregar nuevos event listeners
+  canvas.addEventListener('mousedown', handleMouseDown);
+  document.addEventListener('mousemove', handleMouseMove);
+  document.addEventListener('mouseup', endDrag);
+  canvas.addEventListener('touchstart', handleTouchStart);
+  document.addEventListener('touchmove', handleTouchMove);
+  document.addEventListener('touchend', endDrag);
+}
+
+// Nuevo método para actualizar la posición de ambos handles basado en los índices guardados
+updateHandlePositions() {
+  const chartLeft = 50;
+  const chartWidth = this.canvasWidth - 100;
+  
+  // Verificar que los índices estén dentro del rango válido
+  if (this.savedLeftIndex >= 0 && this.savedLeftIndex < this.dataSource.length &&
+      this.savedRightIndex >= 0 && this.savedRightIndex < this.dataSource.length) {
+      
+    // Actualizar los años seleccionados basados en los índices guardados
+    this.firstYearSelected = this.dataSource[this.savedLeftIndex].date;
+    this.lastYearSelected = this.dataSource[this.savedRightIndex].date;
+    
+    // Actualizar la posición visual de los handles
+    const barWidth = chartWidth / this.dataSource.length;
+    
+    this.slider.leftHandle.x = chartLeft + (this.savedLeftIndex / (this.dataSource.length - 1)) * chartWidth;
+    this.slider.rightHandle.x = chartLeft + (this.savedRightIndex / (this.dataSource.length - 1)) * chartWidth;
+    
+    // Actualizar propiedades públicas
+    this.yearsSelected = [this.firstYearSelected, this.lastYearSelected];
+    this.yearsURL = `${this.firstYearSelected} - ${this.lastYearSelected}`;
+    
+    // Redibujar el gráfico
+    this.drawChart();
+  }
+}
+
+
+  updateLeftHandleYear() {
+    if (!this.dataSource.length) return;
+    
+    const chartLeft = 50;
+    const chartWidth = this.canvasWidth - 100;
+    
+    // Calcular solo el índice izquierdo basado en su posición actual
+    const leftPos = (this.slider.leftHandle.x - chartLeft) / chartWidth;
+    const leftIndex = Math.round(leftPos * (this.dataSource.length - 1));
+    
+    // Actualizar solo el primer año seleccionado
+    if (leftIndex >= 0 && leftIndex < this.dataSource.length) {
+      this.firstYearSelected = this.dataSource[leftIndex].date;
+    }
+    
+    // Si tenemos un índice derecho guardado, mantenerlo
+    if (this.initialRightYearIndex >= 0 && this.initialRightYearIndex < this.dataSource.length) {
+      this.lastYearSelected = this.dataSource[this.initialRightYearIndex].date;
+    }
+    
+    // Actualizar la posición del handle derecho según el año guardado
+    // Esto mantiene el handle derecho en su posición original
+    const rightIndex = this.initialRightYearIndex !== -1 ? 
+      this.initialRightYearIndex : 
+      this.dataSource.findIndex(d => d.date === this.lastYearSelected);
+    
+    if (rightIndex !== -1) {
+      const rightPos = rightIndex / (this.dataSource.length - 1);
+      this.slider.rightHandle.x = chartLeft + (chartWidth * rightPos);
+    }
+    
+    // Actualizar propiedades públicas
+    this.yearsSelected = [this.firstYearSelected, this.lastYearSelected];
+    this.yearsURL = `${this.firstYearSelected} - ${this.lastYearSelected}`;
   }
   
+  updateRightHandleYear() {
+    if (!this.dataSource.length) return;
+    
+    const chartLeft = 50;
+    const chartWidth = this.canvasWidth - 100;
+    
+    // Calcular solo el índice derecho basado en su posición actual
+    const rightPos = (this.slider.rightHandle.x - chartLeft) / chartWidth;
+    const rightIndex = Math.round(rightPos * (this.dataSource.length - 1));
+    
+    // Actualizar solo el último año seleccionado
+    if (rightIndex >= 0 && rightIndex < this.dataSource.length) {
+      this.lastYearSelected = this.dataSource[rightIndex].date;
+    }
+    
+    // Actualizar propiedades públicas
+    this.yearsSelected = [this.firstYearSelected, this.lastYearSelected];
+    this.yearsURL = `${this.firstYearSelected} - ${this.lastYearSelected}`;
+  }
+  
+  
   updateSelectedRangeFromHandles() {
+    if (!this.dataSource.length) return;
+    
     const chartLeft = 50;
     const chartWidth = this.canvasWidth - 100;
     
     // Calculate position as percentage of width
     const leftPos = (this.slider.leftHandle.x - chartLeft) / chartWidth;
-    const rightPos = (this.slider.rightHandle.x - chartLeft) / chartWidth;
     
-    // Convert to index in data array
+    // Para el índice izquierdo, calculamos la posición proporcional
     const leftIndex = Math.round(leftPos * (this.dataSource.length - 1));
+    
+    // Para el índice derecho, mantenemos su valor actual si NO estamos arrastrando el handle izquierdo
+    // Esto es la clave para evitar que el handle derecho salte a 2018 al mover el izquierdo
+    const rightPos = (this.slider.rightHandle.x - chartLeft) / chartWidth;
     const rightIndex = Math.round(rightPos * (this.dataSource.length - 1));
     
-    // Get years from data
-    this.firstYearSelected = this.dataSource[leftIndex].date;
-    this.lastYearSelected = this.dataSource[rightIndex].date;
+    // Get years from data (with safety checks)
+    if (leftIndex >= 0 && leftIndex < this.dataSource.length) {
+      this.firstYearSelected = this.dataSource[leftIndex].date;
+    }
+    
+    if (rightIndex >= 0 && rightIndex < this.dataSource.length) {
+      this.lastYearSelected = this.dataSource[rightIndex].date;
+    }
     
     // Update public properties
     this.yearsSelected = [this.firstYearSelected, this.lastYearSelected];
@@ -369,8 +530,7 @@ export class TimeLineComponent implements OnInit {
       
       // Update chart if it's been initialized
       if (this.chartLoaded) {
-        this.updateRangeSelector();
-        // Also update handles position
+        // Update handles position
         const chartLeft = 50;
         const chartWidth = this.canvasWidth - 100;
         const barWidth = chartWidth / this.dataSource.length;
@@ -394,7 +554,7 @@ export class TimeLineComponent implements OnInit {
     
     if (!this.accessibleMode) {
       this.updateRangeSelector();
-      // Cuando volvemos al modo gráfico, necesitamos reinicializar el canvas
+      // When going back to graphic mode, reinitialize the canvas
       setTimeout(() => {
         this.reinitializeChart();
       }, 100);
@@ -402,21 +562,30 @@ export class TimeLineComponent implements OnInit {
   }
 
   reinitializeChart() {
-    const canvas = document.getElementById('timeline-chart') as HTMLCanvasElement;
+    const canvas = this.canvasRef?.nativeElement || document.getElementById('timeline-chart') as HTMLCanvasElement;
     if (!canvas) return;
     
-    // Limpiar y redibujar el gráfico
+    // Actualizar los índices guardados basados en los años actuales antes de reinicializar
+    this.savedLeftIndex = this.dataSource.findIndex(d => d.date === this.firstYearSelected);
+    this.savedRightIndex = this.dataSource.findIndex(d => d.date === this.lastYearSelected);
+    
+    // Asegurarse de que los índices son válidos
+    if (this.savedLeftIndex === -1) this.savedLeftIndex = 0;
+    if (this.savedRightIndex === -1) this.savedRightIndex = this.dataSource.length - 1;
+    
+    // Clear and redraw the chart
     this.chartContext = canvas.getContext('2d');
     this.drawChart();
-    this.setupSliderHandlers();
+    this.setupSliderHandlers(canvas);
     this.chartLoaded = true;
   }
 
   getData(value: any) {
-    this.firstYearSelected = value[0];
-    this.lastYearSelected = value[1];
-    this.accessibleSelect();
+    if (value && value.length >= 2) {
+      this.firstYearSelected = value[0];
+      this.lastYearSelected = value[1];
+      this.accessibleSelect();
+    }
   }
 }
-
 export class TimeLineModule {}
