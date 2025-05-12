@@ -1,10 +1,11 @@
-import { Component, ViewChild, OnInit } from '@angular/core';
+import { Component, ViewChild, OnInit, ChangeDetectorRef } from '@angular/core';
 import { AragopediaService } from './aragopediaService';
 import { DomSanitizer } from '@angular/platform-browser';
 import { AragopediaSelectorTemasComponent } from '../aragopedia-selector-temas/aragopedia-selector-temas.component';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
+import { OrderBy } from 'desy-angular';
 
 // Definimos el enum localmente para evitar problemas de importación
 export enum OrderByEnum {
@@ -45,7 +46,9 @@ interface TableRecalculateParams {
 })
 export class AragopediaTablaDatosComponent implements OnInit {
   // Exponemos el enum para usarlo en el template
-  OrderBy = OrderByEnum;
+  OrderBy = OrderBy;
+  // Exponemos Math para usarlo en el template
+  Math = Math;
   
   ocultarPeriod: boolean = false;
   displayedColumns!: string[];
@@ -53,7 +56,8 @@ export class AragopediaTablaDatosComponent implements OnInit {
     { nombre: 'Localidad', matColumnDef: 'nameRefArea' },
     { nombre: 'Fecha subida', matColumnDef: 'nameRefPeriod' },
   ];
-  
+  rawRowsData: Array<{ id: string, cellsList: { text: string, classes?: string }[] }> = [];
+  filteredRowsData = [...this.rawRowsData];
   // Variables para la tabla DESY
   headCells: any[] = [];
   rowsData: any[] = [];
@@ -78,14 +82,54 @@ export class AragopediaTablaDatosComponent implements OnInit {
   itemsPerPage: number = 10; 
   currentPage: number = 1;
   totalItems: number = 0;
+  totalPages: number = 0;
+  maxVisiblePages: number = 5;
+  pageSizeOptions: number[] = [5, 10, 25, 50];
   
   // Variables para ordenación
   currentSort: any = null;
 
+  /** 
+   * Calcula los números de página que deben mostrarse
+   * basado en la página actual y el máximo de botones visibles
+   */
+  get visiblePages(): number[] {
+    const pages: number[] = [];
+    
+    if (this.totalPages <= 1) {
+      return this.totalPages === 1 ? [1] : [];
+    }
+    
+    // Si hay menos páginas que el máximo a mostrar, mostrar todas
+    if (this.totalPages <= this.maxVisiblePages) {
+      for (let i = 1; i <= this.totalPages; i++) {
+        pages.push(i);
+      }
+      return pages;
+    }
+    
+    // Calcular el rango de páginas a mostrar
+    const halfVisible = Math.floor(this.maxVisiblePages / 2);
+    
+    let startPage = Math.max(1, this.currentPage - halfVisible);
+    let endPage = Math.min(this.totalPages, startPage + this.maxVisiblePages - 1);
+    
+    // Ajustar si estamos cerca del final
+    if (endPage - startPage + 1 < this.maxVisiblePages) {
+      startPage = Math.max(1, endPage - this.maxVisiblePages + 1);
+    }
+    
+    for (let i = startPage; i <= endPage; i++) {
+      pages.push(i);
+    }
+    
+    return pages;
+  }
+
   @ViewChild('paginator') paginator!: MatPaginator;
   @ViewChild(AragopediaSelectorTemasComponent) selectorTemas!: AragopediaSelectorTemasComponent;
 
-  constructor(public aragopediaSvc: AragopediaService, private sanitizer: DomSanitizer) {}
+  constructor(public aragopediaSvc: AragopediaService, private sanitizer: DomSanitizer, private cd: ChangeDetectorRef) {}
 
   ngOnInit() {
     if (this.validateUrl(this.queryAragopediaCSV)) {
@@ -191,6 +235,7 @@ export class AragopediaTablaDatosComponent implements OnInit {
         
         this.loading = false;
         this.totalItems = this.rowsData.length;
+        this.totalPages = Math.ceil(this.totalItems / this.itemsPerPage);
         this.handlePageChange(1);
       });
     });
@@ -222,24 +267,35 @@ export class AragopediaTablaDatosComponent implements OnInit {
 
   // Método para manejar la paginación
   handlePageChange(page: number) {
+    // Asegurarse de que la página está dentro de los límites
+    if (page < 1) page = 1;
+    if (page > this.totalPages) page = this.totalPages;
+    
+    console.log('Paginador: cambio a página', page);
     this.currentPage = page;
     const startIndex = (page - 1) * this.itemsPerPage;
     const endIndex = Math.min(startIndex + this.itemsPerPage, this.visibleRowsData.length);
     this.paginatedRowsData = this.visibleRowsData.slice(startIndex, endIndex);
+    
+    // Actualizar el total de páginas
+    this.totalPages = Math.ceil(this.visibleRowsData.length / this.itemsPerPage);
+    this.cd.detectChanges();
   }
-
+  
   // Método para manejar la recalculación de la tabla (filtrado y ordenación)
   handleRecalculateTable(params: TableRecalculateParams) {
     let rows = [...this.rowsData];
     
     // Aplicar filtros
-    if (params.filters && params.filters.length > 0) {
-      params.filters.forEach((filter: TableFilter) => {
-        if (filter.filterText.trim()) {
-          rows = rows.filter(row => {
-            const cellText = row.cellsList[filter.columnIndex].text.toString().toLowerCase();
-            return cellText.includes(filter.filterText.toLowerCase());
-          });
+    if (params.filters?.length) {
+      params.filters.forEach(f => {
+        if (f.filterText.trim()) {
+          rows = rows.filter(row =>
+            row.cellsList[f.columnIndex].text
+               .toString()
+               .toLowerCase()
+               .includes(f.filterText.toLowerCase())
+          );
         }
       });
     }
@@ -268,10 +324,27 @@ export class AragopediaTablaDatosComponent implements OnInit {
       
       this.currentSort = params.sort;
     }
-    
+
+    // Si hay filtros activos o se ha cambiado la ordenación, volver a la primera página
+    if ((params.filters?.some(f => f.filterText.trim())) || params.sort) {
+      this.currentPage = 1;
+    }
+  
+    // Actualizar datos visibles y paginación
     this.visibleRowsData = rows;
     this.totalItems = rows.length;
-    this.handlePageChange(1);
+    this.totalPages = Math.ceil(this.totalItems / this.itemsPerPage);
+    
+    // Actualizo la página actual
+    this.handlePageChange(this.currentPage);
+    this.cd.detectChanges();
+  }
+
+  // Cambiar el número de elementos por página
+  setItemsPerPage(numItems: number) {
+    this.itemsPerPage = numItems;
+    this.totalPages = Math.ceil(this.visibleRowsData.length / this.itemsPerPage);
+    this.handlePageChange(1); // Volver a la primera página cuando cambia el tamaño
   }
 
   isNumeric(value: any): boolean {

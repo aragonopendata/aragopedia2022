@@ -80,6 +80,7 @@ export class FichaAragonComponent implements OnInit {
   constructor(public resultSvc: ResultService, private fb: FormBuilder, private http: HttpClient, public aragopediaSvc: AragopediaService) { }
 
   temp = undefined;
+  firstLand: boolean | undefined;
 
   lugarBuscado: any;
   lugarBuscadoParsed!: string;

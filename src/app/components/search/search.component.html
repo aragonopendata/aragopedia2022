@@ -1,8 +1,18 @@
 <div class="main-search container">
     <form [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup.value)" novalidate>
-        <input formControlName="text" #inputBusqueda type="text" class="main-search__input" name="main-search"
-            id="main-search" placeholder="Buscar en el banco de datos">
-
-        <button class="main-search__submit" type="submit">Buscar</button>
+        <!-- Usando el componente desy-search-bar -->
+        <desy-search-bar 
+            id="main-search" 
+            formControlName="text" 
+            placeholder="Buscar en el banco de datos"
+            labelText="Búsqueda"
+            (clickEvent)="onSubmit(formGroup.value)">
+            <!-- Customizando el botón dentro del search bar -->
+            <desy-button 
+                classes="c-button c-button--primary ml-sm" 
+                text="Buscar" 
+                (clickEvent)="onSubmit(formGroup.value)">
+            </desy-button>
+        </desy-search-bar>
     </form>
 </div>

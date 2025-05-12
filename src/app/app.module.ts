@@ -44,9 +44,10 @@ import { MatSortModule } from '@angular/material/sort';
 import { NgChartsModule } from 'ng2-charts';
 import { MatSelectModule } from '@angular/material/select';
 import { TimeLineComponent } from './components/timeline/timeline.component';
-import { DesyAngularModule } from 'desy-angular';
+import { DesyAngularModule, DesyTablesModule, DesyPaginationModule } from 'desy-angular';
 
 import { DxRangeSelectorModule, DxChartModule } from 'devextreme-angular';
+import { AragopediaNuevaTablaDatosComponent } from './components/aragopedia-nueva-tabla-datos/aragopedia-nueva-tabla-datos.component';
 
 @NgModule({
   declarations: [
@@ -60,11 +61,14 @@ import { DxRangeSelectorModule, DxChartModule } from 'devextreme-angular';
     SelectProvinciaComponent,
     SelectComarcaComponent,
     SelectMunicipioComponent,
-    ResultsComponent,
-    ResultComponent,
+     ResultsComponent,
+     ResultComponent,
     NotFoundComponent,
     PiramidePoblacionComponent,
     FilterPipe,
+    AragopediaSelectorTemasComponent,
+    AragopediaTablaDatosComponent,
+    AragopediaNuevaTablaDatosComponent,
     AragopediaComponent,
     AragopediaSelectorTemasComponent,
     AragopediaTablaDatosComponent,
@@ -99,7 +103,9 @@ import { DxRangeSelectorModule, DxChartModule } from 'devextreme-angular';
     MatSelectModule,
     DxRangeSelectorModule,
     DxChartModule,
-    DesyAngularModule
+    DesyAngularModule,
+    DesyTablesModule,
+    DesyPaginationModule
   ],
   // exports: [
   //   ButtonComponent

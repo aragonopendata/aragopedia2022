@@ -13,11 +13,11 @@ $my-app-theme: mat.m2-define-light-theme((color: (primary: $my-app-primary,
 
 @include mat.all-component-themes($my-app-theme);
 
-html,
+/* html,
 body {
     height: 100%;
 }
-
+ */
 body {
     margin: 0;
     font-family: Roboto, "Helvetica Neue", sans-serif;
@@ -53,8 +53,8 @@ body.zoomed {
 
 html,
 body {
-    height: 100%;
-    color: var(--text-color);
+/*     height: 100%;
+ */    color: var(--text-color);
 }
 
 body {
@@ -119,11 +119,25 @@ a {
 
 // Desktop
 
+// Desktop — todo lo que vaya dentro de <main> seguirá centrado
 main section,
-main .container,
+main .container {
+  max-width: 1350px;
+  padding: 0 50px;
+  align-items: center;
+  text-align: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+// Footer — misma anchura y padding pero alineado a la izquierda
 footer .container {
-    max-width: 1350px;
-    padding: 0 50px;
+  max-width: 1350px;
+  padding: 0 50px;
+  align-items: center;
+  text-align: left;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 .btn {

@@ -85,9 +85,27 @@
           },
           "defaultConfiguration": "production"
         },
+        // "serve": {
+        //   "options": {
+        //   "proxyConfig": "proxy.conf.json"
+        //   },
+        //   "builder": "@angular-builders/custom-webpack:dev-server",
+        //   // "builder": "@angular-devkit/build-angular:dev-server",
+        //   "configurations": {
+        //     "production": {
+        //       "buildTarget": "aragopool:build:production"
+        //     },
+        //     "development": {
+        //       "buildTarget": "aragopool:build:development"
+        //     }
+        //   },
+        //   "defaultConfiguration": "development"
+        // },
         "serve": {
+          "options": {
+            "proxyConfig": "proxy.conf.json"
+          },
           "builder": "@angular-builders/custom-webpack:dev-server",
-          // "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
               "buildTarget": "aragopool:build:production"
