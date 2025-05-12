@@ -31,7 +31,7 @@ import { FilterPipe } from './pipes/filter.pipe';
 import { AragopediaComponent } from './pages/aragopedia/aragopedia.component';
 import { AragopediaSelectorTemasComponent } from './components/aragopedia-selector-temas/aragopedia-selector-temas.component';
 import { AragopediaTablaDatosComponent } from './components/aragopedia-tabla-datos/aragopedia-tabla-datos.component';
-import { JwPaginationModule } from 'jw-angular-pagination';
+// import { JwPaginationModule } from 'jw-angular-pagination';
 import { PersonaModule } from './pages/persona/persona.module';
 import { FichaAragonComponent } from './pages/result/ficha-aragon/ficha-aragon.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -43,6 +43,11 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { NgChartsModule } from 'ng2-charts';
 import { MatSelectModule } from '@angular/material/select';
+import { TimeLineComponent } from './components/timeline/timeline.component';
+import { DesyAngularModule, DesyTablesModule, DesyPaginationModule } from 'desy-angular';
+
+import { DxRangeSelectorModule, DxChartModule } from 'devextreme-angular';
+import { AragopediaNuevaTablaDatosComponent } from './components/aragopedia-nueva-tabla-datos/aragopedia-nueva-tabla-datos.component';
 
 @NgModule({
   declarations: [
@@ -56,11 +61,14 @@ import { MatSelectModule } from '@angular/material/select';
     SelectProvinciaComponent,
     SelectComarcaComponent,
     SelectMunicipioComponent,
-    ResultsComponent,
-    ResultComponent,
+     ResultsComponent,
+     ResultComponent,
     NotFoundComponent,
     PiramidePoblacionComponent,
     FilterPipe,
+    AragopediaSelectorTemasComponent,
+    AragopediaTablaDatosComponent,
+    AragopediaNuevaTablaDatosComponent,
     AragopediaComponent,
     AragopediaSelectorTemasComponent,
     AragopediaTablaDatosComponent,
@@ -69,12 +77,13 @@ import { MatSelectModule } from '@angular/material/select';
     ComarcasComponent,
     MunicipiosComponent,
     LocationComponent,
+    TimeLineComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    TimeLineModule,
+    // TimeLineModule,
     ReactiveFormsModule,
     MatAutocompleteModule,
     MatFormFieldModule,
@@ -85,15 +94,22 @@ import { MatSelectModule } from '@angular/material/select';
     HttpClientModule,
     MatTabsModule,
     MatProgressSpinnerModule,
-    JwPaginationModule,
+    // JwPaginationModule,
     PersonaModule,
     MatCheckboxModule,
     MatPaginatorModule,
     MatSortModule,
     NgChartsModule,
     MatSelectModule,
-
+    DxRangeSelectorModule,
+    DxChartModule,
+    DesyAngularModule,
+    DesyTablesModule,
+    DesyPaginationModule
   ],
+  // exports: [
+  //   ButtonComponent
+  // ],
   providers: [ResultService],
   bootstrap: [AppComponent]
 })

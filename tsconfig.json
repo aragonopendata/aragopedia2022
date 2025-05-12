@@ -22,7 +22,8 @@
       "es2020",
       "dom",
       "ES2021.String"
-    ]
+    ],
+    "skipLibCheck": true
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

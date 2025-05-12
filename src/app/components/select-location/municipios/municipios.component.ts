@@ -60,22 +60,31 @@ export class SelectMunicipioComponent implements OnInit {
     this.formGroup.get('municipio')?.valueChanges.subscribe(response => {
       this.selectedMunicipio = response;
       this.selected = this.selectedMunicipio;
-      
-      this.municipiosParsed.sort((a, b) => a.nombre.localeCompare(b.nombre, 'es', { sensitivity: 'base' })); // bien ordenados
-      this.municipios.sort((a: string, b: string) => a.localeCompare(b, 'es', { sensitivity: 'base' })); // bien ordenados
-      
-      this.municipiosParsed.forEach((municipio: any) => {
-        if (municipio.nombre === this.selectedMunicipio) {
-          this.selectedId = municipio.id;
-        }
-      })
-      if (this.selectedId !== '') {
-        this.router.navigate(['detalles'], { queryParams: { tipo: 'municipio', id: this.selectedId } })
-      }
+      this.findSelectedId();
       this.filterData(response);
-
     });
+  }
 
+  // Función para manejar la selección desde desy-option
+  selectMunicipio(municipio: string) {
+    this.selectedMunicipio = municipio;
+    this.formGroup.get('municipio')?.setValue(municipio);
+    this.findSelectedId();
+  }
+
+  // Extraer la búsqueda de ID a una función separada
+  findSelectedId() {
+    this.municipiosParsed.sort((a, b) => a.nombre.localeCompare(b.nombre, 'es', { sensitivity: 'base' })); // bien ordenados
+    this.municipios.sort((a: string, b: string) => a.localeCompare(b, 'es', { sensitivity: 'base' })); // bien ordenados
+    
+    this.municipiosParsed.forEach((municipio: any) => {
+      if (municipio.nombre === this.selectedMunicipio) {
+        this.selectedId = municipio.id;
+      }
+    })
+    if (this.selectedId !== '') {
+      this.router.navigate(['detalles'], { queryParams: { tipo: 'municipio', id: this.selectedId } })
+    }
   }
 
   filterData(enteredData: any) {
@@ -114,5 +123,4 @@ export class SelectMunicipioComponent implements OnInit {
     const acentos: any = { 'á': 'a', 'é': 'e', 'í': 'i', 'ó': 'o', 'ú': 'u' };
    return str.split('').map((letra: any) => acentos[letra] || letra).join('').toString();
   }
-
 }

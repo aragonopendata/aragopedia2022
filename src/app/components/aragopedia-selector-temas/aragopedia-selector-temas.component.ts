@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild, Output, EventEmitter, Input } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { dateFormat } from 'dc';
 import { AragopediaService } from '../aragopedia-tabla-datos/aragopediaService';
 import { ComarcasComponent } from './location/comarcas/comarcas.component';
 import { LocationComponent } from './location/location.component';

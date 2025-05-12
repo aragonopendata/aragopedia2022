@@ -58,20 +58,31 @@ export class SelectProvinciaComponent implements OnInit {
     this.formGroup.get('municipio')?.valueChanges.subscribe(response => {
       this.selected = this.selectedProvincia;
       this.selectedProvincia = response;
-      this.provinciasParsed.forEach((provincia: any) => {
-        if (provincia.nombre.toLowerCase() === this.selectedProvincia.toLowerCase()) {
-          this.selectedId = provincia.id;
-        }
-      });
-      if (this.selectedId) {
-        this.router.navigate(['detalles'], { queryParams: { tipo: 'diputacion', id: this.selectedId } })
-      }
+      this.findSelectedId();
       this.filterData(response);
     });
   }
 
-  filterData(enteredData: any) {
+  // Función para manejar la selección desde el desy-option
+  selectProvincia(provincia: string) {
+    this.selectedProvincia = provincia;
+    this.formGroup.get('municipio')?.setValue(provincia);
+    this.findSelectedId();
+  }
 
+  // Extrae la búsqueda de ID a una función separada
+  findSelectedId() {
+    this.provinciasParsed.forEach((provincia: any) => {
+      if (provincia.nombre.toLowerCase() === this.selectedProvincia.toLowerCase()) {
+        this.selectedId = provincia.id;
+      }
+    });
+    if (this.selectedId) {
+      this.router.navigate(['detalles'], { queryParams: { tipo: 'diputacion', id: this.selectedId } })
+    }
+  }
+
+  filterData(enteredData: any) {
     this.filteredProvincias = this.provincias.filter((item: any) => {
       return item.toLowerCase().indexOf(enteredData.toLowerCase()) > -1
     })
@@ -79,6 +90,6 @@ export class SelectProvinciaComponent implements OnInit {
 
   getNames() {
     this.provincias = ['Huesca', 'Zaragoza', 'Teruel'];
+    this.filteredProvincias = this.provincias;
   }
-
 }

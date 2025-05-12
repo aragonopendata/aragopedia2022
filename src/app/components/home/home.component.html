@@ -11,7 +11,11 @@
     </h2>
     <p style="font-size: 16px">Selecciona al menos 3 años y un máximo de 5 temas. Para seleccionar el rango de años
         que desea consultar desplaza las barras situadas en los extremos.</p>
-    <app-timeline [yearsSelected]="selectedYears"></app-timeline>
+        <app-timeline
+        [yearsSelected]="selectedYears"
+        (valueChanged)="selectedYears = $event.value"
+        (rangeString)="yearsURL = $event">
+      </app-timeline>
     <!-- Temas -->
 
     <app-temas></app-temas>
@@ -20,16 +24,26 @@
 
     <div class="container submit">
         <p *ngIf="error" class="error">Debes seleccionar entre 1 y 5 temas y un mínimo de 3 años</p>
-        <button (click)="submit()" class="btn submit__btn">Realizar
-            búsqueda</button>
+        
+  
+<desy-button 
+  classes="c-button--primary" 
+  (clickEvent)="submit()">
+  Realizar búsqueda
+</desy-button>
+    
     </div>
 </div>
 
 <div class="container home__temas">
     <div class="container submit margen_top">
-
-        <h2>Datos estadísticos por entidad territorial</h2>
-        <button class="btn submit__btn" [routerLink]="['/aragopedia']">Consulta datos estadísticos</button>
-
+        <h2 style=" text-align: left;
+    padding-bottom: 40px;">Datos estadísticos por entidad territorial</h2>
+        <!-- Reemplazando el botón tradicional por un desy-button -->
+        <desy-button 
+            classes="c-button--primary" 
+            routerLink="/aragopedia">
+            Consulta datos estadísticos
+        </desy-button>
     </div>
 </div>

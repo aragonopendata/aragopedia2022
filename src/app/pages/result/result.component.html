@@ -82,58 +82,90 @@
                     </li>
                 </ul>
             </div>
-            <div class="inicio__contact">
-                <div>
-                    <h2 *ngIf="this.direccion">Contacto</h2>
-                    <ul>
-                        <li *ngIf="this.direccion"><b>Dirección</b> {{this.capitalizeString(this.direccion)}}</li>
-                        <li *ngIf="this.localidad"><b>Localidad</b> {{this.capitalizeString(this.localidad)}}</li>
-                        <li *ngIf="this.codPostal"><b>Código postal</b> {{this.codPostal}}</li>
-                        <li *ngIf="this.telefono"><b>Teléfono</b> <a href="tel:{{this.telefono}}">{{this.telefono}}</a>
-                        </li>
-                        <li *ngIf="this.email"><b>email</b> <a href="mailto:{{this.email}}">{{this.email}}</a></li>
-                    </ul>
-                    <a class="data-link" href="{{dataSource.datosContacto}}"  target="_blank" rel="noopener" >Ver origen de los datos</a>
-                </div>
-
-                <div *ngIf="this.numeroEntidadesSingulares !== 0">
-                    <h2>Entidades singulares</h2>
-                    <ul class="entidades">
-                        <li class="entidades__item" *ngFor="let entidad of entidadesSingulares">
-                            <a href="{{entidad.s.value}}"
-                                 target="_blank" rel="noopener" >{{this.capitalizeString(entidad.nombreEntidad.value)}}</a>
-                        </li>
-                    </ul>
-                    <a class="data-link" href="{{dataSource.entidadesSingulares}}"  target="_blank" rel="noopener" >Ver origen de los
-                        datos</a>
-                </div>
-                <div class="template__img-municipio" *ngIf="this.imageWikiDataUrl">
-                    <div class="loading" *ngIf="!this.imageWikiDataUrl">
-                        <mat-spinner [diameter]="50"></mat-spinner>
+            <div class="lg:w-1/3">
+                <div class="inicio__contact-container">
+                  <desy-card classes="w-full" containerClasses="p-base bg-neutral-lighter border-t-8 border-neutral-dark">
+                    <!-- Sección para mostrar la imagen: Si existe la imagen, se muestra en la parte superior -->
+                    <desy-card-sub *ngIf="this.imageWikiDataUrl"
+                       backgroundColor="transparent"
+                       backgroundImageUrl="{{ this.imageWikiDataUrl }}"
+                       classes="h-60 -m-base mt-base bg-cover bg-center bg-no-repeat overflow-hidden"
+                       [role]="'img'"
+                       [ariaLabel]="'Imagen principal de ' + this.lugarBuscado">
+                    </desy-card-sub>
+                    
+                    <!-- Sección de contenido: Datos de contacto, entidades y botón de descarga -->
+                    <div class="desy-card-content">
+                      <div class="flex flex-col">
+                        <!-- Datos de contacto -->
+                        <div *ngIf="this.direccion" class="mb-8">
+                          <h2 class="text-xl font-semibold mb-4">Contacto</h2>
+                          <ul class="space-y-2">
+                            <li *ngIf="this.direccion" class="flex flex-wrap">
+                              <span class="font-bold mr-2">Dirección:</span>
+                              {{ this.capitalizeString(this.direccion) }}
+                            </li>
+                            <li *ngIf="this.localidad" class="flex flex-wrap">
+                              <span class="font-bold mr-2">Localidad:</span>
+                              {{ this.capitalizeString(this.localidad) }}
+                            </li>
+                            <li *ngIf="this.codPostal" class="flex flex-wrap">
+                              <span class="font-bold mr-2">Código postal:</span>
+                              {{ this.codPostal }}
+                            </li>
+                            <li *ngIf="this.telefono" class="flex flex-wrap">
+                              <span class="font-bold mr-2">Teléfono:</span>
+                              <a href="tel:{{ this.telefono }}" class="text-primary hover:underline">
+                                {{ this.telefono }}
+                              </a>
+                            </li>
+                            <li *ngIf="this.email" class="flex flex-wrap">
+                              <span class="font-bold mr-2">Email:</span>
+                              <a href="mailto:{{ this.email }}" class="text-primary hover:underline">
+                                {{ this.email }}
+                              </a>
+                            </li>
+                          </ul>
+                          <a class="text-sm text-primary hover:underline block mt-2"
+                             href="{{ dataSource.datosContacto }}" target="_blank" rel="noopener">
+                            Ver origen de los datos
+                          </a>
+                        </div>
+                        
+                        <!-- Entidades singulares (opcional) -->
+                        <div *ngIf="this.numeroEntidadesSingulares !== 0" class="mb-8">
+                          <h2 class="text-xl font-semibold mb-4">Entidades singulares</h2>
+                          <ul class="entidades max-h-48 overflow-y-auto mb-2">
+                            <li class="entidades__item mb-2" *ngFor="let entidad of entidadesSingulares">
+                              <a href="{{ entidad.s.value }}" class="text-primary hover:underline" target="_blank" rel="noopener">
+                                {{ this.capitalizeString(entidad.nombreEntidad.value) }}
+                              </a>
+                            </li>
+                          </ul>
+                          <a class="text-sm text-primary hover:underline block mt-2"
+                             href="{{ dataSource.entidadesSingulares }}" target="_blank" rel="noopener">
+                            Ver origen de los datos
+                          </a>
+                        </div>
+                        
+                        <!-- Botón de descarga -->
+                        <div class="text-center mt-6">
+                          <button class="btn btn-download py-2 px-4 bg-primary text-white rounded hover:bg-primary-dark transition-colors"
+                                  type="button" (click)="fileDownload()">
+                            DESCARGAR FICHA
+                          </button>
+                          
+                        </div>
+                      </div>
                     </div>
-                    <figure>
-                        <a href="{{this.imageWikiDataUrl}}" target="_blank" rel="nofollow noopener"><img
-                                src="{{this.imageWikiDataUrl}}" alt="Imagen principal de {{this.lugarBuscado}}"
-                                width="220" height="160"></a>
-                        <figcaption>Imagen <a href="{{dataSource.image}}"  target="_blank" rel="noopener" >obtenida de WikiData</a>. Este
-                            archivo está disponible bajo la licencia <a
-                                href="https://en.wikipedia.org/wiki/es:Creative_Commons" target="_blank"
-                                rel="nofollow noopener">Creative Commons</a> <a
-                                href="https://creativecommons.org/licenses/by/4.0/deed.es" target="_blank"
-                                rel="nofollow noopener">
-                                Atribución 4.0
-                                Internacional
-                            </a>
-                        </figcaption>
-                    </figure>
+                  </desy-card>
                 </div>
-                <div class="download">
-                    <button class="btn btn-download" type="button" (click)="fileDownload()">DESCARGAR FICHA</button>
-                </div>
-            </div>
+              </div>
+              
+              
         </section>
 
-        <section class="container template__caracteristicas">
+        <section class="container template__caracteristicas"  *ngIf="shouldShowCaracteristicas()">
             <h2>Características del territorio</h2>
             <div class="caracteristicas__list" *ngIf="this.tipoLocalidad === 'municipio'">
                 <a *ngIf="this.porcentajeSueloRural !== undefined && this.porcentajeSueloRural !== 'NaN'"
@@ -279,9 +311,12 @@
             </div>
 
             <div *ngIf="this.numberOfCreativeWork !== 0" class="graphics__item" fragment="creative-works">
-                <div class="graphics__item-cw">
-                    <h2>Enlaces de interés</h2>
-                    <p class="big-number"><b>Menciones en publicaciones:</b> {{this.numberOfCreativeWork}} <span
+                <div *ngIf="shouldShowEnlacesInteres()" class="graphics__item-cw">
+                    <h2 style="text-align: left;
+                    font-size: 20px;
+                ">Enlaces de interés</h2>
+                    <p class="big-number" style="    text-align: left;
+    font-size: 20px;"><b>Menciones en publicaciones:</b> {{this.numberOfCreativeWork}} <span
                             *ngIf="numberOfCreativeWork >= 10 || this.tipoLocalidad === 'diputacion'">
                             (Mostrando las
                             últimas 10 publicaciones)
@@ -339,16 +374,21 @@
             </div>
 
             <div class="graphics__item miembros" *ngIf="this.cantidadMiembrosPleno !== 0">
-                <h2>Miembros del pleno territorial</h2>
-                <ul>
+                <h2 style="    font-size: 26px;
+                margin-bottom: 10px;
+                font-weight: 600;
+                text-align: left;
+            ">Miembros del pleno territorial</h2>
+                <ul style="    text-align: left;
+">
                     <li *ngFor="let miembro of miembrosPleno"><b>{{miembro.cargo.value}}: </b>
                         <a
                             [routerLink]="['/persona/', this.createNameForUrl(miembro.persona.value)]">{{miembro.nombrePersona.value}}</a>
                     </li>
                 </ul>
-                <a class="data-link" href="{{dataSource.miembrosPleno}}"  target="_blank" rel="noopener" >Ver origen de los datos</a>
+                <a  style="text-align: left;"  class="data-link" href="{{dataSource.miembrosPleno}}"  target="_blank" rel="noopener" >Ver origen de los datos</a>
             </div>
-            <div class="graphics__item personas-ilustres" *ngIf="this.cantidadPersonasIlustres !== 0">
+            <div  style="text-align: left;"  class="graphics__item personas-ilustres" *ngIf="this.cantidadPersonasIlustres !== 0">
                 <h2>Personas Ilustres nacidas en {{this.tituloFicha}} (<a href="{{dataSource.personasIlustres}}"
                          target="_blank" rel="noopener" >Obtenido de WikiData</a> bajo licencia CC 4.0.0)
                 </h2>
@@ -359,8 +399,12 @@
             </div>
         </section>
 
-        <section class="container template__statistics">
-            <h2>Encuentra los datos estadísticos de {{this.tituloFicha}}</h2>
+        <section  *ngIf="shouldShowDatosEstadisticos()" class="container template__statistics">
+            <h2 style="    text-align: left;
+            font-size: 26px;
+            font-weight: 600;
+            margin-top: 30px;
+            margin-bottom: 20px;">Encuentra los datos estadísticos de {{this.tituloFicha}}</h2>
             <form [formGroup]="formGroup">
                 <div class="selector-temas">
                     <mat-form-field class="temas">
@@ -390,9 +434,9 @@
                     <mat-spinner [diameter]="70"></mat-spinner>
                 </div>
                 <app-aragopedia-tabla-datos
-                    [ngClass]="{'errorTabla' : this.errorTabla, 'hidden': this.displayTema === '' || loading}"
-                    class="tabla-datos">
-                </app-aragopedia-tabla-datos>
+                [hidden]="errorTabla || firstLand || loading"
+                class="tabla-datos display-block">
+            </app-aragopedia-tabla-datos>
             </div>
         </section>
 
@@ -404,290 +448,371 @@
 </ng-container>
 
 
-<!-- Ficha de COMARCA -->
-
+<!-- Ficha de COMARCA --><!-- Ficha de COMARCA -->
 <ng-container *ngIf="this.tipoLocalidad === 'comarca'">
     <div class="container template">
-        <section class="container breadcrumbs">
-            <p><a [routerLink]="['/']">Inicio</a> > {{this.capitalizeString(this.tipoLocalidad)}}>
-                {{this.tituloFicha}}</p>
-        </section>
-        <section class="container container template__inicio">
-            <div class="inicio__img">
-                <h1 class="inicio__name">{{this.tituloFicha}}</h1>
-                <a href={{this.urlMap}}  target="_blank" rel="noopener" >
-                    <mat-spinner [ngClass]="{'spinnerHide':this.map}"></mat-spinner>
-                    <img src={{this.map}} alt="Mapa">
+      <section class="container breadcrumbs">
+        <p>
+          <a [routerLink]="['/']">Inicio</a> > {{ this.capitalizeString(this.tipoLocalidad) }}>
+          {{ this.tituloFicha }}
+        </p>
+      </section>
+      <section class="container template__inicio">
+        <div class="inicio__img">
+          <h1 class="inicio__name">{{ this.tituloFicha }}</h1>
+          <a href="{{ this.urlMap }}" target="_blank" rel="noopener">
+            <mat-spinner [ngClass]="{'spinnerHide': this.map}"></mat-spinner>
+            <img src="{{ this.map }}" alt="Mapa">
+          </a>
+          <a href="{{ this.urlMap }}" target="_blank" rel="noopener" class="btn map_btn">
+            Ver en el mapa
+          </a>
+        </div>
+        <div class="inicio__data" [ngClass]="{'central-datos': this.tituloFicha === 'Central'}">
+          <ul>
+            <li *ngIf="this.sueloUrbano">
+              <a href="{{ dataSource.sueloUrbano }}" target="_blank" rel="noopener">
+                <mat-icon>open_in_new</mat-icon>
+                <span class="big-number">{{ format(this.sueloUrbano) }}</span>
+                Hectáreas de suelo urbano ({{ dataYearExtension }})
+              </a>
+            </li>
+            <li *ngIf="this.sueloRural">
+              <a href="{{ dataSource.sueloRural }}" target="_blank" rel="noopener">
+                <mat-icon>open_in_new</mat-icon>
+                <span class="big-number">{{ format(this.sueloRural) }}</span>
+                Hectáreas de suelo rural ({{ dataYearExtension }})
+              </a>
+            </li>
+            <li *ngIf="this.locales">
+              <a href="{{ dataSource.edificiosDestinadosLocales }}" target="_blank" rel="noopener">
+                <mat-icon>open_in_new</mat-icon>
+                <span class="big-number">{{ format(this.locales) }}</span>
+                Edificios destinados a locales (2011)
+              </a>
+            </li>
+            <li *ngIf="this.poblacion">
+              <a href="{{ dataSource.habitantes }}" target="_blank" rel="noopener">
+                <mat-icon>open_in_new</mat-icon>
+                <span class="big-number">{{ format(this.poblacion) }}</span>
+                Habitantes ({{ yearPoblacion }})
+              </a>
+            </li>
+            <li *ngIf="this.poligonos">
+              <a href="{{ dataSource.poligonos }}" target="_blank" rel="noopener">
+                <mat-icon>open_in_new</mat-icon>
+                <span class="big-number">{{ format(this.poligonos) }}</span>
+              </a>
+              Polígonos industriales
+            </li>
+            <li *ngIf="this.explotacionesGanaderas">
+              <a href="{{ dataSource.explotacionesGanaderas }}" target="_blank" rel="noopener">
+                <mat-icon>open_in_new</mat-icon>
+                <span class="big-number">{{ format(this.explotacionesGanaderas) }}</span>
+                Explotaciones ganaderas
+              </a>
+            </li>
+            <li *ngIf="this.incendiosUltimosAnos">
+              <a href="{{ dataSource.incendios }}" target="_blank" rel="noopener">
+                <mat-icon>open_in_new</mat-icon>
+                <span class="big-number">{{ format(this.incendiosUltimosAnos) }}</span>
+                Incendios desde 2001
+              </a>
+            </li>
+            <li *ngIf="this.hectareasQuemadas">
+              <a href="{{ dataSource.hectareasAfectadas }}" target="_blank" rel="noopener">
+                <mat-icon>open_in_new</mat-icon>
+                <span class="big-number">{{ format(this.hectareasQuemadas) }}</span>
+                Hectáreas afectadas por incendios desde 2001
+              </a>
+            </li>
+            <li *ngIf="this.numberOfCreativeWork">
+              <a href="{{ dataSource.publicaciones }}" target="_blank" rel="noopener">
+                <mat-icon>open_in_new</mat-icon>
+                <span class="big-number" style="    text-align: left;
+    font-size: 20px;">{{ format(this.numberOfCreativeWork) }}</span>
+                Menciones en publicaciones
+              </a>
+            </li>
+            <li *ngIf="this.plazasHoteleras">
+              <a href="{{ dataSource.alojamientosHoteleros }}" target="_blank" rel="noopener">
+                <mat-icon>open_in_new</mat-icon>
+                <span class="big-number">{{ format(this.plazasHoteleras) }}</span>
+                Alojamientos hoteleros
+              </a>
+            </li>
+            <li *ngIf="this.alojamientosTuristicos">
+              <a href="{{ dataSource.alojamientosRurales }}" target="_blank" rel="noopener">
+                <mat-icon>open_in_new</mat-icon>
+                <span class="big-number">{{ format(this.alojamientosTuristicos) }}</span>
+                Alojamientos de turismo rural
+              </a>
+            </li>
+            <li *ngIf="this.municipiosEnTerritorio > 0">
+              <a href="{{ dataSource.municipios }}" target="_blank" rel="noopener">
+                <mat-icon>open_in_new</mat-icon>
+                <span class="big-number">{{ format(this.municipiosEnTerritorio) }}</span>
+                Municipios en el territorio
+              </a>
+            </li>
+          </ul>
+        </div>
+        <!-- Sección de contacto usando desy-card -->
+        <div class="lg:w-1/3">
+          <div class="inicio__contact-container">
+            <desy-card classes="w-full" containerClasses="p-base bg-neutral-lighter border-t-8 border-neutral-dark">
+              <!-- Si existe imagen, se muestra en la parte superior -->
+              <desy-card-sub *ngIf="this.imageWikiDataUrl"
+                backgroundColor="transparent"
+                backgroundImageUrl="{{ this.imageWikiDataUrl }}"
+                classes="h-60 -m-base mt-base bg-cover bg-center bg-no-repeat overflow-hidden"
+                [role]="'img'"
+                [ariaLabel]="'Imagen principal de ' + this.lugarBuscado">
+              </desy-card-sub>
+              <!-- Contenido: Datos de contacto, entidades y botón de descarga -->
+              <div class="desy-card-content">
+                <div class="flex flex-col">
+                  <div *ngIf="this.direccion" class="mb-8">
+                    <h2 class="text-xl font-semibold mb-4">Contacto</h2>
+                    <ul class="space-y-2">
+                      <li *ngIf="this.direccion" class="flex flex-wrap">
+                        <span class="font-bold mr-2">Dirección:</span>
+                        {{ this.capitalizeString(this.direccion) }}
+                      </li>
+                      <li *ngIf="this.localidad" class="flex flex-wrap">
+                        <span class="font-bold mr-2">Localidad:</span>
+                        {{ this.capitalizeString(this.localidad) }}
+                      </li>
+                      <li *ngIf="this.codPostal" class="flex flex-wrap">
+                        <span class="font-bold mr-2">Código postal:</span>
+                        {{ this.codPostal }}
+                      </li>
+                      <li *ngIf="this.telefono" class="flex flex-wrap">
+                        <span class="font-bold mr-2">Teléfono:</span>
+                        <a href="tel:{{ this.telefono }}" class="text-primary hover:underline">
+                          {{ this.telefono }}
+                        </a>
+                      </li>
+                      <li *ngIf="this.email" class="flex flex-wrap">
+                        <span class="font-bold mr-2">Email:</span>
+                        <a href="mailto:{{ this.email }}" class="text-primary hover:underline">
+                          {{ this.email }}
+                        </a>
+                      </li>
+                    </ul>
+                    <a class="text-sm text-primary hover:underline block mt-2"
+                       href="{{ dataSource.datosContacto }}" target="_blank" rel="noopener">
+                      Ver origen de los datos
+                    </a>
+                  </div>
+                  <div *ngIf="this.numeroEntidadesSingulares !== 0" class="mb-8">
+                    <h2 class="text-xl font-semibold mb-4">Entidades singulares</h2>
+                    <ul class="entidades max-h-48 overflow-y-auto mb-2">
+                      <li *ngFor="let entidad of entidadesSingulares" class="mb-2 entidades__item">
+                        <a href="{{ entidad.s.value }}" class="text-primary hover:underline" target="_blank" rel="noopener">
+                          {{ this.capitalizeString(entidad.nombreEntidad.value) }}
+                        </a>
+                      </li>
+                    </ul>
+                    <a class="text-sm text-primary hover:underline block mt-2"
+                       href="{{ dataSource.entidadesSingulares }}" target="_blank" rel="noopener">
+                      Ver origen de los datos
+                    </a>
+                  </div>
+                  <div class="text-center mt-6">
+                    <button class="btn btn-download py-2 px-4 bg-primary text-white rounded hover:bg-primary-dark transition-colors"
+                            type="button" (click)="fileDownload()">
+                      DESCARGAR FICHA
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </desy-card>
+          </div>
+        </div>
+      </section>
+  
+      <section class="container template__caracteristicas"  *ngIf="shouldShowCaracteristicas()">
+        <h2>Características del territorio</h2>
+        <div class="caracteristicas__list">
+          <a *ngIf="this.densidadPoblacion" href="{{ dataSource.densidad }}" target="_blank" rel="noopener">
+            <div class="caracteristica__item">
+              <mat-icon>people</mat-icon> La densidad de población de <b>{{ this.tituloFicha }}</b> es de
+              {{ this.densidadPoblacion }} habitantes por km<sup>2</sup>
+            </div>
+          </a>
+          <a *ngIf="this.edadMediaHombres" href="{{ dataSource.edadMedia }}" target="_blank" rel="noopener">
+            <div class="caracteristica__item">
+              <mat-icon>person</mat-icon> La edad media de los <b>hombres</b> es de {{ this.edadMediaHombres }} años ({{ yearEdadMedia }})
+            </div>
+          </a>
+          <a *ngIf="this.edadMediaMujeres" href="{{ dataSource.edadMedia }}" target="_blank" rel="noopener">
+            <div class="caracteristica__item">
+              <mat-icon>person</mat-icon> La edad media de las <b>mujeres</b> es de {{ this.edadMediaMujeres }} años ({{ yearEdadMedia }})
+            </div>
+          </a>
+        </div>
+      </section>
+  
+      <section class="container template__graphics">
+        <div class="graphics__item poblacion" style="width: 100%;">
+          <div class="tabla">
+            <h2>Últimos datos de Población</h2>
+            <div class="tabla-container">
+              <table class="tabla-poblacion">
+                <tr>
+                  <th>Año</th>
+                  <td *ngFor="let year of yearsTablaPoblacion"><span>{{ year }}</span></td>
+                </tr>
+                <tr *ngIf="this.municipio[0]">
+                  <th>{{ this.municipio[0] }}</th>
+                  <td *ngFor="let element of tablaPoblacion.slice().reverse()">
+                    <span *ngIf="element.nameRefArea.value == this.municipio[0]">
+                      {{ format(element.poblac.value) }}
+                    </span>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+          <div class="grafica">
+            <div class="grafica-poblacion">
+              <h2>Gráfica de los últimos 5 años</h2>
+              <canvas baseChart class="chart" [data]="lineChartData" [options]="lineChartOptions" [type]="lineChartType"></canvas>
+            </div>
+            <a class="data-link" href="{{ dataSource.tablaPoblacion }}" target="_blank" rel="noopener">
+              Ver origen de los datos
+            </a>
+          </div>
+        </div>
+      </section>
+      <section class="container template__graphics">
+        <div class="graphics__item presupuestos" *ngIf="presupuestos">
+          <h2>Información sobre presupuestos</h2>
+          <a href="{{ presupuestos }}" target="_blank" rel="noopener" class="btn btn-presupuestos">
+            <mat-icon>open_in_new</mat-icon>Ver información de presupuestos
+          </a>
+          <a class="data-link" href="{{ dataSource.presupuestos }}" target="_blank" rel="noopener">
+            Ver origen de los datos
+          </a>
+        </div>
+        <div *ngIf="this.numberOfCreativeWork" class="graphics__item" fragment="creative-works">
+          <div *ngIf="shouldShowEnlacesInteres()" class="graphics__item-cw">
+            <h2 style="text-align: left;
+            font-size: 20px;
+        ">Enlaces de interés</h2>
+            <p class="big-number">
+              <b>Menciones en publicaciones:</b> {{ format(this.numberOfCreativeWork) }}
+              <span *ngIf="this.numberOfCreativeWork >= 10">
+                (Mostrando las 10 últimas publicaciones)
+              </span>
+            </p>
+          </div>
+          <div class="slides">
+            <mat-tab-group mat-align-tabs="start">
+              <mat-tab *ngFor="let link of creativeWork" label="{{ link.title.value }}">
+                <span class="slides__tema">
+                  <a *ngIf="link.tema.value==='http://datos.gob.es/kos/sector-publico/sector/turismo'"
+                     href="{{ link.tema.value }}" target="_blank" rel="noopener">Turismo</a>
+                  <a *ngIf="link.tema.value==='http://datos.gob.es/kos/sector-publico/sector/educacion'"
+                     href="{{ link.tema.value }}" target="_blank" rel="noopener">Educación</a>
+                  <a *ngIf="link.tema.value==='http://datos.gob.es/kos/sector-publico/sector/ciencia-tecnologia'"
+                     href="{{ link.tema.value }}" target="_blank" rel="noopener">Ciencia y Tecnología</a>
+                  <a *ngIf="link.tema.value==='http://datos.gob.es/kos/sector-publico/sector/empleo'"
+                     href="{{ link.tema.value }}" target="_blank" rel="noopener">Empleo</a>
+                  <a *ngIf="link.tema.value==='http://datos.gob.es/kos/sector-publico/sector/economia'"
+                     href="{{ link.tema.value }}" target="_blank" rel="noopener">Economia</a>
+                  <a *ngIf="link.tema.value==='http://datos.gob.es/kos/sector-publico/sector/sector-publico'"
+                     href="{{ link.tema.value }}" target="_blank" rel="noopener">Sector Público</a>
+                  <a *ngIf="link.tema.value==='http://datos.gob.es/kos/sector-publico/sector/salud'"
+                     href="{{ link.tema.value }}" target="_blank" rel="noopener">Salud</a>
+                  <a *ngIf="link.tema.value==='http://datos.gob.es/kos/sector-publico/sector/cultura-ocio'"
+                     href="{{ link.tema.value }}" target="_blank" rel="noopener">Cultura y Ocio</a>
+                  <a *ngIf="link.tema.value==='http://datos.gob.es/kos/sector-publico/sector/sociedad-bienestar'"
+                     href="{{ link.tema.value }}" target="_blank" rel="noopener">Sociedad y Bienestar</a>
+                  <a *ngIf="link.tema.value==='http://datos.gob.es/kos/sector-publico/sector/medio-ambiente'"
+                     href="{{ link.tema.value }}" target="_blank" rel="noopener">Medio Ambiente</a>
+                </span>
+                <p class="slides__abstract" *ngIf="leerMas">
+                  {{ link.resumen.value }}
+                  <span class="leer-mas" (click)="this.leerMas = !this.leerMas">
+                    Reducir resumen <mat-icon>keyboard_arrow_up</mat-icon>
+                  </span>
+                </p>
+                <p class="slides__abstract" *ngIf="leerMas === false">
+                  {{ this.reduceText(link.resumen.value) }}...
+                  <span class="leer-mas" (click)="this.leerMas = !this.leerMas">
+                    Ver resumen completo <mat-icon>keyboard_arrow_down</mat-icon>
+                  </span>
+                </p>
+                <a href="{{ link.url.value }}" target="_blank" rel="noopener" class="slide__link">
+                  Leer más
                 </a>
-                <a href={{this.urlMap}}  target="_blank" rel="noopener"  class="btn map_btn">Ver en el mapa</a>
-            </div>
-            <div class="inicio__data" [ngClass]="{'central-datos': this.tituloFicha === 'Central'}">
-                <ul>
-                    <li *ngIf="this.sueloUrbano"><a href="{{dataSource.sueloUrbano}}"  target="_blank" rel="noopener" >
-                            <mat-icon>open_in_new</mat-icon><span
-                                class="big-number">{{format(this.sueloUrbano)}}</span>Hectáreas de suelo
-                            urbano ({{dataYearExtension}})</a></li>
-                    <li *ngIf="this.sueloRural"><a href="{{dataSource.sueloRural}}"
-                             target="_blank" rel="noopener" ><mat-icon>open_in_new</mat-icon><span
-                                class="big-number">{{format(this.sueloRural)}}</span>Hectáreas de suelo
-                            rural ({{dataYearExtension}})</a></li>
-                    <li *ngIf="this.locales"><a href="{{dataSource.edificiosDestinadosLocales}}"
-                             target="_blank" rel="noopener" ><mat-icon>open_in_new</mat-icon><span
-                                class="big-number">{{format(this.locales)}}</span>Edificios destinados a
-                            locales (2011)</a></li>
-                    <li *ngIf="this.poblacion"><a href="{{dataSource.habitantes}}"
-                             target="_blank" rel="noopener" ><mat-icon>open_in_new</mat-icon><span
-                                class="big-number">{{format(this.poblacion)}}</span>Habitantes ({{yearPoblacion}})</a>
-                    </li>
-     
-                    <li *ngIf="this.poligonos"><a href="{{dataSource.poligonos}}"
-                             target="_blank" rel="noopener" ><mat-icon>open_in_new</mat-icon><span
-                                class="big-number">{{format(this.poligonos)}}</span></a>Polígonos industriales
-                    </li>
-                    <li *ngIf="this.explotacionesGanaderas"><a href="{{dataSource.explotacionesGanaderas}}"
-                             target="_blank" rel="noopener" ><mat-icon>open_in_new</mat-icon><span
-                                class="big-number">{{format(this.explotacionesGanaderas)}}</span>Explotaciones
-                            ganaderas</a></li>
-                    <li *ngIf="this.incendiosUltimosAnos"><a href="{{dataSource.incendios}}"
-                             target="_blank" rel="noopener" ><mat-icon>open_in_new</mat-icon><span
-                                class="big-number">{{format(this.incendiosUltimosAnos)}}</span>Incendios desde 2001</a>
-                    </li>
-                    <li *ngIf="this.hectareasQuemadas"><a href="{{dataSource.hectareasAfectadas}}"
-                             target="_blank" rel="noopener" ><mat-icon>open_in_new</mat-icon><span
-                                class="big-number">{{format(this.hectareasQuemadas)}}</span>Hectáreas afectadas por
-                            incendios desde 2001</a></li>
-                    <li *ngIf="this.numberOfCreativeWork"><a href="{{dataSource.publicaciones}}"
-                             target="_blank" rel="noopener" ><mat-icon>open_in_new</mat-icon><span
-                                class="big-number">{{format(this.numberOfCreativeWork)}}</span>Menciones
-                            en publicaciones</a></li>
-                    <li *ngIf="this.plazasHoteleras"><a href="{{dataSource.alojamientosHoteleros}}"
-                             target="_blank" rel="noopener" ><mat-icon>open_in_new</mat-icon><span
-                                class="big-number">{{format(this.plazasHoteleras)}}</span>Alojamientos
-                            hoteleros</a></li>
-                    <li *ngIf="this.alojamientosTuristicos"><a href="{{dataSource.alojamientosRurales}}"
-                             target="_blank" rel="noopener" ><mat-icon>open_in_new</mat-icon><span
-                                class="big-number">{{format(this.alojamientosTuristicos)}}</span>Alojamientos
-                            de turismo rural</a>
-                    </li>
-                    <li *ngIf="this.municipiosEnTerritorio > 0"><a href="{{dataSource.municipios}}"
-                             target="_blank" rel="noopener" ><mat-icon>open_in_new</mat-icon><span
-                                class="big-number">{{format(this.municipiosEnTerritorio)}}</span>Municipios en
-                            el territorio</a>
-                    </li>
-                </ul>
-
-            </div>
-            <div *ngIf="this.direccion || this.imageWikiDataUrl" class="inicio__contact">
-                <h2 *ngIf="this.direccion">Contacto</h2>
-                <ul>
-                    <li *ngIf="this.direccion"><b>Dirección</b> {{this.capitalizeString(this.direccion)}}</li>
-                    <li *ngIf="this.localidad"><b>Localidad</b> {{this.capitalizeString(this.localidad)}}</li>
-                    <li *ngIf="this.codPostal"><b>Código postal</b> {{this.codPostal}}</li>
-                    <li *ngIf="this.telefono"><b>Teléfono</b> <a href="tel:{{this.telefono}}">{{this.telefono}}</a></li>
-                    <li *ngIf="this.email"><b>email</b> <a href="mailto:{{this.email}}">{{this.email}}</a></li>
-                </ul>
-                <a class="data-link" href="{{dataSource.datosContacto}}"  target="_blank" rel="noopener" >Ver origen de los datos</a>
-                <div class="template__img-municipio" *ngIf="this.imageWikiDataUrl">
-                    <div class="loading" *ngIf="!this.imageWikiDataUrl">
-                        <mat-spinner [diameter]="50"></mat-spinner>
-                    </div>
-                    <figure>
-                        <a href="{{this.imageWikiDataUrl}}" target="_blank" rel="nofollow noopener"><img
-                                src="{{this.imageWikiDataUrl}}" alt="Imagen principal de {{this.lugarBuscado}}"></a>
-                        <figcaption><a href="{{dataSource.image}}"  target="_blank" rel="noopener" >Imagen obtenida de WikiData</a>. Este
-                            archivo está disponible bajo la licencia <a
-                                href="https://en.wikipedia.org/wiki/es:Creative_Commons" target="_blank"
-                                rel="nofollow noopener">Creative Commons</a> <a
-                                href="https://creativecommons.org/licenses/by/4.0/deed.es" target="_blank"
-                                rel="nofollow noopener">
-                                Atribución 4.0
-                                Internacional
-                            </a>
-                        </figcaption>
-                    </figure>
-                </div>
-                <div class="download">
-                    <button class="btn btn-download" type="button" (click)="fileDownload()">DESCARGAR FICHA</button>
-                </div>
-            </div>
-        </section>
-
-        <section class="container template__caracteristicas">
-            <h2>Características del territorio</h2>
-            <div class="caracteristicas__list">
-                <a *ngIf="this.densidadPoblacion" href="{{dataSource.densidad}}"  target="_blank" rel="noopener" >
-                    <div class="caracteristica__item">
-                        <mat-icon>people</mat-icon> La densidad de población de <b>{{this.tituloFicha}}</b> es de
-                        {{this.densidadPoblacion}} habitantes por km<sup>2</sup>
-                    </div>
-                </a>
-                <a *ngIf="this.edadMediaHombres" href="{{dataSource.edadMedia}}"  target="_blank" rel="noopener" >
-                    <div class="caracteristica__item">
-                        <mat-icon>person</mat-icon> La edad media de los <b>hombres</b> es de
-                        {{this.edadMediaHombres}}
-                        años ({{yearEdadMedia}})
-                    </div>
-                </a>
-                <a *ngIf="this.edadMediaMujeres" href="{{dataSource.edadMedia}}"  target="_blank" rel="noopener" >
-                    <div class="caracteristica__item">
-                        <mat-icon>person</mat-icon> La edad media de las <b>mujeres</b> es de
-                        {{this.edadMediaMujeres}}
-                        años ({{yearEdadMedia}})
-                    </div>
-                </a>
-            </div>
-        </section>
-
-        <section class="container template__graphics">
-            <div class="graphics__item poblacion" style="width: 100%;">
-                <div class="tabla">
-                    <h2>Últimos datos de Población</h2>
-                    <div class="tabla-container">
-                        <table class="tabla-poblacion">
-                            <tr>
-                                <th>Año</th>
-                                <td *ngFor="let year of yearsTablaPoblacion"><span>{{year}}</span></td>
-                            </tr>
-                            <tr *ngIf="this.municipio[0]">
-                                <th>{{this.municipio[0]}}</th>
-                                <td *ngFor="let element of tablaPoblacion.slice().reverse()">
-                                    <span *ngIf="element.nameRefArea.value == this.municipio[0]">
-                                        {{format(element.poblac.value)}}
-                                    </span>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-                <div class="grafica">
-                    <div class="grafica-poblacion">
-                        <h2>Gráfica de los últimos 5 años</h2>
-                        <canvas baseChart class="chart" [data]="lineChartData" [options]="lineChartOptions"
-                            [type]="lineChartType"></canvas>
-                    </div>
-                    <a class="data-link" href="{{dataSource.tablaPoblacion}}"  target="_blank" rel="noopener" >Ver origen de los
-                        datos</a>
-                </div>
-            </div>
-        </section>
-        <section class="container template__graphics">
-            <div class="graphics__item presupuestos" *ngIf="presupuestos">
-                <h2>Información sobre presupuestos</h2>
-                <a href="{{presupuestos}}"  target="_blank" rel="noopener" 
-                    class="btn btn-presupuestos"><mat-icon>open_in_new</mat-icon>Ver información de
-                    presupuestos</a>
-                <a class="data-link" href="{{dataSource.presupuestos}}"  target="_blank" rel="noopener" >Ver origen de los datos</a>
-            </div>
-            <div *ngIf="this.numberOfCreativeWork" class="graphics__item" fragment="creative-works">
-                <div class="graphics__item-cw">
-                    <h2>Enlaces de interés</h2>
-                    <p class="big-number"><b>
-                        </b><b>Menciones en publicaciones:</b> {{format(this.numberOfCreativeWork)}} <span
-                            *ngIf="this.numberOfCreativeWork >= 10"> (Mostrando las 10 últimas publicaciones)</span></p>
-                </div>
-                <div class="slides">
-                    <mat-tab-group mat-align-tabs="start">
-                        <mat-tab *ngFor="let link of creativeWork" label="{{link.title.value}}">
-                            <span class="slides__tema">
-                                <a *ngIf="
-                                link.tema.value==='http://datos.gob.es/kos/sector-publico/sector/turismo'"
-                                    href="{{link.tema.value}}"  target="_blank" rel="noopener" >Turismo</a>
-                                <a *ngIf="
-                                link.tema.value==='http://datos.gob.es/kos/sector-publico/sector/educacion'"
-                                    href="{{link.tema.value}}"  target="_blank" rel="noopener" >Educación</a>
-                                <a *ngIf="
-                                link.tema.value==='http://datos.gob.es/kos/sector-publico/sector/ciencia-tecnologia'"
-                                    href="{{link.tema.value}}"  target="_blank" rel="noopener" >Ciencia y Tecnología</a>
-                                <a *ngIf="
-                                link.tema.value==='http://datos.gob.es/kos/sector-publico/sector/empleo'"
-                                    href="{{link.tema.value}}"  target="_blank" rel="noopener" >Empleo</a>
-                                <a *ngIf="
-                                link.tema.value==='http://datos.gob.es/kos/sector-publico/sector/economia'"
-                                    href="{{link.tema.value}}"  target="_blank" rel="noopener" >Economia</a>
-                                <a *ngIf="
-                                link.tema.value==='http://datos.gob.es/kos/sector-publico/sector/sector-publico'"
-                                    href="{{link.tema.value}}"  target="_blank" rel="noopener" >Sector Público</a>
-                                <a *ngIf="
-                                link.tema.value==='http://datos.gob.es/kos/sector-publico/sector/salud'"
-                                    href="{{link.tema.value}}"  target="_blank" rel="noopener" >Salud</a>
-                                <a *ngIf="
-                                link.tema.value==='http://datos.gob.es/kos/sector-publico/sector/cultura-ocio'"
-                                    href="{{link.tema.value}}"  target="_blank" rel="noopener" >Cultura y Ocio</a>
-                                <a *ngIf="
-                                link.tema.value==='http://datos.gob.es/kos/sector-publico/sector/sociedad-bienestar'"
-                                    href="{{link.tema.value}}"  target="_blank" rel="noopener" >Sociedad y Bienestar</a>
-                                <a *ngIf="
-                                link.tema.value==='http://datos.gob.es/kos/sector-publico/sector/medio-ambiente'"
-                                    href="{{link.tema.value}}"  target="_blank" rel="noopener" >Medio Ambiente</a>
-                            </span>
-                            <p class="slides__abstract" *ngIf="leerMas">{{link.resumen.value}} <span class="leer-mas"
-                                    (click)="this.leerMas = !this.leerMas" > Reducir resumen</span></p>
-                            <p class=" slides__abstract" *ngIf="leerMas === false">
-                                {{this.reduceText(link.resumen.value)}}... <span class="leer-mas"
-                                    (click)="this.leerMas = !this.leerMas" >Ver resumen completo</span></p>
-
-
-                            <a href="{{link.url.value}}"  target="_blank" rel="noopener"  class="slide__link">Leer más</a>
-                        </mat-tab>
-                    </mat-tab-group>
-                </div>
-            </div>
-            <div class="graphics__item miembros" *ngIf="this.cantidadMiembrosPleno !== 0">
-                <h2>Miembros del pleno territorial</h2>
-                <ul>
-                    <li *ngFor="let miembro of miembrosPleno"><b>{{miembro.cargo.value}}: </b>
-                        <a
-                            [routerLink]="['/persona/', this.createNameForUrl(miembro.persona.value)]">{{miembro.nombrePersona.value}}</a>
-                    </li>
-                </ul>
-                <a class="data-link" href="{{dataSource.miembrosPleno}}"  target="_blank" rel="noopener" >Ver origen de los datos</a>
-            </div>
-
-        </section>
-
-        <section class="container template__statistics">
-            <h2>Encuentra los datos estadísticos de {{this.lugarBuscado}}</h2>
-            <form [formGroup]="formGroup">
-                <div class="selector-temas">
-                    <mat-form-field class="temas">
-                        <mat-label>
-                            Seleccionar datos
-                        </mat-label>
-                        <input formControlName="tema" [(ngModel)]="selectedTema" matInput [formControl]="temasControl"
-                            type="select" [matAutocomplete]="auto" />
-                        <mat-autocomplete #auto="matAutocomplete">
-                            <mat-option *ngFor="let tema of filteredTemas" 
-                                (click)="temaSelected(tema)"
-                                (keyup)="temaSelected(tema)"
-                                [value]="tema.nombre.value">
-                                {{tema.nombre.value}}
-                            </mat-option>
-                        </mat-autocomplete>
-                    </mat-form-field>
-                </div>
-            </form>
-            <div>
-                <h3 class="datos-seleccionados" [ngClass]="{'hidden': this.displayTema === ''}"><b>Datos
-                        seleccionados:</b><br>
-                    <span class="underline">{{displayTema}}</span>
-                </h3>
-                <p [ngClass]="{'errorTabla' : !this.errorTabla}">No se encontraron datos</p>
-                <div class="loading" *ngIf="loading">
-                    <mat-spinner [diameter]="70"></mat-spinner>
-                </div>
-                <app-aragopedia-tabla-datos
-                    [ngClass]="{'errorTabla' : this.errorTabla, 'hidden': this.displayTema === '' || loading}"
-                    class="tabla-datos">
-                </app-aragopedia-tabla-datos>
-            </div>
-        </section>
-
+              </mat-tab>
+            </mat-tab-group>
+          </div>
+        </div>
+        <div class="graphics__item miembros" *ngIf="this.cantidadMiembrosPleno !== 0">
+          <h2 style="    font-size: 26px;
+          margin-bottom: 10px;
+          font-weight: 600;
+      ">Miembros del pleno territorial</h2>
+          <ul style="    text-align: left;
+">
+            <li *ngFor="let miembro of miembrosPleno">
+              <b>{{ miembro.cargo.value }}:</b>
+              <a [routerLink]="['/persona/', this.createNameForUrl(miembro.persona.value)]">
+                {{ miembro.nombrePersona.value }}
+              </a>
+            </li>
+          </ul>
+          <a class="data-link" href="{{ dataSource.miembrosPleno }}" target="_blank" rel="noopener" style="text-align: left;">
+            Ver origen de los datos
+          </a>
+        </div>
+      </section>
+  
+      <section  *ngIf="shouldShowDatosEstadisticos()" class="container template__statistics">
+        <h2 style="    text-align: left;
+        font-size: 26px;
+        font-weight: 600;
+        margin-top: 30px;
+        margin-bottom: 20px;">Encuentra los datos estadísticos de {{ this.lugarBuscado }}</h2>
+        <form [formGroup]="formGroup">
+          <div class="selector-temas">
+            <mat-form-field class="temas">
+              <mat-label>Seleccionar datos</mat-label>
+              <input formControlName="tema" [(ngModel)]="selectedTema" matInput [formControl]="temasControl" type="select" [matAutocomplete]="auto" />
+              <mat-autocomplete #auto="matAutocomplete">
+                <mat-option *ngFor="let tema of filteredTemas" (click)="temaSelected(tema)" (keyup)="temaSelected(tema)" [value]="tema.nombre.value">
+                  {{ tema.nombre.value }}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </div>
+        </form>
+        <div>
+          <h3 class="datos-seleccionados" [ngClass]="{'hidden': this.displayTema === ''}">
+            <b>Datos seleccionados:</b><br>
+            <span class="underline">{{ displayTema }}</span>
+          </h3>
+          <p [ngClass]="{'errorTabla': !this.errorTabla}">No se encontraron datos</p>
+          <div class="loading" *ngIf="loading">
+            <mat-spinner [diameter]="70"></mat-spinner>
+          </div>
+          <app-aragopedia-tabla-datos [ngClass]="{'errorTabla': this.errorTabla, 'hidden': this.displayTema === '' || loading}" class="tabla-datos">
+          </app-aragopedia-tabla-datos>
+        </div>
+      </section>
     </div>
-
+  
     <div class="return">
-        <button class="btn return__btn" [routerLink]="['/']"><mat-icon>keyboard_arrow_left</mat-icon><span
-                class="return__text">Nueva búsqueda</span></button>
+      <button class="btn return__btn" [routerLink]="['/']">
+        <mat-icon>keyboard_arrow_left</mat-icon>
+        <span class="return__text">Nueva búsqueda</span>
+      </button>
     </div>
-</ng-container>
-
-<!-- Ficha de PROVINCIA -->
+  </ng-container>
+  
+  <!-- Ficha de PROVINCIA -->
+  
