@@ -1,86 +1,71 @@
-::ng-deep {
-    .table-container {
-        position: relative;
-        width: 100%;
-        overflow-x: scroll; //add horizontal bar option in html
-    }
 
-    .loading-table {
+/* Estilos personalizados para la tabla DESY */
+::ng-deep {
+    /* Cabeceras de la tabla */
+    desy-table-advanced-header-cell {
+        background-color: var(--accent-color, #00475C) !important;
+        
+        desy-content {
+            font-weight: bold;
+            color: white !important;
+            font-size: 16px;
+        }
+    }
+    
+    /* Estilos para filas alternadas */
+    desy-table-advanced-row:nth-child(even) {
+        background-color: #deecf0;
+    }
+    
+    desy-table-advanced-row:nth-child(odd) {
+        background-color: #cee5eb;
+    }
+    
+    /* Estilos para celdas alineadas a la derecha */
+    .text-right {
+        text-align: right;
+    }
+    
+    /* Mejoras en la paginación */
+    desy-pagination {
         display: flex;
         justify-content: center;
-        top: 0;
-        height: 100%;
-        width: 100%;
-        background-color: rgba($color: #ffffff, $alpha: 0.5);
-        z-index: 999;
-
-        .mat-spinner {
-            margin-top: 100px;
-        }
-
-        .mat-progress-spinner circle,
-        .mat-spinner circle {
-            stroke: var(--accent-color);
-        }
-
-        p {
-            margin-top: 1em;
-            font-family: 'Signika', sans-serif;
-            font-size: var(--h3);
-            text-align: center;
-        }
-    }
-
-    mat-table {
-        border-radius: 10px;
-    }
-
-    tr.mat-header-row.cdk-header-row.ng-star-inserted>th {
-        background: var(--accent-color) !important;
-        color: #cee5eb;
-        text-align: center;
-        font-size: 16px;
-        padding: 17px;
-    }
-
-    tr.mat-row.cdk-row.ng-star-inserted td {
-        text-align: center;
-        font-size: 16px;
-    }
-
-    td.mat-cell {
-        padding-top: 15px !important;
-    }
-
-}
-
-::ng-deep {
-    .mat-sort-header-arrow {
-        color: white;
-    }
-
-    .mat-sort-header-container {
-        justify-content: center;
-        text-align: center;
+        margin-top: 1rem;
     }
 }
 
-table {
+/* Resto de estilos originales */
+.table-container {
+    position: relative;
     width: 100%;
-    align-self: center;
+    overflow-x: auto;
 }
 
-tr:nth-child(even) {
-    background: #deecf0
-}
+.loading-table {
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba($color: #ffffff, $alpha: 0.5);
+    z-index: 999;
 
-tr:nth-child(odd) {
-    background: #cee5eb
-}
+    .mat-spinner {
+        margin-top: 100px;
+    }
 
-th {
-    background: #EDEDEC;
-    min-width: fit-content;
+    .mat-progress-spinner circle,
+    .mat-spinner circle {
+        stroke: var(--accent-color);
+    }
+
+    p {
+        margin-top: 1em;
+        font-family: 'Signika', sans-serif;
+        font-size: var(--h3);
+        text-align: center;
+    }
 }
 
 .btn-descarga {
@@ -88,6 +73,14 @@ th {
     border: solid 1px #00475C;
     color: #00475C;
     cursor: pointer;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    font-weight: bold;
+    text-decoration: none;
+    
+    &:hover {
+        background-color: #f2f2f2;
+    }
 }
 
 .divDescarga {

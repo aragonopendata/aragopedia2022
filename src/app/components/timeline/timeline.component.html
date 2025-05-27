@@ -1,22 +1,12 @@
-<div class="loading" *ngIf="this.dataSource.length === 1">
+<div class="loading" *ngIf="isLoading">
     <mat-spinner [diameter]="70"></mat-spinner>
     <p>Cargando línea temporal</p>
 </div>
-<div *ngIf="this.dataSource.length !== 1" class="space container" style="margin:auto; margin-bottom: 1rem">
-    <dx-range-selector *ngIf="!accessibleMode" (onValueChanged)="getData($event.value)" id="range-selector"
-        title="Selecciona un rango de años" [value]="yearsSelected" [dataSource]="dataSource">
-        <dxo-margin [top]="50"></dxo-margin>
-        <dxo-size [height]="280"></dxo-size>
-        <dxo-chart>
-            <dxi-series valueField="dataQuantity" color="#00607A"></dxi-series>
-            <dxo-common-series-settings type="steparea" argumentField="date">
-            </dxo-common-series-settings>
-        </dxo-chart>
-        <dxo-scale minorTickInterval="day" valueType="year">
-            <dxo-tick-interval [years]="1"></dxo-tick-interval>
-        </dxo-scale>
-        <dxo-slider-marker format="day"></dxo-slider-marker>
-    </dx-range-selector>
+<div *ngIf="!isLoading" class="timeline-container">
+    <!-- Custom range selector -->
+    <div class="timeline-chart-container" [hidden]="accessibleMode">
+        <canvas #timelineCanvas id="timeline-chart" [width]="canvasWidth" [height]="canvasHeight"></canvas>
+    </div>
 
     <div class="accessible-mode" *ngIf="accessibleMode">
         <form appearance="fill">
@@ -42,13 +32,15 @@
         </form>
     </div>
 
-    <div class="years-selected" style="margin-top: 100px;">
+    <div class="years-selected">
         <p>Años seleccionados:
             <b> {{yearsURL}} </b>
         </p>
-        <button class="btn btn-accessible" (click)="toggleAccessibleMode()"><span
-                *ngIf="!accessibleMode">Mostrar modo accesible</span><span *ngIf="accessibleMode">Ocultar modo
-                accesible</span></button>
-
+        <desy-button 
+        classes="c-button--link" 
+        (clickEvent)="toggleAccessibleMode()">
+        <span *ngIf="!accessibleMode">Mostrar modo accesible</span>
+        <span *ngIf="accessibleMode">Ocultar modo accesible</span>
+      </desy-button>
     </div>
 </div>

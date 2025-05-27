@@ -10,7 +10,7 @@ import { AragopediaComponent } from './pages/aragopedia/aragopedia.component';
 import { FichaAragonComponent } from './pages/result/ficha-aragon/ficha-aragon.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/', pathMatch: 'full' },
+  // { path: '', redirectTo: '/', pathMatch: 'full' },
   { path: '', component: HomeComponent, title: 'Aragopedia - Inicio' },
   { path: 'persona/:id', component: PersonaComponent, title: 'Aragopedia - Personas' },
   { path: 'general', component: GeneralComponent },

@@ -133,9 +133,9 @@ footer {
   color: #1f2331 !important;
 }
 
-.font-semibold {
-  font-weight: 400;
-}
+// .font-semibold {
+//   font-weight: 400;
+// }
 
 .font-bold {
   font-weight: 600;
@@ -217,4 +217,8 @@ footer {
 
 .border-neutral-base {
   margin-top: 20px;
+}
+
+footer .c-link{
+  font-weight: 400 !important;
 }

@@ -1,5 +1,12 @@
 <div>
-    <h2><mat-icon> place</mat-icon> Selecciona una entidad territorial</h2>
+    <h2>
+        <desy-icon>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="1em" height="1em" class="inline">
+                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+            </svg>
+        </desy-icon>
+        Selecciona una entidad territorial
+    </h2>
     <p *ngIf="error" class="error">Debes seleccionar alguna localidad</p>
     <form class="location-form" [formGroup]="locationForm">
 
@@ -17,6 +24,6 @@
         </div>
         
     </form>
-    <button class="btn link-aragon" (click)="goToAragon()" [ngClass]="{'active':activeAragon}">
-        Consultar datos de toda la Comunidad de Aragón</button>
+    <desy-button   (click)="goToAragon()" [ngClass]="{'active':activeAragon}">
+        Consultar datos de toda la Comunidad de Aragón</desy-button >
     </div>

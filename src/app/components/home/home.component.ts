@@ -16,8 +16,6 @@ export class HomeComponent  {
 
   @ViewChild(SelectLocationComponent) location: any;
   @ViewChild(TemasComponent) temas: any;
-  @ViewChild(TimeLineComponent) years: any;
-  @ViewChild(TimeLineComponent) yearsSelectedURL: any;
 
   // selectedYears: any[] = [];
   firstYearSelected: any;
@@ -33,11 +31,13 @@ export class HomeComponent  {
 
   submit(): void {
     this.temasSelected = this.temas.temasSeleccionados;
-    this.selectedYears = this.years.yearsSelected;
-    this.yearsURL = this.yearsSelectedURL.yearsURL;
-
-    if ((this.temasSelected.length > 0 && this.temasSelected.length < 6) && Number(this.selectedYears[1]) - Number(this.selectedYears[0]) >= 2) {
-      this.router.navigate([`results/${this.temasSelected}/${this.yearsURL}`]);
+  
+    if (this.temasSelected.length &&
+        this.temasSelected.length < 6 &&
+        Number(this.selectedYears[1]) - Number(this.selectedYears[0]) >= 2) {
+  
+      const years = `${this.selectedYears[0]}-${this.selectedYears[1]}`;   // 👈
+      this.router.navigate([`results/${this.temasSelected}/${years}`]);
     } else {
       this.error = true;
     }

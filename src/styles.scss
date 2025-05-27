@@ -1,13 +1,11 @@
-// Custom Theming for Angular Material
-// For more information: https://material.angular.io/guide/theming
 @use '@angular/material' as mat;
 @include mat.core();
 
-$my-app-primary: mat.define-palette(mat.$indigo-palette);
-$my-app-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
-$my-app-warn: mat.define-palette(mat.$red-palette);
+$my-app-primary: mat.m2-define-palette(mat.$m2-indigo-palette);
+$my-app-accent: mat.m2-define-palette(mat.$m2-pink-palette, A200, A100, A400);
+$my-app-warn: mat.m2-define-palette(mat.$m2-red-palette);
 
-$my-app-theme: mat.define-light-theme((color: (primary: $my-app-primary,
+$my-app-theme: mat.m2-define-light-theme((color: (primary: $my-app-primary,
                 accent: $my-app-accent,
                 warn: $my-app-warn,
             ),
@@ -15,11 +13,11 @@ $my-app-theme: mat.define-light-theme((color: (primary: $my-app-primary,
 
 @include mat.all-component-themes($my-app-theme);
 
-html,
+/* html,
 body {
     height: 100%;
 }
-
+ */
 body {
     margin: 0;
     font-family: Roboto, "Helvetica Neue", sans-serif;
@@ -55,8 +53,8 @@ body.zoomed {
 
 html,
 body {
-    height: 100%;
-    color: var(--text-color);
+/*     height: 100%;
+ */    color: var(--text-color);
 }
 
 body {
@@ -121,11 +119,25 @@ a {
 
 // Desktop
 
+// Desktop — todo lo que vaya dentro de <main> seguirá centrado
 main section,
-main .container,
+main .container {
+  max-width: 1350px;
+  padding: 0 50px;
+  align-items: center;
+  text-align: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+// Footer — misma anchura y padding pero alineado a la izquierda
 footer .container {
-    max-width: 1350px;
-    padding: 0 50px;
+  max-width: 1350px;
+  padding: 0 50px;
+  align-items: center;
+  text-align: left;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 .btn {
@@ -162,3 +174,10 @@ footer .container {
         max-width: 700px;
     }
 }
+
+
+
+.text-left {
+    text-align: left;
+}
+

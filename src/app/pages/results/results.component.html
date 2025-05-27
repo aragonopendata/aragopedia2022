@@ -1,21 +1,22 @@
 <div class="results-page container">
     <section class="results">
-        <h2 class="results__title" *ngIf="this.results.length <= 1">Resultados de la búsqueda. Encontrados
-            <u>{{this.results.length - 1}}
-                resultados de
-                {{this.temasSelected}}
-                entre {{this.firstYear}} y {{this.lastYear}}:</u>
-        </h2>
-        <h2 *ngIf="this.results.length > 1" class="results__title">Resultados de la búsqueda. Encontrados
-            <u>{{this.results.length}} resultados de
-                {{this.temasSelected}}
-                entre {{this.firstYear}} y {{this.lastYear}}:</u>
-        </h2>
+        <h2 class="results__title" *ngIf="numberOfResults > 0">
+            Resultados de la búsqueda. Encontrados
+            <u>{{ numberOfResults }} resultados de {{ temasSelected }}
+               entre {{ firstYear }} y {{ lastYear }}:</u>
+          </h2>
+          
+          <p *ngIf="numberOfResults === 0" class="search-error">
+            No se han encontrado resultados, prueba a
+            <a (click)="toggleSidebar()">aplicar otros filtros</a>.
+          </p>
 
         
-        <form class="desktop__timeline">
-            <app-timeline [yearsSelected]="this.selectedYears"></app-timeline>
-            <div class="results__filter-desktop" [ngClass]="{'active': active}">
+<!--         <form class="desktop__timeline">
+            <app-timeline
+            [yearsSelected]="selectedYears"
+            (valueChanged)="onYearsChanged($event)">
+          </app-timeline>            <div class="results__filter-desktop" [ngClass]="{'active': active}">
 
                 <div class="filter-temas">
                     <label class="filter-temas__item" *ngFor="let tema of temasParsed" for="{{tema.title}}"
@@ -31,7 +32,14 @@
                     <a class="uncheck-btn" (click)="uncheckTemas($event)">Borrar temas seleccionados</a>
                 </div>
             </div>
-        </form>
+        </form> -->
+
+        <div class="desktop__timeline">
+            <app-timeline
+              [yearsSelected]="selectedYears"
+              (valueChanged)="onYearsChanged($event)">
+            </app-timeline>
+        </div>
 
         <div class="results__filter">
             <div class="results__filter-menu" [ngClass]="{'filter-active': this.active}" 
@@ -53,7 +61,7 @@
                 <p>Año ascendente</p>
             </div>
         </div>
-        <div *ngIf="this.results.length !== 1">
+        <div *ngIf="this.numberOfResults !== 1">
             <div class="desktop__buscador">
                 <!-- BUSCADOR -->
                 <div class="main-search container">
@@ -65,7 +73,7 @@
                 <!-- buscador -->
                 <div class="filter-type__container">
                     <button class="filter-type" [ngClass]="{'active-type': activeAll}" (click)="this.showAll()">Todos
-                        ({{this.results.length}})</button>
+                        ({{this.numberOfResults}})</button>
                     <button class="filter-type" [ngClass]="{'active-type': activeDataset}"
                         (click)="this.filterByDataset()">Datasets ({{this.totalDatasets}})</button>
                     <button class="filter-type" [ngClass]="{'active-type': activeCube}"
@@ -131,7 +139,12 @@
 
         <div *ngIf="this.items">
             <div *ngIf="this.items.length !== 1 " class="results__pagination">
-                <jw-pagination [items]="items" (changePage)="onChangePage($event)"></jw-pagination>
+                <desy-pagination 
+                    [totalItems]="this.items.length"
+                    [itemsPerPage]="pageSize"
+                    [(currentPage)]="currentPage"
+                    (currentPageChange)="onChangePage($event)">
+                </desy-pagination>
             </div>
         </div>
     </section>

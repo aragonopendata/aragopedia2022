@@ -8,21 +8,23 @@
 
                 <div *ngIf="temasActive === true" class="seleccionar-datos">
                     <h2><mat-icon> table_chart</mat-icon> Seleccionar datos</h2>
-                    <mat-form-field class="temas">
-                        <mat-label>
-                            Datos
-                        </mat-label>
-                        <input formControlName="tema" [(ngModel)]="selectedTema" matInput [formControl]="temasControl"
-                            type="select" [matAutocomplete]="auto" />
-                        <mat-autocomplete #auto="matAutocomplete">
-                            <mat-option *ngFor="let tema of filteredTemas"
-                                (click)="temaSelectedAuto(tema)"
-                                (keyup)="temaSelectedAuto(tema)"
-                                [value]="tema.nombre.value" >
-                                {{tema.nombre.value}}
-                            </mat-option>
-                        </mat-autocomplete>
-                    </mat-form-field>
+            <desy-select
+            [id]="'temasSelect'"
+            [name]="'tema'"
+            [labelText]="'Datos'"           
+            [classes]="'temas w-full'"      
+            formControlName="tema"         
+            > 
+
+            <desy-option
+            *ngFor="let tema of filteredTemas"
+            [value]="tema.nombre.value"
+            (click)="temaSelectedAuto(tema)">
+            {{ tema.nombre.value }}
+            </desy-option>
+
+            </desy-select>
+
                 </div>
             </form>
         </div>
@@ -31,7 +33,7 @@
             <span class="underline">{{displayTema}}</span> en {{displayZona}}
         </h3>
         <div class="loading-table" *ngIf="loading">
-            <mat-spinner [diameter]="70"></mat-spinner>
+            <desy-spinner [id]="'loading-spinner'" [text]="'Cargando...'" [classes]="'text-2xl'"></desy-spinner>
         </div>
         <app-aragopedia-tabla-datos class="tabla-datos"
             [hidden]="errorTabla || firstLand || loading"></app-aragopedia-tabla-datos>

@@ -1,7 +1,7 @@
 <div class="space categories container">
     <h2>Temas o cifras a consultar</h2>
     <div class="loading" *ngIf="this.temasConIconos.length === 1">
-        <mat-spinner [diameter]="70"></mat-spinner>
+        <desy-spinner [id]="'loading-spinner'" [text]="'Cargando...'" [classes]="'text-2xl'"></desy-spinner>
     </div>
     <form *ngIf="this.temasConIconos.length !== 1" [formGroup]="temasGroup" class="space categories__list">
         <input [formControl]="temasCtrl" (change)="onChange($event.target)" class="check__temas"

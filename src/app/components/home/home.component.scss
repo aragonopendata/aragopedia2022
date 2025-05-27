@@ -5,6 +5,7 @@
 
     .container {
         margin: auto;
+        text-align: left;
     }
 
     h2 {
@@ -15,6 +16,7 @@
 .home__temas {
     margin: auto;
     margin-top: 3em;
+    text-align: left;
 
     h2 {
         font-size: var(--h1);
@@ -40,7 +42,7 @@
         text-align: center;
     }
 }
-
+/* 
 .margen_top {
     margin-top: 1.5rem;
-}
+} */

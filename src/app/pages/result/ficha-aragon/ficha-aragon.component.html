@@ -4,102 +4,134 @@
             <p><span [routerLink]="['/']">Inicio</span> > Comunidad >
                 Aragón</p>
         </section>
-        <section class="container container template__inicio">
+        <section class="container template__inicio">
             <div class="inicio__img">
                 <h1 class="inicio__name">Aragón</h1>
-                <a href={{this.urlMap}}  target="_blank" rel="noopener" >
+                <a href={{this.urlMap}} target="_blank" rel="noopener">
                     <img *ngIf="this.map" src={{this.map}} alt="Mapa de {{this.lugarBuscado}}">
                 </a>
-                <a href={{this.urlMap}}  target="_blank" rel="noopener"  class="btn map_btn">Ver en el mapa</a>
+                <a href={{this.urlMap}} target="_blank" rel="noopener" class="btn map_btn">Ver en el mapa</a>
             </div>
             <div class="inicio__data inicio__data-aragon">
                 <ul>
-                    <li *ngIf="this.sueloUrbano"><a href="{{dataSource.sueloUrbano}}"  target="_blank" rel="noopener" >
+                    <li *ngIf="this.sueloUrbano"><a href="{{dataSource.sueloUrbano}}" target="_blank" rel="noopener">
                             <mat-icon>open_in_new</mat-icon><span
                                 class="big-number">{{format(this.sueloUrbano)}}</span>Hectáreas de suelo
                             urbano ({{dataYearExtension}})</a></li>
-                    <li *ngIf="this.sueloRural"><a href="{{dataSource.sueloRural}}"
-                             target="_blank" rel="noopener" ><mat-icon>open_in_new</mat-icon><span
+                    <li *ngIf="this.sueloRural"><a href="{{dataSource.sueloRural}}" target="_blank" rel="noopener"><mat-icon>open_in_new</mat-icon><span
                                 class="big-number">{{format(this.sueloRural)}}</span>Hectáreas de suelo
                             rural ({{dataYearExtension}})</a></li>
-                    <li *ngIf="this.oficinasComarcales"><a href="{{dataSource.edificiosDestinadosLocales}}"
-                             target="_blank" rel="noopener" ><mat-icon>open_in_new</mat-icon><span
+                    <li *ngIf="this.oficinasComarcales"><a href="{{dataSource.edificiosDestinadosLocales}}" target="_blank"
+                            rel="noopener"><mat-icon>open_in_new</mat-icon><span
                                 class="big-number">{{format(this.oficinasComarcales)}}</span>Edificios destinados a
                             locales (2011)</a></li>
-                    <li *ngIf="this.poblacion"><a href="{{dataSource.habitantes}}"
-                             target="_blank" rel="noopener" ><mat-icon>open_in_new</mat-icon><span
+                    <li *ngIf="this.poblacion"><a href="{{dataSource.habitantes}}" target="_blank"
+                            rel="noopener"><mat-icon>open_in_new</mat-icon><span
                                 class="big-number">{{format(this.poblacion)}}</span>Habitantes ({{yearPoblacion}})</a>
                     </li>
-
-                    <li *ngIf="this.poligonos"><a href="{{dataSource.poligonos}}"
-                             target="_blank" rel="noopener" ><mat-icon>open_in_new</mat-icon><span
+        
+                    <li *ngIf="this.poligonos"><a href="{{dataSource.poligonos}}" target="_blank"
+                            rel="noopener"><mat-icon>open_in_new</mat-icon><span
                                 class="big-number">{{format(this.poligonos)}}</span></a>Polígonos industriales
                     </li>
-
-                    <li *ngIf="this.incendiosUltimosAnos"><a href="{{dataSource.incendios}}"
-                             target="_blank" rel="noopener" ><mat-icon>open_in_new</mat-icon><span
+        
+                    <li *ngIf="this.incendiosUltimosAnos"><a href="{{dataSource.incendios}}" target="_blank"
+                            rel="noopener"><mat-icon>open_in_new</mat-icon><span
                                 class="big-number">{{this.incendiosUltimosAnos}}</span>Incendios desde 2001</a></li>
-                    <li *ngIf="this.hectareasQuemadas"><a href="{{dataSource.hectareasAfectadas}}"
-                             target="_blank" rel="noopener" ><mat-icon>open_in_new</mat-icon><span
+                    <li *ngIf="this.hectareasQuemadas"><a href="{{dataSource.hectareasAfectadas}}" target="_blank"
+                            rel="noopener"><mat-icon>open_in_new</mat-icon><span
                                 class="big-number">{{format(this.hectareasQuemadas)}}</span>Hectáreas afectadas por
                             incendios desde 2001</a></li>
-                    <li *ngIf="this.numberOfCreativeWork"><a href="{{dataSource.publicaciones}}"
-                             target="_blank" rel="noopener" ><mat-icon>open_in_new</mat-icon><span
+                    <li *ngIf="this.numberOfCreativeWork"><a href="{{dataSource.publicaciones}}" target="_blank"
+                            rel="noopener"><mat-icon>open_in_new</mat-icon><span
                                 class="big-number">{{format(this.numberOfCreativeWork)}}</span>Menciones de
                             publicaciones</a></li>
-                    <li *ngIf="this.plazasHoteleras"><a href="{{dataSource.alojamientosHoteleros}}"
-                             target="_blank" rel="noopener" ><mat-icon>open_in_new</mat-icon><span
+                    <li *ngIf="this.plazasHoteleras"><a href="{{dataSource.alojamientosHoteleros}}" target="_blank"
+                            rel="noopener"><mat-icon>open_in_new</mat-icon><span
                                 class="big-number">{{format(this.plazasHoteleras)}}</span>Alojamientos
                             hoteleros</a></li>
-                    <li *ngIf="this.alojamientosTuristicos"><a href="{{dataSource.alojamientosRurales}}"
-                             target="_blank" rel="noopener" ><mat-icon>open_in_new</mat-icon><span
+                    <li *ngIf="this.alojamientosTuristicos"><a href="{{dataSource.alojamientosRurales}}" target="_blank"
+                            rel="noopener"><mat-icon>open_in_new</mat-icon><span
                                 class="big-number">{{format(this.alojamientosTuristicos)}}</span>Alojamientos
                             de turismo rural</a>
                     </li>
-                    <li *ngIf="this.municipiosEnTerritorio > 0"><a href="{{dataSource.municipios}}"
-                             target="_blank" rel="noopener" ><mat-icon>open_in_new</mat-icon><span
+                    <li *ngIf="this.municipiosEnTerritorio > 0"><a href="{{dataSource.municipios}}" target="_blank"
+                            rel="noopener"><mat-icon>open_in_new</mat-icon><span
                                 class="big-number">{{format(this.municipiosEnTerritorio)}}</span>Municipios en
                             el territorio</a>
                     </li>
-                    <li *ngIf="this.mascotas"><a href="{{dataSource.mascotas}}"
-                        target="_blank" rel="noopener" ><mat-icon>open_in_new</mat-icon><span
-                        class="big-number">{{format(this.mascotas)}}</span>Animales de compañía</a>
+                    <li *ngIf="this.mascotas"><a href="{{dataSource.mascotas}}" target="_blank" rel="noopener"><mat-icon>open_in_new</mat-icon><span
+                                class="big-number">{{format(this.mascotas)}}</span>Animales de compañía</a>
                     </li>
                 </ul>
-
             </div>
-            <div class="inicio__contact">
-                <h2>Contacto</h2>
-                <ul>
-                    <li *ngIf="this.direccion"><b>Dirección</b> {{this.direccion}}</li>
-                    <li *ngIf="this.codPostal"><b>Código postal</b> {{this.codPostal}}</li>
-                    <li *ngIf="this.telefono"><b>Teléfono</b> <a href="tel:{{this.telefono}}">{{this.telefono}}</a></li>
-                    <li *ngIf="this.email"><b>email</b> <a href="mailto:{{this.email}}">{{this.email}}</a></li>
+            
+            <!-- Nueva implementación con desy-card para la sección de contacto -->
+           <div class="lg:w-1/3">
+    <div class="inicio__contact-container">
+        <desy-card classes="w-full" containerClasses="p-base bg-neutral-lighter border-t-8 border-neutral-dark">
+            <!-- Contenido dentro de la card -->
+            <div class="desy-card-content">
+                <!-- Título de contacto -->
+                <h2 class="text-xl font-semibold mb-4">Contacto</h2>
+                
+                <!-- Lista de datos de contacto -->
+                <ul class="space-y-2 mb-4">
+                    <li *ngIf="this.direccion" class="flex flex-wrap">
+                        <b class="mr-2">Dirección</b> {{this.direccion}}
+                    </li>
+                    <li *ngIf="this.codPostal" class="flex flex-wrap">
+                        <b class="mr-2">Código postal</b> {{this.codPostal}}
+                    </li>
+                    <li *ngIf="this.telefono" class="flex flex-wrap">
+                        <b class="mr-2">Teléfono</b> <a href="tel:{{this.telefono}}" class="text-primary hover:underline">{{this.telefono}}</a>
+                    </li>
+                    <li *ngIf="this.email" class="flex flex-wrap">
+                        <b class="mr-2">Email</b> <a href="mailto:{{this.email}}" class="text-primary hover:underline">{{this.email}}</a>
+                    </li>
                 </ul>
-                <a class="data-link" href="{{dataSource.datosContacto}}"  target="_blank" rel="noopener" >Ver origen de los datos</a>
-                <div class="template__img-municipio" *ngIf="this.imageWikiDataUrl">
+                
+                <!-- Enlace al origen de los datos -->
+                <a class="text-sm text-primary hover:underline block mb-4" href="{{dataSource.datosContacto}}" target="_blank" rel="noopener">Ver origen de los datos</a>
+                
+                <!-- Imagen y atribución -->
+                <div class="template__img-municipio mb-4" *ngIf="this.imageWikiDataUrl">
                     <div class="loading" *ngIf="!this.imageWikiDataUrl">
                         <mat-spinner [diameter]="50"></mat-spinner>
                     </div>
                     <figure>
-                        <a href="{{this.imageWikiDataUrl}}" target="_blank" rel="nofollow noopener"><img
-                                src="{{this.imageWikiDataUrl}}" alt="Imagen principal de {{this.lugarBuscado}}"></a>
-                        <figcaption>Imagen <a href="{{dataSource.image}}"  target="_blank" rel="noopener" >obtenida de WikiData</a>. Este
-                            archivo está disponible bajo la licencia <a
-                                href="https://en.wikipedia.org/wiki/es:Creative_Commons" target="_blank"
-                                rel="nofollow noopener">Creative Commons</a> <a
-                                href="https://creativecommons.org/licenses/by/4.0/deed.es" target="_blank"
-                                rel="nofollow noopener">
-                                Atribución 4.0
-                                Internacional
+                        <a href="{{this.imageWikiDataUrl}}" target="_blank" rel="nofollow noopener">
+                            <img src="{{this.imageWikiDataUrl}}" alt="Imagen principal de {{this.lugarBuscado}}" class="w-full rounded">
+                        </a>
+                        <figcaption class="text-sm mt-2">
+                            Imagen <a href="{{ dataSource.image }}" target="_blank" rel="noopener">obtenida de WikiData</a>.  
+                            Este archivo está disponible bajo la licencia
+                            <a href="https://en.wikipedia.org/wiki/es:Creative_Commons"
+                               target="_blank"
+                               rel="nofollow noopener">
+                              Creative Commons
                             </a>
-                        </figcaption>
+                            y bajo los términos de
+                            <a href="https://creativecommons.org/licenses/by/4.0/deed.es"
+                               target="_blank"
+                               rel="nofollow noopener">
+                              Atribución 4.0 Internacional
+                            </a>.
+                          </figcaption>
+                          
                     </figure>
                 </div>
-                <div class="download">
-                    <button class="btn btn-download" type="button" (click)="fileDownload()">DESCARGAR FICHA</button>
+                
+                <!-- Botón de descarga -->
+                <div class="text-center mt-4">
+                    <button class="btn btn-download py-2 px-4 bg-primary text-white rounded hover:bg-primary-dark transition-colors" type="button" (click)="fileDownload()">
+                        DESCARGAR FICHA
+                    </button>
                 </div>
             </div>
+        </desy-card>
+    </div>
+</div>
         </section>
 
         <section class="container template__caracteristicas">
@@ -169,8 +201,8 @@
 
             <div class="graphics__item" fragment="creative-works">
                 <div class="graphics__item-cw">
-                    <h2>Enlaces de interés</h2>
-                    <p class="big-number"><b>
+                    <h2 style="font-size:20px; text-align:left;">Enlaces de interés</h2>
+                    <p class="big-number" style="text-align: left; margin-top: 10px;"><b>
                             Menciones en publicaciones:</b> {{this.numberOfCreativeWork}} (Mostrando las
                         últimas 10 publicaciones)</p>
                 </div>
@@ -222,8 +254,8 @@
                 </div>
             </div>
 
-            <div class="graphics__item miembros" *ngIf="this.cantidadMiembrosPleno !== 0">
-                <h2>Miembros del Gobierno de Aragón</h2>
+            <div class="graphics__item miembros" style="text-align: left;" *ngIf="this.cantidadMiembrosPleno !== 0">
+                <h2 style="font-size: 26px; margin-bottom: 10px; font-weight: 600;">Miembros del Gobierno de Aragón</h2>
                 <ul>
                     <li *ngFor="let miembro of this.miembrosPleno"><b>{{miembro.orgTitle.value}}: </b>
                         <a
@@ -235,12 +267,12 @@
         </section>
 
         <section class="container template__statistics">
-            <h2>Encuentra los datos estadísticos de {{this.lugarBuscado}}</h2>
+            <h2 style="font-size: 26px;text-align: left;margin-bottom: 10px; font-weight: 600; margin-top: 10px;">Encuentra los datos estadísticos de {{this.lugarBuscado}}</h2>
             <form [formGroup]="formGroup">
                 <div class="selector-temas">
                     <mat-form-field class="temas">
                         <mat-label>
-                            Seleccionar datos
+                            Seleccionar datos FICHA ARAGON
                         </mat-label>
                         <input formControlName="tema" [(ngModel)]="selectedTema" matInput [formControl]="temasControl"
                             type="select" [matAutocomplete]="auto" />
@@ -265,9 +297,9 @@
                     <mat-spinner [diameter]="70"></mat-spinner>
                 </div>
                 <app-aragopedia-tabla-datos
-                    [ngClass]="{'errorTabla' : this.errorTabla, 'hidden': this.displayTema === '' || loading}"
-                    class="tabla-datos">
-                </app-aragopedia-tabla-datos>
+            [hidden]="errorTabla || firstLand || loading"
+            class="tabla-datos display-block">
+        </app-aragopedia-tabla-datos>
             </div>
         </section>
 
