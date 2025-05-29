@@ -147,6 +147,14 @@
                             Ver origen de los datos
                           </a>
                         </div>
+
+                        <div class="mb-8">
+                          <h2 class="text-xl font-semibold mb-4 text-left">Presupuestos</h2>
+                          <a class="text-sm text-primary hover:underline block mt-2 c-link text-left"
+                              href="{{ presupuestos }}" target="_blank" rel="noopener">
+                            Ver origen de los datos
+                          </a>
+                        </div>
                         
                         <!-- Botón de descarga -->
                         <div class="text-center mt-6">
@@ -297,7 +305,7 @@
                         <canvas baseChart class="chart" [data]="lineChartData" [options]="lineChartOptions"
                             [type]="lineChartType"></canvas>
                     </div>
-                    <a class="data-link" href="{{dataSource.tablaPoblacion}}"  target="_blank" rel="noopener" >Ver origen de los
+                    <a class="data-link c-link text-left" href="{{dataSource.tablaPoblacion}}"  target="_blank" rel="noopener" >Ver origen de los
                         datos</a>
                 </div>
             </div>
@@ -608,6 +616,13 @@
                     </ul>
                     <a class="text-sm text-primary hover:underline block mt-2 c-link text-left"
                        href="{{ dataSource.entidadesSingulares }}" target="_blank" rel="noopener">
+                      Ver origen de los datos
+                    </a>
+                  </div>
+                  <div class="mb-8">
+                    <h2 class="text-xl font-semibold mb-4 text-left">Presupuestos</h2>
+                    <a class="text-sm text-primary hover:underline block mt-2 c-link text-left"
+                        href="{{ presupuestos }}" target="_blank" rel="noopener">
                       Ver origen de los datos
                     </a>
                   </div>
