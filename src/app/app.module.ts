@@ -45,9 +45,15 @@ import { NgChartsModule } from 'ng2-charts';
 import { MatSelectModule } from '@angular/material/select';
 import { TimeLineComponent } from './components/timeline/timeline.component';
 import { DesyAngularModule, DesyTablesModule, DesyPaginationModule } from 'desy-angular';
+import { MatButtonModule } from '@angular/material/button';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { DxRangeSelectorModule, DxChartModule } from 'devextreme-angular';
 import { AragopediaNuevaTablaDatosComponent } from './components/aragopedia-nueva-tabla-datos/aragopedia-nueva-tabla-datos.component';
+import { QueryResultsComponent } from './pages/query-results/query-results.component';
+import { QueryResultsService } from './pages/query-results/query-results.service';
+import { QueryLinkService } from './pages/query-results/query-link.service';
+
 
 @NgModule({
   declarations: [
@@ -77,7 +83,8 @@ import { AragopediaNuevaTablaDatosComponent } from './components/aragopedia-nuev
     ComarcasComponent,
     MunicipiosComponent,
     LocationComponent,
-    TimeLineComponent
+    TimeLineComponent,
+    QueryResultsComponent
   ],
   imports: [
     BrowserModule,
@@ -101,6 +108,8 @@ import { AragopediaNuevaTablaDatosComponent } from './components/aragopedia-nuev
     MatSortModule,
     NgChartsModule,
     MatSelectModule,
+    MatButtonModule,
+    MatTooltipModule,
     DxRangeSelectorModule,
     DxChartModule,
     DesyAngularModule,
@@ -110,7 +119,7 @@ import { AragopediaNuevaTablaDatosComponent } from './components/aragopedia-nuev
   // exports: [
   //   ButtonComponent
   // ],
-  providers: [ResultService],
+  providers: [ResultService, QueryResultsService, QueryLinkService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

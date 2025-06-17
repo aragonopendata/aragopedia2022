@@ -8,6 +8,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AragopediaService } from 'src/app/components/aragopedia-tabla-datos/aragopediaService';
 import { ChartConfiguration, ChartType } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
+import { QueryLinkService } from '../query-results/query-link.service';
 
 interface DataLinks {
   sueloUrbano: string,
@@ -35,7 +36,6 @@ interface DataLinks {
   personasIlustres: string,
   image: string,
   presupuestos: string,
-
   mascotas: string
 }
 
@@ -82,15 +82,23 @@ export class ResultComponent {
     }
   }
 
-  constructor(public resultSvc: ResultService, private fb: FormBuilder, private _route: ActivatedRoute, private http: HttpClient, public aragopediaSvc: AragopediaService) { }
+  constructor(
+    public resultSvc: ResultService, 
+    private fb: FormBuilder, 
+    private _route: ActivatedRoute, 
+    private http: HttpClient, 
+    public aragopediaSvc: AragopediaService,
+    private router: Router,
+    private queryLinkService: QueryLinkService
+  ) { }
 
   temp = undefined;
   currentLink: any;
   firstLand: boolean | undefined;
-  pageSize: number = 10; // Limitamos a 10 elementos por página
+  pageSize: number = 10;
   currentPage: number = 1;
-  maxPagesToShow: number = 5; // Limitamos a mostrar 5 páginas numeradas
-  totalPages: number = 0; // Total de páginas disponibles
+  maxPagesToShow: number = 5;
+  totalPages: number = 0;
   tituloFicha!: string;
   lugarBuscado: any;
   lugarBuscadoParsed!: string;
@@ -153,7 +161,6 @@ export class ResultComponent {
   dataYearExtension: any;
   presupuestos!: string;
   loading: boolean = false;
-
   mascotas!: string;
 
   @ViewChild(AragopediaSelectorTemasComponent) aragopediaMunicipio: any;
@@ -185,7 +192,6 @@ export class ResultComponent {
   queryUrlOficinaComarcal!: string;
   queryUrlMunicipiosEnTerritorio!: string;
   queryUrlPresupuestos!: string;
-
   queryUrlMascotas!: string;
 
   dataSource: DataLinks = {
@@ -214,7 +220,6 @@ export class ResultComponent {
     personasIlustres: '',
     image: '',
     presupuestos: '',
-
     mascotas: ''
   };
 
@@ -233,24 +238,34 @@ export class ResultComponent {
   queryTabla!: string;
   columnas: any;
   errorTabla: boolean = false;
-
   filteredTemas: any;
   formGroup!: FormGroup;
 
-
   // Download data
-
   dataDownload = this.temp || [{ nombre: '', email: '', telefono: '', direccion: '', codigoPostal: '', habitantes: '', sueloRural: '', sueloUrbano: '', densidad: '', poligonosIndustriales: '', explotacionesGanaderas: '', plazasHoteleras: '', incendiosDesde2022: '', hectareasAfectadasPorIncendios: '', mencionesEnPublicaciones: '', alojamientosTuristicos: '', urlImagen: '', porcentajeSueloRural: '', porcentajeSueloUrbano: '', esDeLosMasPoblados: '', edadMediaHombres: '', edadMediaMujeres: '', creativeWorks: '', miembrosPleno: '', personasIlustres: '', entidadesSingulares: '', mascotas: '' }];
 
+  navigateToQueryResults(queryUrl: string, dataType: string): void {
+    if (!queryUrl || queryUrl.trim() === '') {
+      console.warn(`URL de query vacía para tipo de dato: ${dataType}`);
+      return;
+    }
 
+    const title = this.queryLinkService.generateTitle(dataType, this.tituloFicha);
+    const description = this.queryLinkService.generateDescription(dataType, this.tituloFicha);
+    const context = this.tipoLocalidad;
+
+    this.queryLinkService.navigateToQueryResults(queryUrl, title, description, context);
+  }
 
   ngOnInit() {
 
     this.queryIdWikiData = `https://opendata.aragon.es/sparql?default-graph-uri=&query=select+%3Fs+str%28%3Fnombre%29+%3Fid+%3Fclasif%0D%0Awhere++%7B%0D%0A++++++%3Fs+%3Chttp%3A%2F%2Fwww.w3.org%2Fns%2Forg%23classification%3E+%3Fclasif.+%0D%0A++++++%3Fs+dc%3Aidentifier+%3Fid.+%0D%0A+++++%3Fs+dc%3Atitle+%3Fnombre.%0D%0A+++++VALUES+%3Fclasif+%7B%3Chttps%3A%2F%2Fwww.geonames.org%2Fontology%23A.ADM2%3E+%3Chttp%3A%2F%2Fopendata.aragon.es%2Fkos%2Fcomarca%3E+%3Chttps%3A%2F%2Fwww.geonames.org%2Fontology%23P.PPL%3E%7D%0D%0A%7D%0D%0Aorder+by+asc%28%3Fclasif%29+%3Fid+%0D%0A&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`;
-    this._route.queryParams.subscribe(params => {  //DE AQUI LEES LOS PARAMETROS DE LA URL PARAMETROS URL
+    
+    this._route.queryParams.subscribe(params => {
       this.codigoIne = params['id'];
       this.tipoLocalidad = params['tipo'];
     });
+    
     if (this.tipoLocalidad === 'municipio') {
       this.sufijoCuboDatos = 'TM';
     } else if (this.tipoLocalidad === 'comarca') {
@@ -259,7 +274,6 @@ export class ResultComponent {
       this.sufijoCuboDatos = 'TP';
     }
 
-    //Sacamos el nombre del municipio a través del codigo INE
     if (this.tipoLocalidad === 'diputacion') {
       this.queryNombresIne = `https://opendata.aragon.es/sparql?default-graph-uri=&query=select++concat%28%22Provincia+de+%22%2C+%3Fnombre%29+as+%3Fnombre+where+%7B%0D%0A++%3Chttp%3A%2F%2Fopendata.aragon.es%2Frecurso%2Fsector-publico%2Forganizacion%2Fdiputacion%2F${this.codigoIne}%3E+owl%3AsameAs+%3Faragopedia.%0D%0A++%3Faragopedia+rdfs%3Alabel+%3Fnombre.%0D%0A++FILTER%28%21+regex%28%3Fnombre%2C+%22%29%24%22%29%29.%0D%0A%7D&format=application%2Fsparql-results%2Bjson&timeout=0&signal_void=on`
     } else {

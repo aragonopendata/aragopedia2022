@@ -1,0 +1,441 @@
+
+@import '../result/result.component.scss';
+
+.query-results-header {
+  margin-bottom: 2rem;
+  padding-top: 40px;
+  
+  .query-results-title {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 0.5rem;
+    text-align: left;
+  }
+  
+  .query-results-description {
+    font-size: 1.125rem;
+    color: #64748b;
+    margin-bottom: 1rem;
+    line-height: 1.6;
+    text-align: left;
+  }
+}
+
+.query-actions {
+  margin: 2rem 0;
+  
+  .action-buttons {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+  }
+}
+
+.query-display {
+  .query-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid #e2e8f0;
+    
+    h3 {
+      margin: 0;
+      color: #1e293b;
+    }
+  }
+  
+  .query-code {
+    background-color: #f1f5f9;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    font-family: 'Courier New', Monaco, monospace;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: #334155;
+    white-space: pre-wrap;
+    word-break: break-word;
+    max-height: 300px;
+    overflow-y: auto;
+  }
+}
+
+.results-section {
+  .section-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+    font-weight: 500;
+    text-align: left;
+  }
+  
+  // Estilos de tabla siguiendo el patrón de Desy y result.component
+  .tabla-datos {
+    &.display-block {
+      display: block !important;
+    }
+    
+    .table-container {
+      width: 100%;
+      
+      .table-wrapper {
+        overflow-x: auto;
+        border-radius: 0.75rem;
+        border: 1px solid #e2e8f0;
+        margin-bottom: 1rem;
+        
+        .desy-table {
+          width: 100%;
+          border-collapse: collapse;
+          background-color: white;
+          
+          .table-header {
+            background-color: #f8fafc;
+            font-weight: 600;
+            color: #374151;
+            padding: 1rem 0.75rem;
+            border-bottom: 2px solid #e5e7eb;
+            font-size: 0.875rem;
+            text-align: left;
+            text-transform: capitalize;
+          }
+          
+          .table-cell {
+            padding: 0.75rem;
+            border-bottom: 1px solid #f3f4f6;
+            vertical-align: top;
+            font-size: 0.875rem;
+            
+            &:not(:last-child) {
+              border-right: 1px solid #f3f4f6;
+            }
+            
+            .table-link {
+              color: #0ea5e9;
+              text-decoration: none;
+              display: inline-flex;
+              align-items: center;
+              gap: 0.25rem;
+              
+              &:hover {
+                text-decoration: underline;
+                color: #0284c7;
+              }
+              
+              .external-link-icon {
+                font-size: 0.875rem;
+                width: 0.875rem;
+                height: 0.875rem;
+              }
+            }
+            
+            .numeric {
+              font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+              font-weight: 500;
+              text-align: right;
+              display: block;
+            }
+            
+            .empty-cell {
+              color: #9ca3af;
+              font-style: italic;
+            }
+          }
+          
+          .table-row {
+            &:hover {
+              background-color: #f9fafb;
+            }
+            
+            &.even {
+              background-color: #fafafa;
+            }
+          }
+        }
+      }
+      
+      .pagination-section {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem;
+        background-color: #f8fafc;
+        border-radius: 0.5rem;
+        flex-wrap: wrap;
+        gap: 1rem;
+        
+        .pagination-info {
+          font-size: 0.875rem;
+          color: #64748b;
+        }
+        
+        .pagination-controls {
+          display: flex;
+          gap: 0.25rem;
+          align-items: center;
+        }
+        
+        .page-size-selector {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          font-size: 0.875rem;
+          
+          label {
+            color: #64748b;
+          }
+          
+          .form-select {
+            padding: 0.375rem 0.75rem;
+            border: 1px solid #d1d5db;
+            border-radius: 0.375rem;
+            background-color: white;
+            font-size: 0.875rem;
+            
+            &:focus {
+              outline: none;
+              border-color: #0ea5e9;
+              box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
+            }
+          }
+        }
+      }
+    }
+  }
+  
+  .data-link {
+    display: block;
+    font-size: 16px;
+    margin-top: 1em;
+    margin-bottom: 1em;
+  }
+}
+
+// Paginación personalizada siguiendo el estilo de result
+.pagination-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background-color: #f8fafc;
+  border-radius: 0.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+  
+  .pagination-info {
+    font-size: 0.875rem;
+    color: #64748b;
+  }
+  
+  .pagination-controls {
+    display: flex;
+    gap: 0.25rem;
+    align-items: center;
+  }
+  
+  .page-size-selector {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    
+    label {
+      color: #64748b;
+    }
+    
+    .form-select {
+      padding: 0.375rem 0.75rem;
+      border: 1px solid #d1d5db;
+      border-radius: 0.375rem;
+      background-color: white;
+      font-size: 0.875rem;
+      
+      &:focus {
+        outline: none;
+        border-color: #0ea5e9;
+        box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
+      }
+    }
+  }
+}
+
+// Botones siguiendo el diseño Desy y consistente con result.component
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.375rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+  cursor: pointer;
+  font-size: 0.875rem;
+  
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  
+  mat-icon {
+    font-size: 1.125rem;
+    width: 1.125rem;
+    height: 1.125rem;
+  }
+  
+  // Variantes de botones
+  &.btn-primary {
+    background-color: var(--accent-color, #0ea5e9);
+    color: white;
+    border-color: var(--accent-color, #0ea5e9);
+    
+    &:hover:not(:disabled) {
+      background-color: var(--accent-color-dark, #0284c7);
+      border-color: var(--accent-color-dark, #0284c7);
+    }
+  }
+  
+  &.btn-secondary {
+    background-color: #6b7280;
+    color: white;
+    border-color: #6b7280;
+    
+    &:hover:not(:disabled) {
+      background-color: #4b5563;
+      border-color: #4b5563;
+    }
+  }
+  
+  &.btn-outline {
+    background-color: white;
+    color: var(--accent-color, #0ea5e9);
+    border-color: var(--accent-color, #0ea5e9);
+    
+    &:hover:not(:disabled) {
+      background-color: var(--accent-color, #0ea5e9);
+      color: white;
+    }
+  }
+  
+  &.btn-sm {
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+    
+    mat-icon {
+      font-size: 1rem;
+      width: 1rem;
+      height: 1rem;
+    }
+  }
+}
+
+// Botón de retorno consistente con result.component.scss
+.return {
+  width: fit-content;
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  z-index: 999;
+
+  .return__btn {
+    padding: 6px;
+    border-radius: 60px;
+    margin: auto;
+    outline: none;
+    border-width: 0;
+    cursor: pointer;
+
+    background: rgba(0, 71, 92, 0.65);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(4.5px);
+    -webkit-backdrop-filter: blur(4.5px);
+    transition: all 0.3s;
+
+    .return__text {
+      display: none;
+    }
+
+    mat-icon {
+      font-size: 32px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+    }
+
+    &:hover {
+      background: var(--accent-color);
+      box-shadow: 0 0 15px 10px rgba(0, 0, 0, 0.1);
+    }
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .query-actions {
+    .action-buttons {
+      flex-direction: column;
+      align-items: stretch;
+    }
+  }
+  
+  .pagination-container {
+    flex-direction: column;
+    align-items: stretch;
+    
+    .pagination-controls {
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+  }
+}
+
+@media (min-width: 720px) {
+  .return {
+    right: 0;
+    left: 0;
+    margin: auto;
+
+    .return__btn {
+      padding: 15px 20px;
+      border-radius: 3px;
+
+      .return__text {
+        display: block;
+      }
+
+      mat-icon {
+        display: none;
+      }
+    }
+  }
+}
+
+.mat-mdc-progress-spinner {
+  margin: 0 auto;
+}
+
+// Tooltips
+[matTooltip] {
+  cursor: pointer;
+}
+
+
+
+
+
+/* --- */
+
+td{
+  text-align: left !important;
+}
+
+caption{
+  text-align: left !important;
+  margin-bottom: 25px;
+}

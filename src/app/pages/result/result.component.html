@@ -1,4 +1,4 @@
-<ng-container *ngIf="this.tipoLocalidad === 'municipio' || this.tipoLocalidad === 'diputacion'">
+  <ng-container *ngIf="this.tipoLocalidad === 'municipio' || this.tipoLocalidad === 'diputacion'">
     <div class="container template">
         <section class="container breadcrumbs">
             <p *ngIf="this.tipoLocalidad === 'municipio'"><a [routerLink]="['/']">Inicio</a> > Municipio >
@@ -17,68 +17,100 @@
             </div>
             <div class="inicio__data">
                 <ul [ngClass]="{'grid-provincias' : this.tipoLocalidad === 'diputacion'}">
-                    <li *ngIf="this.sueloUrbano"><a href="{{dataSource.sueloUrbano}}"  target="_blank" rel="noopener" >
-                            <mat-icon>open_in_new</mat-icon><span
-                                class="big-number">{{format(this.sueloUrbano)}}</span>Hectáreas de suelo
-                            urbano ({{dataYearExtension}})</a></li>
-                    <li *ngIf="this.sueloRural"><a href="{{dataSource.sueloRural}}"
-                             target="_blank" rel="noopener" ><mat-icon>open_in_new</mat-icon><span
-                                class="big-number">{{format(this.sueloRural)}}</span>Hectáreas de suelo
-                            rural ({{dataYearExtension}})</a></li>
-                    <li><a href="{{dataSource.edificiosDestinadosLocales}}"
-                             target="_blank" rel="noopener" ><mat-icon>open_in_new</mat-icon><span class="big-number"><span
+                  <li *ngIf="this.sueloUrbano">
+                      <a (click)="navigateToQueryResults(dataSource.sueloUrbano, 'sueloUrbano')" style="cursor: pointer;">
+                          <mat-icon>open_in_new</mat-icon>
+                          <span class="big-number">{{format(this.sueloUrbano)}}</span>
+                          Hectáreas de suelo urbano ({{dataYearExtension}})
+                      </a>
+                  </li>
+                  <li *ngIf="this.sueloRural">
+                      <a (click)="navigateToQueryResults(dataSource.sueloRural, 'sueloRural')" class="query-link cursor-pointer">
+                          <mat-icon>open_in_new</mat-icon><span
+                              class="big-number">{{format(this.sueloRural)}}</span>Hectáreas de suelo
+                          rural ({{dataYearExtension}})
+                      </a>
+                  </li>
+                    <li>
+                        <a (click)="navigateToQueryResults(dataSource.edificiosDestinadosLocales, 'edificiosDestinadosLocales')" class="query-link cursor-pointer">
+                            <mat-icon>open_in_new</mat-icon><span class="big-number"><span
                                     *ngIf="this.locales">{{format(this.locales)}}</span><span
                                     *ngIf="!this.locales">0</span></span>Edificios destinados a
-                            locales (2011)</a></li>
-                    <li *ngIf="this.poblacion"><a href="{{dataSource.habitantes}}"
-                             target="_blank" rel="noopener" ><mat-icon>open_in_new</mat-icon><span
-                                class="big-number">{{format(this.poblacion)}}</span>Habitantes ({{yearPoblacion}})</a>
+                            locales (2011)
+                        </a>
                     </li>
-                    <li *ngIf="this.densidadPoblacion && this.tipoLocalidad === 'municipio'"><a
-                            href="{{dataSource.densidad}}"  target="_blank" rel="noopener" ><mat-icon>open_in_new</mat-icon><span
-                                class="big-number">
+                    <li *ngIf="this.poblacion">
+                        <a (click)="navigateToQueryResults(dataSource.habitantes, 'habitantes')" class="query-link cursor-pointer">
+                            <mat-icon>open_in_new</mat-icon><span
+                                class="big-number">{{format(this.poblacion)}}</span>Habitantes ({{yearPoblacion}})
+                        </a>
+                    </li>
+                    <li *ngIf="this.densidadPoblacion && this.tipoLocalidad === 'municipio'">
+                        <a (click)="navigateToQueryResults(dataSource.densidad, 'densidad')" class="query-link cursor-pointer">
+                            <mat-icon>open_in_new</mat-icon><span class="big-number">
                                 {{ format(this.densidadPoblacion) }}   
-                                <!-- {{ this.densidadPoblacion !== 'NaN' ? format(this.densidadPoblacion) : '0' }} -->
-                            </span>Habitantes por
-                            KM<sup>2</sup></a></li>
-                    <li *ngIf="this.poligonos"><a href="{{dataSource.poligonos}}"
-                             target="_blank" rel="noopener" ><mat-icon>open_in_new</mat-icon><span
-                                class="big-number">{{format(this.poligonos)}}</span></a>Polígonos industriales
+                            </span>Habitantes por KM<sup>2</sup>
+                        </a>
                     </li>
-                    <li *ngIf="this.explotacionesGanaderas"><a href="{{dataSource.explotacionesGanaderas}}"
-                             target="_blank" rel="noopener" ><mat-icon>open_in_new</mat-icon><span
+                    <li *ngIf="this.poligonos">
+                        <a (click)="navigateToQueryResults(dataSource.poligonos, 'poligonos')" class="query-link cursor-pointer">
+                            <mat-icon>open_in_new</mat-icon><span
+                                class="big-number">{{format(this.poligonos)}}</span>Polígonos industriales
+                        </a>
+                    </li>
+                    <li *ngIf="this.explotacionesGanaderas">
+                        <a (click)="navigateToQueryResults(dataSource.explotacionesGanaderas, 'explotacionesGanaderas')" class="query-link cursor-pointer">
+                            <mat-icon>open_in_new</mat-icon><span
                                 class="big-number">{{format(this.explotacionesGanaderas)}}</span>Explotaciones
-                            ganaderas</a></li>
-                    <li *ngIf="this.incendiosUltimosAnos"><a href="{{dataSource.incendios}}"
-                             target="_blank" rel="noopener" ><mat-icon>open_in_new</mat-icon><span
-                                class="big-number">{{format(this.incendiosUltimosAnos)}}</span>Incendios desde 2001</a>
+                            ganaderas
+                        </a>
                     </li>
-                    <li *ngIf="this.hectareasQuemadas"><a href="{{dataSource.hectareasAfectadas}}"
-                             target="_blank" rel="noopener" ><mat-icon>open_in_new</mat-icon><span
+                    <li *ngIf="this.incendiosUltimosAnos">
+                        <a (click)="navigateToQueryResults(dataSource.incendios, 'incendios')" class="query-link cursor-pointer">
+                            <mat-icon>open_in_new</mat-icon><span
+                                class="big-number">{{format(this.incendiosUltimosAnos)}}</span>Incendios desde 2001
+                        </a>
+                    </li>
+                    <li *ngIf="this.hectareasQuemadas">
+                        <a (click)="navigateToQueryResults(dataSource.hectareasAfectadas, 'hectareasAfectadas')" class="query-link cursor-pointer">
+                            <mat-icon>open_in_new</mat-icon><span
                                 class="big-number">{{format(this.hectareasQuemadas)}}</span>Hectáreas afectadas por
-                            incendios desde 2001</a></li>
-                    <li *ngIf="this.numberOfCreativeWork"><a href="{{dataSource.publicaciones}}"
-                             target="_blank" rel="noopener" ><mat-icon>open_in_new</mat-icon><span
+                            incendios desde 2001
+                        </a>
+                    </li>
+                    <li *ngIf="this.numberOfCreativeWork">
+                        <a (click)="navigateToQueryResults(dataSource.publicaciones, 'publicaciones')" class="query-link cursor-pointer">
+                            <mat-icon>open_in_new</mat-icon><span
                                 class="big-number">{{format(this.numberOfCreativeWork)}}</span>Menciones
-                            en publicaciones</a></li>
-                    <li *ngIf="this.plazasHoteleras"><a href="{{dataSource.alojamientosHoteleros}}"
-                             target="_blank" rel="noopener" ><mat-icon>open_in_new</mat-icon><span
+                            en publicaciones
+                        </a>
+                    </li>
+                    <li *ngIf="this.plazasHoteleras">
+                        <a (click)="navigateToQueryResults(dataSource.alojamientosHoteleros, 'alojamientosHoteleros')" class="query-link cursor-pointer">
+                            <mat-icon>open_in_new</mat-icon><span
                                 class="big-number">{{format(this.plazasHoteleras)}}</span>Alojamientos
-                            hoteleros</a></li>
-                    <li *ngIf="this.alojamientosTuristicos"><a href="{{dataSource.alojamientosRurales}}"
-                             target="_blank" rel="noopener" ><mat-icon>open_in_new</mat-icon><span
+                            hoteleros
+                        </a>
+                    </li>
+                    <li *ngIf="this.alojamientosTuristicos">
+                        <a (click)="navigateToQueryResults(dataSource.alojamientosRurales, 'alojamientosRurales')" class="query-link cursor-pointer">
+                            <mat-icon>open_in_new</mat-icon><span
                                 class="big-number">{{format(this.alojamientosTuristicos)}}</span>Alojamientos
-                            de turismo rural</a>
+                            de turismo rural
+                        </a>
                     </li>
-                    <li *ngIf="this.municipiosEnTerritorio > 0"><a href="{{dataSource.municipios}}"
-                             target="_blank" rel="noopener" ><mat-icon>open_in_new</mat-icon><span
+                    <li *ngIf="this.municipiosEnTerritorio > 0">
+                        <a (click)="navigateToQueryResults(dataSource.municipios, 'municipios')" class="query-link cursor-pointer">
+                            <mat-icon>open_in_new</mat-icon><span
                                 class="big-number">{{format(this.municipiosEnTerritorio)}}</span>Municipios en
-                            el territorio</a>
+                            el territorio
+                        </a>
                     </li>
-
-                    <li *ngIf="this.mascotas"><a href="{{dataSource.mascotas}}"
-                            target="_blank" rel="noopener" ><mat-icon>open_in_new</mat-icon><span
-                            class="big-number">{{format(this.mascotas)}}</span>Animales de compañía</a>
+                    <li *ngIf="this.mascotas">
+                        <a (click)="navigateToQueryResults(dataSource.mascotas, 'mascotas')" class="query-link cursor-pointer">
+                            <mat-icon>open_in_new</mat-icon><span
+                            class="big-number">{{format(this.mascotas)}}</span>Animales de compañía
+                        </a>
                     </li>
                 </ul>
             </div>
@@ -127,7 +159,7 @@
                             </li>
                           </ul>
                           <a class="text-sm text-primary hover:underline block mt-2 c-link text-left"
-                             href="{{ dataSource.datosContacto }}" target="_blank" rel="noopener">
+                             (click)="navigateToQueryResults(dataSource.datosContacto, 'datosContacto')">
                             Ver origen de los datos
                           </a>
                         </div>
@@ -143,7 +175,7 @@
                             </li>
                           </ul>
                           <a class="text-sm text-primary hover:underline block mt-2 c-link text-left"
-                             href="{{ dataSource.entidadesSingulares }}" target="_blank" rel="noopener">
+                             (click)="navigateToQueryResults(dataSource.entidadesSingulares, 'entidadesSingulares')">
                             Ver origen de los datos
                           </a>
                         </div>
@@ -152,7 +184,7 @@
                           <h2 class="text-xl font-semibold mb-4 text-left">Presupuestos</h2>
                           <a class="text-sm text-primary hover:underline block mt-2 c-link text-left"
                               href="{{ presupuestos }}" target="_blank" rel="noopener">
-                            Ver origen de los datos
+                            Ver detalle en aplicación de presupuestos
                           </a>
                         </div>
                         
@@ -162,22 +194,19 @@
                                   type="button" (click)="fileDownload()">
                             DESCARGAR FICHA
                           </button>
-                          
                         </div>
                       </div>
                     </div>
                   </desy-card>
                 </div>
               </div>
-              
-              
         </section>
 
         <section class="container template__caracteristicas"  *ngIf="shouldShowCaracteristicas()">
             <h2 class="section-title">Características del territorio</h2>
             <div class="caracteristicas__list" *ngIf="this.tipoLocalidad === 'municipio'">
                 <a *ngIf="this.porcentajeSueloRural !== undefined && this.porcentajeSueloRural !== 'NaN'"
-                    href="{{dataSource.porcentajeSueloRural}}" target="blank">
+                    (click)="navigateToQueryResults(dataSource.porcentajeSueloRural, 'porcentajeSueloRural')" class="query-link cursor-pointer">
                     <div class="caracteristica__item">
                         <mat-icon> local_florist</mat-icon> Ocupa un {{this.porcentajeSueloRural}}% del <b>suelo
                             rural</b>
@@ -185,7 +214,7 @@
                     </div>
                 </a>
                 <a *ngIf="this.porcentajeSueloUrbano !== undefined && this.porcentajeSueloUrbano !== 'NaN'"
-                    href="{{dataSource.porcentajeSueloUrbano}}"  target="_blank" rel="noopener" >
+                    (click)="navigateToQueryResults(dataSource.porcentajeSueloUrbano, 'porcentajeSueloUrbano')" class="query-link cursor-pointer">
                     <div class="caracteristica__item">
                         <mat-icon>zoom_out_map</mat-icon> Ocupa un {{this.porcentajeSueloUrbano}}% del <b>suelo
                             urbano</b>
@@ -193,7 +222,8 @@
                         Aragón ({{yearRatioSuelo}})
                     </div>
                 </a>
-                <a *ngIf="esPoblado == '1'; else noPoblado" href="{{dataSource.esPoblado}}"  target="_blank" rel="noopener" >
+                <a *ngIf="esPoblado == '1'; else noPoblado" 
+                   (click)="navigateToQueryResults(dataSource.esPoblado, 'esPoblado')" class="query-link cursor-pointer">
                     <div class="caracteristica__item">
                         <mat-icon>insert_chart_outlined</mat-icon> {{this.tituloFicha}} está entre uno de <b>los 20
                             territorios más
@@ -201,7 +231,7 @@
                     </div>
                 </a>
                 <ng-template #noPoblado>
-                    <a href="{{dataSource.esPoblado}}"  target="_blank" rel="noopener" >
+                    <a (click)="navigateToQueryResults(dataSource.esPoblado, 'esPoblado')" class="query-link cursor-pointer">
                         <div class="caracteristica__item">
                             <mat-icon>insert_chart_outlined</mat-icon> {{this.tituloFicha}} no está entre uno de <b>los
                                 20
@@ -210,14 +240,16 @@
                         </div>
                     </a>
                 </ng-template>
-                <a *ngIf="this.edadMediaHombres" href="{{dataSource.edadMedia}}"  target="_blank" rel="noopener" >
+                <a *ngIf="this.edadMediaHombres" 
+                   (click)="navigateToQueryResults(dataSource.edadMedia, 'edadMedia')" class="query-link cursor-pointer">
                     <div class="caracteristica__item">
                         <mat-icon>person</mat-icon> La edad media de los <b>hombres</b> es de
                         {{this.edadMediaHombres}}
                         años ({{yearEdadMedia}})
                     </div>
                 </a>
-                <a *ngIf="this.edadMediaMujeres" href="{{dataSource.edadMedia}}"  target="_blank" rel="noopener" >
+                <a *ngIf="this.edadMediaMujeres" 
+                   (click)="navigateToQueryResults(dataSource.edadMedia, 'edadMedia')" class="query-link cursor-pointer">
                     <div class="caracteristica__item">
                         <mat-icon>person</mat-icon> La edad media de las <b>mujeres</b> es de
                         {{this.edadMediaMujeres}}
@@ -225,14 +257,14 @@
                     </div>
                 </a>
 
-                <a *ngIf="tieneOficinaComarcal === 0; else noLocales" href="{{dataSource.tieneOficinaComarcal}}"
-                     target="_blank" rel="noopener" >
+                <a *ngIf="tieneOficinaComarcal === 0; else noLocales" 
+                   (click)="navigateToQueryResults(dataSource.tieneOficinaComarcal, 'tieneOficinaComarcal')" class="query-link cursor-pointer">
                     <div class="caracteristica__item">
                         <mat-icon>business</mat-icon> {{this.tituloFicha}} no cuenta con <b>oficina comarcal</b>
                     </div>
                 </a>
                 <ng-template #noLocales>
-                    <a href="{{dataSource.tieneOficinaComarcal}}"  target="_blank" rel="noopener" >
+                    <a (click)="navigateToQueryResults(dataSource.tieneOficinaComarcal, 'tieneOficinaComarcal')" class="query-link cursor-pointer">
                         <div class="caracteristica__item">
                             <mat-icon>business</mat-icon> {{this.tituloFicha}} cuenta con <b>oficina comarcal</b>
                         </div>
@@ -241,20 +273,23 @@
             </div>
 
             <div class="caracteristicas__list" *ngIf="this.tipoLocalidad === 'diputacion'">
-                <a *ngIf="this.densidadPoblacion" href="{{dataSource.densidad}}"  target="_blank" rel="noopener" >
+                <a *ngIf="this.densidadPoblacion" 
+                   (click)="navigateToQueryResults(dataSource.densidad, 'densidad')" class="query-link cursor-pointer">
                     <div class="caracteristica__item">
                         <mat-icon>people</mat-icon> La densidad de población de <b>La {{this.tituloFicha}}</b> es de
                         {{this.densidadPoblacion}} habitantes por km<sup>2</sup>
                     </div>
                 </a>
-                <a *ngIf="this.edadMediaHombres" href="{{dataSource.edadMedia}}"  target="_blank" rel="noopener" >
+                <a *ngIf="this.edadMediaHombres" 
+                   (click)="navigateToQueryResults(dataSource.edadMedia, 'edadMedia')" class="query-link cursor-pointer">
                     <div class="caracteristica__item">
                         <mat-icon>person</mat-icon> La edad media de los <b>hombres</b> es de
                         {{this.edadMediaHombres}}
                         años ({{yearEdadMedia}})
                     </div>
                 </a>
-                <a *ngIf="this.edadMediaMujeres" href="{{dataSource.edadMedia}}"  target="_blank" rel="noopener" >
+                <a *ngIf="this.edadMediaMujeres" 
+                   (click)="navigateToQueryResults(dataSource.edadMedia, 'edadMedia')" class="query-link cursor-pointer">
                     <div class="caracteristica__item">
                         <mat-icon>person</mat-icon> La edad media de las <b>mujeres</b> es de
                         {{this.edadMediaMujeres}}
@@ -263,6 +298,7 @@
                 </a>
             </div>
         </section>
+        
         <section class="container template__graphics">
             <div class="graphics__item poblacion" style="width: 100%;"
                 *ngIf="lineChartData.datasets[0].data.length > 0">
@@ -305,7 +341,8 @@
                         <canvas baseChart class="chart" [data]="lineChartData" [options]="lineChartOptions"
                             [type]="lineChartType"></canvas>
                     </div>
-                    <a class="data-link c-link text-left" href="{{dataSource.tablaPoblacion}}"  target="_blank" rel="noopener" >Ver origen de los
+                    <a class="data-link c-link text-left" 
+                       (click)="navigateToQueryResults(dataSource.tablaPoblacion, 'tablaPoblacion')">Ver origen de los
                         datos</a>
                 </div>
             </div>
@@ -315,7 +352,8 @@
                 <a href="{{presupuestos}}"  target="_blank" rel="noopener" 
                     class="btn btn-presupuestos"><mat-icon>open_in_new</mat-icon>Ver información de
                     presupuestos</a>
-                <a class="data-link c-link" href="{{dataSource.presupuestos}}"  target="_blank" rel="noopener" >Ver origen de los datos</a>
+                <a class="data-link c-link" 
+                   (click)="navigateToQueryResults(dataSource.presupuestos, 'presupuestos')">Ver origen de los datos</a>
             </div>
 
             <div *ngIf="this.numberOfCreativeWork !== 0" class="graphics__item" fragment="creative-works">
@@ -383,18 +421,18 @@
 
             <div class="graphics__item miembros" *ngIf="this.cantidadMiembrosPleno !== 0">
                 <h2 class="section-title">Miembros del pleno territorial</h2>
-                <ul style="    text-align: left;
-">
+                <ul style="text-align: left;">
                     <li *ngFor="let miembro of miembrosPleno"><b>{{miembro.cargo.value}}: </b>
                         <a
                             [routerLink]="['/persona/', this.createNameForUrl(miembro.persona.value)]">{{miembro.nombrePersona.value}}</a>
                     </li>
                 </ul>
-                <a  style="text-align: left;"  class="data-link c-link" href="{{dataSource.miembrosPleno}}"  target="_blank" rel="noopener" >Ver origen de los datos</a>
+                <a  style="text-align: left;"  class="data-link c-link" 
+                   (click)="navigateToQueryResults(dataSource.miembrosPleno, 'miembrosPleno')">Ver origen de los datos</a>
             </div>
-            <div  style="text-align: left;"  class="graphics__item personas-ilustres" *ngIf="this.cantidadPersonasIlustres !== 0">
-                <h2>Personas Ilustres nacidas en {{this.tituloFicha}} (<a href="{{dataSource.personasIlustres}}"
-                         target="_blank" rel="noopener" >Obtenido de WikiData</a> bajo licencia CC 4.0.0)
+            
+            <div style="text-align: left;" class="graphics__item personas-ilustres" *ngIf="this.cantidadPersonasIlustres !== 0">
+                <h2>Personas Ilustres nacidas en {{this.tituloFicha}} (<a (click)="navigateToQueryResults(dataSource.personasIlustres, 'personasIlustres')" class="query-link cursor-pointer">Obtenido de WikiData</a> bajo licencia CC 4.0.0)
                 </h2>
                 <ul>
                     <li *ngFor="let persona of personasIlustres"><a href="{{persona.about.value}}"
@@ -448,7 +486,7 @@
 </ng-container>
 
 
-<!-- Ficha de COMARCA --><!-- Ficha de COMARCA -->
+<!-- Ficha de COMARCA -->
 <ng-container *ngIf="this.tipoLocalidad === 'comarca'">
     <div class="container template">
       <section class="container breadcrumbs">
@@ -471,85 +509,84 @@
         <div class="inicio__data" [ngClass]="{'central-datos': this.tituloFicha === 'Central'}">
           <ul>
             <li *ngIf="this.sueloUrbano">
-              <a href="{{ dataSource.sueloUrbano }}" target="_blank" rel="noopener">
+              <a (click)="navigateToQueryResults(dataSource.sueloUrbano, 'sueloUrbano')" class="query-link cursor-pointer">
                 <mat-icon>open_in_new</mat-icon>
                 <span class="big-number">{{ format(this.sueloUrbano) }}</span>
                 Hectáreas de suelo urbano ({{ dataYearExtension }})
               </a>
             </li>
             <li *ngIf="this.sueloRural">
-              <a href="{{ dataSource.sueloRural }}" target="_blank" rel="noopener">
+              <a (click)="navigateToQueryResults(dataSource.sueloRural, 'sueloRural')" class="query-link cursor-pointer">
                 <mat-icon>open_in_new</mat-icon>
                 <span class="big-number">{{ format(this.sueloRural) }}</span>
                 Hectáreas de suelo rural ({{ dataYearExtension }})
               </a>
             </li>
             <li *ngIf="this.locales">
-              <a href="{{ dataSource.edificiosDestinadosLocales }}" target="_blank" rel="noopener">
+              <a (click)="navigateToQueryResults(dataSource.edificiosDestinadosLocales, 'edificiosDestinadosLocales')" class="query-link cursor-pointer">
                 <mat-icon>open_in_new</mat-icon>
                 <span class="big-number">{{ format(this.locales) }}</span>
                 Edificios destinados a locales (2011)
               </a>
             </li>
             <li *ngIf="this.poblacion">
-              <a href="{{ dataSource.habitantes }}" target="_blank" rel="noopener">
+              <a (click)="navigateToQueryResults(dataSource.habitantes, 'habitantes')" class="query-link cursor-pointer">
                 <mat-icon>open_in_new</mat-icon>
                 <span class="big-number">{{ format(this.poblacion) }}</span>
                 Habitantes ({{ yearPoblacion }})
               </a>
             </li>
             <li *ngIf="this.poligonos">
-              <a href="{{ dataSource.poligonos }}" target="_blank" rel="noopener">
+              <a (click)="navigateToQueryResults(dataSource.poligonos, 'poligonos')" class="query-link cursor-pointer">
                 <mat-icon>open_in_new</mat-icon>
                 <span class="big-number">{{ format(this.poligonos) }}</span>
+                Polígonos industriales
               </a>
-              Polígonos industriales
             </li>
             <li *ngIf="this.explotacionesGanaderas">
-              <a href="{{ dataSource.explotacionesGanaderas }}" target="_blank" rel="noopener">
+              <a (click)="navigateToQueryResults(dataSource.explotacionesGanaderas, 'explotacionesGanaderas')" class="query-link cursor-pointer">
                 <mat-icon>open_in_new</mat-icon>
                 <span class="big-number">{{ format(this.explotacionesGanaderas) }}</span>
                 Explotaciones ganaderas
               </a>
             </li>
             <li *ngIf="this.incendiosUltimosAnos">
-              <a href="{{ dataSource.incendios }}" target="_blank" rel="noopener">
+              <a (click)="navigateToQueryResults(dataSource.incendios, 'incendios')" class="query-link cursor-pointer">
                 <mat-icon>open_in_new</mat-icon>
                 <span class="big-number">{{ format(this.incendiosUltimosAnos) }}</span>
                 Incendios desde 2001
               </a>
             </li>
             <li *ngIf="this.hectareasQuemadas">
-              <a href="{{ dataSource.hectareasAfectadas }}" target="_blank" rel="noopener">
+              <a (click)="navigateToQueryResults(dataSource.hectareasAfectadas, 'hectareasAfectadas')" class="query-link cursor-pointer">
                 <mat-icon>open_in_new</mat-icon>
                 <span class="big-number">{{ format(this.hectareasQuemadas) }}</span>
                 Hectáreas afectadas por incendios desde 2001
               </a>
             </li>
             <li *ngIf="this.numberOfCreativeWork">
-              <a href="{{ dataSource.publicaciones }}" target="_blank" rel="noopener">
+              <a (click)="navigateToQueryResults(dataSource.publicaciones, 'publicaciones')" class="query-link cursor-pointer">
                 <mat-icon>open_in_new</mat-icon>
-                <span class="big-number" style="    text-align: left;
-    font-size: 20px;">{{ format(this.numberOfCreativeWork) }}</span>
+                <span class="big-number" style="text-align: left; font-size: 20px;">{{ format(this.numberOfCreativeWork) }}</span>
                 Menciones en publicaciones
               </a>
             </li>
             <li *ngIf="this.plazasHoteleras">
-              <a href="{{ dataSource.alojamientosHoteleros }}" target="_blank" rel="noopener">
+              <a (click)="navigateToQueryResults(dataSource.alojamientosHoteleros, 'alojamientosHoteleros')" class="query-link cursor-pointer">
                 <mat-icon>open_in_new</mat-icon>
                 <span class="big-number">{{ format(this.plazasHoteleras) }}</span>
                 Alojamientos hoteleros
               </a>
             </li>
             <li *ngIf="this.alojamientosTuristicos">
-              <a href="{{ dataSource.alojamientosRurales }}" target="_blank" rel="noopener">
+              <a (click)="navigateToQueryResults(dataSource.alojamientosRurales, 'alojamientosRurales')" class="query-link cursor-pointer">
                 <mat-icon>open_in_new</mat-icon>
                 <span class="big-number">{{ format(this.alojamientosTuristicos) }}</span>
                 Alojamientos de turismo rural
               </a>
             </li>
             <li *ngIf="this.municipiosEnTerritorio > 0">
-              <a href="{{ dataSource.municipios }}" target="_blank" rel="noopener">
+              <a (click)="navigateToQueryResults(dataSource.municipios, 'municipios')" class="query-link cursor-pointer">
                 <mat-icon>open_in_new</mat-icon>
                 <span class="big-number">{{ format(this.municipiosEnTerritorio) }}</span>
                 Municipios en el territorio
@@ -601,7 +638,7 @@
                       </li>
                     </ul>
                     <a class="text-sm text-primary hover:underline block mt-2 c-link text-left"
-                       href="{{ dataSource.datosContacto }}" target="_blank" rel="noopener">
+                       (click)="navigateToQueryResults(dataSource.datosContacto, 'datosContacto')">
                       Ver origen de los datos
                     </a>
                   </div>
@@ -615,7 +652,7 @@
                       </li>
                     </ul>
                     <a class="text-sm text-primary hover:underline block mt-2 c-link text-left"
-                       href="{{ dataSource.entidadesSingulares }}" target="_blank" rel="noopener">
+                       (click)="navigateToQueryResults(dataSource.entidadesSingulares, 'entidadesSingulares')">
                       Ver origen de los datos
                     </a>
                   </div>
@@ -642,18 +679,21 @@
       <section class="container template__caracteristicas"  *ngIf="shouldShowCaracteristicas()">
         <h2 class="section-title">Características del territorio</h2>
         <div class="caracteristicas__list">
-          <a *ngIf="this.densidadPoblacion" href="{{ dataSource.densidad }}" target="_blank" rel="noopener">
+          <a *ngIf="this.densidadPoblacion" 
+             (click)="navigateToQueryResults(dataSource.densidad, 'densidad')" class="query-link cursor-pointer">
             <div class="caracteristica__item">
               <mat-icon>people</mat-icon> La densidad de población de <b>{{ this.tituloFicha }}</b> es de
               {{ this.densidadPoblacion }} habitantes por km<sup>2</sup>
             </div>
           </a>
-          <a *ngIf="this.edadMediaHombres" href="{{ dataSource.edadMedia }}" target="_blank" rel="noopener">
+          <a *ngIf="this.edadMediaHombres" 
+             (click)="navigateToQueryResults(dataSource.edadMedia, 'edadMedia')" class="query-link cursor-pointer">
             <div class="caracteristica__item">
               <mat-icon>person</mat-icon> La edad media de los <b>hombres</b> es de {{ this.edadMediaHombres }} años ({{ yearEdadMedia }})
             </div>
           </a>
-          <a *ngIf="this.edadMediaMujeres" href="{{ dataSource.edadMedia }}" target="_blank" rel="noopener">
+          <a *ngIf="this.edadMediaMujeres" 
+             (click)="navigateToQueryResults(dataSource.edadMedia, 'edadMedia')" class="query-link cursor-pointer">
             <div class="caracteristica__item">
               <mat-icon>person</mat-icon> La edad media de las <b>mujeres</b> es de {{ this.edadMediaMujeres }} años ({{ yearEdadMedia }})
             </div>
@@ -687,7 +727,8 @@
               <h2>Gráfica de los últimos 5 años</h2>
               <canvas baseChart class="chart" [data]="lineChartData" [options]="lineChartOptions" [type]="lineChartType"></canvas>
             </div>
-            <a class="data-link" href="{{ dataSource.tablaPoblacion }}" target="_blank" rel="noopener">
+            <a class="data-link" 
+               (click)="navigateToQueryResults(dataSource.tablaPoblacion, 'tablaPoblacion')">
               Ver origen de los datos
             </a>
           </div>
@@ -699,7 +740,8 @@
           <a href="{{ presupuestos }}" target="_blank" rel="noopener" class="btn btn-presupuestos">
             <mat-icon>open_in_new</mat-icon>Ver información de presupuestos
           </a>
-          <a class="data-link" href="{{ dataSource.presupuestos }}" target="_blank" rel="noopener">
+          <a class="data-link" 
+             (click)="navigateToQueryResults(dataSource.presupuestos, 'presupuestos')">
             Ver origen de los datos
           </a>
         </div>
@@ -759,8 +801,7 @@
         </div>
         <div class="graphics__item miembros" *ngIf="this.cantidadMiembrosPleno !== 0">
           <h2 class="section-title">Miembros del pleno territorial</h2>
-          <ul style="    text-align: left;
-">
+          <ul style="text-align: left;">
             <li *ngFor="let miembro of miembrosPleno">
               <b>{{ miembro.cargo.value }}:</b>
               <a [routerLink]="['/persona/', this.createNameForUrl(miembro.persona.value)]">
@@ -768,7 +809,9 @@
               </a>
             </li>
           </ul>
-          <a class="data-link" href="{{ dataSource.miembrosPleno }}" target="_blank" rel="noopener" style="text-align: left;">
+          <a class="data-link" 
+             (click)="navigateToQueryResults(dataSource.miembrosPleno, 'miembrosPleno')" 
+             style="text-align: left;">
             Ver origen de los datos
           </a>
         </div>
@@ -811,6 +854,3 @@
       </button>
     </div>
   </ng-container>
-  
-  <!-- Ficha de PROVINCIA -->
-  

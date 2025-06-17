@@ -104,3 +104,40 @@
         justify-content: center;
     }
 }
+
+.tabla-datos td{
+    text-align: left !important;
+}
+
+.tabla-datos caption{
+    text-align: left !important;
+    margin-bottom: 25px;
+}
+
+
+.template__results app-aragopedia-tabla-datos td{
+    text-align: left !important;
+}
+
+.template__results app-aragopedia-tabla-datos caption{
+    text-align: left !important;
+    margin-bottom: 25px;
+}
+
+.template__results table td{
+    text-align: left !important;
+}
+
+.template__results table caption{
+    text-align: left !important;
+    margin-bottom: 25px;
+}
+
+.template__results desy-table-advanced td{
+    text-align: left !important;
+}
+
+.template__results desy-table-advanced caption{
+    text-align: left !important;
+    margin-bottom: 25px;
+}

@@ -1,4 +1,4 @@
-import { Component, ViewChild, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, ViewChild, OnInit, ChangeDetectorRef, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { AragopediaService } from './aragopediaService';
 import { DomSanitizer } from '@angular/platform-browser';
 import { AragopediaSelectorTemasComponent } from '../aragopedia-selector-temas/aragopedia-selector-temas.component';
@@ -44,7 +44,13 @@ interface TableRecalculateParams {
   templateUrl: './aragopedia-tabla-datos.component.html',
   styleUrls: ['./aragopedia-tabla-datos.component.scss'],
 })
-export class AragopediaTablaDatosComponent implements OnInit {
+export class AragopediaTablaDatosComponent implements OnInit, OnChanges {
+  // Nuevos inputs para datos directos
+  @Input() directData: any[] = []; // Datos directos para query-results
+  @Input() directColumns: string[] = []; // Columnas directas
+  @Input() showDownloadButtons: boolean = true; // Controlar si mostrar botones de descarga
+  @Input() tableTitle: string = 'Datos estadísticos'; // Título personalizable
+
   // Exponemos el enum para usarlo en el template
   OrderBy = OrderBy;
   // Exponemos Math para usarlo en el template
@@ -138,6 +144,174 @@ export class AragopediaTablaDatosComponent implements OnInit {
       console.log('url no válida o no segura', this.queryAragopediaCSV);
     }
 
+    // Si hay datos directos, procesarlos inmediatamente
+    if (this.directData && this.directData.length > 0) {
+      this.processDirectData();
+      return;
+    }
+
+    // Flujo original con el servicio
+    this.setupServiceSubscriptions();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    // Detectar cambios en los datos directos
+    if (changes['directData'] && this.directData && this.directData.length > 0) {
+      this.processDirectData();
+    }
+  }
+
+  /**
+   * Procesa datos directos para query-results
+   */
+  private processDirectData() {
+    this.loading = true;
+    this.tituloTabla = this.tableTitle;
+
+    // Configurar columnas
+    if (this.directColumns && this.directColumns.length > 0) {
+      this.displayedColumns = this.directColumns;
+      this.setupDirectColumns();
+    }
+
+    // Procesar datos
+    this.prepareDirectRowsData(this.directData);
+    
+    this.totalItems = this.rowsData.length;
+    this.totalPages = Math.ceil(this.totalItems / this.itemsPerPage);
+    this.handlePageChange(1);
+    
+    this.loading = false;
+  }
+
+  /**
+   * Configura las columnas para datos directos
+   */
+  private setupDirectColumns() {
+    this.columnasTabla = [];
+    this.headCells = [];
+
+    this.directColumns.forEach((columnName) => {
+      // Formatear nombre de columna
+      const formattedName = this.formatColumnName(columnName);
+      
+      const columnaAux: Columna = {
+        nombre: formattedName,
+        matColumnDef: columnName
+      };
+      
+      this.columnasTabla.push(columnaAux);
+      
+      // Añadir a headCells para DESY - todas las columnas alineadas a la izquierda
+      this.headCells.push({
+        text: formattedName,
+        hasFilter: false,
+        orderBy: 'asc',
+        classes: '' // Sin clases especiales, todo alineado a la izquierda
+      });
+    });
+  }
+
+  /**
+   * Prepara datos de filas para datos directos
+   */
+  private prepareDirectRowsData(data: any[]) {
+    this.rowsData = [];
+    
+    data.forEach((row: any, index: number) => {
+      const cellsList: any[] = [];
+      
+      // Para cada columna, crear una celda
+      this.directColumns.forEach(columnName => {
+        const cellValue = this.getCellValue(row[columnName]);
+        const originalValue = row[columnName]?.value || '';
+        
+        cellsList.push({
+          text: cellValue,
+          originalValue: originalValue, // Guardar el valor original para detectar URLs
+          classes: '' // Quitar alineación a la derecha para que todo vaya a la izquierda
+        });
+      });
+      
+      this.rowsData.push({
+        id: 'row-' + index,
+        cellsList: cellsList
+      });
+    });
+    
+    this.visibleRowsData = [...this.rowsData];
+  }
+
+  /**
+   * Obtiene el valor formateado de una celda
+   */
+  private getCellValue(cellData: any): string {
+    if (!cellData || !cellData.value) {
+      return '—';
+    }
+
+    const value = cellData.value;
+    
+    // Si es una URL, extraer solo la parte final más legible
+    if (this.isUrl(value)) {
+      try {
+        const url = new URL(value);
+        const pathParts = url.pathname.split('/');
+        const lastPart = pathParts[pathParts.length - 1];
+        return lastPart || url.hostname;
+      } catch {
+        return value;
+      }
+    }
+
+    // Si es un número, formatearlo
+    if (cellData.type === 'literal' && cellData.datatype && 
+        (cellData.datatype.includes('integer') || cellData.datatype.includes('decimal'))) {
+      const num = parseFloat(value);
+      if (!isNaN(num)) {
+        return num.toLocaleString('es-ES');
+      }
+    }
+
+    return value;
+  }
+
+  /**
+   * Formatea el nombre de una columna
+   */
+  private formatColumnName(columnName: string): string {
+    return columnName
+      .replace(/([A-Z])/g, ' $1')
+      .replace(/^./, str => str.toUpperCase())
+      .replace(/_/g, ' ')
+      .replace(/\b\w/g, l => l.toUpperCase());
+  }
+
+  /**
+   * Determina si una columna es numérica
+   */
+  private isNumericColumn(columnName: string): boolean {
+    return columnName.toLowerCase().includes('rate') || 
+           columnName.toLowerCase().includes('count') ||
+           columnName.toLowerCase().includes('number');
+  }
+
+  /**
+   * Determina si un valor es una URL
+   */
+  public isUrl(value: string): boolean {
+    try {
+      new URL(value);
+      return true;
+    } catch {
+      return false;
+    }
+  }
+
+  /**
+   * Configura las suscripciones al servicio (flujo original)
+   */
+  private setupServiceSubscriptions() {
     this.aragopediaSvc.columnasTablaObserver.subscribe((dataColumnas: any) => {
       this.nombresColumnas = dataColumnas;
     });
@@ -241,7 +415,7 @@ export class AragopediaTablaDatosComponent implements OnInit {
     });
   }
 
-  // Prepara los datos de filas para el formato que espera DESY
+  // Prepara los datos de filas para el formato que espera DESY (flujo original)
   prepareRowsData(data: any[]) {
     this.rowsData = [];
     

@@ -1,0 +1,119 @@
+<div class="container template">
+  <!-- Breadcrumbs -->
+  <section class="container breadcrumbs">
+    <p>
+      <a [routerLink]="['/']">Inicio</a> > 
+      <span *ngIf="context">{{ getContextName() }} > </span>
+      Resultados de consulta
+    </p>
+  </section>
+
+  <!-- Header -->
+  <div class="query-results-header">
+    <h1 class="query-results-title">{{ title }}</h1>
+    <p *ngIf="description" class="query-results-description">{{ description }}</p>
+  </div>
+
+  <!-- Loading -->
+  <section class="container" *ngIf="loading">
+    <desy-card classes="w-full text-center p-8">
+      <mat-spinner [diameter]="60"></mat-spinner>
+      <p class="mt-4 text-lg">Cargando resultados de la consulta...</p>
+    </desy-card>
+  </section>
+
+  <!-- Error -->
+  <section class="container" *ngIf="error">
+    <desy-card classes="w-full border-l-4 border-red-500 bg-red-50">
+      <div class="flex items-center">
+        <mat-icon class="text-red-500 mr-3">error</mat-icon>
+        <div>
+          <h3 class="text-lg font-semibold text-red-800">Error al cargar los datos</h3>
+          <p class="text-red-600">{{ error }}</p>
+        </div>
+      </div>
+    </desy-card>
+  </section>
+
+  <!-- Acciones -->
+  <section class="container query-actions" *ngIf="!loading && !error && tableData.rows.length > 0">
+    <div class="action-buttons">
+      <button 
+        class="btn btn-primary"
+        (click)="exportToCSV()">
+        <mat-icon>download</mat-icon>
+        Exportar CSV
+      </button>
+
+      <button 
+        class="btn btn-secondary"
+        (click)="toggleQueryVisibility()">
+        <mat-icon>{{ showQuery ? 'visibility_off' : 'code' }}</mat-icon>
+        {{ showQuery ? 'Ocultar Query' : 'Ver Query SPARQL' }}
+      </button>
+      
+      <button 
+        class="btn btn-outline"
+        (click)="openOriginalQuery()">
+        <mat-icon>open_in_new</mat-icon>
+        Ver en SPARQL Endpoint
+      </button>
+    </div>
+  </section>
+
+  <!-- Query SPARQL -->
+  <section class="container" *ngIf="showQuery && sparqlQuery">
+    <desy-card classes="w-full">
+      <div class="query-display">
+        <div class="query-header">
+          <h3 class="text-lg font-semibold flex items-center">
+            <mat-icon class="mr-2">code</mat-icon>
+            Query SPARQL
+          </h3>
+          <button 
+            class="btn btn-sm btn-outline"
+            (click)="copyQueryToClipboard()"
+            matTooltip="Copiar query">
+            <mat-icon>content_copy</mat-icon>
+          </button>
+        </div>
+        <pre class="query-code">{{ sparqlQuery }}</pre>
+      </div>
+    </desy-card>
+  </section>
+
+  <!-- Tabla de resultados -->
+  <section class="container template__results" *ngIf="!loading && !error && tableData.rows.length > 0">
+    <div class="results-section">
+      <h2 class="section-title">Resultados de la consulta</h2>
+      
+      <!-- Usar el componente de tabla modificado con datos directos -->
+      <app-aragopedia-tabla-datos
+        [directData]="tableData.rows"
+        [directColumns]="tableData.columns"
+        [showDownloadButtons]="false"
+        [tableTitle]="title"
+        class="tabla-datos display-block">
+      </app-aragopedia-tabla-datos>
+      
+    </div>
+  </section>
+
+  <!-- Sin resultados -->
+  <section class="container" *ngIf="!loading && !error && tableData.rows.length === 0">
+    <desy-card classes="w-full text-center p-8">
+      <mat-icon class="text-gray-400 text-6xl mb-4">search_off</mat-icon>
+      <h3 class="text-xl font-semibold text-gray-600 mb-2">Sin resultados</h3>
+      <p class="text-gray-500">La consulta no devolvió ningún resultado.</p>
+    </desy-card>
+  </section>
+
+</div>
+
+<!-- Botón de retorno en la esquina inferior derecha -->
+<div class="return">
+  <button class="btn return__btn" (click)="goBack()">
+    <mat-icon>keyboard_arrow_left</mat-icon>
+    <span class="return__text">Volver</span>
+  </button>
+</div>
