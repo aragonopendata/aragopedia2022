@@ -223,11 +223,13 @@ export class AragopediaTablaDatosComponent implements OnInit, OnChanges {
       
       // Para cada columna, crear una celda
       this.directColumns.forEach(columnName => {
-        const cellValue = this.getCellValue(row[columnName]);
-        const originalValue = row[columnName]?.value || '';
+        // Para datos directos que ya vienen formateados desde query-results.service.ts,
+        // usar directamente el valor formateado en lugar de aplicar getCellValue()
+        const cellValue = row[columnName]?.value || '—';
+        const originalValue = row[columnName]?.originalValue || row[columnName]?.value || '';
         
         cellsList.push({
-          text: cellValue,
+          text: cellValue, // Usar el valor ya formateado desde el servicio
           originalValue: originalValue, // Guardar el valor original para detectar URLs
           classes: '' // Quitar alineación a la derecha para que todo vaya a la izquierda
         });
@@ -249,21 +251,14 @@ export class AragopediaTablaDatosComponent implements OnInit, OnChanges {
     if (!cellData || !cellData.value) {
       return '—';
     }
-
+  
     const value = cellData.value;
     
-    // Si es una URL, extraer solo la parte final más legible
+    // Si es una URL, mostrarla completa en lugar de extraer la parte final
     if (this.isUrl(value)) {
-      try {
-        const url = new URL(value);
-        const pathParts = url.pathname.split('/');
-        const lastPart = pathParts[pathParts.length - 1];
-        return lastPart || url.hostname;
-      } catch {
-        return value;
-      }
+      return value; // Devolver la URL completa
     }
-
+  
     // Si es un número, formatearlo
     if (cellData.type === 'literal' && cellData.datatype && 
         (cellData.datatype.includes('integer') || cellData.datatype.includes('decimal'))) {
@@ -272,7 +267,7 @@ export class AragopediaTablaDatosComponent implements OnInit, OnChanges {
         return num.toLocaleString('es-ES');
       }
     }
-
+  
     return value;
   }
 

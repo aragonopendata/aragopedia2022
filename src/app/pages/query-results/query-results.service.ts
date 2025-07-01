@@ -44,6 +44,8 @@ export class QueryResultsService {
     }
   }
 
+  
+
   /**
    * Formatea la query SPARQL para mejor legibilidad
    */
@@ -69,7 +71,7 @@ export class QueryResultsService {
     if (!data || !data.results || !data.results.bindings || data.results.bindings.length === 0) {
       return { columns: [], rows: [] };
     }
-
+  
     const bindings = data.results.bindings;
     const columns = Object.keys(bindings[0]);
     
@@ -77,8 +79,18 @@ export class QueryResultsService {
       const row: any = {};
       columns.forEach(col => {
         if (binding[col]) {
-          row[col] = {
+          const originalData = {
             value: binding[col].value,
+            type: binding[col].type || 'literal',
+            datatype: binding[col].datatype
+          };
+          
+          // Aplicar formateo directamente aquí
+          const formattedValue = this.formatCellValueForDisplay(originalData);
+          
+          row[col] = {
+            value: formattedValue, // Usar el valor formateado
+            originalValue: binding[col].value, // Guardar el valor original por si acaso
             type: binding[col].type || 'literal',
             datatype: binding[col].datatype
           };
@@ -88,8 +100,65 @@ export class QueryResultsService {
       });
       return row;
     });
-
+  
     return { columns, rows };
+  }
+
+  
+
+  /**
+   * Formatea un valor específicamente para mostrar en la tabla
+   */
+  private formatCellValueForDisplay(cellData: any): string {
+    if (!cellData || cellData.value === null || cellData.value === undefined) {
+      return '';
+    }
+  
+    const value = cellData.value.toString();
+    
+    // Si está vacío, devolver cadena vacía
+    if (value.trim() === '') {
+      return '';
+    }
+  
+    // Si es una URL, mostrarla completa (OPCIÓN 1)
+    if (this.isUrl(value)) {
+      return value; // Mostrar la URL completa sin modificar
+    }
+  
+    // Si es un número, formatearlo
+    if (cellData.type === 'literal' && cellData.datatype && 
+        (cellData.datatype.includes('integer') || 
+         cellData.datatype.includes('decimal') || 
+         cellData.datatype.includes('double') ||
+         cellData.datatype.includes('float'))) {
+      const num = parseFloat(value);
+      if (!isNaN(num)) {
+        return num.toLocaleString('es-ES', {
+          maximumFractionDigits: 2,
+          minimumFractionDigits: 0
+        });
+      }
+    }
+  
+    // Si es una fecha, formatearla
+    if (cellData.datatype && cellData.datatype.includes('date')) {
+      try {
+        const date = new Date(value);
+        if (!isNaN(date.getTime())) {
+          return date.toLocaleDateString('es-ES');
+        }
+      } catch {
+        // Si no se puede parsear como fecha, devolver valor original
+      }
+    }
+  
+    // Para texto normal, limitar longitud si es muy largo
+    if (value.length > 150) {
+      return value.substring(0, 147) + '...';
+    }
+  
+    return value;
   }
 
   /**
@@ -163,10 +232,27 @@ export class QueryResultsService {
       
       if (pathParts.length > 0) {
         const lastPart = pathParts[pathParts.length - 1];
-        // Decodificar y limpiar el nombre
-        return decodeURIComponent(lastPart)
+        
+        // Decodificación múltiple para manejar casos como "Arag%C3%B3n"
+        let decodedName = lastPart;
+        
+        // Aplicar decodeURIComponent múltiples veces si es necesario
+        try {
+          decodedName = decodeURIComponent(decodedName);
+          // Verificar si todavía contiene caracteres codificados y decodificar de nuevo
+          if (decodedName.includes('%')) {
+            decodedName = decodeURIComponent(decodedName);
+          }
+        } catch (e) {
+          // Si falla la decodificación, usar el valor original
+          decodedName = lastPart;
+        }
+        
+        // Limpiar y formatear el nombre
+        return decodedName
           .replace(/_/g, ' ')
           .replace(/%20/g, ' ')
+          .replace(/([a-z])([A-Z])/g, '$1 $2') // Separar camelCase
           .trim();
       }
       
@@ -177,8 +263,8 @@ export class QueryResultsService {
   }
 
   /**
-   * Formatea un valor para mostrar en la tabla
-   */
+ * Formatea un valor para mostrar en la tabla
+ */
   formatCellValue(cellData: any): string {
     if (!cellData || cellData.value === null || cellData.value === undefined) {
       return '';
@@ -191,17 +277,17 @@ export class QueryResultsService {
       return '';
     }
 
-    // Si es una URL, extraer solo la parte final más legible
+    // Si es una URL, mostrarla completa en lugar de extraer el nombre
     if (this.isUrl(value)) {
-      return this.extractReadableNameFromUrl(value);
+      return value; // Devolver la URL completa
     }
 
     // Si es un número, formatearlo
     if (cellData.type === 'literal' && cellData.datatype && 
         (cellData.datatype.includes('integer') || 
-         cellData.datatype.includes('decimal') || 
-         cellData.datatype.includes('double') ||
-         cellData.datatype.includes('float'))) {
+        cellData.datatype.includes('decimal') || 
+        cellData.datatype.includes('double') ||
+        cellData.datatype.includes('float'))) {
       const num = parseFloat(value);
       if (!isNaN(num)) {
         // Formatear con separadores de miles estilo español

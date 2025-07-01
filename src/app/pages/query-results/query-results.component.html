@@ -83,7 +83,7 @@
   </section>
 
   <!-- Tabla de resultados -->
-  <section class="container template__results" *ngIf="!loading && !error && tableData.rows.length > 0">
+  <section class="container template__results" *ngIf="!loading && !error">
     <div class="results-section">
       <h2 class="section-title">Resultados de la consulta</h2>
       
@@ -100,13 +100,13 @@
   </section>
 
   <!-- Sin resultados -->
-  <section class="container" *ngIf="!loading && !error && tableData.rows.length === 0">
+  <!-- <section class="container" *ngIf="!loading && !error && tableData.rows.length === 0">
     <desy-card classes="w-full text-center p-8">
       <mat-icon class="text-gray-400 text-6xl mb-4">search_off</mat-icon>
       <h3 class="text-xl font-semibold text-gray-600 mb-2">Sin resultados</h3>
       <p class="text-gray-500">La consulta no devolvió ningún resultado.</p>
     </desy-card>
-  </section>
+  </section> -->
 
 </div>
 

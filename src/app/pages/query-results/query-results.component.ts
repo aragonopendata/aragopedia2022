@@ -81,8 +81,72 @@ export class QueryResultsComponent implements OnInit {
    * Procesa los resultados de la query para mostrar en tabla
    */
   private processResults(data: any): void {
+    // Si no hay datos, crear una tabla con valor "0"
+    if (!data || !data.results || !data.results.bindings || data.results.bindings.length === 0) {
+      this.createEmptyTableWithZero();
+      this.totalResults = 1; // Contar como 1 resultado para que se muestre la tabla
+      return;
+    }
+
+    // Procesar resultados normalmente
     this.tableData = this.queryService.processResultsForTable(data);
     this.totalResults = this.tableData.rows.length;
+  }
+
+  /**
+   * Crea una tabla con una sola celda que muestra "0" cuando no hay resultados
+   */
+  private createEmptyTableWithZero(): void {
+    // Determinar qué columna usar basándose en el tipo de query
+    const columnName = this.determineColumnNameForEmptyResult();
+    
+    this.tableData = {
+      columns: [columnName],
+      rows: [{
+        [columnName]: {
+          value: '0',
+          type: 'literal',
+          datatype: 'http://www.w3.org/2001/XMLSchema#integer'
+        }
+      }]
+    };
+  }
+
+  /**
+   * Determina el nombre de columna apropiado cuando no hay resultados
+   */
+  private determineColumnNameForEmptyResult(): string {
+    // Intentar determinar el tipo de query basándose en el título o la query misma
+    const titleLower = this.title.toLowerCase();
+    const queryLower = this.sparqlQuery.toLowerCase();
+    
+    // Mapear títulos a nombres de columna apropiados
+    if (titleLower.includes('población') || titleLower.includes('habitantes')) {
+      return 'poblacion';
+    } else if (titleLower.includes('incendios')) {
+      return 'incendios';
+    } else if (titleLower.includes('polígonos') || titleLower.includes('poligonos')) {
+      return 'poligonos';
+    } else if (titleLower.includes('alojamientos')) {
+      return 'alojamientos';
+    } else if (titleLower.includes('explotaciones')) {
+      return 'explotaciones';
+    } else if (titleLower.includes('hectáreas') || titleLower.includes('hectareas')) {
+      return 'hectareas';
+    } else if (titleLower.includes('superficie') || titleLower.includes('suelo')) {
+      return 'superficie';
+    } else if (titleLower.includes('municipios')) {
+      return 'municipios';
+    } else if (titleLower.includes('mascotas') || titleLower.includes('animales')) {
+      return 'mascotas';
+    } else if (titleLower.includes('menciones') || titleLower.includes('publicaciones')) {
+      return 'menciones';
+    } else if (queryLower.includes('count')) {
+      return 'total';
+    } else {
+      // Valor por defecto
+      return 'resultado';
+    }
   }
 
   /**
@@ -146,10 +210,7 @@ export class QueryResultsComponent implements OnInit {
    * Exporta los resultados a CSV
    */
   exportToCSV(): void {
-    if (this.tableData.rows.length === 0) {
-      return;
-    }
-
+    // Siempre permitir exportación, incluso si solo hay un "0"
     const csvContent = this.generateCSVContent();
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
     const link = document.createElement('a');

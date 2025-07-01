@@ -151,14 +151,18 @@
                                 {{ this.telefono }}
                               </a>
                             </li>
-                            <li *ngIf="this.email" class="flex flex-wrap">
+                            <li *ngIf="this.email" class="flex flex-wrap li-email">
                               <span class="font-bold mr-2">Email:</span>
-                              <a href="mailto:{{ this.email }}" class="text-primary hover:underline c-link">
-                                {{ this.email }}
-                              </a>
+                              <div class="flex flex-col">
+                                <a *ngFor="let singleEmail of emailList" 
+                                   href="mailto:{{ singleEmail }}" 
+                                   class="text-primary hover:underline c-link">
+                                  {{ singleEmail }}
+                                </a>
+                              </div>
                             </li>
                           </ul>
-                          <a class="text-sm text-primary hover:underline block mt-2 c-link text-left"
+                          <a class="text-sm text-primary hover:underline block mt-2 c-link text-left data-link pointer"
                              (click)="navigateToQueryResults(dataSource.datosContacto, 'datosContacto')">
                             Ver origen de los datos
                           </a>
@@ -174,7 +178,7 @@
                               </a>
                             </li>
                           </ul>
-                          <a class="text-sm text-primary hover:underline block mt-2 c-link text-left"
+                          <a class="text-sm text-primary hover:underline block mt-2 c-link text-left data-link pointer"
                              (click)="navigateToQueryResults(dataSource.entidadesSingulares, 'entidadesSingulares')">
                             Ver origen de los datos
                           </a>
@@ -352,7 +356,7 @@
                 <a href="{{presupuestos}}"  target="_blank" rel="noopener" 
                     class="btn btn-presupuestos"><mat-icon>open_in_new</mat-icon>Ver información de
                     presupuestos</a>
-                <a class="data-link c-link" 
+                <a class="data-link c-link pointer" 
                    (click)="navigateToQueryResults(dataSource.presupuestos, 'presupuestos')">Ver origen de los datos</a>
             </div>
 
@@ -427,7 +431,7 @@
                             [routerLink]="['/persona/', this.createNameForUrl(miembro.persona.value)]">{{miembro.nombrePersona.value}}</a>
                     </li>
                 </ul>
-                <a  style="text-align: left;"  class="data-link c-link" 
+                <a  style="text-align: left;"  class="data-link c-link pointer" 
                    (click)="navigateToQueryResults(dataSource.miembrosPleno, 'miembrosPleno')">Ver origen de los datos</a>
             </div>
             
@@ -637,7 +641,7 @@
                         </a>
                       </li>
                     </ul>
-                    <a class="text-sm text-primary hover:underline block mt-2 c-link text-left"
+                    <a class="text-sm text-primary hover:underline block mt-2 c-link text-left data-link pointer"
                        (click)="navigateToQueryResults(dataSource.datosContacto, 'datosContacto')">
                       Ver origen de los datos
                     </a>
@@ -651,14 +655,14 @@
                         </a>
                       </li>
                     </ul>
-                    <a class="text-sm text-primary hover:underline block mt-2 c-link text-left"
+                    <a class="text-sm text-primary hover:underline block mt-2 c-link text-left data-link pointer"
                        (click)="navigateToQueryResults(dataSource.entidadesSingulares, 'entidadesSingulares')">
                       Ver origen de los datos
                     </a>
                   </div>
                   <div class="mb-8">
                     <h2 class="text-xl font-semibold mb-4 text-left">Presupuestos</h2>
-                    <a class="text-sm text-primary hover:underline block mt-2 c-link text-left"
+                    <a class="text-sm text-primary hover:underline block mt-2 c-link text-left data-link pointer"
                         href="{{ presupuestos }}" target="_blank" rel="noopener">
                       Ver origen de los datos
                     </a>
@@ -727,7 +731,7 @@
               <h2>Gráfica de los últimos 5 años</h2>
               <canvas baseChart class="chart" [data]="lineChartData" [options]="lineChartOptions" [type]="lineChartType"></canvas>
             </div>
-            <a class="data-link" 
+            <a class="data-link pointer" 
                (click)="navigateToQueryResults(dataSource.tablaPoblacion, 'tablaPoblacion')">
               Ver origen de los datos
             </a>
@@ -740,7 +744,7 @@
           <a href="{{ presupuestos }}" target="_blank" rel="noopener" class="btn btn-presupuestos">
             <mat-icon>open_in_new</mat-icon>Ver información de presupuestos
           </a>
-          <a class="data-link" 
+          <a class="data-link pointer" 
              (click)="navigateToQueryResults(dataSource.presupuestos, 'presupuestos')">
             Ver origen de los datos
           </a>
@@ -809,7 +813,7 @@
               </a>
             </li>
           </ul>
-          <a class="data-link" 
+          <a class="data-link pointer" 
              (click)="navigateToQueryResults(dataSource.miembrosPleno, 'miembrosPleno')" 
              style="text-align: left;">
             Ver origen de los datos

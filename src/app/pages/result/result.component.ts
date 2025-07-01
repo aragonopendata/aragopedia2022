@@ -1149,6 +1149,17 @@ export class ResultComponent {
 
   }
 
+  get emailList(): string[] {
+    if (!this.email) {
+      return [];
+    }
+    
+    // Si contiene "/", dividir los emails, sino devolver array con un elemento
+    return this.email.includes('/') 
+      ? this.email.split('/').map((email: string) => email.trim())
+      : [this.email];
+  }
+
 
 }
 
